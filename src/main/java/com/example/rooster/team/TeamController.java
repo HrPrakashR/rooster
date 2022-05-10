@@ -11,6 +11,7 @@ public class TeamController {
         this.teamService = teamService;
     }
 
+    // Team anzeigen
 
     // Team anlegen
 

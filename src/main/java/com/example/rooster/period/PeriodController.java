@@ -30,6 +30,8 @@ public class PeriodController {
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    // Eintrag anzeigen
+
     // Eintrag loeschen
 
     // Eintrag bearbeiten
