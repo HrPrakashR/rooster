@@ -2,7 +2,6 @@ package com.example.rooster.team;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Map;
 
 @Entity
 @Table(name = "team")

@@ -1,4 +1,4 @@
-package com.example.rooster.time_frame;
+package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
 
@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "period")
 public class Period {
 
     @Id

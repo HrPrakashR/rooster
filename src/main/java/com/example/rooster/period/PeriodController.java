@@ -1,7 +1,7 @@
-package com.example.rooster.employee;
+package com.example.rooster.period;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class EmployeeController {
+public class PeriodController {
 }

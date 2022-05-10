@@ -5,6 +5,7 @@ import com.example.rooster.team.Team;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id

@@ -1,8 +1,8 @@
-package com.example.rooster.team;
+package com.example.rooster.period;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeamRepository extends CrudRepository<Team, Long> {
+public interface PeriodRepository extends CrudRepository<Period, Long> {
 }

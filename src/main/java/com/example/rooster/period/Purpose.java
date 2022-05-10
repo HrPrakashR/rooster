@@ -1,4 +1,4 @@
-package com.example.rooster.time_frame;
+package com.example.rooster.period;
 
 public enum Purpose {
     VACATION_REQUEST,
