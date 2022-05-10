@@ -16,13 +16,15 @@ public class Period {
     private Purpose purpose;
 
     private Date dateFrom;
+
     private Date dateTo;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public Period() {}
+    public Period() {
+    }
 
     public long getId() {
         return id;
