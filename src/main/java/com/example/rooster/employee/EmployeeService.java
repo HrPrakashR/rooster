@@ -14,26 +14,26 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(long id) {
-        return employeeRepository.findEmployeeById(id);
+        return this.employeeRepository.findEmployeeById(id);
     }
 
     public List<Employee> findAllEmployees() {
-        return employeeRepository.findAll();
+        return this.employeeRepository.findAll();
     }
 
     public List<Employee> findAllEmployeesByTeam (Team team) {
-        return employeeRepository.findAllByTeam(team);
+        return this.employeeRepository.findAllByTeam(team);
     }
 
     public List<Employee> findAllEmployeesByRole (Role role) {
-        return employeeRepository.findAllByRole(role);
+        return this.employeeRepository.findAllByRole(role);
     }
 
     public Employee addNewEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        return this.employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Employee employee) {
-        employeeRepository.delete(employee);
+        this.employeeRepository.delete(employee);
     }
 }
