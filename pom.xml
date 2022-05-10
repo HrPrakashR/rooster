@@ -14,7 +14,7 @@
 	<name>rooster</name>
 	<description>rooster</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>18.0.1</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,6 +41,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<version>2.1.212</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
