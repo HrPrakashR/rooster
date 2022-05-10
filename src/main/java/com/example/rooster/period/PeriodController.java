@@ -17,11 +17,11 @@ public class PeriodController {
     }
 
     @GetMapping("/leaveRequest")
-    public List<PeriodDTO> createLeaveRequest(){
+    public List<PeriodDTO> createLeaveRequest() {
         List<PeriodDTO> leaveRequest = new LinkedList<>();
 
         for (Period period : periodRepository.findAllById()) {
-            leaveRequest.add(new PeriodDTO(period.getPurpose(),period.getDateFrom(),period.getDateTo(),period.getEmployee()));
+            leaveRequest.add(new PeriodDTO(period.getPurpose(), period.getDateFrom(), period.getDateTo(), period.getEmployee()));
         }
         return leaveRequest;
     }

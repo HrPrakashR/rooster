@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface PeriodRepository extends CrudRepository<Period, Long> {
 
-    List<Period>findAllById();
+    List<Period> findAllById();
 
 }

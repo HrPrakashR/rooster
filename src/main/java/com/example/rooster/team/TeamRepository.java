@@ -10,6 +10,7 @@ import java.util.List;
 public interface TeamRepository extends CrudRepository<Team, Long> {
 
     List<Team> findAll();
+
     Team findTeamById(Long teamId);
 
     Team findByEmployee(Employee employee);

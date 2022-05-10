@@ -21,11 +21,11 @@ public class EmployeeService {
         return this.employeeRepository.findAll();
     }
 
-    public List<Employee> getEmployees (Team team) {
+    public List<Employee> getEmployees(Team team) {
         return this.employeeRepository.findAllByTeam(team);
     }
 
-    public List<Employee> getEmployee (Role role) {
+    public List<Employee> getEmployee(Role role) {
         return this.employeeRepository.findAllByRole(role);
     }
 

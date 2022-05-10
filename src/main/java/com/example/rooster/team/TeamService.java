@@ -17,15 +17,15 @@ public class TeamService {
         return this.teamRepository.findAll();
     }
 
-    public Team getTeam(long id){
+    public Team getTeam(long id) {
         return this.teamRepository.findTeamById(id);
     }
 
-    public Team getTeam(Employee employee){
+    public Team getTeam(Employee employee) {
         return this.teamRepository.findByEmployee(employee);
     }
 
-    public Team setTeam(Team team){
+    public Team setTeam(Team team) {
         return this.teamRepository.save(team);
     }
 }
