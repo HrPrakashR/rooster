@@ -13,23 +13,23 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee findEmployeeById(long id) {
+    public Employee getEmployee(long id) {
         return this.employeeRepository.findEmployeeById(id);
     }
 
-    public List<Employee> findAllEmployees() {
+    public List<Employee> getEmployees() {
         return this.employeeRepository.findAll();
     }
 
-    public List<Employee> findAllEmployeesByTeam (Team team) {
+    public List<Employee> getEmployees (Team team) {
         return this.employeeRepository.findAllByTeam(team);
     }
 
-    public List<Employee> findAllEmployeesByRole (Role role) {
+    public List<Employee> getEmployee (Role role) {
         return this.employeeRepository.findAllByRole(role);
     }
 
-    public Employee addNewEmployee(Employee employee) {
+    public Employee setEmployee(Employee employee) {
         return this.employeeRepository.save(employee);
     }
 
