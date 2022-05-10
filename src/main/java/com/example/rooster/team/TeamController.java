@@ -14,7 +14,6 @@ public class TeamController {
 
     // Team anlegen
 
-
     // Team bearbeiten
 
     // Team Loeschen
