@@ -190,9 +190,18 @@ public class Team {
         this.sundayTo = sundayTo;
     }
 
+
+    /**
+     * getWeekdays().get(0) = monday
+     * getWeekdays().get(1) = tuesday
+     * ...
+     * each day has
+     * "from Date" get(0)
+     * and
+     * "to Date" get(1)
+      */
     public List<List<Date>> getWeekdays() {
         List<List<Date>> weekdays = new ArrayList<>();
-
         List<Date> weekdaysFrom = new ArrayList<>();
         List<Date> weekdaysTo = new ArrayList<>();
 
