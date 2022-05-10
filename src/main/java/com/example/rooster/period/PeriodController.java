@@ -5,25 +5,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PeriodController {
 
     // neuen Eintrag erstellen
-    private final PeriodRepository periodRepository;
+    private final PeriodService periodService;
 
-    public PeriodController(PeriodRepository periodRepository) {
-        this.periodRepository = periodRepository;
+    public PeriodController(PeriodService periodService) {
+        this.periodService = periodService;
     }
 
     @GetMapping("/leaveRequest")
     public List<PeriodDTO> createLeaveRequest() {
-        List<PeriodDTO> leaveRequest = new LinkedList<>();
-
-        for (Period period : periodRepository.findAllById()) {
-            leaveRequest.add(new PeriodDTO(period.getPurpose(), period.getDateFrom(), period.getDateTo(), period.getEmployee()));
-        }
-        return leaveRequest;
+        return this.periodService
+                .getPeriods()
+                .stream()
+                .map(period ->
+                        new PeriodDTO(period.getPurpose(),
+                                period.getDateFrom(),
+                                period.getDateTo(),
+                                period.getEmployee()))
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     // Eintrag loeschen
