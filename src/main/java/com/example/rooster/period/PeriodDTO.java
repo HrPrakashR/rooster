@@ -14,6 +14,9 @@ public class PeriodDTO {
 
     private Employee employee;
 
+    public PeriodDTO() {
+    }
+
     public PeriodDTO(Purpose purpose, Date dateFrom, Date dateTo, Employee employee) {
         this.purpose = purpose;
         this.dateFrom = dateFrom;
