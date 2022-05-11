@@ -24,4 +24,12 @@ public class TeamService {
     public Team setTeam(Team team) {
         return this.teamRepository.save(team);
     }
+
+    public Team updateTeam(Team newTeam) {
+        return this.teamRepository.save(newTeam);
+    }
+
+    public void deleteTeamById(long id) {
+        this.teamRepository.deleteById(id);
+    }
 }
