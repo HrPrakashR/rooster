@@ -1,8 +1,6 @@
-import { Observable, Subscription, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Component, Injectable, OnInit} from '@angular/core';
-import { Employee } from './employee';
+import {Employee} from './employee';
 
 @Component({
   selector: 'app-employee',
@@ -14,13 +12,14 @@ export class EmployeeComponent implements OnInit {
 
   employees?: Employee[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.getEmployee();
   }
 
-  getEmployee(){
+  getEmployee() {
     this.http
       .get<Employee[]>('/api/employees')
       .subscribe(result => this.employees = result);

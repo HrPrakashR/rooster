@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GeneratorComponent } from './generator.component';
+import {GeneratorComponent} from './generator.component';
 
 describe('GeneratorComponent', () => {
   let component: GeneratorComponent;
@@ -8,9 +8,9 @@ describe('GeneratorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GeneratorComponent ]
+      declarations: [GeneratorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
