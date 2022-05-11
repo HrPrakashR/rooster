@@ -24,11 +24,30 @@ public class TeamService {
         return this.teamRepository.save(team);
     }
 
-    public Team updateTeam(Team newTeam) {
-        return this.teamRepository.save(newTeam);
-    }
-
     public void deleteTeamById(long id) {
         this.teamRepository.deleteById(id);
+    }
+
+    public Team updateTeam(TeamDTO teamDTO) {
+        Team team = this.teamRepository.findByName(teamDTO.getName());
+        team.setRestHours(teamDTO.getRestHours());
+        team.setRestDays(teamDTO.getRestDays());
+        team.setMinBreakTime(teamDTO.getMinBreakTime());
+        team.setMondayFrom(teamDTO.getMondayFrom());
+        team.setMondayTo(teamDTO.getMondayTo());
+        team.setTuesdayFrom(teamDTO.getTuesdayFrom());
+        team.setTuesdayTo(teamDTO.getTuesdayTo());
+        team.setWednesdayFrom(teamDTO.getWednesdayFrom());
+        team.setWednesdayTo(teamDTO.getWednesdayTo());
+        team.setThursdayFrom(teamDTO.getThursdayFrom());
+        team.setThursdayTo(teamDTO.getThursdayTo());
+        team.setFridayFrom(teamDTO.getFridayFrom());
+        team.setFridayTo(teamDTO.getFridayTo());
+        team.setSaturdayFrom(teamDTO.getSaturdayFrom());
+        team.setSaturdayTo(teamDTO.getSaturdayTo());
+        team.setSundayFrom(teamDTO.getSundayFrom());
+        team.setSundayTo(teamDTO.getSundayTo());
+
+        return this.setTeam(team);
     }
 }

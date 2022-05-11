@@ -6,7 +6,6 @@ import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,23 +85,14 @@ public class PeriodController {
 
     //Displaying the periods of a certain team in a certain time interval
     @GetMapping("/periodRequests/team/{id}")
-    public List<Period> showPeriodsPerTeamAndTimeInterval (@PathVariable long id,
-                                                           @RequestParam Date start,
-                                                           @RequestParam Date end) {
+    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long id,
+                                                          @RequestParam Date start,
+                                                          @RequestParam Date end) {
         Team team = teamService.getTeam(id);
 
         return periodService.getPeriodsPerTeamAndTimeInterval(team, start, end);
 
     }
-
-
-
-
-
-
-
-
-
 
 
     // Eintrag anzeigen ==> done
@@ -112,7 +102,7 @@ public class PeriodController {
     // Eintrag bearbeiten
 
     // Gib Daten eines bestimmten Purposes eines bestimmten Mitarbeiters zurueck
-     // ==> would be better at frontend, we already have the list of a certain employee
+    // ==> would be better at frontend, we already have the list of a certain employee
 
     // Alle Daten eines Mitarbeiters zurueckgeben ==> done
 

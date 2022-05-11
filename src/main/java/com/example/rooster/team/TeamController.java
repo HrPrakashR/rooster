@@ -1,9 +1,6 @@
 package com.example.rooster.team;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,13 +31,10 @@ public class TeamController {
 
     // Team bearbeiten sobald Frontend steht!
 
-//   @PostMapping("/edit/{id}")
-//    public Team update(@RequestBody @PathVariable Long id) {
-//        Team team = teamService.getTeam(id);
-//
-//        return teamService.updateTeam(team);
-//   }
-
+    @PostMapping("/team/edit")
+    public Team update(@RequestBody TeamDTO teamDTO) {
+        return this.teamService.updateTeam(teamDTO);
+    }
 
     // Team Loeschen
     @DeleteMapping("/team/delete/{id}")
