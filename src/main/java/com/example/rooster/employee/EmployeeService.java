@@ -33,7 +33,11 @@ public class EmployeeService {
         return this.employeeRepository.save(employee);
     }
 
-    public void deleteEmployee(Employee employee) {
-        this.employeeRepository.delete(employee);
+    public void deleteEmployeeById(long id) {
+        this.employeeRepository.deleteById(id);
+    }
+
+    public void updateFirstName(long id, String firstName) {
+        this.employeeRepository.updateFirstName(id, firstName);
     }
 }
