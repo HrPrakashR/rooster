@@ -16,11 +16,13 @@ public class TeamController {
 
     // Team anzeigen
 
+    // ToDo: use name instead of id
     @GetMapping("/team/{id}")
     public Team getTeam(@PathVariable long id) {
         return teamService.getTeam(id);
     }
 
+    // ToDo: Use DTOs instead of Team entity
     @GetMapping("/teams")
     public List<Team> getTeams() {
         return teamService.getTeams();
@@ -40,6 +42,7 @@ public class TeamController {
     }
 
 
+    // ToDo: Delete with DTO and byName
     @DeleteMapping("/team/delete/{id}")
     public List<Team> deleteTeam(@PathVariable long id) {
         this.teamService.deleteTeamById(id);
