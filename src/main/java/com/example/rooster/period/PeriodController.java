@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @RestController
 public class PeriodController {
 
-    // neuen Eintrag erstellen
     private final PeriodService periodService;
     private final EmployeeService employeeService;
 
@@ -26,7 +25,7 @@ public class PeriodController {
         this.teamService = teamService;
     }
 
-    @GetMapping("/leaveRequest")
+    @GetMapping("/periods")
     public List<PeriodDTO> createLeaveRequest() {
         return this.periodService
                 .getPeriods()
@@ -40,7 +39,7 @@ public class PeriodController {
     }
 
     //Showing the form for a new period request/entry
-    @GetMapping("/periodRequest")
+    @GetMapping("/period")
     public PeriodDTO createPeriodRequest() {
         long miliseconds = System.currentTimeMillis();
         Date today = new Date(miliseconds);
@@ -51,7 +50,7 @@ public class PeriodController {
     }
 
     //Submitting the filled form, saving it as a converted period
-    @PostMapping("/periodRequest")
+    @PostMapping("/period/new")
     public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
         periodService.addPeriod(period);
@@ -60,14 +59,14 @@ public class PeriodController {
 
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
-    @GetMapping("/periodRequests/employee/{employeeId}")
+    @GetMapping("/period/employee/{employeeId}")
     public List<Period> showPeriodRequestFromEmployee(@PathVariable long employeeId) {
         Employee employee = employeeService.getEmployee(employeeId);
         return periodService.getPeriodsByEmployee(employee);
     }
 
     //Showing a certain request
-    @GetMapping("periodRequest/{id}")
+    @GetMapping("/period/{id}")
     public Period showPeriodRequest(@PathVariable long id) {
         return periodService.getPeriod(id);
     }
@@ -92,10 +91,14 @@ public class PeriodController {
 
     }
 
+    // ToDo: Remove Id's from frontend and use DTO's and unique identifier (f.ex. write a new method)
+
 
     // Eintrag anzeigen ==> done
 
     // Eintrag loeschen ==> done
+
+    // Neuer Eintrag
 
     // Eintrag bearbeiten
 
