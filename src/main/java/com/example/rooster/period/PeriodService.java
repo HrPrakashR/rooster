@@ -1,8 +1,10 @@
 package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.team.Team;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,7 +20,7 @@ public class PeriodService {
         return this.periodRepository.findAll();
     }
 
-    public List<Period> findPeriodsByEmployee(Employee employee) {
+    public List<Period> getPeriodsByEmployee(Employee employee) {
         return periodRepository.findAllByEmployee(employee);
     }
 
@@ -39,4 +41,13 @@ public class PeriodService {
     public void addPeriod(Period period) {
         periodRepository.save(period);
     }
+
+    public void deletePeriod(Period period) {
+        periodRepository.delete(period);
+    }
+
+    public List<Period> getPeriodsPerTeamAndTimeInterval(Team team, Date start, Date end) {
+        return periodRepository.findAllByEmployeeTeamAndDateFromBetweenOrEmployeeTeamAndDateToBetween(team, start, end);
+    }
+
 }
