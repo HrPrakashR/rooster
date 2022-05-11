@@ -1,1 +1,9 @@
 <p>employee works!</p>
+<div *ngIf="employees">
+  IS SET:
+  <ng-container *ngFor="let employee of employees">
+    {{ employee.id }}
+    {{ employee.email }}
+    {{ employee.breakTime }}
+  </ng-container>
+</div>
