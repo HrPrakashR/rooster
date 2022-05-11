@@ -47,7 +47,7 @@ public class PeriodService {
     }
 
     public List<Period> getPeriodsPerTeamAndTimeInterval(Team team, Date start, Date end) {
-        return periodRepository.findAllByEmployeeTeamAndDateFromBetweenOrEmployeeTeamAndDateToBetween(team, start, end);
+        return periodRepository.findAllByEmployeeTeamAndDateFromBetween(team, start, end);
     }
 
 }

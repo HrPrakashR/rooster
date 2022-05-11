@@ -17,5 +17,7 @@ public interface PeriodRepository extends CrudRepository<Period, Long> {
 
     List<Period> findAllByEmployee(Employee employee);
 
-    List<Period> findAllByEmployeeTeamAndDateFromBetweenOrEmployeeTeamAndDateToBetween(Team team, Date beginDate, Date endDate);
+    List<Period> findAllByEmployeeTeamAndDateFromBetween(Team team, Date beginDate, Date endDate);
+    // TODO MEHMET: Old, not working: java.lang.IllegalArgumentException
+    // List<Period> findAllByEmployeeTeamAndDateFromBetweenOrEmployeeTeamAndDateToBetween(Team team, Date beginDate, Date endDate);
 }
