@@ -3,6 +3,7 @@ package com.example.rooster.team;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TeamService {
@@ -21,7 +22,12 @@ public class TeamService {
     }
 
     public Team setTeam(TeamDTO teamDTO) {
-        return this.teamRepository.save(teamDTO.getTeam());
+        if(Objects.isNull(this.teamRepository.findByName(teamDTO.getName()))) {
+            return this.teamRepository.save(teamDTO.getTeam());
+        }else{
+            throw new RuntimeException("This Team already exists");
+        }
+
     }
 
     public void deleteTeamById(long id) {

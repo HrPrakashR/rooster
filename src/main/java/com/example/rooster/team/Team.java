@@ -191,15 +191,8 @@ public class Team {
     }
 
 
-    /**
-     * getWeekdays().get(0) = monday
-     * getWeekdays().get(1) = tuesday
-     * ...
-     * each day has
-     * "from Date" get(0)
-     * and
-     * "to Date" get(1)
-     */
+/*  actually we do not need that method. But it is possibly usable in the future.
+
     public List<List<Date>> getWeekdays() {
         List<List<Date>> weekdays = new ArrayList<>();
         List<Date> weekdaysFrom = new ArrayList<>();
@@ -229,7 +222,7 @@ public class Team {
         }
 
         return weekdays;
-    }
+    }*/
 
     public void setId(Long id) {
         this.id = id;

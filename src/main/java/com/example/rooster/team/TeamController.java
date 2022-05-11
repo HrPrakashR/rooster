@@ -33,14 +33,13 @@ public class TeamController {
         return this.teamService.setTeam(teamDTO);
     }
 
-    // Team bearbeiten sobald Frontend steht!
 
     @PostMapping("/team/edit")
     public Team update(@RequestBody TeamDTO teamDTO) {
         return this.teamService.updateTeam(teamDTO);
     }
 
-    // Team Loeschen
+
     @DeleteMapping("/team/delete/{id}")
     public List<Team> deleteTeam(@PathVariable long id) {
         this.teamService.deleteTeamById(id);
