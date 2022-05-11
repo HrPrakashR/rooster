@@ -1,6 +1,9 @@
 package com.example.rooster.employee;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -12,6 +15,11 @@ public class EmployeeController {
     }
 
     // Liste aller Arbeiter eines Teams uebergeben
+
+    @GetMapping("/employees")
+    List<Employee> getEmployees() {
+        return employeeService.getEmployees();
+    }
 
     // Neuer Mitarbeiter
 
