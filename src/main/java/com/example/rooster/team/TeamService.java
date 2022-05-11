@@ -20,8 +20,8 @@ public class TeamService {
         return this.teamRepository.findTeamById(id);
     }
 
-    public Team setTeam(Team team) {
-        return this.teamRepository.save(team);
+    public Team setTeam(TeamDTO teamDTO) {
+        return this.teamRepository.save(teamDTO.getTeam());
     }
 
     public void deleteTeamById(long id) {
@@ -29,25 +29,8 @@ public class TeamService {
     }
 
     public Team updateTeam(TeamDTO teamDTO) {
-        Team team = this.teamRepository.findByName(teamDTO.getName());
-        team.setRestHours(teamDTO.getRestHours());
-        team.setRestDays(teamDTO.getRestDays());
-        team.setMinBreakTime(teamDTO.getMinBreakTime());
-        team.setMondayFrom(teamDTO.getMondayFrom());
-        team.setMondayTo(teamDTO.getMondayTo());
-        team.setTuesdayFrom(teamDTO.getTuesdayFrom());
-        team.setTuesdayTo(teamDTO.getTuesdayTo());
-        team.setWednesdayFrom(teamDTO.getWednesdayFrom());
-        team.setWednesdayTo(teamDTO.getWednesdayTo());
-        team.setThursdayFrom(teamDTO.getThursdayFrom());
-        team.setThursdayTo(teamDTO.getThursdayTo());
-        team.setFridayFrom(teamDTO.getFridayFrom());
-        team.setFridayTo(teamDTO.getFridayTo());
-        team.setSaturdayFrom(teamDTO.getSaturdayFrom());
-        team.setSaturdayTo(teamDTO.getSaturdayTo());
-        team.setSundayFrom(teamDTO.getSundayFrom());
-        team.setSundayTo(teamDTO.getSundayTo());
-
-        return this.setTeam(team);
+        Team team = teamDTO.getTeam();
+        team.setId(this.teamRepository.findByName(teamDTO.getName()).getId());
+        return this.teamRepository.save(team);
     }
 }

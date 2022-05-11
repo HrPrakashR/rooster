@@ -197,4 +197,27 @@ public class TeamDTO {
     public void setSundayTo(Date sundayTo) {
         this.sundayTo = sundayTo;
     }
+
+    public Team getTeam() {
+        Team team = new Team();
+        team.setName(this.getName());
+        team.setRestHours(this.getRestHours());
+        team.setRestDays(this.getRestDays());
+        team.setMinBreakTime(this.getMinBreakTime());
+        team.setMondayFrom(this.getMondayFrom());
+        team.setMondayTo(this.getMondayTo());
+        team.setTuesdayFrom(this.getTuesdayFrom());
+        team.setTuesdayTo(this.getTuesdayTo());
+        team.setWednesdayFrom(this.getWednesdayFrom());
+        team.setWednesdayTo(this.getWednesdayTo());
+        team.setThursdayFrom(this.getThursdayFrom());
+        team.setThursdayTo(this.getThursdayTo());
+        team.setFridayFrom(this.getFridayFrom());
+        team.setFridayTo(this.getFridayTo());
+        team.setSaturdayFrom(this.getSaturdayFrom());
+        team.setSaturdayTo(this.getSaturdayTo());
+        team.setSundayFrom(this.getSundayFrom());
+        team.setSundayTo(this.getSundayTo());
+        return team;
+    }
 }

@@ -16,7 +16,7 @@ public class TeamController {
 
     // Team anzeigen
 
-    @GetMapping("/{id}/team")
+    @GetMapping("/team/{id}")
     public Team getTeam(@PathVariable long id) {
         return teamService.getTeam(id);
     }
@@ -28,6 +28,10 @@ public class TeamController {
 
 
     // Team anlegen
+    @PostMapping("/team/new")
+    public Team newTeam(@RequestBody TeamDTO teamDTO) {
+        return this.teamService.setTeam(teamDTO);
+    }
 
     // Team bearbeiten sobald Frontend steht!
 
