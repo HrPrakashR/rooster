@@ -40,7 +40,7 @@ public class PeriodController {
     }
 
     //Showing the form for a new period request/entry
-    @GetMapping("/period")
+    @GetMapping("/period/new")
     public PeriodDTO createPeriodRequest() {
         long miliseconds = System.currentTimeMillis();
         Date today = new Date(miliseconds);
@@ -50,6 +50,7 @@ public class PeriodController {
         return periodDTO;
     }
 
+    //ToDo: Does not work: empty result, but id is set correctly
     //Submitting the filled form, saving it as a converted period
     @PostMapping("/period/new")
     public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {

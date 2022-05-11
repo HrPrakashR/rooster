@@ -33,7 +33,7 @@ public class EmployeeController {
 
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @GetMapping("/employee/details/{id}")
+    @GetMapping("/employee/{id}")
     public Employee employeeDetails(@PathVariable long id) {
         return employeeService.getEmployee(id);
     }
