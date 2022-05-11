@@ -21,10 +21,6 @@ public class TeamService {
         return this.teamRepository.findTeamById(id);
     }
 
-    public Team getTeam(Employee employee) {
-        return this.teamRepository.findByEmployee(employee);
-    }
-
     public Team setTeam(Team team) {
         return this.teamRepository.save(team);
     }
