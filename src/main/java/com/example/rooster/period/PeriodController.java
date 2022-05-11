@@ -25,6 +25,7 @@ public class PeriodController {
         this.teamService = teamService;
     }
 
+    // ToDo: write new Period method in PeriodDTO -> public Period getPeriod(){}. (You can take a look at TeamDTO)
     @GetMapping("/periods")
     public List<PeriodDTO> createLeaveRequest() {
         return this.periodService
@@ -52,11 +53,12 @@ public class PeriodController {
     //Submitting the filled form, saving it as a converted period
     @PostMapping("/period/new")
     public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {
-        Period period = periodService.convertToPeriod(periodDTO);
+        Period period = periodService.convertToPeriod(periodDTO); // ToDo: look at todo line 28
         periodService.addPeriod(period);
         return periodService.getPeriodsByEmployee(period.getEmployee());
     }
 
+    // ToDo: Use employeeDTO and Postmapping
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
     @GetMapping("/period/employee/{employeeId}")
@@ -65,14 +67,16 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(employee);
     }
 
+    // ToDo: Use period DTO instead of id
     //Showing a certain request
     @GetMapping("/period/{id}")
     public Period showPeriodRequest(@PathVariable long id) {
         return periodService.getPeriod(id);
     }
 
+    // ToDo: Use period DTO instead of id
     //Deleting a certain request. Returns the list of remaining requests of the employee.
-    @DeleteMapping("/periodRequest/delete/{id}")
+    @DeleteMapping("/period/delete/{id}")
     public List<Period> deletePeriodRequest(@PathVariable long id) {
         Period period = periodService.getPeriod(id);
         Employee employee = period.getEmployee();
@@ -80,8 +84,9 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(employee);
     }
 
+    //  ToDo: Use period DTO instead of id
     //Displaying the periods of a certain team in a certain time interval
-    @GetMapping("/periodRequests/team/{id}")
+    @GetMapping("/periods/team/{id}")
     public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long id,
                                                           @RequestParam Date start,
                                                           @RequestParam Date end) {
@@ -90,9 +95,6 @@ public class PeriodController {
         return periodService.getPeriodsPerTeamAndTimeInterval(team, start, end);
 
     }
-
-    // ToDo: Remove Id's from frontend and use DTO's and unique identifier (f.ex. write a new method)
-
 
     // Eintrag anzeigen ==> done
 

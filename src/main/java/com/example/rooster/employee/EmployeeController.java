@@ -13,23 +13,18 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    // TODO Liste aller Arbeiter eines Teams uebergeben
 
-
-    // Liste aller Mitarbeiter
     @GetMapping("/employees")
     List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 
-    // Neuer Mitarbeiter
-    @PostMapping("/employees")
+    @PostMapping("/employee/new")
     public Employee addNewEmployee(@RequestBody Employee newEmployee) {
         return employeeService.setEmployee(newEmployee);
     }
 
-
-    // Mitarbeiter loeschen
+    // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
     @DeleteMapping("/employee/delete/{id}")
     public List<Employee> deleteEmployee(@PathVariable long id) {
         employeeService.deleteEmployeeById(id);
@@ -37,13 +32,13 @@ public class EmployeeController {
     }
 
 
-    // Einzelnen Mitarbeiter uebergeben
+    // ToDo: do the same with a DTO and post mapping, without path-variable
     @GetMapping("/employee/details/{id}")
     public Employee employeeDetails(@PathVariable long id) {
         return employeeService.getEmployee(id);
     }
 
-    // Mitarbeiter bearbeiten
+    // ToDo: do the same with a DTO and post mapping, without path-variable
     @PostMapping("/employee/update/{id}")
     public void employeeUpdate(@PathVariable long id, Employee employee) {
         employeeService.updateFirstName(id, employee.getFirstName());
