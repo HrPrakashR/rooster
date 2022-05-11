@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import { PeriodComponent } from './period/period.component';
 import { TeamComponent } from './team/team.component';
 import { GeneratorComponent } from './generator/generator.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { GeneratorComponent } from './generator/generator.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
       { path: 'employee', component: EmployeeComponent },
