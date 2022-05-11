@@ -28,8 +28,6 @@ public class PeriodController {
 
     @GetMapping("/leaveRequest")
     public List<PeriodDTO> createLeaveRequest() {
-
-        // ToDo: Zu klaeren: Sollen wir fuer alle Rest-Uebergaben an Angular DTOs verwenden?
         return this.periodService
                 .getPeriods()
                 .stream()
