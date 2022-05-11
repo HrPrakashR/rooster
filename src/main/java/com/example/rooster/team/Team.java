@@ -1,9 +1,7 @@
 package com.example.rooster.team;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "team")
@@ -44,6 +42,10 @@ public class Team {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -186,10 +188,6 @@ public class Team {
         return sundayTo;
     }
 
-    public void setSundayTo(Date sundayTo) {
-        this.sundayTo = sundayTo;
-    }
-
 
 /*  actually we do not need that method. But it is possibly usable in the future.
 
@@ -224,7 +222,7 @@ public class Team {
         return weekdays;
     }*/
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSundayTo(Date sundayTo) {
+        this.sundayTo = sundayTo;
     }
 }

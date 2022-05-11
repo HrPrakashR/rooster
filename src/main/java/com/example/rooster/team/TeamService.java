@@ -22,9 +22,9 @@ public class TeamService {
     }
 
     public Team setTeam(TeamDTO teamDTO) {
-        if(Objects.isNull(this.teamRepository.findByName(teamDTO.getName()))) {
+        if (Objects.isNull(this.teamRepository.findByName(teamDTO.getName()))) {
             return this.teamRepository.save(teamDTO.getTeam());
-        }else{
+        } else {
             throw new RuntimeException("This Team already exists");
         }
 
