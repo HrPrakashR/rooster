@@ -1,4 +1,5 @@
 import {Team} from "../team/team";
+import {Role} from "./role";
 
 export interface Employee {
   id: number;
@@ -10,5 +11,5 @@ export interface Employee {
   hoursPerWeek: number;
   balanceHours: number;
   breakTime: number;
-  role: string;
+  role: Role;
 }
