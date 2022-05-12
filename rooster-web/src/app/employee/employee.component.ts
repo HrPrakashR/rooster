@@ -21,7 +21,7 @@ export class EmployeeComponent implements OnInit {
 
   getEmployee() {
     this.http
-      .get<Employee[]>('/api/employees')
+      .get<Employee[]>('/api/employees/get_all')
       .subscribe(result => this.employees = result);
   }
 }
