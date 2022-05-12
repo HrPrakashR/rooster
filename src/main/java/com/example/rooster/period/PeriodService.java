@@ -68,11 +68,18 @@ public class PeriodService {
     }
 
     public List<Period> getPeriodsPerTeamAndTimeInterval(Team team, Date start, Date end) {
-        return periodRepository.findAllByEmployeeTeamAndDateFromBetween(team, start, end);
+        List<Period> periodList = periodRepository.findAllByEmployeeTeam(team);
+        List<Period> newPeriodList = new ArrayList<>();
+        for (Period period : periodList) {
+            if (period.getDateFrom().after(start) && period.getDateTo().before(end)){
+                newPeriodList.add(period);
+            }
+        }
+        return newPeriodList;
     }
 
     public Period getPeriodFromPeriodDTO(PeriodDTO periodDTO) {
-        return periodRepository.findByPurposeAndAndDateFromAndDateToAndEmployee(periodDTO.getPurpose(), periodDTO.getDateFrom(), periodDTO.getDateTo(), periodDTO.getEmployee());
+        return periodRepository.findByPurposeAndDateFromAndDateToAndEmployee(periodDTO.getPurpose(), periodDTO.getDateFrom(), periodDTO.getDateTo(), periodDTO.getEmployee());
     }
 
 }

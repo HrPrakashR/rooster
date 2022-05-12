@@ -17,9 +17,8 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
 
     List<Period> findAllByEmployee(Employee employee);
 
-    Period findByPurposeAndAndDateFromAndDateToAndEmployee(Purpose purpose, Date dateFrom, Date dateTo, Employee employee);
+    Period findByPurposeAndDateFromAndDateToAndEmployee(Purpose purpose, Date dateFrom, Date dateTo, Employee employee);
 
-    List<Period> findAllByEmployeeTeamAndDateFromBetween(Team team, Date beginDate, Date endDate);
-    // TODO MEHMET: Old, not working: java.lang.IllegalArgumentException
-    // List<Period> findAllByEmployeeTeamAndDateFromBetweenOrEmployeeTeamAndDateToBetween(Team team, Date beginDate, Date endDate);
+    List<Period> findAllByEmployeeTeam(Team team);
+
 }
