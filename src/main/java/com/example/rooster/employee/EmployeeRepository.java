@@ -1,6 +1,7 @@
 package com.example.rooster.employee;
 
 import com.example.rooster.team.Team;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findEmployeeById(long id);
 
     List<Employee> findAll();
