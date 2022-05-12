@@ -55,7 +55,7 @@ public class PeriodController {
     //ToDo: Does not work: empty result, but id is set correctly
     //Submitting the filled form, saving it as a converted period
     @PostMapping("/new")
-    public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {
+    public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO); // ToDo: look at todo line 28
         periodService.addPeriod(period);
         return periodService.getPeriodsByEmployee(period.getEmployee());
