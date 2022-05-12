@@ -83,10 +83,10 @@ public class PeriodController {
 
     //  ToDo: Use period DTO instead of id - new DateDTO -> DONE
     //Displaying the periods of a certain team in a certain time interval
-    @GetMapping("/team/time_plan")
-    public List<Period> showPeriodsPerTeamAndTimeInterval(@RequestBody TeamDTO teamDTO,
+    @GetMapping("/time_plan/{teamId}")
+    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long teamId,
                                                           @RequestBody DateDTO dateDTO) {
-        Team team = teamService.getTeamByName(teamDTO.getName());
+        Team team = teamService.getTeam(teamId);
         Date dateFrom = dateDTO.getDateFrom();
         Date dateTo = dateDTO.getDateTo();
         return periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
