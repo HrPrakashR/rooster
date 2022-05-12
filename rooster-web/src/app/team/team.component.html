@@ -10,11 +10,7 @@ how to output the date format: https://www.angularjswiki.com/angular/angular-dat
 Create a new Team
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="fetchTeamDTO()" *ngIf="!newTeam" class="btn btn-primary" type="button">New Team</button>
-  <ng-container *ngIf="newTeam">
-    <button (click)="clearTeamDTO()" class="btn btn-primary" type="button">Hide New Team</button>
     <input [(ngModel)]="newTeam.name" type="text">
-  </ng-container>
 </div>
 
 

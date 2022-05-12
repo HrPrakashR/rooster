@@ -1,5 +1,3 @@
-import {DatePipe} from "@angular/common";
-
 export interface Team {
   name: string;
   restHours: number;

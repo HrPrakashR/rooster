@@ -11,7 +11,7 @@ import {Team} from "./team";
 @Injectable()
 export class TeamComponent implements OnInit {
 
-  newTeam?: Team;
+  newTeam: Team = {} as Team;
   teams?: Team[];
 
   constructor(private http: HttpClient) {  }
@@ -27,12 +27,8 @@ export class TeamComponent implements OnInit {
       this.teams = undefined;
   }
 
-  fetchTeamDTO(){
-    this.http.get<Team>('/api/teams/new').subscribe(result => this.newTeam = result);
-  }
-
   clearTeamDTO(){
-    this.newTeam = undefined;
+    this.newTeam = {} as Team;
   }
 
 }
