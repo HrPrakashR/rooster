@@ -2,8 +2,10 @@ package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.team.Team;
+import com.example.rooster.team.TeamDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,13 @@ public class PeriodService {
 
     public List<Period> getPeriods() {
         return this.periodRepository.findAll();
+    }
+
+    public List<PeriodDTO> getPeriodsAsDTO() {
+        List<Period> periods = this.getPeriods();
+        List<PeriodDTO> periodDTOs = new ArrayList<>();
+        periods.forEach(period -> periodDTOs.add(this.convertToPeriodDTO(period)));
+        return periodDTOs;
     }
 
     public List<Period> getPeriodsByEmployee(Employee employee) {
