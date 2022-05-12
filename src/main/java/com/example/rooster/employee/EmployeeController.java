@@ -1,5 +1,6 @@
 package com.example.rooster.employee;
 
+import com.example.rooster.team.TeamDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,33 +17,40 @@ public class EmployeeController {
 
 
     @GetMapping("/get_all")
-    List<Employee> getEmployees() {
-        return employeeService.getEmployees();
+    List<EmployeeDTO> getEmployees() {
+        return employeeService.getEmployeesAsDTO();
+    }
+
+    @GetMapping("/new")
+    public EmployeeDTO addNewEmployee(){
+        return new EmployeeDTO();
     }
 
     @PostMapping("/new")
-    public Employee addNewEmployee(@RequestBody Employee newEmployee) {
-        return employeeService.setEmployee(newEmployee);
+    public Employee addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = employeeService.convertToEmployee(employeeDTO);
+        return employeeService.setEmployee(employee);
     }
 
     // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
     @DeleteMapping("/delete")
-    public List<Employee> deleteEmployee(@PathVariable long id) {
-        employeeService.deleteEmployeeById(id);
+    public List<EmployeeDTO> deleteEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.deleteEmployeeByEmail(employeeDTO.getEmail());
         return getEmployees();
     }
 
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @GetMapping("/get")
-    public Employee employeeDetails(@PathVariable long id) {
-        return employeeService.getEmployee(id);
+    @PostMapping("/get")
+    public Employee getEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    return employeeService.getEmployeeByEmail(employeeDTO.getEmail());
     }
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
     @PostMapping("/edit")
-    public void employeeUpdate(@PathVariable long id, Employee employee) {
-        employeeService.updateFirstName(id, employee.getFirstName());
+    public Employee update() {
+
+        return null;
     }
 
 
