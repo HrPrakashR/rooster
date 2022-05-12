@@ -21,6 +21,10 @@ public class TeamService {
         return this.teamRepository.findTeamById(id);
     }
 
+    public Team getTeamByName(String name) {
+        return this.teamRepository.findTeamById(this.teamRepository.findByName(name).getId());
+    }
+
     public Team setTeam(TeamDTO teamDTO) {
         if (Objects.isNull(this.teamRepository.findByName(teamDTO.getName()))) {
             return this.teamRepository.save(teamDTO.getTeam());
@@ -30,8 +34,8 @@ public class TeamService {
 
     }
 
-    public void deleteTeamById(long id) {
-        this.teamRepository.deleteById(id);
+    public void deleteTeam(String name) {
+        this.teamRepository.deleteById((this.teamRepository.findByName(name).getId()));
     }
 
     public Team updateTeam(TeamDTO teamDTO) {
