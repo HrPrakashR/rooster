@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import {Team} from "./team";
 
 @Component({
@@ -14,9 +14,7 @@ export class TeamComponent implements OnInit {
   newTeam?: Team;
   teams?: Team[];
 
-  constructor(private http: HttpClient) {
-    new FormControl()
-  }
+  constructor(private http: HttpClient) {  }
 
   ngOnInit(): void {
   }
@@ -31,6 +29,10 @@ export class TeamComponent implements OnInit {
 
   fetchTeamDTO(){
     this.http.get<Team>('/api/teams/new').subscribe(result => this.newTeam = result);
+  }
+
+  clearTeamDTO(){
+    this.newTeam = undefined;
   }
 
 }
