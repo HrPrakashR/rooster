@@ -1,5 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { FormControl } from '@angular/forms';
 import {Team} from "./team";
 
 @Component({
