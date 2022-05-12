@@ -40,6 +40,16 @@ public class PeriodService {
         return period;
     }
 
+    public PeriodDTO convertToPeriodDTO(Period period) {
+        PeriodDTO periodDTO = new PeriodDTO();
+        periodDTO.setPurpose(period.getPurpose());
+        periodDTO.setDateFrom(period.getDateFrom());
+        periodDTO.setDateTo(period.getDateTo());
+        periodDTO.setEmployee(period.getEmployee());
+
+        return  periodDTO;
+    }
+
     public void addPeriod(Period period) {
         periodRepository.save(period);
     }
