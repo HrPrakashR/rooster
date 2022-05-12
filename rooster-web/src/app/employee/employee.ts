@@ -2,7 +2,6 @@ import {Team} from "../team/team";
 import {Role} from "./role";
 
 export interface Employee {
-  id: number;
   firstName: string;
   lastName: string;
   password: string;
