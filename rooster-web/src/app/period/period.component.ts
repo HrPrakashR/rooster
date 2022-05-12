@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Period} from './period';
+import {HttpClient} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-period',
@@ -7,7 +10,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PeriodComponent implements OnInit {
 
-  constructor() {
+  newPeriod: Period = {} as Period;
+  periods?: Period[];
+
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
