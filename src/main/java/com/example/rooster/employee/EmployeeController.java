@@ -21,11 +21,6 @@ public class EmployeeController {
         return employeeService.getEmployeesAsDTO();
     }
 
-    @GetMapping("/new")
-    public EmployeeDTO addNewEmployee(){
-        return new EmployeeDTO();
-    }
-
     @PostMapping("/new")
     public Employee addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee employee = employeeService.convertToEmployee(employeeDTO);
@@ -33,18 +28,20 @@ public class EmployeeController {
     }
 
     // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
-    @DeleteMapping("/delete")
-    public List<EmployeeDTO> deleteEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        employeeService.deleteEmployeeByEmail(employeeDTO.getEmail());
-        return getEmployees();
+    @DeleteMapping("/delete/{email}")
+    public EmployeeDTO deleteEmployee(@PathVariable String email) {
+        Employee employee = employeeService.deleteEmployeeByEmail(email);
+        return this.employeeService.convertToDTO(employee);
     }
 
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @PostMapping("/get")
-    public Employee getEmployee(@RequestBody EmployeeDTO employeeDTO) {
-    return employeeService.getEmployeeByEmail(employeeDTO.getEmail());
+    @GetMapping("/get/{email}")
+    public EmployeeDTO getEmployee(@PathVariable String email) {
+        Employee employee = employeeService.getEmployeeByEmail(email);
+        return this.employeeService.convertToDTO(employee);
     }
+
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
     @PostMapping("/edit")

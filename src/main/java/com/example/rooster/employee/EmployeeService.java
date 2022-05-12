@@ -77,8 +77,10 @@ public class EmployeeService {
         return this.employeeRepository.findEmployeeByEmail(email);
     }
 
-    public void deleteEmployeeByEmail(String email ) {
-        this.employeeRepository.delete(this.getEmployeeByEmail(email));
+    public Employee deleteEmployeeByEmail(String email ) {
+        Employee employee = this.getEmployeeByEmail(email);
+        this.employeeRepository.delete(employee);
+        return employee;
     }
 
 }
