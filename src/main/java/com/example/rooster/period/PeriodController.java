@@ -44,11 +44,13 @@ public class PeriodController {
     }
 
     //ToDo: Does not work: empty result, but id is set correctly
+    // ToDo: look at todo line 28
+    // It should be working with the converter method
     //added RequestBody annotation, should now work.
     //Submitting the filled form, saving it as a converted period
     @PostMapping("/new")
     public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
-        Period period = periodService.convertToPeriod(periodDTO); // ToDo: look at todo line 28
+        Period period = periodService.convertToPeriod(periodDTO);
         periodService.addPeriod(period);
         return periodService.getPeriodsByEmployee(period.getEmployee());
     }
@@ -56,24 +58,26 @@ public class PeriodController {
     // ToDo: Use employeeDTO and Postmapping
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
+    //TODO: We need a method in EmplyerService to determine the related user
+    //For example: findEmployeeByNameAndLastName(String name, String lastName)
     @GetMapping("/employee/get_all")
     public List<Period> showPeriodRequestFromEmployee(@PathVariable long employeeId) {
         Employee employee = employeeService.getEmployee(employeeId);
         return periodService.getPeriodsByEmployee(employee);
     }
 
-    // ToDo: Use period DTO instead of id
+    // ToDo: Use period DTO instead of id -> DONE
     //Showing a certain request
     @GetMapping("/get")
-    public Period showPeriodRequest(@PathVariable long id) {
-        return periodService.getPeriod(id);
+    public Period showPeriodRequest(@RequestBody PeriodDTO periodDTO) {
+        return periodService.getPeriodFromPeriodDTO(periodDTO);
     }
 
-    // ToDo: Use period DTO instead of id
+    // ToDo: Use period DTO instead of id -> DONE
     //Deleting a certain request. Returns the list of remaining requests of the employee.
     @DeleteMapping("/delete")
-    public List<Period> deletePeriodRequest(@PathVariable long id) {
-        Period period = periodService.getPeriod(id);
+    public List<Period> deletePeriodRequest(@RequestBody PeriodDTO periodDTO) {
+        Period period = periodService.getPeriodFromPeriodDTO(periodDTO);
         Employee employee = period.getEmployee();
         periodService.deletePeriod(period);
         return periodService.getPeriodsByEmployee(employee);

@@ -71,4 +71,8 @@ public class PeriodService {
         return periodRepository.findAllByEmployeeTeamAndDateFromBetween(team, start, end);
     }
 
+    public Period getPeriodFromPeriodDTO(PeriodDTO periodDTO) {
+        return periodRepository.findByPurposeAndAndDateFromAndDateToAndEmployee(periodDTO.getPurpose(), periodDTO.getDateFrom(), periodDTO.getDateTo(), periodDTO.getEmployee());
+    }
+
 }
