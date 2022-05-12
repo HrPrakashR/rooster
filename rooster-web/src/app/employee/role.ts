@@ -1,6 +1,7 @@
 export enum Role {
   TRAINEE,
   STAFF,
+  SUBSTITUTE_MANAGER,
   MANAGER,
   OWNER
 }
