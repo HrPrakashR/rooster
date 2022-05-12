@@ -44,6 +44,7 @@ public class PeriodController {
     }
 
     //ToDo: Does not work: empty result, but id is set correctly
+    //added RequestBody annotation, should now work.
     //Submitting the filled form, saving it as a converted period
     @PostMapping("/new")
     public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
