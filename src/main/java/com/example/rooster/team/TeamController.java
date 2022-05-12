@@ -16,41 +16,36 @@ public class TeamController {
     }
 
     // Display Team with Team Name as input parameter
-    // Todo: task completed
-    // changed getTeam parameter from id to name and GetMapping to PostMapping
-
     @PostMapping("/get")
     public Team getTeam(@RequestBody TeamDTO teamDTO) {
         return teamService.getTeamByName(teamDTO.getName());
     }
 
-    // ToDo: Use DTOs instead of Team entity
+    // Display all Teams
     @GetMapping("/get_all")
     public List<TeamDTO> getTeams() {
         return teamService.getTeams();
     }
 
-    // Team anlegen
+    // Create a new Team
     @PostMapping("/new")
     public Team newTeam(@RequestBody TeamDTO teamDTO) {
         return this.teamService.setTeam(teamDTO);
     }
 
     @GetMapping("/new")
-    public TeamDTO newTeam(){
+    public TeamDTO newTeam() {
         return new TeamDTO();
     }
 
     //Edit a Team
+    //Attention: Team name cannot be changed, as it is identifier!
     @PostMapping("/edit")
     public Team update(@RequestBody TeamDTO teamDTO) {
         return this.teamService.updateTeam(teamDTO);
     }
 
     // Delete a Team
-    // ToDo: Delete with DTO and byName - Task Completed
-    // Changed DeleteMapping to PostMapping and
-    // Name is used as parameter instead of Id
     @PostMapping("/delete")
     public void delete(@RequestBody TeamDTO teamDTO) {
         this.teamService.deleteTeam(teamDTO.getName());
