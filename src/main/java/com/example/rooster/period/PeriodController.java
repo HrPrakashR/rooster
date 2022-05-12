@@ -29,16 +29,7 @@ public class PeriodController {
     // Look at Team getAkk
     @GetMapping("/get_all")
     public List<PeriodDTO> getAll() {
-        LinkedList<PeriodDTO> periodDTOS = new LinkedList<>();
-        for (Period period : this.periodService.getPeriods()) {
-            PeriodDTO periodDTO = new PeriodDTO(
-                    period.getPurpose(),
-                    period.getDateFrom(), //TODO: Im DTO Methode zum Umwandeln
-                    period.getDateTo(),
-                    period.getEmployee());
-            periodDTOS.add(periodDTO);
-        }
-        return periodDTOS;
+        return periodService.getPeriodsAsDTO();
     }
 
     //Showing the form for a new period request/entry
