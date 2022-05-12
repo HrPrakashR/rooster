@@ -3,6 +3,7 @@ package com.example.rooster.period;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
+import com.example.rooster.team.TeamDTO;
 import com.example.rooster.team.TeamService;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,16 +84,15 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(employee);
     }
 
-    //  ToDo: Use period DTO instead of id - new DateDTO
+    //  ToDo: Use period DTO instead of id - new DateDTO -> DONE
     //Displaying the periods of a certain team in a certain time interval
     @GetMapping("/team/time_plan")
-    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long id,
-                                                          @RequestParam Date start,
-                                                          @RequestParam Date end) {
-        Team team = teamService.getTeam(id);
-
-        return periodService.getPeriodsPerTeamAndTimeInterval(team, start, end);
-
+    public List<Period> showPeriodsPerTeamAndTimeInterval(@RequestBody TeamDTO teamDTO,
+                                                          @RequestBody DateDTO dateDTO) {
+        Team team = teamService.getTeamByName(teamDTO.getName());
+        Date dateFrom = dateDTO.getDateFrom();
+        Date dateTo = dateDTO.getDateTo();
+        return periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
     }
 
     // Eintrag anzeigen ==> done
