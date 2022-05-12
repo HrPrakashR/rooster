@@ -1,6 +1,7 @@
 package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamDTO;
@@ -44,11 +45,7 @@ public class PeriodController {
         return periodDTO;
     }
 
-    //ToDo: Does not work: empty result, but id is set correctly
-    // ToDo: look at todo line 28
-    // It should be working with the converter method
-    //added RequestBody annotation, should now work.
-    //Submitting the filled form, saving it as a converted period
+
     @PostMapping("/new")
     public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
@@ -56,14 +53,14 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(period.getEmployee());
     }
 
-    // ToDo: Use employeeDTO and Postmapping
+    // ToDo: Use employeeDTO and Postmapping -> DONE
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
-    //TODO: We need a method in EmplyerService to determine the related user
-    //For example: findEmployeeByNameAndLastName(String name, String lastName)
-    @GetMapping("/employee/get_all")
-    public List<Period> showPeriodRequestFromEmployee(@PathVariable long employeeId) {
-        Employee employee = employeeService.getEmployee(employeeId);
+    //TODO: We need a method in EmployerService to determine the related user
+    //For example: findEmployeeByEMail(String email)
+    @PostMapping("/employee/get_all")
+    public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = employeeService.getEmployeeByEmail(employeeDTO.getEmail());
         return periodService.getPeriodsByEmployee(employee);
     }
 
