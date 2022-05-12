@@ -36,6 +36,11 @@ public class TeamController {
         return this.teamService.setTeam(teamDTO);
     }
 
+    @GetMapping("/new")
+    public TeamDTO newTeam(){
+        return new TeamDTO();
+    }
+
     //Edit a Team
     @PostMapping("/edit")
     public Team update(@RequestBody TeamDTO teamDTO) {
