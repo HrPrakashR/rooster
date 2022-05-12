@@ -2,6 +2,7 @@ package com.example.rooster.team;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +14,11 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public List<Team> getTeams() {
-        return this.teamRepository.findAll();
+    public List<TeamDTO> getTeams() {
+        List<Team> teams = this.teamRepository.findAll();
+        List<TeamDTO> teamDTOs = new ArrayList<>();
+        teams.forEach((team) -> teamDTOs.add(new TeamDTO(team)));
+        return teamDTOs;
     }
 
     public Team getTeam(long id) {
@@ -22,7 +26,7 @@ public class TeamService {
     }
 
     public Team getTeamByName(String name) {
-        return this.teamRepository.findTeamById(this.teamRepository.findByName(name).getId());
+        return this.teamRepository.findByName(name);
     }
 
     public Team setTeam(TeamDTO teamDTO) {

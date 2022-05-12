@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/employees/")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -14,18 +15,18 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/employees")
+    @GetMapping("/get_all")
     List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 
-    @PostMapping("/employee/new")
+    @PostMapping("/new")
     public Employee addNewEmployee(@RequestBody Employee newEmployee) {
         return employeeService.setEmployee(newEmployee);
     }
 
     // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
-    @DeleteMapping("/employee/delete/{id}")
+    @DeleteMapping("/delete")
     public List<Employee> deleteEmployee(@PathVariable long id) {
         employeeService.deleteEmployeeById(id);
         return getEmployees();
@@ -33,13 +34,13 @@ public class EmployeeController {
 
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @GetMapping("/employee/{id}")
+    @GetMapping("/get")
     public Employee employeeDetails(@PathVariable long id) {
         return employeeService.getEmployee(id);
     }
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @PostMapping("/employee/update/{id}")
+    @PostMapping("/edit")
     public void employeeUpdate(@PathVariable long id, Employee employee) {
         employeeService.updateFirstName(id, employee.getFirstName());
     }

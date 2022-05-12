@@ -28,6 +28,8 @@ public class PeriodService {
         return this.periodRepository.findPeriodById(id);
     }
 
+
+    // TODO in DTO einbinden
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
         period.setPurpose(periodDTO.getPurpose());

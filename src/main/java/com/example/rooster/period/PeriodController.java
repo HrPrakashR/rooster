@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/periods/")
 public class PeriodController {
 
     private final PeriodService periodService;
@@ -26,21 +26,23 @@ public class PeriodController {
     }
 
     // ToDo: write new Period method in PeriodDTO -> public Period getPeriod(){}. (You can take a look at TeamDTO)
-    @GetMapping("/periods")
-    public List<PeriodDTO> createLeaveRequest() {
-        return this.periodService
-                .getPeriods()
-                .stream()
-                .map(period ->
-                        new PeriodDTO(period.getPurpose(),
-                                period.getDateFrom(),
-                                period.getDateTo(),
-                                period.getEmployee()))
-                .collect(Collectors.toCollection(LinkedList::new));
+    // Look at Team getAkk
+    @GetMapping("/get_all")
+    public List<PeriodDTO> getAll() {
+        LinkedList<PeriodDTO> periodDTOS = new LinkedList<>();
+        for (Period period : this.periodService.getPeriods()) {
+            PeriodDTO periodDTO = new PeriodDTO(
+                    period.getPurpose(),
+                    period.getDateFrom(), //TODO: Im DTO Methode zum Umwandeln
+                    period.getDateTo(),
+                    period.getEmployee());
+            periodDTOS.add(periodDTO);
+        }
+        return periodDTOS;
     }
 
     //Showing the form for a new period request/entry
-    @GetMapping("/period/new")
+    @GetMapping("/new")
     public PeriodDTO createPeriodRequest() {
         long miliseconds = System.currentTimeMillis();
         Date today = new Date(miliseconds);
@@ -52,7 +54,7 @@ public class PeriodController {
 
     //ToDo: Does not work: empty result, but id is set correctly
     //Submitting the filled form, saving it as a converted period
-    @PostMapping("/period/new")
+    @PostMapping("/new")
     public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO); // ToDo: look at todo line 28
         periodService.addPeriod(period);
@@ -62,7 +64,7 @@ public class PeriodController {
     // ToDo: Use employeeDTO and Postmapping
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
-    @GetMapping("/period/employee/{employeeId}")
+    @GetMapping("/employee/get_all")
     public List<Period> showPeriodRequestFromEmployee(@PathVariable long employeeId) {
         Employee employee = employeeService.getEmployee(employeeId);
         return periodService.getPeriodsByEmployee(employee);
@@ -70,14 +72,14 @@ public class PeriodController {
 
     // ToDo: Use period DTO instead of id
     //Showing a certain request
-    @GetMapping("/period/{id}")
+    @GetMapping("/get")
     public Period showPeriodRequest(@PathVariable long id) {
         return periodService.getPeriod(id);
     }
 
     // ToDo: Use period DTO instead of id
     //Deleting a certain request. Returns the list of remaining requests of the employee.
-    @DeleteMapping("/period/delete/{id}")
+    @DeleteMapping("/delete")
     public List<Period> deletePeriodRequest(@PathVariable long id) {
         Period period = periodService.getPeriod(id);
         Employee employee = period.getEmployee();
@@ -85,9 +87,9 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(employee);
     }
 
-    //  ToDo: Use period DTO instead of id
+    //  ToDo: Use period DTO instead of id - new DateDTO
     //Displaying the periods of a certain team in a certain time interval
-    @GetMapping("/periods/team/{id}")
+    @GetMapping("/team/time_plan")
     public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long id,
                                                           @RequestParam Date start,
                                                           @RequestParam Date end) {

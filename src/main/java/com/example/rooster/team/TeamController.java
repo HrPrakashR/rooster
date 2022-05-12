@@ -1,12 +1,12 @@
 package com.example.rooster.team;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@RequestMapping("/api/teams/")
 public class TeamController {
 
     private final TeamService teamService;
@@ -19,25 +19,25 @@ public class TeamController {
     // Todo: task completed
     // changed getTeam parameter from id to name and GetMapping to PostMapping
 
-    @PostMapping("/team/get")
+    @PostMapping("/get")
     public Team getTeam(@RequestBody TeamDTO teamDTO) {
         return teamService.getTeamByName(teamDTO.getName());
     }
 
     // ToDo: Use DTOs instead of Team entity
-    @GetMapping("/teams")
-    public List<Team> getTeams() {
+    @GetMapping("/get_all")
+    public List<TeamDTO> getTeams() {
         return teamService.getTeams();
     }
 
     // Team anlegen
-    @PostMapping("/team/new")
+    @PostMapping("/new")
     public Team newTeam(@RequestBody TeamDTO teamDTO) {
         return this.teamService.setTeam(teamDTO);
     }
 
     //Edit a Team
-    @PostMapping("/team/edit")
+    @PostMapping("/edit")
     public Team update(@RequestBody TeamDTO teamDTO) {
         return this.teamService.updateTeam(teamDTO);
     }
@@ -46,7 +46,7 @@ public class TeamController {
     // ToDo: Delete with DTO and byName - Task Completed
     // Changed DeleteMapping to PostMapping and
     // Name is used as parameter instead of Id
-    @PostMapping("/team/delete")
+    @PostMapping("/delete")
     public void delete(@RequestBody TeamDTO teamDTO) {
         this.teamService.deleteTeam(teamDTO.getName());
     }

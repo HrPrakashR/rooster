@@ -1,7 +1,5 @@
 package com.example.rooster.team;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,7 +11,7 @@ public class Team {
     @Column(name = "id", nullable = false)
     private Long id;
 
-// wird unique festgelegt im Setter
+    // wird unique festgelegt im Setter
     private String name;
 
     private double restHours;
