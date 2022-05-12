@@ -11,17 +11,26 @@ import {Team} from "./team";
 @Injectable()
 export class TeamComponent implements OnInit {
 
+  newTeam?: Team;
   teams?: Team[];
 
   constructor(private http: HttpClient) {
+    new FormControl()
   }
 
   ngOnInit(): void {
-    this.fetchAll();
   }
 
   fetchAll() {
       this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
+  }
+
+  clearAll() {
+      this.teams = undefined;
+  }
+
+  fetchTeamDTO(){
+    this.http.get<Team>('/api/teams/new').subscribe(result => this.newTeam = result);
   }
 
 }

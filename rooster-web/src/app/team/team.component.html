@@ -10,35 +10,40 @@ how to output the date format: https://www.angularjswiki.com/angular/angular-dat
 <!--
 Table with all teams
 -->
-<table class="table" *ngIf="teams">
-  <thead>
-  <tr>
-    <th scope="col">Name</th>
-    <th scope="col">Rest Hours</th>
-    <th scope="col">Rest Days</th>
-    <th scope="col">Minimal Break Time</th>
-    <th scope="col">Monday</th>
-    <th scope="col">Tuesday</th>
-    <th scope="col">Wednesday</th>
-    <th scope="col">Thursday</th>
-    <th scope="col">Friday</th>
-    <th scope="col">Saturday</th>
-    <th scope="col">Sunday</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let team of teams">
-    <th scope="row">{{team.name}}</th>
-    <td>{{team.restHours}}</td>
-    <td>{{team.restDays}}</td>
-    <td>{{team.minBreakTime}}</td>
-    <td>{{team.mondayFrom | date:'shortTime'}} - {{team.mondayTo | date:'shortTime'}}</td>
-    <td>{{team.tuesdayFrom | date:'shortTime'}} - {{team.tuesdayTo | date:'shortTime'}}</td>
-    <td>{{team.wednesdayFrom | date:'shortTime'}} - {{team.wednesdayTo | date:'shortTime'}}</td>
-    <td>{{team.thursdayFrom | date:'shortTime'}} - {{team.thursdayTo | date:'shortTime'}}</td>
-    <td>{{team.fridayFrom | date:'shortTime'}} - {{team.fridayTo | date:'shortTime'}}</td>
-    <td>{{team.saturdayFrom | date:'shortTime'}} - {{team.saturdayTo | date:'shortTime'}}</td>
-    <td>{{team.sundayFrom | date:'shortTime'}} - {{team.sundayTo | date:'shortTime'}}</td>
-  </tr>
-  </tbody>
-</table>
+<button type="button" class="btn btn-primary" (click)="fetchAll()" *ngIf="!teams">Show Teams</button>
+<ng-container *ngIf="teams">
+  <button type="button" class="btn btn-primary" (click)="clearAll()">Hide Teams</button>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Rest Hours</th>
+      <th scope="col">Rest Days</th>
+      <th scope="col">Minimal Break Time</th>
+      <th scope="col">Monday</th>
+      <th scope="col">Tuesday</th>
+      <th scope="col">Wednesday</th>
+      <th scope="col">Thursday</th>
+      <th scope="col">Friday</th>
+      <th scope="col">Saturday</th>
+      <th scope="col">Sunday</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let team of teams">
+      <th scope="row">{{team.name}}</th>
+      <td>{{team.restHours}}</td>
+      <td>{{team.restDays}}</td>
+      <td>{{team.minBreakTime}}</td>
+      <td>{{team.mondayFrom | date:'shortTime'}} - {{team.mondayTo | date:'shortTime'}}</td>
+      <td>{{team.tuesdayFrom | date:'shortTime'}} - {{team.tuesdayTo | date:'shortTime'}}</td>
+      <td>{{team.wednesdayFrom | date:'shortTime'}} - {{team.wednesdayTo | date:'shortTime'}}</td>
+      <td>{{team.thursdayFrom | date:'shortTime'}} - {{team.thursdayTo | date:'shortTime'}}</td>
+      <td>{{team.fridayFrom | date:'shortTime'}} - {{team.fridayTo | date:'shortTime'}}</td>
+      <td>{{team.saturdayFrom | date:'shortTime'}} - {{team.saturdayTo | date:'shortTime'}}</td>
+      <td>{{team.sundayFrom | date:'shortTime'}} - {{team.sundayTo | date:'shortTime'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
+
