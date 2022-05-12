@@ -1,8 +1,10 @@
 package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
+import com.example.rooster.team.TeamDTO;
 import com.example.rooster.team.TeamService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +31,7 @@ public class PeriodController {
     // Look at Team getAkk
     @GetMapping("/get_all")
     public List<PeriodDTO> getAll() {
-        LinkedList<PeriodDTO> periodDTOS = new LinkedList<>();
-        for (Period period : this.periodService.getPeriods()) {
-            PeriodDTO periodDTO = new PeriodDTO(
-                    period.getPurpose(),
-                    period.getDateFrom(), //TODO: Im DTO Methode zum Umwandeln
-                    period.getDateTo(),
-                    period.getEmployee());
-            periodDTOS.add(periodDTO);
-        }
-        return periodDTOS;
+        return periodService.getPeriodsAsDTO();
     }
 
     //Showing the form for a new period request/entry
@@ -52,51 +45,51 @@ public class PeriodController {
         return periodDTO;
     }
 
-    //ToDo: Does not work: empty result, but id is set correctly
-    //Submitting the filled form, saving it as a converted period
+
     @PostMapping("/new")
-    public List<Period> submitPeriodRequest(PeriodDTO periodDTO) {
-        Period period = periodService.convertToPeriod(periodDTO); // ToDo: look at todo line 28
+    public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
+        Period period = periodService.convertToPeriod(periodDTO);
         periodService.addPeriod(period);
         return periodService.getPeriodsByEmployee(period.getEmployee());
     }
 
-    // ToDo: Use employeeDTO and Postmapping
+    // ToDo: Use employeeDTO and Postmapping -> DONE
     //Showing the requests/entries of a certain employee (employee id as request parameter)
     //Purpose can be filtered at Frontend
-    @GetMapping("/employee/get_all")
-    public List<Period> showPeriodRequestFromEmployee(@PathVariable long employeeId) {
-        Employee employee = employeeService.getEmployee(employeeId);
+    //TODO: We need a method in EmployerService to determine the related user
+    //For example: findEmployeeByEMail(String email)
+    @PostMapping("/employee/get_all")
+    public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = employeeService.getEmployeeByEmail(employeeDTO.getEmail());
         return periodService.getPeriodsByEmployee(employee);
     }
 
-    // ToDo: Use period DTO instead of id
+    // ToDo: Use period DTO instead of id -> DONE
     //Showing a certain request
     @GetMapping("/get")
-    public Period showPeriodRequest(@PathVariable long id) {
-        return periodService.getPeriod(id);
+    public Period showPeriodRequest(@RequestBody PeriodDTO periodDTO) {
+        return periodService.getPeriodFromPeriodDTO(periodDTO);
     }
 
-    // ToDo: Use period DTO instead of id
+    // ToDo: Use period DTO instead of id -> DONE
     //Deleting a certain request. Returns the list of remaining requests of the employee.
     @DeleteMapping("/delete")
-    public List<Period> deletePeriodRequest(@PathVariable long id) {
-        Period period = periodService.getPeriod(id);
+    public List<Period> deletePeriodRequest(@RequestBody PeriodDTO periodDTO) {
+        Period period = periodService.getPeriodFromPeriodDTO(periodDTO);
         Employee employee = period.getEmployee();
         periodService.deletePeriod(period);
         return periodService.getPeriodsByEmployee(employee);
     }
 
-    //  ToDo: Use period DTO instead of id - new DateDTO
+    //  ToDo: Use period DTO instead of id - new DateDTO -> DONE
     //Displaying the periods of a certain team in a certain time interval
-    @GetMapping("/team/time_plan")
-    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long id,
-                                                          @RequestParam Date start,
-                                                          @RequestParam Date end) {
-        Team team = teamService.getTeam(id);
-
-        return periodService.getPeriodsPerTeamAndTimeInterval(team, start, end);
-
+    @GetMapping("/time_plan/{teamId}")
+    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long teamId,
+                                                          @RequestBody DateDTO dateDTO) {
+        Team team = teamService.getTeam(teamId);
+        Date dateFrom = dateDTO.getDateFrom();
+        Date dateTo = dateDTO.getDateTo();
+        return periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
     }
 
     // Eintrag anzeigen ==> done
