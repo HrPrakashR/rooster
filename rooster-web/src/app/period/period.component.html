@@ -1,12 +1,11 @@
 <h1 class="title">Period</h1>
-
 <!--
 Table with all Periods
 -->
 <div class="container-fluid p-3 my-3">
   <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Periods</button>
   <ng-container *ngIf="periods">
-    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Periods</button>
+    <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Periods</button>
     <table class="table">
       <thead>
       <tr>
@@ -27,7 +26,30 @@ Table with all Periods
     </table>
   </ng-container>
 </div>
-
+<div class="container-fluid p-3 my-3">
+  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
+  <ng-container *ngIf="employees">
+    <button (click)="clearAllEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Employee</th>
+        <th scope="col">Balance Hours</th>
+        <th scope="col">Break Time</th>
+        <th scope="col">Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let e of employees">
+        <th scope="row">{{e.firstName}} {{e.lastName}}</th>
+        <td>{{e.balanceHours}}</td>
+        <td>{{e.breakTime}}</td>
+        <td>{{e.email}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
 <!--
 Form to create a new Leave request
 -->
@@ -36,14 +58,13 @@ Form to create a new Leave request
   <form [hidden]="!newLeave">
     <button (click)="showLeaveRequest()" *ngIf="newLeave">Hide Leave Request</button>
   <div class="newLeave">
-    Employee First name: <div [(ngModel)] = "newPeriod.employee.firstName"><br>
-    <select>
-      <div *ngFor="let p of periods">
-      <option value="{{p.employee.firstName}}">Employee First name</option>
-      </div>
-    </select>
-  </div>
-<!--    Employee Last name: <input [(ngModel)] = "newPeriod.employee.lastName"><br>-->
+    Employee First name:
+    <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>
+      <select [(ngModel)]="selectedEmployee">
+        <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
+      </select>
+    </div>
+    <br>
     Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
     <select>
       <option value="0">Vacation Request</option>

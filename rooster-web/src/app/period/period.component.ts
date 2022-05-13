@@ -1,35 +1,57 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
+import { FormControl } from '@angular/forms';
+import {Employee} from "../employee/employee";
 
 @Component({
   selector: 'app-period',
   templateUrl: './period.component.html',
   styleUrls: ['./period.component.css']
 })
+@Injectable()
 export class PeriodComponent implements OnInit {
 
   newPeriod: Period = {} as Period;
   periods?: Period[];
+  employees?: Employee[];
+
+  selectedEmployee = "email@email.de"
+
+
+  getEmployees(){
+    this.http.get<Employee[]>('/api/employees/get_all').subscribe(emp => this.employees = emp);
+  }
+
 
   newLeave = false;
+  showEmployeeList = false;
 
   constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
+    this.getEmployees();
   }
 
   fetchAll() {
     this.http.get<Period[]>('/api/periods/get_all').subscribe(result => this.periods = result);
   }
 
-  clearAll() {
+  clearAllPeriods() {
     this.periods = undefined;
+  }
+
+  clearAllEmployees() {
+    this.employees = undefined;
   }
 
   showLeaveRequest(){
     this.newLeave = !this.newLeave;
+  }
+
+  showEmployees(){
+    this.showEmployeeList = !this.showEmployeeList;
   }
 
   saveEntry(){
@@ -38,5 +60,7 @@ export class PeriodComponent implements OnInit {
     // this.periods?.push(this.newPeriod);
     this.newPeriod = {} as Period;
   }
+
+
 
 }
