@@ -1,1 +1,65 @@
-<p>period works!</p>
+<h1 class="title">Period</h1>
+
+<!--
+Table with all Periods
+-->
+<div class="container-fluid p-3 my-3">
+  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Periods</button>
+  <ng-container *ngIf="periods">
+    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Periods</button>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Employee</th>
+        <th scope="col">Purpose</th>
+        <th scope="col">Date from</th>
+        <th scope="col">Date to</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let period of periods">
+        <th scope="row">{{period.employee.firstName}} {{period.employee.lastName}}</th>
+        <td>{{period.purpose}}</td>
+        <td>{{period.dateFrom}}</td>
+        <td>{{period.dateTo}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
+
+<!--
+Form to create a new Leave request
+-->
+<div class="container-fluid p-3 my-3">
+  <button (click)="showLeaveRequest()" *ngIf="!newLeave">Create Leave Request</button>
+  <form [hidden]="!newLeave">
+    <button (click)="showLeaveRequest()" *ngIf="newLeave">Hide Leave Request</button>
+  <div class="newLeave">
+    Employee First name: <div [(ngModel)] = "newPeriod.employee.firstName"><br>
+    <select>
+      <div *ngFor="let p of periods">
+      <option value="{{p.employee.firstName}}">Employee First name</option>
+      </div>
+    </select>
+  </div>
+<!--    Employee Last name: <input [(ngModel)] = "newPeriod.employee.lastName"><br>-->
+    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
+    <select>
+      <option value="0">Vacation Request</option>
+      <option value="1">Confirmed Vacation</option>
+      <option value="2">Sick Leave</option>
+      <option value="3">Working Hours</option>
+      <option value="4">Scheduled Working Hours</option>
+      <option value="5">Absence</option>
+      <option value="6">Free Time Request</option>
+      <option value="7">Working Hour Request</option>
+    </select>
+  </div><br>
+    Date from: <input [(ngModel)] = "newPeriod.dateFrom" type="Date">
+    Date to: <input [(ngModel)] = "newPeriod.dateTo" type="Date">
+    <button type="submit" (click)="saveEntry()">Submit</button>
+  </div>
+  </form>
+</div>
+
