@@ -40,8 +40,9 @@ export class EmployeeComponent implements OnInit {
       .subscribe(result => this.teams = result);
   }
 
-  saveNewEmployee(newEmployee: Employee): Observable<Employee> {
-    return this.http.post<Employee>("/api/employees/new", newEmployee);
+  saveNewEmployee(newEmployee: Employee){
+    this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result=>this.employees?.push(result));
+    this.isFormShown = false;
   }
 
   toggleShow() {
