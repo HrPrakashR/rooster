@@ -1,8 +1,86 @@
-<p>employee works!</p>
-<div *ngIf="employees">
-  IS SET:
-  <ng-container *ngFor="let employee of employees">
-    {{ employee.email }}
-    {{ employee.breakTime }}
+<div class="container-fluid p-3 my-3">
+  <button (click)="toggleShow()" *ngIf=!isFormShown class="btn btn-primary" type="button">Add New Employees</button>
+  <ng-container *ngIf=isFormShown>
+    <button (click)="toggleShow()" class="btn btn-primary" type="button">Close Form</button>
+    <form #contactForm="ngForm">
+      <p>
+        <label for="firstName">Name:</label>
+        <input type="text" name="firstName" id="firstName" [(ngModel)]="newEmployee.firstName" #firstName="ngModel" placeholder="First Name">
+      </p>
+
+      <p>
+        <label for="lastName">Last Name:</label>
+        <input type="text" name="lastName" id="lastName" [(ngModel)]="newEmployee.lastName" #firstName="ngModel" placeholder="Last Name">
+      </p>
+
+      <p>
+        <label for="password">Password:</label>
+        <input type="text" name="password" id="password" [(ngModel)]="newEmployee.password" #passwordName="ngModel" placeholder="Password">
+      </p>
+
+      <p>
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" [(ngModel)]="newEmployee.email" #email="ngModel" placeholder="Email">
+      </p>
+
+      <p>
+        <label for="team">Team:</label>
+        <input type="text" name="team" id="team" [(ngModel)]="newEmployee.team" #team="ngModel" placeholder="Team">
+      </p>
+      <p>
+      <select *ngFor="team in teams">
+        <option ngValue="[(team.Name)]">{{team.name}}</option>
+      </select>
+      </p>
+
+      <p>
+        <label for="hoursPerWeek">Hours Per Week:</label>
+        <input type="number" name="hoursPerWeek" id="hoursPerWeek" [(ngModel)]="newEmployee.hoursPerWeek" #hoursPerWeek="ngModel" placeholder="Hours Per Week">
+      </p>
+
+      <p>
+        <label for="balanceHours">Balance Hours:</label>
+        <input type="number" name="balanceHours" id="balanceHours" [(ngModel)]="newEmployee.balanceHours" #balanceHours="ngModel" placeholder="Balance Hours">
+      </p>
+
+      <p>
+        <label for="breakTime">Break Time:</label>
+        <input type="number" name="breakTime" id="breakTime" [(ngModel)]="newEmployee.breakTime" #breakTime="ngModel" placeholder="Break Time">
+      </p>
+
+      <p>
+        <label for="role">Role:</label>
+        <input type="text" name="role" id="role" [(ngModel)]="newEmployee.role" #role="ngModel" placeholder="Role">
+      </p>
+
+      <p>
+        <button (click)="saveNewEmployee(newEmployee)" value="Save">Save</button>
+      </p>
+    </form>
+  </ng-container>
+</div>
+
+<div class="container-fluid p-3 my-3">
+  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
+  <ng-container *ngIf="employees">
+    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Employees</button>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Employee</th>
+        <th scope="col">Balance Hours</th>
+        <th scope="col">Break Time</th>
+        <th scope="col">Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let e of employees">
+        <th scope="row">{{e.firstName}} {{e.lastName}}</th>
+        <td>{{e.balanceHours}}</td>
+        <td>{{e.breakTime}}</td>
+        <td>{{e.email}}</td>
+      </tr>
+      </tbody>
+    </table>
   </ng-container>
 </div>
