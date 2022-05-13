@@ -15,6 +15,8 @@ export class TeamComponent implements OnInit {
   newTeam: Team = {} as Team;
   teams?: Team[];
 
+  addTeam = false;
+
   constructor(private http: HttpClient) {  }
 
   ngOnInit(): void {
@@ -32,7 +34,11 @@ export class TeamComponent implements OnInit {
     this.newTeam = {} as Team;
   }
 
-  public onAddTeam(addTeam: NgForm): void{
+  showAddTeamRequest(){
+    this.addTeam = !this.addTeam;
+  }
+
+  public onAddTeam(): void{
 
   }
 
