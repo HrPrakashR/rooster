@@ -3,6 +3,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {Employee} from './employee';
 import {Observable} from "rxjs";
 import {Team} from "../team/team";
+import {Role} from "./role";
 
 @Component({
   selector: 'app-employee',
@@ -16,6 +17,8 @@ export class EmployeeComponent implements OnInit {
   teams?: Team[];
   newEmployee = {} as Employee;
   isFormShown = false;
+  public Role = Role;
+
 
   constructor(private http: HttpClient) {
   }

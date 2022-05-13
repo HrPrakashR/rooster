@@ -25,11 +25,8 @@
 
       <p>
         <label for="team">Team:</label>
-        <input type="text" name="team" id="team" [(ngModel)]="newEmployee.team" #team="ngModel" placeholder="Team">
-      </p>
-      <p>
-      <select *ngFor="team in teams">
-        <option ngValue="[(team.Name)]">{{team.name}}</option>
+      <select [(ngModel)]="newEmployee.team" id="team">
+        <option *ngFor="let team of teams" [value]="team">{{team.name}}</option>
       </select>
       </p>
 
@@ -50,8 +47,15 @@
 
       <p>
         <label for="role">Role:</label>
-        <input type="text" name="role" id="role" [(ngModel)]="newEmployee.role" #role="ngModel" placeholder="Role">
+        <select [(ngModel)]="newEmployee.role" id="role">
+          <option *ngFor="let r of Role | keyvalue" [value]="r">{{r.key}} - {{r.value}}</option>
+        </select>
       </p>
+
+      <!--<p>
+        <label for="role">Role:</label>
+        <input type="text" name="role" id="role" [(ngModel)]="newEmployee.role" #role="ngModel" placeholder="Role">
+      </p>-->
 
       <p>
         <button (click)="saveNewEmployee(newEmployee)" value="Save">Save</button>
