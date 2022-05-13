@@ -33,11 +33,6 @@ public class TeamController {
         return this.teamService.setTeam(teamDTO);
     }
 
-    @GetMapping("/new")
-    public TeamDTO newTeam() {
-        return new TeamDTO();
-    }
-
     //Edit a Team
     //Attention: Team name cannot be changed, as it is identifier!
     @PostMapping("/edit")
