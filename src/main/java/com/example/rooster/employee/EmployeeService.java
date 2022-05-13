@@ -18,7 +18,7 @@ public class EmployeeService {
         return this.employeeRepository.findEmployeeById(id);
     }
 
-    public Employee convertToEmployee(EmployeeDTO employeeDTO){
+    public Employee convertToEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
@@ -32,7 +32,7 @@ public class EmployeeService {
         return employee;
     }
 
-    public EmployeeDTO convertToDTO(Employee employee){
+    public EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
@@ -47,13 +47,12 @@ public class EmployeeService {
     }
 
 
-
     public List<Employee> getEmployees() {
 
         return this.employeeRepository.findAll();
     }
 
-    public List<EmployeeDTO> getEmployeesAsDTO(){
+    public List<EmployeeDTO> getEmployeesAsDTO() {
         List<Employee> employees = this.getEmployees();
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
         employees.forEach(employee -> employeeDTOS.add(this.convertToDTO(employee)));
@@ -77,7 +76,7 @@ public class EmployeeService {
         return this.employeeRepository.findEmployeeByEmail(email);
     }
 
-    public Employee deleteEmployeeByEmail(String email ) {
+    public Employee deleteEmployeeByEmail(String email) {
         Employee employee = this.getEmployeeByEmail(email);
         this.employeeRepository.delete(employee);
         return employee;

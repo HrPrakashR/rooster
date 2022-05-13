@@ -6,7 +6,7 @@ public class DateDTO {
     private Date dateFrom;
     private Date dateTo;
 
-    public DateDTO(){}
+    public DateDTO() {}
 
     public DateDTO(Date dateFrom, Date dateTo) {
         this.dateFrom = dateFrom;
