@@ -38,8 +38,10 @@ export class TeamComponent implements OnInit {
     this.addTeam = !this.addTeam;
   }
 
-  public onAddTeam(): void{
-
+  public addNewTeam(newTeam: Team){
+    this.http
+      .post<Team>("api/teams/new",newTeam).subscribe(result => this.teams?.push(result));
+    this.addTeam = false;
   }
 
 }

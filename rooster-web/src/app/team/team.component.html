@@ -126,7 +126,7 @@ how to output the date format: https://www.angularjswiki.com/angular/angular-dat
   </div>
 
 
-  <button class="btn btn-success" (click)="onAddTeam()" value="Speichern" [disabled]="!teamForm?.valid">Submit</button>
+  <button class="btn btn-success" (click)="addNewTeam(newTeam)" value="submit" [disabled]="!teamForm?.valid">Submit</button>
 
 </form>
 </div>
