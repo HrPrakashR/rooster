@@ -1,7 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, NgForm} from '@angular/forms';
 import {Team} from "./team";
+import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-team',
@@ -29,6 +30,10 @@ export class TeamComponent implements OnInit {
 
   clearTeamDTO(){
     this.newTeam = {} as Team;
+  }
+
+  public onAddTeam(addTeam: NgForm): void{
+
   }
 
 }
