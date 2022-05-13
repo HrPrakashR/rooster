@@ -25,30 +25,30 @@
 
       <p>
         <label for="team">Team:</label>
-      <select [(ngModel)]="newEmployee.team" id="team">
-        <option *ngFor="let team of teams" [value]="team">{{team.name}}</option>
-      </select>
+        <select [(ngModel)]="newEmployee.team" id="team">
+          <option *ngFor="let team of teams" [ngValue]="team">{{team.name}}</option>
+        </select>
       </p>
 
       <p>
         <label for="hoursPerWeek">Hours Per Week:</label>
-        <input type="number" name="hoursPerWeek" id="hoursPerWeek" [(ngModel)]="newEmployee.hoursPerWeek" #hoursPerWeek="ngModel" placeholder="Hours Per Week">
+        <input type="number" name="hoursPerWeek" id="hoursPerWeek" [(ngModel)]="newEmployee.hoursPerWeek" #hoursPerWeek="ngModel" placeholder="Hours Per Week" [min]="0" step="1">
       </p>
 
       <p>
         <label for="balanceHours">Balance Hours:</label>
-        <input type="number" name="balanceHours" id="balanceHours" [(ngModel)]="newEmployee.balanceHours" #balanceHours="ngModel" placeholder="Balance Hours">
+        <input type="number" name="balanceHours" id="balanceHours" [(ngModel)]="newEmployee.balanceHours" #balanceHours="ngModel" placeholder="Balance Hours" step="0.25">
       </p>
 
       <p>
         <label for="breakTime">Break Time:</label>
-        <input type="number" name="breakTime" id="breakTime" [(ngModel)]="newEmployee.breakTime" #breakTime="ngModel" placeholder="Break Time">
+        <input type="number" name="breakTime" id="breakTime" [(ngModel)]="newEmployee.breakTime" #breakTime="ngModel" placeholder="Break Time"[min]="0" step="0,25">
       </p>
 
       <p>
         <label for="role">Role:</label>
         <select [(ngModel)]="newEmployee.role" id="role">
-          <option *ngFor="let r of Role | keyvalue" [value]="r">{{r.key}} - {{r.value}}</option>
+          <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value" >{{r.key}} - {{r.value}}</option>
         </select>
       </p>
 
