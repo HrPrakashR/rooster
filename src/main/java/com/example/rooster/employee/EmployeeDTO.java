@@ -1,8 +1,8 @@
 package com.example.rooster.employee;
 
-import com.example.rooster.team.Team;
-
 public class EmployeeDTO {
+
+    private long id;
 
     private String firstName;
 
@@ -10,9 +10,7 @@ public class EmployeeDTO {
 
     private String email;
 
-    private String password;
-
-    private Team team;
+    private long team;
 
     private double hoursPerWeek;
 
@@ -20,21 +18,29 @@ public class EmployeeDTO {
 
     private double breakTime;
 
-    private Role role;
+    private int role;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String firstName, String lastName, String email, String password, Team team, double hoursPerWeek, double balanceHours, double breakTime, Role role) {
+    public EmployeeDTO(long id, String firstName, String lastName, String email, long team, double hoursPerWeek, double balanceHours, double breakTime, int role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.team = team;
         this.hoursPerWeek = hoursPerWeek;
         this.balanceHours = balanceHours;
         this.breakTime = breakTime;
         this.role = role;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -61,19 +67,11 @@ public class EmployeeDTO {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Team getTeam() {
+    public long getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(long team) {
         this.team = team;
     }
 
@@ -101,11 +99,11 @@ public class EmployeeDTO {
         this.breakTime = breakTime;
     }
 
-    public Role getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(int role) {
         this.role = role;
     }
 }

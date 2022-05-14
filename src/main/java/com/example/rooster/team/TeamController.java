@@ -16,9 +16,9 @@ public class TeamController {
     }
 
     // Display Team with Team Name as input parameter
-    @PostMapping("/get")
-    public Team getTeam(@RequestBody TeamDTO teamDTO) {
-        return teamService.getTeamByName(teamDTO.getName());
+    @PostMapping("/get/{id}")
+    public Team getTeam(@PathVariable long id) {
+        return teamService.getTeamById(id);
     }
 
     // Display all Teams
@@ -29,20 +29,20 @@ public class TeamController {
 
     // Create a new Team
     @PostMapping("/new")
-    public Team newTeam(@RequestBody TeamDTO teamDTO) {
-        return this.teamService.setTeam(teamDTO);
+    public void newTeam(@RequestBody TeamDTO teamDTO) {
+        this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
     }
 
     //Edit a Team
     //Attention: Team name cannot be changed, as it is identifier!
     @PostMapping("/edit")
     public Team update(@RequestBody TeamDTO teamDTO) {
-        return this.teamService.updateTeam(teamDTO);
+        return this.teamService.updateTeam(this.teamService.convertToTeam(teamDTO));
     }
 
     // Delete a Team
-    @PostMapping("/delete")
-    public void delete(@RequestBody TeamDTO teamDTO) {
-        this.teamService.deleteTeam(teamDTO.getName());
+    @PostMapping("/delete/{id}")
+    public void delete(@PathVariable long id) {
+        this.teamService.deleteTeam(id);
     }
 }

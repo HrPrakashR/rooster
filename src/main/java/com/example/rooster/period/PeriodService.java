@@ -1,10 +1,12 @@
 package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +15,11 @@ public class PeriodService {
 
     private final PeriodRepository periodRepository;
 
-    public PeriodService(PeriodRepository periodRepository) {
+    private final EmployeeService employeeService;
+
+    public PeriodService(PeriodRepository periodRepository, EmployeeService employeeService) {
         this.periodRepository = periodRepository;
+        this.employeeService = employeeService;
     }
 
     public List<Period> getPeriods() {
@@ -36,25 +41,27 @@ public class PeriodService {
         return this.periodRepository.findPeriodById(id);
     }
 
+    private Purpose findPurpose(int id) {
+        return Arrays.stream(Purpose.values()).filter(purpose -> purpose.ordinal() == id).findFirst().orElse(null);
+    }
 
     // TODO in DTO einbinden
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
-        period.setPurpose(periodDTO.getPurpose());
+        period.setPurpose(this.findPurpose(periodDTO.getPurpose()));
         period.setDateFrom(periodDTO.getDateFrom());
         period.setDateTo(periodDTO.getDateTo());
-        period.setEmployee(periodDTO.getEmployee());
-
+        period.setEmployee(this.employeeService.getEmployee(periodDTO.getEmployee()));
         return period;
     }
 
     public PeriodDTO convertToPeriodDTO(Period period) {
         PeriodDTO periodDTO = new PeriodDTO();
-        periodDTO.setPurpose(period.getPurpose());
+        periodDTO.setId(period.getId());
+        periodDTO.setPurpose(period.getPurpose().ordinal());
         periodDTO.setDateFrom(period.getDateFrom());
         periodDTO.setDateTo(period.getDateTo());
-        periodDTO.setEmployee(period.getEmployee());
-
+        periodDTO.setEmployee(period.getEmployee().getId());
         return periodDTO;
     }
 
@@ -76,9 +83,4 @@ public class PeriodService {
         }
         return newPeriodList;
     }
-
-    public Period getPeriodFromPeriodDTO(PeriodDTO periodDTO) {
-        return periodRepository.findByPurposeAndDateFromAndDateToAndEmployee(periodDTO.getPurpose(), periodDTO.getDateFrom(), periodDTO.getDateTo(), periodDTO.getEmployee());
-    }
-
 }

@@ -27,6 +27,15 @@ public class Period {
     public Period() {
     }
 
+    public Period(long id, Purpose purpose, Date dateFrom, Date dateTo, Employee employee) {
+        this.id = id;
+        this.purpose = purpose;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.employee = employee;
+    }
+
+
     public long getId() {
         return id;
     }
