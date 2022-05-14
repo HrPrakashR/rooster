@@ -3,6 +3,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {Employee} from './employee';
 import {Team} from "../team/team";
 import {Role} from "./role";
+import {EmployeeService} from "./employee.service";
 
 @Component({
   selector: 'app-employee',
@@ -19,7 +20,8 @@ export class EmployeeComponent implements OnInit {
   public Role = Role;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
@@ -63,5 +65,11 @@ export class EmployeeComponent implements OnInit {
 
   clearAll() {
     this.employees = undefined;
+  }
+
+  deleteEmployee(employee: Employee): void {
+    // @ts-ignore
+    this.employees = this.employees.filter(e => e !== employee);
+    this.employeeService.deleteEmployee(employee.id).subscribe();
   }
 }

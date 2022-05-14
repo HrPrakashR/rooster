@@ -1,5 +1,8 @@
 package com.example.rooster.employee;
 
+import com.example.rooster.period.Period;
+import com.example.rooster.period.PeriodRepository;
+import com.example.rooster.period.PeriodService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
 import org.springframework.stereotype.Service;
@@ -14,9 +17,12 @@ public class EmployeeService {
 
     private final TeamService teamService;
 
-    public EmployeeService(EmployeeRepository employeeRepository, TeamService teamService) {
+    private final PeriodRepository periodRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository, TeamService teamService, PeriodRepository periodRepository) {
         this.employeeRepository = employeeRepository;
         this.teamService = teamService;
+        this.periodRepository = periodRepository;
     }
 
     public Employee getEmployee(long id) {
@@ -89,6 +95,12 @@ public class EmployeeService {
         Employee employee = this.getEmployeeById(id);
         this.employeeRepository.delete(employee);
         return employee;
+    }
+
+    public void deletePeriodsOfEmployee(Employee employee) {
+        List<Period> periodsList = new ArrayList<>();
+        periodsList = this.periodRepository.findAllByEmployee(employee);
+        periodsList.forEach(p -> this.periodRepository.delete(p));
     }
 
 }

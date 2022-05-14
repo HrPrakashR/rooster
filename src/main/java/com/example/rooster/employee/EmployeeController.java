@@ -30,6 +30,7 @@ public class EmployeeController {
     // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable long id) {
+        employeeService.deletePeriodsOfEmployee(employeeService.getEmployeeById(id));
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
