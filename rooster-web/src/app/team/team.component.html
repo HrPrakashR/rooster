@@ -175,6 +175,7 @@ Table with all teams
         <td>{{team.fridayFrom | date:'shortTime'}} - {{team.fridayTo | date:'shortTime'}}</td>
         <td>{{team.saturdayFrom | date:'shortTime'}} - {{team.saturdayTo | date:'shortTime'}}</td>
         <td>{{team.sundayFrom | date:'shortTime'}} - {{team.sundayTo | date:'shortTime'}}</td>
+        <td><button class="btn btn-danger" (click)="deleteTeam(team.id)" value="delete">Delete</button></td>
       </tr>
       </tbody>
     </table>
