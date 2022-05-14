@@ -6,29 +6,48 @@ import java.util.Date;
 
 public class PeriodDTO {
 
-    private Purpose purpose;
+
+    private long id;
+    private int purpose;
 
     private Date dateFrom;
 
     private Date dateTo;
 
-    private Employee employee;
+    private long employee;
 
     public PeriodDTO() {
     }
 
-    public PeriodDTO(Purpose purpose, Date dateFrom, Date dateTo, Employee employee) {
+    public PeriodDTO(long id, int purpose, Date dateFrom, Date dateTo, long employee) {
+        this.id = id;
         this.purpose = purpose;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.employee = employee;
     }
 
-    public Purpose getPurpose() {
+    public PeriodDTO(Period period) {
+        this.id = period.getId();
+        this.purpose = period.getPurpose().ordinal();
+        this.dateFrom = period.getDateFrom();
+        this.dateTo = period.getDateTo();
+        this.employee = period.getEmployee().getId();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(Purpose purpose) {
+    public void setPurpose(int purpose) {
         this.purpose = purpose;
     }
 
@@ -48,11 +67,11 @@ public class PeriodDTO {
         this.dateTo = dateTo;
     }
 
-    public Employee getEmployee() {
+    public long getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(long employee) {
         this.employee = employee;
     }
 }

@@ -3,6 +3,7 @@ package com.example.rooster.period;
 import com.example.rooster.employee.Employee;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Date;
 
 @Entity
@@ -25,6 +26,30 @@ public class Period {
     private Employee employee;
 
     public Period() {
+    }
+
+    public Period(long id, Purpose purpose, Date dateFrom, Date dateTo, Employee employee) {
+        this.id = id;
+        this.purpose = purpose;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.employee = employee;
+    }
+
+    private Purpose findPurpose(int id){
+        for (Purpose purpose:Purpose.values()) {
+            if (purpose.ordinal() ==id){
+                return purpose;
+            }
+        }
+        return null;
+    }
+    public Period(PeriodDTO periodDTO) {
+        this.id = periodDTO.getId();
+        this.purpose = findPurpose(periodDTO.getPurpose());
+        this.dateFrom = periodDTO.getDateFrom();
+        this.dateTo = periodDTO.getDateTo();
+        this.employee = ;
     }
 
     public long getId() {

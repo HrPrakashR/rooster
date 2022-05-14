@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TeamDTO {
 
+    private long id;
     private String name;
 
     private double restHours;
@@ -31,27 +32,11 @@ public class TeamDTO {
     private Date sundayTo;
 
     public TeamDTO() {
-        this.name = "Team Name";
-        this.restHours = 0;
-        this.restDays = 0;
-        this.minBreakTime = 0;
-        this.mondayFrom = null;
-        this.mondayTo = null;
-        this.tuesdayFrom = null;
-        this.tuesdayTo = null;
-        this.wednesdayFrom = null;
-        this.wednesdayTo = null;
-        this.thursdayFrom = null;
-        this.thursdayTo = null;
-        this.fridayFrom = null;
-        this.fridayTo = null;
-        this.saturdayFrom = null;
-        this.saturdayTo = null;
-        this.sundayFrom = null;
-        this.sundayTo = null;
+
     }
 
-    public TeamDTO(String name, double restHours, int restDays, double minBreakTime, Date mondayFrom, Date mondayTo, Date tuesdayFrom, Date tuesdayTo, Date wednesdayFrom, Date wednesdayTo, Date thursdayFrom, Date thursdayTo, Date fridayFrom, Date fridayTo, Date saturdayFrom, Date saturdayTo, Date sundayFrom, Date sundayTo) {
+    public TeamDTO(long id, String name, double restHours, int restDays, double minBreakTime, Date mondayFrom, Date mondayTo, Date tuesdayFrom, Date tuesdayTo, Date wednesdayFrom, Date wednesdayTo, Date thursdayFrom, Date thursdayTo, Date fridayFrom, Date fridayTo, Date saturdayFrom, Date saturdayTo, Date sundayFrom, Date sundayTo) {
+        this.id = id;
         this.name = name;
         this.restHours = restHours;
         this.restDays = restDays;
@@ -73,6 +58,7 @@ public class TeamDTO {
     }
 
     public TeamDTO(Team team) {
+        this.id = team.getId();
         this.name = team.getName();
         this.restHours = team.getRestHours();
         this.restDays = team.getRestDays();
@@ -91,6 +77,14 @@ public class TeamDTO {
         this.saturdayTo = team.getSaturdayTo();
         this.sundayFrom = team.getSundayFrom();
         this.sundayTo = team.getSundayTo();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

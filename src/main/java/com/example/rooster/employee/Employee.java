@@ -36,11 +36,14 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(long id) {
+        this.id = id;
+        this.firstName =
+    }
 
     public long getId() {
         return id;
     }
-
 
     public String getFirstName() {
         return firstName;
