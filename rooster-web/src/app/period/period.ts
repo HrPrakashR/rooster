@@ -4,5 +4,5 @@ export interface Period {
   purpose: number;
   dateFrom: Date;
   dateTo: Date;
-  employee: Employee;
+  employee: number;
 }
