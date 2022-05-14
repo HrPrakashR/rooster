@@ -1,7 +1,6 @@
 import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
-import { FormControl } from '@angular/forms';
 import {Employee} from "../employee/employee";
 
 @Component({
@@ -18,11 +17,9 @@ export class PeriodComponent implements OnInit {
 
   selectedEmployee = "email@email.de"
 
-
   getEmployees(){
     this.http.get<Employee[]>('/api/employees/get_all').subscribe(emp => this.employees = emp);
   }
-
 
   newLeave = false;
   showEmployeeList = false;
@@ -61,6 +58,9 @@ export class PeriodComponent implements OnInit {
     this.newPeriod = {} as Period;
   }
 
-
+  deletePeriod(id: number){
+    this.http.delete<Period>('/api/periods/delete/${id}')
+      .subscribe()
+  }
 
 }

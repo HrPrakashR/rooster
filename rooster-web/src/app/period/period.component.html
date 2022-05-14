@@ -17,7 +17,7 @@ Table with all Periods
       </thead>
       <tbody>
       <tr *ngFor="let period of periods">
-        <th scope="row">{{period.employee.firstName}} {{period.employee.lastName}}</th>
+        <th scope="row">{{period.employee}}</th>
         <td>{{period.purpose}}</td>
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
@@ -26,10 +26,13 @@ Table with all Periods
     </table>
   </ng-container>
 </div>
+<!--
+Show all Employees
+-->
 <div class="container-fluid p-3 my-3">
-  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
-  <ng-container *ngIf="employees">
-    <button (click)="clearAllEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
+  <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees</button>
+  <ng-container *ngIf="showEmployeeList">
+    <button (click)="showEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
     <table class="table">
       <thead>
       <tr>
@@ -83,4 +86,3 @@ Form to create a new Leave request
   </div>
   </form>
 </div>
-
