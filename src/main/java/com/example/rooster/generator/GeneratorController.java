@@ -31,13 +31,11 @@ public class GeneratorController {
     private int month;
     private int year;
 
-
     public GeneratorController(PeriodService periodService, EmployeeService employeeService, TeamService teamService) {
         this.periodService = periodService;
         this.employeeService = employeeService;
         this.teamService = teamService;
     }
-
 
     @GetMapping("/get")
     public List<PeriodDTO> getAll() {
