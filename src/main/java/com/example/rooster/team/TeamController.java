@@ -41,8 +41,9 @@ public class TeamController {
     }
 
     // Delete a Team
-    @PostMapping("/delete/{id}")
+    @DeleteMapping ("/delete/{id}")
     public void delete(@PathVariable long id) {
+        this.teamService.neutralizeEmployeeTeam(this.teamService.getTeam(id));
         this.teamService.deleteTeam(id);
     }
 }
