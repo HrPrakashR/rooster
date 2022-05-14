@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/users/")
@@ -48,23 +49,20 @@ public class UserController {
     private String getPassword() {
         int length = (int) (Math.random() * 12) + 10;
 
-        // Code from https://www.tutorialspoint.com/Generating-password-in-Java
-        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialCharacters = "!@#$+-*";
         String numbers = "1234567890";
-        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+        String combinedChars = letters + letters.toLowerCase() + specialCharacters + numbers;
+
         Random random = new Random();
         char[] password = new char[length];
 
-        password[0] = lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length()));
-        password[1] = capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length()));
+        password[0] = letters.toLowerCase().charAt(random.nextInt(letters.toLowerCase().length()));
+        password[1] = letters.charAt(random.nextInt(letters.length()));
         password[2] = specialCharacters.charAt(random.nextInt(specialCharacters.length()));
         password[3] = numbers.charAt(random.nextInt(numbers.length()));
 
-        for (int i = 4; i < length; i++) {
-            password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
-        }
+        IntStream.range(4, length).forEach(i -> password[i] = combinedChars.charAt(random.nextInt(combinedChars.length())));
 
         return new String(password);
     }
