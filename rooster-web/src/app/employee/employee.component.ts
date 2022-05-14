@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, Injectable, OnInit} from '@angular/core';
 import {Employee} from './employee';
-import {Observable} from "rxjs";
 import {Team} from "../team/team";
 import {Role} from "./role";
 
@@ -40,7 +39,20 @@ export class EmployeeComponent implements OnInit {
       .subscribe(result => this.teams = result);
   }
 
+  getNextEmployeeId(employees: Employee[] | undefined) {
+    if(employees) {
+      const ids = employees.map(object => {
+        return object.id;
+      });
+      const max = Math.max(...ids);
+      return max + 1;
+    } else {
+      return 0;
+    }
+  }
+
   saveNewEmployee(newEmployee: Employee){
+    newEmployee.id = this.getNextEmployeeId(this.employees);
     this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result=>this.employees?.push(result));
     this.isFormShown = false;
   }
