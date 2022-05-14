@@ -78,6 +78,10 @@
         <td>{{e.balanceHours}}</td>
         <td>{{e.breakTime}}</td>
         <td>{{e.email}}</td>
+        <td>
+          <button type="button" class="delete" title="delete employee"
+                  (click)="deleteEmployee(e)">Delete</button>
+        </td>
       </tr>
       </tbody>
     </table>
