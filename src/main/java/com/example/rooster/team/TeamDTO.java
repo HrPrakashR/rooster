@@ -5,6 +5,7 @@ import java.util.Date;
 public class TeamDTO {
 
     private long id;
+
     private String name;
 
     private double restHours;
@@ -55,28 +56,6 @@ public class TeamDTO {
         this.saturdayTo = saturdayTo;
         this.sundayFrom = sundayFrom;
         this.sundayTo = sundayTo;
-    }
-
-    public TeamDTO(Team team) {
-        this.id = team.getId();
-        this.name = team.getName();
-        this.restHours = team.getRestHours();
-        this.restDays = team.getRestDays();
-        this.minBreakTime = team.getMinBreakTime();
-        this.mondayFrom = team.getMondayFrom();
-        this.mondayTo = team.getMondayTo();
-        this.tuesdayFrom = team.getTuesdayFrom();
-        this.tuesdayTo = team.getTuesdayTo();
-        this.wednesdayFrom = team.getWednesdayFrom();
-        this.wednesdayTo = team.getWednesdayTo();
-        this.thursdayFrom = team.getThursdayFrom();
-        this.thursdayTo = team.getThursdayTo();
-        this.fridayFrom = team.getFridayFrom();
-        this.fridayTo = team.getFridayTo();
-        this.saturdayFrom = team.getSaturdayFrom();
-        this.saturdayTo = team.getSaturdayTo();
-        this.sundayFrom = team.getSundayFrom();
-        this.sundayTo = team.getSundayTo();
     }
 
     public long getId() {

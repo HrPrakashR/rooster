@@ -1,21 +1,30 @@
 package com.example.rooster.employee;
 
 import com.example.rooster.team.Team;
+import com.example.rooster.team.TeamService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    private final TeamService teamService;
+
+    public EmployeeService(EmployeeRepository employeeRepository, TeamService teamService) {
         this.employeeRepository = employeeRepository;
+        this.teamService = teamService;
     }
 
     public Employee getEmployee(long id) {
         return this.employeeRepository.findEmployeeById(id);
+    }
+
+    private Role findRole(int id) {
+        return Arrays.stream(Role.values()).filter(role -> role.ordinal() == id).findFirst().orElse(null);
     }
 
     public Employee convertToEmployee(EmployeeDTO employeeDTO) {
@@ -23,12 +32,11 @@ public class EmployeeService {
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmail(employeeDTO.getEmail());
-        employee.setPassword(employeeDTO.getPassword());
-        employee.setTeam(employeeDTO.getTeam());
+        employee.setTeam(this.teamService.getTeam(employeeDTO.getTeam()));
         employee.setHoursPerWeek(employeeDTO.getHoursPerWeek());
         employee.setBalanceHours(employeeDTO.getBalanceHours());
         employee.setBreakTime(employeeDTO.getBreakTime());
-        employee.setRole(employeeDTO.getRole());
+        employee.setRole(this.findRole(employeeDTO.getRole()));
         return employee;
     }
 
@@ -37,12 +45,11 @@ public class EmployeeService {
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
         employeeDTO.setEmail(employee.getEmail());
-        employeeDTO.setPassword(employee.getPassword());
-        employeeDTO.setTeam(employee.getTeam());
+        employeeDTO.setTeam(employee.getTeam().getId());
         employeeDTO.setHoursPerWeek(employee.getHoursPerWeek());
         employeeDTO.setBalanceHours(employee.getBalanceHours());
         employeeDTO.setBreakTime(employee.getBreakTime());
-        employeeDTO.setRole(employee.getRole());
+        employeeDTO.setRole(employee.getRole().ordinal());
         return employeeDTO;
     }
 
@@ -71,13 +78,13 @@ public class EmployeeService {
         return this.employeeRepository.save(employee);
     }
 
-    public Employee getEmployeeByEmail(String email) {
+    public Employee getEmployeeById(long id) {
 
-        return this.employeeRepository.findEmployeeByEmail(email);
+        return this.employeeRepository.findEmployeeById(id);
     }
 
-    public Employee deleteEmployeeByEmail(String email) {
-        Employee employee = this.getEmployeeByEmail(email);
+    public Employee deleteEmployeeById(long id) {
+        Employee employee = this.getEmployeeById(id);
         this.employeeRepository.delete(employee);
         return employee;
     }

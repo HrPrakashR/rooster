@@ -1,10 +1,9 @@
 package com.example.rooster.employee;
 
-import com.example.rooster.team.Team;
-
 public class EmployeeDTO {
 
     private long id;
+
     private String firstName;
 
     private String lastName;

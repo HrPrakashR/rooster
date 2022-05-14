@@ -1,5 +1,7 @@
 package com.example.rooster.employee;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,23 +24,21 @@ public class EmployeeController {
 
     @PostMapping("/new")
     public Employee addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = employeeService.convertToEmployee(employeeDTO);
-        return employeeService.setEmployee(employee);
+        return employeeService.setEmployee(employeeService.convertToEmployee(employeeDTO));
     }
 
     // ToDo: Use DTO instead of ID and search employee by email (like new team service method)
-    @DeleteMapping("/delete/{email}")
-    public EmployeeDTO deleteEmployee(@PathVariable String email) {
-        Employee employee = employeeService.deleteEmployeeByEmail(email);
-        return this.employeeService.convertToDTO(employee);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable long id) {
+        employeeService.deleteEmployeeById(id);
+        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
-    @GetMapping("/get/{email}")
-    public EmployeeDTO getEmployee(@PathVariable String email) {
-        Employee employee = employeeService.getEmployeeByEmail(email);
-        return this.employeeService.convertToDTO(employee);
+    @GetMapping("/get/{id}")
+    public EmployeeDTO getEmployee(@PathVariable long id) {
+        return this.employeeService.convertToDTO(employeeService.getEmployeeById(id));
     }
 
 

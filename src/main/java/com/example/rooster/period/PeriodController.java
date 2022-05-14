@@ -1,10 +1,11 @@
 package com.example.rooster.period;
 
-import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -32,18 +33,6 @@ public class PeriodController {
         return periodService.getPeriodsAsDTO();
     }
 
-    //Showing the form for a new period request/entry
-    @GetMapping("/new")
-    public PeriodDTO createPeriodRequest() {
-        long miliseconds = System.currentTimeMillis();
-        Date today = new Date(miliseconds);
-        Date tomorrow = new Date(miliseconds + 86_400_000); //miliseconds in a day
-        //Today and tomorrow are the default days for the request
-        PeriodDTO periodDTO = new PeriodDTO(Purpose.WORKING_HOURS, today, tomorrow, new Employee());
-        return periodDTO;
-    }
-
-
     @PostMapping("/new")
     public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
@@ -58,25 +47,22 @@ public class PeriodController {
     //For example: findEmployeeByEMail(String email)
     @PostMapping("/employee/get_all")
     public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = employeeService.getEmployeeByEmail(employeeDTO.getEmail());
-        return periodService.getPeriodsByEmployee(employee);
+        return periodService.getPeriodsByEmployee(employeeService.getEmployeeById(employeeDTO.getId()));
     }
 
     // ToDo: Use period DTO instead of id -> DONE
     //Showing a certain request
-    @GetMapping("/get")
-    public Period showPeriodRequest(@RequestBody PeriodDTO periodDTO) {
-        return periodService.getPeriodFromPeriodDTO(periodDTO);
+    @GetMapping("/get/{id}")
+    public Period showPeriodRequest(@PathVariable long id) {
+        return periodService.getPeriod(id);
     }
 
     // ToDo: Use period DTO instead of id -> DONE
     //Deleting a certain request. Returns the list of remaining requests of the employee.
-    @DeleteMapping("/delete")
-    public List<Period> deletePeriodRequest(@RequestBody PeriodDTO periodDTO) {
-        Period period = periodService.getPeriodFromPeriodDTO(periodDTO);
-        Employee employee = period.getEmployee();
-        periodService.deletePeriod(period);
-        return periodService.getPeriodsByEmployee(employee);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePeriodRequest(@PathVariable long id) {
+        periodService.deletePeriod(periodService.getPeriod(id));
+        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
     //  ToDo: Use period DTO instead of id - new DateDTO -> DONE

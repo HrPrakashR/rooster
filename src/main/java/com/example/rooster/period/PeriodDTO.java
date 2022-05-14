@@ -1,13 +1,12 @@
 package com.example.rooster.period;
 
-import com.example.rooster.employee.Employee;
-
 import java.util.Date;
 
 public class PeriodDTO {
 
 
     private long id;
+
     private int purpose;
 
     private Date dateFrom;
@@ -25,14 +24,6 @@ public class PeriodDTO {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.employee = employee;
-    }
-
-    public PeriodDTO(Period period) {
-        this.id = period.getId();
-        this.purpose = period.getPurpose().ordinal();
-        this.dateFrom = period.getDateFrom();
-        this.dateTo = period.getDateTo();
-        this.employee = period.getEmployee().getId();
     }
 
     public long getId() {
