@@ -16,6 +16,7 @@ export class TeamComponent implements OnInit {
   teams?: Team[];
 
   addTeam = false;
+  status = '';
 
   constructor(private http: HttpClient) {  }
 
@@ -42,6 +43,13 @@ export class TeamComponent implements OnInit {
     this.http
       .post<Team>("api/teams/new",newTeam).subscribe(result => this.teams?.push(result));
     this.addTeam = false;
+  }
+
+
+   public deleteTeam(id: number){
+    this.teams = this.teams?.filter(t => t.id !== id );
+  this.http.delete('api/teams/delete/'+ id)
+.subscribe(() => this.status = 'Delete successful');
   }
 
 }
