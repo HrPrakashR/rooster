@@ -1,5 +1,7 @@
 package com.example.rooster.team;
 
+import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,9 +13,11 @@ import java.util.Objects;
 @Service
 public class TeamService {
     private final TeamRepository teamRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public TeamService(TeamRepository teamRepository) {
+    public TeamService(TeamRepository teamRepository, EmployeeRepository employeeRepository) {
         this.teamRepository = teamRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public List<TeamDTO> getTeams() {
@@ -86,9 +90,14 @@ public class TeamService {
         throw new RuntimeException("This Team already exists");
     }
 
-    public ResponseEntity<String> deleteTeam(Long id) {
+    public ResponseEntity<String> deleteTeam(long id) {
         this.teamRepository.deleteById((this.teamRepository.getById(id).getId()));
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
+    }
+
+    public void neutralizeEmployeeTeam(Team team){
+        List<Employee> listOfEmployees = this.employeeRepository.findAllByTeam(team);
+        listOfEmployees.forEach(e -> e.setTeam(null));
     }
 
     public Team updateTeam(Team team) {
