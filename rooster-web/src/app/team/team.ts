@@ -1,4 +1,5 @@
 export interface Team {
+  id: number;
   name: string;
   restHours: number;
   restDays: number;
