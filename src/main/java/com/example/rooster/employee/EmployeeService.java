@@ -29,6 +29,7 @@ public class EmployeeService {
 
     public Employee convertToEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
+        employee.setId(employeeDTO.getId());
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setEmail(employeeDTO.getEmail());
@@ -42,6 +43,7 @@ public class EmployeeService {
 
     public EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
         employeeDTO.setEmail(employee.getEmail());
