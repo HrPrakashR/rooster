@@ -43,14 +43,15 @@ export class EmployeeService {
   //     );
   // }
 
-  // /** GET hero by id. Will 404 if id not found */
-  // getHero(id: number): Observable<Hero> {
-  //   const url = `${this.heroesUrl}/${id}`;
-  //   return this.http.get<Hero>(url).pipe(
-  //     tap(_ => this.log(`fetched hero id=${id}`)),
-  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
-  //   );
-  // }
+  /** GET employee by id. Will 404 if id not found (this part is not included) */
+  getHero(id: number): Observable<Employee> {
+    const url = `${this.employeesUrl}/get/${id}`;
+    return this.http.get<Employee>(url);
+    //   .pipe(
+    //   tap(_ => this.log(`fetched hero id=${id}`)),
+    //   catchError(this.handleError<Hero>(`getHero id=${id}`))
+    // );
+  }
 
   // /* GET heroes whose name contains search term */
   // searchHeroes(term: string): Observable<Hero[]> {
