@@ -97,12 +97,23 @@ public class GeneratorController {
         boolean sunday = team.getSundayFrom() != team.getSundayTo();
         List<Calendar> workingTime = DateWorker.removeDays(DateWorker.getAllDaysOfMonth(this.year, this.month), monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
-        workingTime.forEach(day ->
-
-                );
-
-
         List<DateDTO> workingPeriods = new ArrayList<>();
+
+        workingTime.forEach(day -> {
+            switch (day.get(Calendar.DAY_OF_WEEK)) {
+                case 1 -> workingPeriods.add(new DateDTO(team.getSundayFrom(), team.getSundayTo()));
+                case 2 -> workingPeriods.add(new DateDTO(team.getMondayFrom(), team.getMondayTo()));
+                case 3 -> workingPeriods.add(new DateDTO(team.getTuesdayFrom(), team.getTuesdayTo()));
+                case 4 -> workingPeriods.add(new DateDTO(team.getWednesdayFrom(), team.getWednesdayTo()));
+                case 5 -> workingPeriods.add(new DateDTO(team.getThursdayFrom(), team.getThursdayTo()));
+                case 6 -> workingPeriods.add(new DateDTO(team.getFridayFrom(), team.getFridayTo()));
+                case 7 -> workingPeriods.add(new DateDTO(team.getSaturdayFrom(), team.getSaturdayTo()));
+                default -> throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
+            }
+        });
+
+
+
         return workingPeriods;
     }
 }
