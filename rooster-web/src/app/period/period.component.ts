@@ -21,6 +21,7 @@ export class PeriodComponent implements OnInit {
     this.http.get<Employee[]>('/api/employees/get_all').subscribe(emp => this.employees = emp);
   }
 
+  status = '';
   newLeave = false;
   showEmployeeList = false;
 
@@ -58,9 +59,10 @@ export class PeriodComponent implements OnInit {
     this.newPeriod = {} as Period;
   }
 
-  deletePeriod(id: number){
-    this.http.delete<Period>('/api/periods/delete/${id}')
-      .subscribe()
+  public deletePeriod(id: number){
+    this.periods = this.periods?.filter(p => p.id !== id);
+    this.http.delete<Period>('/api/periods/delete/' + id)
+      .subscribe( () => this.status = 'Period successfully deleted');
   }
 
 }
