@@ -18,6 +18,9 @@ export class EmployeeComponent implements OnInit {
   newEmployee = {} as Employee;
   isFormShown = false;
   public Role = Role;
+  employeeSelected = false;
+  selectedEmployee = {} as Employee;
+  editMode = false;
 
 
   constructor(private http: HttpClient,
@@ -39,6 +42,11 @@ export class EmployeeComponent implements OnInit {
     this.http
       .get<Team[]>('/api/teams/get_all')
       .subscribe(result => this.teams = result);
+  }
+
+  getTeamName(id: number) {
+    // @ts-ignore
+    return this.teams?.find(t => t.id === id).name;
   }
 
   getNextEmployeeId(employees: Employee[] | undefined) {
@@ -67,9 +75,30 @@ export class EmployeeComponent implements OnInit {
     this.employees = undefined;
   }
 
+  getEmployee(id: number) {
+    this.employeeService.getHero(id).subscribe(result => this.selectedEmployee = result);
+    this.employeeSelected = true;
+  }
+
   deleteEmployee(employee: Employee): void {
     // @ts-ignore
     this.employees = this.employees.filter(e => e !== employee);
     this.employeeService.deleteEmployee(employee.id).subscribe();
+  }
+
+  closeEmployeeDetails() {
+    this.employeeSelected = false;
+  }
+
+  capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  editModeOn() {
+    this.editMode = true;
+  }
+  editModeOff() {
+
+    this.editMode = false;
   }
 }
