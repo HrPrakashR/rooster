@@ -44,6 +44,7 @@ public class GeneratorController {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
         this.setPredefinedRoster();
+        this.setEmployees();
         return this.roster;
     }
 
@@ -77,5 +78,9 @@ public class GeneratorController {
     private void setDate(int month, int year) {
         this.month = month;
         this.year = year;
+    }
+
+    private void setEmployees(){
+        this.employees = this.employeeService.getEmployees(this.team);
     }
 }
