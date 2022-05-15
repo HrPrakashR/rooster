@@ -51,6 +51,16 @@ public class GeneratorController {
         return this.roster;
     }
 
+    // ONLY FOR TESTING: REMOVE LATER
+    @GetMapping("/test/{teamId}/{year}/{month}")
+    public List<DateDTO> getWorkingPeriodsNow(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+        this.setTeam(this.teamService.getTeam(teamId));
+        this.setDate(month, year);
+        this.setPredefinedRoster();
+        this.setEmployees();
+        return this.getWorkingPeriods();
+    }
+
     private void setPredefinedRoster(){
         this.rosterPredefined.addAll(
                 this.periodService
@@ -87,7 +97,10 @@ public class GeneratorController {
         this.employees = this.employeeService.getEmployees(this.team);
     }
 
-    private List<DateDTO> workingPeriods(){
+    private List<DateDTO> getWorkingPeriods(){
+        List<Calendar> allDays = DateWorker.getAllDaysOfMonth(this.year, this.month);
+
+        // if times are the same, at that day is no working day
         boolean monday = team.getMondayFrom() != team.getMondayTo();
         boolean tuesday = team.getTuesdayFrom() != team.getTuesdayTo();
         boolean wednesday = team.getWednesdayFrom() != team.getWednesdayTo();
@@ -95,7 +108,9 @@ public class GeneratorController {
         boolean friday = team.getFridayFrom() != team.getFridayTo();
         boolean saturday = team.getSaturdayFrom() != team.getSaturdayTo();
         boolean sunday = team.getSundayFrom() != team.getSundayTo();
-        List<Calendar> workingTime = DateWorker.removeDays(DateWorker.getAllDaysOfMonth(this.year, this.month), monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+
+        // TODO next method does not work
+        List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
         List<DateDTO> workingPeriods = new ArrayList<>();
 

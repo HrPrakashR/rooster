@@ -28,9 +28,10 @@ public class DateWorker {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-        while(calendar.get(Calendar.DAY_OF_MONTH) <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+        int i = 1;
+        while(i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
             days.add(calendar);
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)+1);
+            calendar.set(Calendar.DAY_OF_MONTH, ++i);
         }
         return days;
     }
