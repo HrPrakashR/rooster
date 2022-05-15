@@ -3,6 +3,7 @@ package com.example.rooster.generator;
 import com.example.rooster.date_worker.DateWorker;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
+import com.example.rooster.period.DateDTO;
 import com.example.rooster.period.Period;
 import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodService;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -87,7 +87,7 @@ public class GeneratorController {
         this.employees = this.employeeService.getEmployees(this.team);
     }
 
-    private List<WorkingDay> workingPeriods(){
+    private List<DateDTO> workingPeriods(){
         boolean monday = team.getMondayFrom() != team.getMondayTo();
         boolean tuesday = team.getTuesdayFrom() != team.getTuesdayTo();
         boolean wednesday = team.getWednesdayFrom() != team.getWednesdayTo();
@@ -102,7 +102,7 @@ public class GeneratorController {
                 );
 
 
-        List<Period> workingPeriods = new ArrayList<>();
+        List<DateDTO> workingPeriods = new ArrayList<>();
         return workingPeriods;
     }
 }
