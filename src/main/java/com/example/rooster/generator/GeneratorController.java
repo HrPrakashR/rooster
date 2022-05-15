@@ -8,15 +8,13 @@ import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/periods/")
+@RequestMapping("/api/generator/")
 public class GeneratorController {
 
     private final PeriodService periodService;
@@ -38,9 +36,9 @@ public class GeneratorController {
         this.teamService = teamService;
     }
 
-    @GetMapping("/get")
-    public List<PeriodDTO> getAll() {
-        this.generate(2, 5, 2022);
+    @GetMapping("/{teamId}/{year}/{month}")
+    public List<PeriodDTO> getAll(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+        this.generate(teamId, month, year);
         return this.roster;
     }
 
