@@ -22,8 +22,11 @@ public class GeneratorController {
     private final EmployeeService employeeService;
 
     private final TeamService teamService;
+
+    // shows the generated roster
     private final List<PeriodDTO> roster = new ArrayList<>();
 
+    // includes the predefined periods (do not overwrite or delete!)
     private final List<Period> rosterPredefined = new ArrayList<>();
     private List<Employee> employees;
     private Team team;
@@ -38,14 +41,13 @@ public class GeneratorController {
 
     @GetMapping("/{teamId}/{year}/{month}")
     public List<PeriodDTO> getAll(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
-        this.generate(teamId, month, year);
+        this.setTeam(this.teamService.getTeam(teamId));
+        this.setDate(month, year);
+        this.setPredefinedRoster();
         return this.roster;
     }
 
-    public void generate(long teamId, int month, int year) {
-        this.setTeam(this.teamService.getTeam(teamId));
-        this.setDate(month, year);
-
+    private void setPredefinedRoster(){
         this.rosterPredefined.addAll(
                 this.periodService
                         .getPeriodsPerTeamAndTimeInterval(
@@ -67,12 +69,12 @@ public class GeneratorController {
                                 )));
     }
 
-    public void setTeam(Team team) {
+    private void setTeam(Team team) {
         this.team = team;
         this.employees = this.employeeService.getEmployees(team);
     }
 
-    public void setDate(int month, int year) {
+    private void setDate(int month, int year) {
         this.month = month;
         this.year = year;
     }
