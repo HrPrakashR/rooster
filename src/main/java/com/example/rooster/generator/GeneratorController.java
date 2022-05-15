@@ -112,8 +112,6 @@ public class GeneratorController {
             }
         });
 
-
-
         return workingPeriods;
     }
 }
