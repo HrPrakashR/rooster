@@ -87,13 +87,22 @@ public class GeneratorController {
         this.employees = this.employeeService.getEmployees(this.team);
     }
 
-    private List<Period> getMissingPeriods(){
-        List<Period> missingPeriods = new ArrayList<>();
+    private List<WorkingDay> workingPeriods(){
+        boolean monday = team.getMondayFrom() != team.getMondayTo();
+        boolean tuesday = team.getTuesdayFrom() != team.getTuesdayTo();
+        boolean wednesday = team.getWednesdayFrom() != team.getWednesdayTo();
+        boolean thursday = team.getThursdayFrom() != team.getThursdayTo();
+        boolean friday = team.getFridayFrom() != team.getFridayTo();
+        boolean saturday = team.getSaturdayFrom() != team.getSaturdayTo();
+        boolean sunday = team.getSundayFrom() != team.getSundayTo();
+        List<Calendar> workingTime = DateWorker.removeDays(DateWorker.getAllDaysOfMonth(this.year, this.month), monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
-        List<Calendar> workingTime = DateWorker.getAllDaysOfMonth(this.year, this.month);
-        workingTime.forEach(time ->
-                switch(time.get)
-        );
+        workingTime.forEach(day ->
 
+                );
+
+
+        List<Period> workingPeriods = new ArrayList<>();
+        return workingPeriods;
     }
 }

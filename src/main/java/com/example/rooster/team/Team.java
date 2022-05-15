@@ -31,10 +31,13 @@ public class Team {
 
     private Date thursdayFrom;
     private Date thursdayTo;
+
     private Date fridayFrom;
     private Date fridayTo;
+
     private Date saturdayFrom;
     private Date saturdayTo;
+
     private Date sundayFrom;
     private Date sundayTo;
 
