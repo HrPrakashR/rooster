@@ -1,5 +1,7 @@
 package com.example.rooster.date_worker;
 
+import com.example.rooster.period.DateDTO;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,5 +69,16 @@ public class DateWorker {
                 }
         );
         return days;
+    }
+
+    public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, seconds);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
     }
 }

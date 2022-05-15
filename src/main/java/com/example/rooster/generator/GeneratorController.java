@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -98,6 +99,7 @@ public class GeneratorController {
     }
 
     private List<DateDTO> getWorkingPeriods(){
+        List<DateDTO> workingPeriods = new ArrayList<>();
         List<Calendar> allDays = DateWorker.getAllDaysOfMonth(this.year, this.month);
 
         // if times are the same, at that day is no working day
@@ -111,11 +113,19 @@ public class GeneratorController {
 
         List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
-        List<DateDTO> workingPeriods = new ArrayList<>();
-
+        // TODO add a day to values
         workingTime.forEach(day -> {
             switch (day.get(Calendar.DAY_OF_WEEK)) {
-                case 1 -> workingPeriods.add(new DateDTO(team.getSundayFrom(), team.getSundayTo()));
+                case 1 -> workingPeriods.add(
+                        new DateDTO(
+                                DateWorker.getDateObject(
+                                        day.get(Calendar.SECOND),
+
+                                )
+                                team.getSundayFrom(),
+
+                                team.getSundayTo())
+                );
                 case 2 -> workingPeriods.add(new DateDTO(team.getMondayFrom(), team.getMondayTo()));
                 case 3 -> workingPeriods.add(new DateDTO(team.getTuesdayFrom(), team.getTuesdayTo()));
                 case 4 -> workingPeriods.add(new DateDTO(team.getWednesdayFrom(), team.getWednesdayTo()));
