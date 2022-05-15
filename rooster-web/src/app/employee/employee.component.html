@@ -1,3 +1,4 @@
+<div *ngIf="!employeeSelected">
 <div class="container-fluid p-3 my-3">
   <button (click)="toggleShow()" *ngIf=!isFormShown class="btn btn-primary" type="button">Add New Employees</button>
   <ng-container *ngIf=isFormShown>
@@ -79,6 +80,10 @@
         <td>{{e.breakTime}}</td>
         <td>{{e.email}}</td>
         <td>
+          <button type="button" class="show" title="employee details"
+                  (click)="getEmployee(e.id)">Details</button>
+        </td>
+        <td>
           <button type="button" class="delete" title="delete employee"
                   (click)="deleteEmployee(e)">Delete</button>
         </td>
@@ -87,3 +92,43 @@
     </table>
   </ng-container>
 </div>
+</div>
+
+<div class="card" *ngIf="employeeSelected"   >
+  <div class="container" *ngIf="!editMode">
+    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>
+    <p>
+      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
+    </p>
+    <p>
+      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
+    </p>
+    <button type="button" class="edit" title="edit employee"
+            (click)="editModeOn()">Edit</button>
+  </div>
+  <div class="container" *ngIf="editMode">
+    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div>
+      <label for="empFirstName">First name: </label>
+      <input id="empFirstName" [(ngModel)]="selectedEmployee.firstName">
+    </div>
+    <div>
+      <label for="empLastName">Last name: </label>
+      <input id="empLastName" [(ngModel)]="selectedEmployee.lastName">
+    </div>
+    <p>
+      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
+    </p>
+    <p>
+      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
+    </p>
+    <button type="button" class="save" title="edit employee"
+            (click)="editModeOff()">Save</button>
+  </div>
+</div>
+
