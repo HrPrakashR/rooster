@@ -119,7 +119,7 @@ public class GeneratorController {
                 case 1 -> workingPeriods.add(
                         new DateDTO(
                                 DateWorker.getDateObject(
-                                        team.getMondayFrom().toInstant().get(Calendar.SECOND),
+                                        DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.SECOND),
                                         team.getMondayFrom().toInstant().get(Calendar.MINUTE),
                                         team.getMondayFrom().toInstant().get(Calendar.HOUR)
 

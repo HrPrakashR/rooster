@@ -81,4 +81,10 @@ public class DateWorker {
         calendar.set(Calendar.YEAR, year);
         return calendar.getTime();
     }
+
+    public static Calendar getCalendarObject(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
 }
