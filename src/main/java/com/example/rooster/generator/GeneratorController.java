@@ -23,11 +23,12 @@ public class GeneratorController {
 
     private final TeamService teamService;
 
-    // shows the generated roster
+    // returns the generated roster
     private final List<PeriodDTO> roster = new ArrayList<>();
 
     // includes the predefined periods (do not overwrite or delete!)
     private final List<Period> rosterPredefined = new ArrayList<>();
+
     private List<Employee> employees;
     private Team team;
     private int month;
@@ -82,5 +83,11 @@ public class GeneratorController {
 
     private void setEmployees(){
         this.employees = this.employeeService.getEmployees(this.team);
+    }
+
+    private List<Period> getMissingPeriods(){
+        List<Period> missingPeriods = new ArrayList<>();
+
+
     }
 }

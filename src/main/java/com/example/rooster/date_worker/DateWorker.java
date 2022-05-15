@@ -1,7 +1,9 @@
 package com.example.rooster.date_worker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DateWorker {
     public static Date getDate(boolean lastDayOfMonth, int year, int month) {
@@ -17,5 +19,20 @@ public class DateWorker {
         calendar.set(Calendar.HOUR, lastDayOfMonth ? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
 
         return calendar.getTime();
+    }
+
+    public static List<Date> getAllDaysOfMonth(int year, int month){
+        List<Date> days = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        while(calendar.get(Calendar.DAY_OF_MONTH) <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+            
+        }
+
+        return days;
     }
 }
