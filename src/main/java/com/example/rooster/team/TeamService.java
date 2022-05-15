@@ -85,7 +85,7 @@ public class TeamService {
     }
 
     public Team setTeam(Team team) {
-          return this.teamRepository.save(team);
+        return this.teamRepository.save(team);
     }
 
     public ResponseEntity<String> deleteTeam(long id) {
@@ -93,7 +93,7 @@ public class TeamService {
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
-    public void neutralizeEmployeeTeam(Team team){
+    public void neutralizeEmployeeTeam(Team team) {
         List<Employee> listOfEmployees = this.employeeRepository.findAllByTeam(team);
         listOfEmployees.forEach(e -> e.setTeam(null));
     }

@@ -30,7 +30,7 @@ public class TeamController {
     // Create a new Team
     @PostMapping("/new")
     public Team newTeam(@RequestBody TeamDTO teamDTO) {
-       return this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
+        return this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
     }
 
     //Edit a Team
@@ -41,7 +41,7 @@ public class TeamController {
     }
 
     // Delete a Team
-    @DeleteMapping ("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable long id) {
         this.teamService.neutralizeEmployeeTeam(this.teamService.getTeam(id));
         this.teamService.deleteTeam(id);
