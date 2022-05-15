@@ -21,6 +21,10 @@ Table with all Periods
         <td>{{period.purpose}}</td>
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
+        <td>
+          <button type="button" class="delete" title="delete employee"
+          (click)="deletePeriod(period.id)">Delete</button>
+        </td>
       </tr>
       </tbody>
     </table>
