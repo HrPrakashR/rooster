@@ -109,7 +109,6 @@ public class GeneratorController {
         boolean saturday = team.getSaturdayFrom() == team.getSaturdayTo();
         boolean sunday = team.getSundayFrom() == team.getSundayTo();
 
-        // TODO next method does not work
         List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
         List<DateDTO> workingPeriods = new ArrayList<>();
