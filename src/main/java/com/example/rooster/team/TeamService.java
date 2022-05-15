@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -79,15 +80,12 @@ public class TeamService {
         return this.teamRepository.findTeamById(id);
     }
 
-    public Team getTeamById(Long id) {
-        return this.teamRepository.findById(id).orElseThrow(() -> new RuntimeException("We cannot find this Team"));
+    public Optional<Team> getTeamById(long id) {
+        return this.teamRepository.findById(id);
     }
 
-    public void setTeam(Team team) {
-        if (team != null && Objects.isNull(this.getTeamById(team.getId()))) {
-            this.teamRepository.save(team);
-        }
-        throw new RuntimeException("This Team already exists");
+    public Team setTeam(Team team) {
+          return this.teamRepository.save(team);
     }
 
     public ResponseEntity<String> deleteTeam(long id) {

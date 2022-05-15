@@ -18,7 +18,7 @@ public class TeamController {
     // Display Team with Team Name as input parameter
     @PostMapping("/get/{id}")
     public Team getTeam(@PathVariable long id) {
-        return teamService.getTeamById(id);
+        return teamService.getTeamById(id).orElseThrow(() -> new RuntimeException("can not find this team"));
     }
 
     // Display all Teams
@@ -29,8 +29,8 @@ public class TeamController {
 
     // Create a new Team
     @PostMapping("/new")
-    public void newTeam(@RequestBody TeamDTO teamDTO) {
-        this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
+    public Team newTeam(@RequestBody TeamDTO teamDTO) {
+       return this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
     }
 
     //Edit a Team
