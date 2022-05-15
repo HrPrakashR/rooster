@@ -4,6 +4,7 @@ import com.example.rooster.date_worker.DateWorker;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.period.Period;
+import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
@@ -23,7 +24,9 @@ public class GeneratorController {
     private final EmployeeService employeeService;
 
     private final TeamService teamService;
-    private final List<Period> roster = new ArrayList<>();
+    private final List<PeriodDTO> roster = new ArrayList<>();
+
+    private final List<Period> rosterPredefined = new ArrayList<>();
     private List<Employee> employees;
     private Team team;
     private int month;
@@ -36,15 +39,16 @@ public class GeneratorController {
     }
 
     @GetMapping("/get")
-    public List<Period> getAll() {
+    public List<PeriodDTO> getAll() {
         this.generate(2, 5, 2022);
         return this.roster;
     }
 
-    public List<Period> generate(long teamId, int month, int year) {
+    public void generate(long teamId, int month, int year) {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
-        this.roster.addAll(
+
+        this.rosterPredefined.addAll(
                 this.periodService
                         .getPeriodsPerTeamAndTimeInterval(
                                 this.team,
@@ -52,7 +56,17 @@ public class GeneratorController {
                                 DateWorker.getDate(true, this.year, this.month)
                         )
         );
-        return this.roster;
+
+        this.rosterPredefined
+                .forEach(period ->
+                        roster.add(
+                                new PeriodDTO(
+                                        period.getId(),
+                                        period.getPurpose().ordinal(),
+                                        period.getDateFrom(),
+                                        period.getDateTo(),
+                                        period.getEmployee().getId()
+                                )));
     }
 
     public void setTeam(Team team) {
