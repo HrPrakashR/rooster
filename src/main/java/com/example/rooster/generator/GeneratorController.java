@@ -47,17 +47,24 @@ public class GeneratorController {
     public List<Period> generate(long teamId, int month, int year) {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
-        this.roster.addAll(this.periodService.getPeriodsPerTeamAndTimeInterval(this.team, getDate(false), getDate(true)));
+        this.roster.addAll(this.periodService.getPeriodsPerTeamAndTimeInterval(this.team, getDate(false, year, month), getDate(true, year, month)));
 
         return this.roster;
     }
 
-    private Date getDate(boolean lastDay) {
+    private Date getDate(boolean lastDay, int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
-        int day = lastDay ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : 1;
-        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.DAY_OF_MONTH, lastDay ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        calendar.set(Calendar.AM_PM, lastDay ? Calendar.PM : Calendar.AM);
+        calendar.set(Calendar.SECOND, lastDay? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
+        calendar.set(Calendar.MINUTE, lastDay? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
+        calendar.set(Calendar.HOUR, lastDay? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
+
+
+        System.out.println(calendar.getTime());
         return calendar.getTime();
     }
 
