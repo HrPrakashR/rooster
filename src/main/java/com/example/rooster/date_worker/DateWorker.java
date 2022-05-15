@@ -36,24 +36,35 @@ public class DateWorker {
     }
 
     public static List<Calendar> removeDays(List<Calendar> calendarInput, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
-        List<Calendar> days = new ArrayList<Calendar>();
+        List<Calendar> days = new ArrayList<>();
         calendarInput.forEach(day -> {
                     switch (day.get(Calendar.DAY_OF_WEEK)) {
-                        case 0:
+                        case 1:
                             if (!sunday) days.add(day);
                             break;
-                        case 1:
+                        case 2:
                             if (!monday) days.add(day);
                             break;
-                            case 2:
-                                if (!monday) days.add(day);
-                                break;
-
+                        case 3:
+                            if (!tuesday) days.add(day);
+                            break;
+                        case 4:
+                            if(!wednesday) days.add(day);
+                            break;
+                        case 5:
+                            if(!thursday) days.add(day);
+                            break;
+                        case 6:
+                            if(!friday) days.add(day);
+                            break;
+                        case 7:
+                            if(!saturday) days.add(day);
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
                     };
                 }
-
-        )
+        );
+        return days;
     }
 }
