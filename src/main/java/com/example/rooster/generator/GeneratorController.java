@@ -11,6 +11,8 @@ import com.example.rooster.team.TeamService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -88,6 +90,10 @@ public class GeneratorController {
     private List<Period> getMissingPeriods(){
         List<Period> missingPeriods = new ArrayList<>();
 
+        List<Calendar> workingTime = DateWorker.getAllDaysOfMonth(this.year, this.month);
+        workingTime.forEach(time ->
+                switch(time.get)
+        );
 
     }
 }
