@@ -101,13 +101,13 @@ public class GeneratorController {
         List<Calendar> allDays = DateWorker.getAllDaysOfMonth(this.year, this.month);
 
         // if times are the same, at that day is no working day
-        boolean monday = team.getMondayFrom() != team.getMondayTo();
-        boolean tuesday = team.getTuesdayFrom() != team.getTuesdayTo();
-        boolean wednesday = team.getWednesdayFrom() != team.getWednesdayTo();
-        boolean thursday = team.getThursdayFrom() != team.getThursdayTo();
-        boolean friday = team.getFridayFrom() != team.getFridayTo();
-        boolean saturday = team.getSaturdayFrom() != team.getSaturdayTo();
-        boolean sunday = team.getSundayFrom() != team.getSundayTo();
+        boolean monday = team.getMondayFrom() == team.getMondayTo();
+        boolean tuesday = team.getTuesdayFrom() == team.getTuesdayTo();
+        boolean wednesday = team.getWednesdayFrom() == team.getWednesdayTo();
+        boolean thursday = team.getThursdayFrom() == team.getThursdayTo();
+        boolean friday = team.getFridayFrom() == team.getFridayTo();
+        boolean saturday = team.getSaturdayFrom() == team.getSaturdayTo();
+        boolean sunday = team.getSundayFrom() == team.getSundayTo();
 
         // TODO next method does not work
         List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
