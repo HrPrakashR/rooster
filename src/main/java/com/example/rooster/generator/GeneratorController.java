@@ -1,5 +1,6 @@
 package com.example.rooster.generator;
 
+import com.example.rooster.date_worker.DateWorker;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.period.Period;
@@ -50,26 +51,11 @@ public class GeneratorController {
                 this.periodService
                         .getPeriodsPerTeamAndTimeInterval(
                                 this.team,
-                                getDate(false, this.year, this.month),
-                                getDate(true, this.year, this.month)
+                                DateWorker.getDate(false, this.year, this.month),
+                                DateWorker.getDate(true, this.year, this.month)
                         )
         );
         return this.roster;
-    }
-
-    private Date getDate(boolean lastDay, int year, int month) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, lastDay ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-        calendar.set(Calendar.AM_PM, lastDay ? Calendar.PM : Calendar.AM);
-        calendar.set(Calendar.MILLISECOND, lastDay? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
-        calendar.set(Calendar.SECOND, lastDay? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
-        calendar.set(Calendar.MINUTE, lastDay? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
-        calendar.set(Calendar.HOUR, lastDay? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
-
-        return calendar.getTime();
     }
 
     public void setTeam(Team team) {
