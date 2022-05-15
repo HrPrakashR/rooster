@@ -3,7 +3,6 @@ package com.example.rooster.generator;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.period.Period;
-import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +25,7 @@ public class GeneratorController {
     private final EmployeeService employeeService;
 
     private final TeamService teamService;
-    private final List<Period> roster = new ArrayList<Period>();
+    private final List<Period> roster = new ArrayList<>();
     private List<Employee> employees;
     private Team team;
     private int month;
@@ -38,17 +38,22 @@ public class GeneratorController {
     }
 
     @GetMapping("/get")
-    public List<PeriodDTO> getAll() {
-        this.generate(1, 5, 2022);
-        return periodService.getPeriodsAsDTO();
+    public List<Period> getAll() {
+        this.generate(2, 5, 2022);
+        return this.roster;
     }
-
 
     public List<Period> generate(long teamId, int month, int year) {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
-        this.roster.addAll(this.periodService.getPeriodsPerTeamAndTimeInterval(this.team, getDate(false, year, month), getDate(true, year, month)));
-
+        this.roster.addAll(
+                this.periodService
+                        .getPeriodsPerTeamAndTimeInterval(
+                                this.team,
+                                getDate(false, this.year, this.month),
+                                getDate(true, this.year, this.month)
+                        )
+        );
         return this.roster;
     }
 
@@ -59,12 +64,11 @@ public class GeneratorController {
         calendar.set(Calendar.DAY_OF_MONTH, lastDay ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 
         calendar.set(Calendar.AM_PM, lastDay ? Calendar.PM : Calendar.AM);
+        calendar.set(Calendar.MILLISECOND, lastDay? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
         calendar.set(Calendar.SECOND, lastDay? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
         calendar.set(Calendar.MINUTE, lastDay? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
         calendar.set(Calendar.HOUR, lastDay? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
 
-
-        System.out.println(calendar.getTime());
         return calendar.getTime();
     }
 
