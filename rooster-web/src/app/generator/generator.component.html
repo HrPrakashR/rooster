@@ -1,13 +1,18 @@
-<h1>Roster for {{ month }} {{ getMonthName(month) }}/{{ year }}</h1>
+<h1>Roster for {{ getMonthName(month) }} {{ year }}</h1>
 
 Month
-<select [(ngModel)]="month" (change)="createCalendar()">
+<select (change)="createCalendar()" [(ngModel)]="month">
   <option *ngFor="let monthChose of monthToChoose" value="{{ monthChose }}"> {{ getMonthName(monthChose) }} </option>
 </select>
 <br>
 Year
-<select [(ngModel)]="year" (change)="createCalendar()">
+<select (change)="createCalendar()" [(ngModel)]="year">
   <option *ngFor="let year of yearsToChoose" value="{{ year }}"> {{ year }} </option>
+</select>
+<br>
+Team
+<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select an Employee
+  <option *ngFor="let team of teams" [value]="team.id">{{ team.name }} </option>
 </select>
 
 <div class="container-fluid p-3 my-3">
@@ -19,10 +24,49 @@ Year
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let day of days">
-      <td>{{ day }}</td>
-      <td></td>
-    </tr>
+    <ng-container *ngIf="selectedTeam">
+      <tr *ngFor="let day of days">
+
+        <ng-container *ngIf="isSpecificDay(day, 0)">
+          <td class="table-primary">{{ day }}. Sunday</td>
+          <td class="table-primary">{{ selectedTeam.sundayFrom | date:'shortTime' }}
+            - {{ selectedTeam.sundayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 1)">
+          <td>{{ day }}. Monday</td>
+          <td>{{ selectedTeam.mondayFrom | date:'shortTime' }} - {{ selectedTeam.mondayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 2)">
+          <td>{{ day }}. Tuesday</td>
+          <td>{{ selectedTeam.tuesdayFrom | date:'shortTime' }} - {{ selectedTeam.tuesdayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 3)">
+          <td>{{ day }}. Wednesday</td>
+          <td>{{ selectedTeam.wednesdayFrom | date:'shortTime' }}
+            - {{ selectedTeam.wednesdayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 4)">
+          <td>{{ day }}. Thursday</td>
+          <td>{{ selectedTeam.thursdayFrom | date:'shortTime' }} - {{ selectedTeam.thursdayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 5)">
+          <td>{{ day }}. Friday</td>
+          <td>{{ selectedTeam.fridayFrom | date:'shortTime' }} - {{ selectedTeam.fridayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+        <ng-container *ngIf="isSpecificDay(day, 6)">
+          <td class="table-primary">{{ day }}. Saturday</td>
+          <td class="table-primary">{{ selectedTeam.saturdayFrom | date:'shortTime' }}
+            - {{ selectedTeam.saturdayTo | date:'shortTime' }}</td>
+        </ng-container>
+
+      </tr>
+    </ng-container>
     </tbody>
   </table>
 </div>
