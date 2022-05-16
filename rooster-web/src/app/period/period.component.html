@@ -1,16 +1,16 @@
-<h1 class="title">Period</h1>
 <!--
 Table with all Periods
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Periods</button>
+  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves</button>
   <ng-container *ngIf="periods">
-    <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Periods</button>
+    <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Leaves</button>
     <table class="table">
       <thead>
       <tr>
         <th scope="col">Employee</th>
         <th scope="col">Purpose</th>
+        <th scope="col">Request Id</th>
         <th scope="col">Date from</th>
         <th scope="col">Date to</th>
       </tr>
@@ -19,10 +19,11 @@ Table with all Periods
       <tr *ngFor="let period of periods">
         <th scope="row">{{period.employee}}</th>
         <td>{{period.purpose}}</td>
+        <td>{{period.id}}</td>
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
         <td>
-          <button type="button" class="delete" title="delete employee"
+          <button type="button" class="btn-danger" title="delete Leave request"
           (click)="deletePeriod(period.id)">Delete</button>
         </td>
       </tr>
@@ -30,6 +31,46 @@ Table with all Periods
     </table>
   </ng-container>
 </div>
+<!--
+Show all Leaves of an Employee
+-->
+<div class="container-fluid p-3 my-3">
+  <button (click)="showEmployeesLeave()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee
+      <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>
+        <select [(ngModel)]="selectedEmployee">
+          <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
+        </select>
+      </div>
+  </button>
+  <ng-container *ngIf="periods">
+    <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Employee</th>
+      <th scope="col">Purpose</th>
+      <th scope="col">Request Id</th>
+      <th scope="col">Date from</th>
+      <th scope="col">Date to</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let period of periods">
+      <th scope="row">{{period.employee}}</th>
+      <td>{{period.purpose}}</td>
+      <td>{{period.id}}</td>
+      <td>{{period.dateFrom}}</td>
+      <td>{{period.dateTo}}</td>
+      <td>
+        <button type="button" class="btn-danger" title="delete employee"
+                (click)="deletePeriod(period.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </ng-container>
+</div>
+
 <!--
 Show all Employees
 -->
@@ -61,9 +102,9 @@ Show all Employees
 Form to create a new Leave request
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="showLeaveRequest()" *ngIf="!newLeave">Create Leave Request</button>
+  <button (click)="showLeaveRequest()" *ngIf="!newLeave" class="btn btn-primary" >Create Leave Request</button>
   <form [hidden]="!newLeave">
-    <button (click)="showLeaveRequest()" *ngIf="newLeave">Hide Leave Request</button>
+    <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary" >Hide Leave Request</button>
   <div class="newLeave">
     Employee First name:
     <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>

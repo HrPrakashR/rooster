@@ -65,4 +65,9 @@ export class PeriodComponent implements OnInit {
       .subscribe( () => this.status = 'Period successfully deleted');
   }
 
+  public showEmployeesLeave () {
+    this.periods = this.periods?.filter(emp => emp.id);
+    this.http.get('/api/periods/get')
+      .subscribe(()=> this.status = "All leave requests of selected Employee")
+  }
 }
