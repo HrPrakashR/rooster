@@ -2,7 +2,7 @@
 <br>
 Month
 <select [(ngModel)]="month" (change)="createCalendar()">
-  <option *ngFor="let monthChose of monthToChoose" value="{{ monthChose }}"> {{ getMonthName(monthChose) }} </option>
+  <option *ngFor="let monthChose of monthToChoose" value="{{ monthChose }}"> {{ monthChose }} - {{ getMonthName(monthChose) }} </option>
 </select>
 <br>
 Year
