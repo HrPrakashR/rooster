@@ -21,6 +21,7 @@ Team
     <tr>
       <th scope="col">Day</th>
       <th scope="col">Compulsory</th>
+      <th *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
     </tr>
     </thead>
     <tbody>
@@ -64,6 +65,8 @@ Team
           <td class="table-primary">{{ selectedTeam.saturdayFrom | date:'shortTime' }}
             - {{ selectedTeam.saturdayTo | date:'shortTime' }}</td>
         </ng-container>
+
+        <th *ngFor="let employee of employees"> - </th>
 
       </tr>
     </ng-container>

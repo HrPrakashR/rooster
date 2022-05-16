@@ -76,6 +76,9 @@ export class GeneratorComponent implements OnInit {
     });
     if (this.selectedTeamId !== undefined) {
       this.setSelectedTeam();
+      this.http
+        .get<Employee[]>('api/employees/get_all/' + this.selectedTeamId)
+        .subscribe(result => this.employees = result);
     }
 
     let i = 1;
