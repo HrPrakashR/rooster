@@ -22,7 +22,10 @@ export class GeneratorComponent implements OnInit {
     this.createCalendar();
   }
 
-  getMonthName(month: number){
+  getMonthName(month: number | string){
+    if (typeof month === "string") {
+      month = parseInt(month);
+    }
     switch (month){
       case 0:
         return "January";
@@ -37,14 +40,16 @@ export class GeneratorComponent implements OnInit {
       case 5:
         return "June";
       case 6:
-        return "August";
+        return "July";
       case 7:
-        return "September";
+        return "August";
       case 8:
-        return "October";
+        return "September";
       case 9:
-        return "November";
+        return "October";
       case 10:
+        return "November";
+      case 11:
         return "December";
       default:
         return "UNKNOWN";
