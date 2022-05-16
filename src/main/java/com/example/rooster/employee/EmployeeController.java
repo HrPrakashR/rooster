@@ -31,6 +31,11 @@ public class EmployeeController {
         return employeeService.getEmployeesAsDTO();
     }
 
+    @GetMapping("/get_all/{teamId}")
+    List<EmployeeDTO> getEmployeesByTeamIdAsDTO(@PathVariable long teamId) {
+        return employeeService.getEmployeesByTeamIdAsDTO(teamId);
+    }
+
     //Creating a new employee
     @PostMapping("/new")
     public EmployeeDTO addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {

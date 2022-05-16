@@ -11,7 +11,7 @@ Year
 </select>
 <br>
 Team
-<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select an Employee
+<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select a Team
   <option *ngFor="let team of teams" [value]="team.id">{{ team.name }} </option>
 </select>
 

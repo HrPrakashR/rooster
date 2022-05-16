@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Team} from "../team/team";
 import {HttpClient} from "@angular/common/http";
+import {Employee} from "../employee/employee";
 
 @Component({
   selector: 'app-generator',
@@ -20,6 +21,7 @@ export class GeneratorComponent implements OnInit {
   selectedTeam?: Team;
   selectedTeamId?: number;
   teams?: Team[];
+  employees?: Employee[];
 
   constructor(private http: HttpClient) {
     this.createCalendar();

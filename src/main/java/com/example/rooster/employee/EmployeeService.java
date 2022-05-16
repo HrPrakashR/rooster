@@ -97,9 +97,15 @@ public class EmployeeService {
     }
 
     public void deletePeriodsOfEmployee(Employee employee) {
-        List<Period> periodsList = new ArrayList<>();
+        List<Period> periodsList;
         periodsList = this.periodRepository.findAllByEmployee(employee);
-        periodsList.forEach(p -> this.periodRepository.delete(p));
+        this.periodRepository.deleteAll(periodsList);
     }
 
+    public List<EmployeeDTO> getEmployeesByTeamIdAsDTO(long teamId) {
+        List<Employee> employees = this.employeeRepository.findAllByTeamId(teamId);
+        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+        employees.forEach(employee -> employeeDTOS.add(this.convertToDTO(employee)));
+        return employeeDTOS;
+    }
 }
