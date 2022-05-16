@@ -1,1 +1,28 @@
-<p>generator works!</p>
+<h1>Roster for {{ month }} {{ getMonthName(month) }}/{{ year }}</h1>
+
+Month
+<select [(ngModel)]="month" (change)="createCalendar()">
+  <option *ngFor="let monthChose of monthToChoose" value="{{ monthChose }}"> {{ getMonthName(monthChose) }} </option>
+</select>
+<br>
+Year
+<select [(ngModel)]="year" (change)="createCalendar()">
+  <option *ngFor="let year of yearsToChoose" value="{{ year }}"> {{ year }} </option>
+</select>
+
+<div class="container-fluid p-3 my-3">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Compulsory</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let day of days">
+      <td>{{ day }}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -43,7 +43,7 @@ public class GeneratorController {
         this.teamService = teamService;
     }
 
-    @GetMapping("/{teamId}/{year}/{month}")
+    @GetMapping("/roster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getAll(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
@@ -53,7 +53,7 @@ public class GeneratorController {
     }
 
     // ONLY FOR TESTING: REMOVE LATER
-    @GetMapping("/test/{teamId}/{year}/{month}")
+    @GetMapping("/workingPeriods/{teamId}/{year}/{month}")
     public List<DateDTO> getWorkingPeriodsNow(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
         this.setTeam(this.teamService.getTeam(teamId));
         this.setDate(month, year);
