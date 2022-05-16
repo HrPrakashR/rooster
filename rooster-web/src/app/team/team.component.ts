@@ -62,9 +62,9 @@ export class TeamComponent implements OnInit {
     this.teamSelected = true;
   }
 
-  // public closeTeamDetailsWindow(){
-  //   this.teamSelected = false;
-  // }
+  public closeTeamDetailsWindow(){
+    this.teamSelected = false;
+  }
   //
   // public editModeOn(){
   //   this.editMode = true;
