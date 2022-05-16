@@ -1,11 +1,14 @@
-<p>roster for {{ month }}/{{ year }}</p>
+<p>roster for {{ getMonth(month) }}/{{ year }}</p>
 <br>
-Month:
-<select [(ngModel)]="month">
-  <option *ngFor="let month of monthToChoose" value="{{month}}" (change)="createCalendar()"> {{ month }} </option>
+Month
+<select [(ngModel)]="month" (change)="createCalendar()">
+  <option *ngFor="let month of monthToChoose" value="{{ month }}"> {{ getMonth(month) }} </option>
 </select>
 <br>
 Year
+<select [(ngModel)]="year" (change)="createCalendar()">
+  <option *ngFor="let year of yearsToChoose" value="{{ year }}"> {{ year }} </option>
+</select>
 
 <div class="container-fluid p-3 my-3">
   <table class="table">
