@@ -9,6 +9,11 @@ Year
 <select [(ngModel)]="year" (change)="createCalendar()">
   <option *ngFor="let year of yearsToChoose" value="{{ year }}"> {{ year }} </option>
 </select>
+<br>
+Team
+<select [(ngModel)]="selectedTeamId" (change)="createCalendar()"> Select an Employee
+  <option *ngFor="let team of teams" [value]="team.id">{{ team.name }} </option>
+</select>
 
 <div class="container-fluid p-3 my-3">
   <table class="table">
@@ -19,10 +24,12 @@ Year
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let day of days">
-      <td>{{ day }}</td>
-      <td></td>
-    </tr>
+    <ng-container *ngIf="selectedTeam">
+      <tr *ngFor="let day of days">
+        <td>{{ day }}</td>
+        <td>{{ selectedTeam.mondayFrom | date:'shortTime' }} - {{ selectedTeam.mondayTo | date:'shortTime' }}</td>
+      </tr>
+    </ng-container>
     </tbody>
   </table>
 </div>

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Team} from "../team/team";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-generator',
@@ -15,7 +17,11 @@ export class GeneratorComponent implements OnInit {
   yearsToChoose: [number] = [2022];
   monthToChoose: [number] = [0];
 
-  constructor() {}
+  selectedTeam?: Team;
+  selectedTeamId?: number;
+  teams?: Team[];
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.month = new Date().getMonth();
@@ -60,6 +66,10 @@ export class GeneratorComponent implements OnInit {
     this.days = [1];
     this.yearsToChoose = [2022];
     this.monthToChoose = [0];
+    this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
+    if(this.selectedTeamId !== undefined){
+      this.setSelectedTeam();
+    }
 
     let i = 1;
     while(new Date(this.year, this.month, i).getMonth().valueOf() == this.month){
@@ -74,6 +84,12 @@ export class GeneratorComponent implements OnInit {
       }
       i++;
     }
+  }
+
+  setSelectedTeam(){
+    this.http
+      .get<Team>('api/teams/get/' + this.selectedTeamId)
+      .subscribe(result => this.selectedTeam = result);
   }
 
 }
