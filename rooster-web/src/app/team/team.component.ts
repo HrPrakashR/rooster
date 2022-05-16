@@ -57,8 +57,8 @@ export class TeamComponent implements OnInit {
 
   public getTeam(id: number){
     this.http
-      .get('api/teams/get/' + id)
-      .subscribe(result => this.selectedTeam == result);
+      .get<Team>('api/teams/get/' + id)
+      .subscribe(result => this.selectedTeam = result);
     this.teamSelected = true;
   }
 
