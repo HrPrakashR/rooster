@@ -4,38 +4,13 @@ how to output the date format: https://www.angularjswiki.com/angular/angular-dat
 -->
 
 
-<h1 class="title">Team</h1>
 
-<!--<div class="col-md-6 offset-md-3">-->
-<!--<h3>Create new Team!</h3>-->
-<!--<form (ngSubmit)="onSubmit()">-->
-
-<!--  <div class="form-group">-->
-<!--    <label>Name</label>-->
-<!--    <input type="text" class="form-control" id="name"-->
-<!--           [(ngModel)]="newTeam.name" name="name">-->
-<!--    </div>-->
-
-<!--  <div class="form-group">-->
-<!--    <label>Rest Hours</label>-->
-<!--    <input type="text" class="form-control" id="restHours"-->
-<!--    [(ngModel)]="newTeam.restHours" name="restHours">-->
-<!--  </div>-->
-
-<!--  <div class="form-group">-->
-<!--    <label>Rest Hours</label>-->
-<!--    <input type="text" class="form-control" id="restDays"-->
-<!--           [(ngModel)]="newTeam.restDays" name="restDays">-->
-<!--  </div>-->
-
-<!--    <button class="btn btn-success" type="submit">Submit</button>-->
-<!--</form>-->
-<!--</div>-->
+<div *ngIf="!teamSelected">
 <div class="container-fluid p-3 my-3">
-  <button (click)="showAddTeamRequest()" *ngIf="!addTeam">Add New Team</button>
+  <button class="btn btn-primary" (click)="showAddTeamRequest()" *ngIf="!addTeam">Add New Team</button>
 
 <form #teamForm="ngForm" [hidden]="!addTeam">
-  <button (click)="showAddTeamRequest()" *ngIf="addTeam">Hide Menu</button><br><br>
+  <button class="btn btn-primary" (click)="showAddTeamRequest()" *ngIf="addTeam">Hide Menu</button><br><br>
   <label for="name">Name</label>
   <input type="text" name="name" id="name" [(ngModel)]="newTeam.name" #name="ngModel" placeholder="Name" required>
 
@@ -175,10 +150,52 @@ Table with all teams
         <td>{{team.fridayFrom | date:'shortTime'}} - {{team.fridayTo | date:'shortTime'}}</td>
         <td>{{team.saturdayFrom | date:'shortTime'}} - {{team.saturdayTo | date:'shortTime'}}</td>
         <td>{{team.sundayFrom | date:'shortTime'}} - {{team.sundayTo | date:'shortTime'}}</td>
+        <td><button class="btn btn-info" (click)="getTeam(team.id)" value="details">Details</button></td>
         <td><button class="btn btn-danger" (click)="deleteTeam(team.id)" value="delete">Delete</button></td>
       </tr>
       </tbody>
     </table>
   </ng-container>
+</div>
+</div>
+<div class="card" *ngIf="teamSelected">
+  <div class="container" *ngIf="!editMode">
+    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeTeamDetailsWindow()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4><b>{{selectedTeam.name}}</b></h4>
+    <p>
+      <strong>Rest Hours: </strong> {{selectedTeam.restHours}}
+    </p>
+    <p>
+      <strong>Rest Days: </strong> {{selectedTeam.restDays}}
+    </p>
+    <p>
+      <strong>Minimal break time: </strong> {{selectedTeam.minBreakTime}}
+    </p>
+    <button type="button" class="edit" title="edit team" (click)="editModeOn()">Edit</button>
+  </div>
+  <div class="container" *ngIf="editMode">
+    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeTeamDetailsWindow()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div>
+      <label for="teamName">Name: </label>
+      <input id="teamName" [(ngModel)]="selectedTeam.name">
+    </div>
+    <div>
+      <label for="teamRestHours">Rest Hours: </label>
+      <input id="teamRestHours" [(ngModel)]="selectedTeam.restHours">
+    </div>
+    <div>
+      <label for="teamRestDays">Rest Days: </label>
+      <input id="teamRestDays" [(ngModel)]="selectedTeam.restDays">
+    </div>
+    <div>
+      <label for="teamMinBreakTime">Min. break time: </label>
+      <input id="teamMinBreakTime" [(ngModel)]="selectedTeam.minBreakTime">
+    </div>
+    <button type="button" class="save" title="edit team" (click)="editModeOff()">Save</button>
+  </div>
 </div>
 

@@ -65,13 +65,13 @@ export class TeamComponent implements OnInit {
   public closeTeamDetailsWindow(){
     this.teamSelected = false;
   }
-  //
-  // public editModeOn(){
-  //   this.editMode = true;
-  // }
-  //
-  // public editModeOff(){
-  //   this.editMode = false;
-  // }
+
+  public editModeOn(){
+    this.editMode = true;
+  }
+
+  public editModeOff(){
+    this.editMode = false;
+  }
 
 }
