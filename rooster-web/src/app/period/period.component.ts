@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, OnInit, ViewChild} from '@angular/core';
 import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
@@ -10,6 +10,8 @@ import {Employee} from "../employee/employee";
 })
 @Injectable()
 export class PeriodComponent implements OnInit {
+
+  @Input() userId: number = 0;
 
   newPeriod: Period = {} as Period;
   periods?: Period[];
