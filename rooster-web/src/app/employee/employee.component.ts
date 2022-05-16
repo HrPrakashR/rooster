@@ -61,7 +61,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  saveNewEmployee(newEmployee: Employee){
+  saveEmployee(newEmployee: Employee){
     newEmployee.id = this.getNextEmployeeId(this.employees);
     this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result=>this.employees?.push(result));
     this.isFormShown = false;
@@ -76,7 +76,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(id: number) {
-    this.employeeService.getHero(id).subscribe(result => this.selectedEmployee = result);
+    this.employeeService.getEmployee(id).subscribe(result => this.selectedEmployee = result);
     this.employeeSelected = true;
   }
 
@@ -97,8 +97,8 @@ export class EmployeeComponent implements OnInit {
   editModeOn() {
     this.editMode = true;
   }
-  editModeOff() {
-
+  editEmployee(employee: Employee) {
+    this.employeeService.editEmployee(employee).subscribe();
     this.editMode = false;
   }
 }

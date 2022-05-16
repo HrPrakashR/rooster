@@ -54,7 +54,7 @@
       </p>
 
       <p>
-        <button (click)="saveNewEmployee(newEmployee)" value="Save">Save</button>
+        <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>
       </p>
     </form>
   </ng-container>
@@ -128,7 +128,7 @@
       <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
     </p>
     <button type="button" class="save" title="edit employee"
-            (click)="editModeOff()">Save</button>
+            (click)="editEmployee(selectedEmployee)">Save</button>
   </div>
 </div>
 

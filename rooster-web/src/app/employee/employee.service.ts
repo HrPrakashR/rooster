@@ -44,7 +44,7 @@ export class EmployeeService {
   // }
 
   /** GET employee by id. Will 404 if id not found (this part is not included) */
-  getHero(id: number): Observable<Employee> {
+  getEmployee(id: number): Observable<Employee> {
     const url = `${this.employeesUrl}/get/${id}`;
     return this.http.get<Employee>(url);
     //   .pipe(
@@ -81,6 +81,11 @@ export class EmployeeService {
   deleteEmployee(id: number): Observable<Employee> {
     const url = `${this.employeesUrl}/delete/${id}`;
     return this.http.delete<Employee>(url, this.httpOptions)
+  }
+
+  editEmployee(employee: Employee): Observable<Employee> {
+    const url = `${this.employeesUrl}/edit`;
+    return this.http.post<Employee>(url, this.httpOptions)
   }
 
   // /** PUT: update the hero on the server */

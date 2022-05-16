@@ -45,11 +45,8 @@ public class EmployeeController {
 
     // ToDo: do the same with a DTO and post mapping, without path-variable
     @PostMapping("/edit")
-    public Employee update() {
-
-        return null;
+    public Employee updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.setEmployee(employeeService.convertToEmployee(employeeDTO));
     }
 
-
-    // Einzelnen Mitarbeiter uebergeben
 }
