@@ -14,8 +14,11 @@ export class TeamComponent implements OnInit {
 
   newTeam: Team = {} as Team;
   teams?: Team[];
+  selectedTeam = {} as Team;
 
+  teamSelected = false;
   addTeam = false;
+  editMode = false;
   status = '';
 
   constructor(private http: HttpClient) {  }
@@ -51,5 +54,24 @@ export class TeamComponent implements OnInit {
   this.http.delete('api/teams/delete/'+ id)
 .subscribe(() => this.status = 'Delete successful');
   }
+
+  public getTeam(id: number){
+    this.http
+      .get('api/teams/get/' + id)
+      .subscribe(result => this.selectedTeam == result);
+    this.teamSelected = true;
+  }
+
+  // public closeTeamDetailsWindow(){
+  //   this.teamSelected = false;
+  // }
+  //
+  // public editModeOn(){
+  //   this.editMode = true;
+  // }
+  //
+  // public editModeOff(){
+  //   this.editMode = false;
+  // }
 
 }
