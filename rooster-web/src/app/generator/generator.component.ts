@@ -92,4 +92,12 @@ export class GeneratorComponent implements OnInit {
       .subscribe(result => this.selectedTeam = result);
   }
 
+  isSpecificDay(day: number, checkWith: number){
+    let selectedDate = new Date();
+    selectedDate.setDate(day);
+    selectedDate.setMonth(this.month);
+    selectedDate.setFullYear(this.year)
+    return selectedDate.getDay() == checkWith;
+  }
+
 }
