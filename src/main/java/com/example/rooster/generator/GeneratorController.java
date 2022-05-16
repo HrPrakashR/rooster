@@ -1,6 +1,6 @@
 package com.example.rooster.generator;
 
-import com.example.rooster.date_worker.DateWorker;
+import com.example.rooster.helpers.DateWorker;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.period.DateDTO;
