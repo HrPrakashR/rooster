@@ -1,6 +1,4 @@
-package com.example.rooster.date_worker;
-
-import com.example.rooster.period.DateDTO;
+package com.example.rooster.helpers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
