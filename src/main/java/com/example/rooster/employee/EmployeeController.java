@@ -1,5 +1,6 @@
 package com.example.rooster.employee;
 
+import com.example.rooster.user.UserController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,11 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final UserController userController;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, UserController userController) {
         this.employeeService = employeeService;
+        this.userController = userController;
     }
 
     //Showing a certain employee
@@ -33,6 +36,7 @@ public class EmployeeController {
     public EmployeeDTO addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee newEmployee = employeeService.convertToEmployee(employeeDTO);
         employeeService.setEmployee(newEmployee);
+        this.userController.sendPassword(employeeDTO.getId()); //Send user a password after adding him/her to the database
         return employeeService.convertToDTO(newEmployee);
     }
 
