@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,13 +27,25 @@ public class PeriodController {
         this.teamService = teamService;
     }
 
-    // ToDo: write new Period method in PeriodDTO -> public Period getPeriod(){}. (You can take a look at TeamDTO)
-    // Look at Team getAkk
+    //Showing a certain request
+    @GetMapping("/get/{id}")
+    public PeriodDTO showPeriodRequest(@PathVariable long id) {
+        return periodService.convertToPeriodDTO(periodService.getPeriod(id));
+    }
+
+    //Showing requests of a certain employee
+    @GetMapping("/employee/get_all")
+    public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return periodService.getPeriodsByEmployee(employeeService.getEmployeeById(employeeDTO.getId()));
+    }
+
+    //Showing all of the periods
     @GetMapping("/get_all")
     public List<PeriodDTO> getAll() {
         return periodService.getPeriodsAsDTO();
     }
 
+    //Creating a new period request. Returns all period requests of an employee.
     @PostMapping("/new")
     public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
@@ -40,24 +53,6 @@ public class PeriodController {
         return periodService.getPeriodsByEmployee(period.getEmployee());
     }
 
-    // ToDo: Use employeeDTO and Postmapping -> DONE
-    //Showing the requests/entries of a certain employee (employee id as request parameter)
-    //Purpose can be filtered at Frontend
-    //TODO: We need a method in EmployerService to determine the related user
-    //For example: findEmployeeByEMail(String email)
-    @PostMapping("/employee/get_all")
-    public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return periodService.getPeriodsByEmployee(employeeService.getEmployeeById(employeeDTO.getId()));
-    }
-
-    // ToDo: Use period DTO instead of id -> DONE
-    //Showing a certain request
-    @GetMapping("/get/{id}")
-    public Period showPeriodRequest(@PathVariable long id) {
-        return periodService.getPeriod(id);
-    }
-
-    // ToDo: Use period DTO instead of id -> DONE
     //Deleting a certain request. Returns the list of remaining requests of the employee.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePeriodRequest(@PathVariable long id) {
@@ -65,30 +60,17 @@ public class PeriodController {
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
-    //  ToDo: Use period DTO instead of id - new DateDTO -> DONE
     //Displaying the periods of a certain team in a certain time interval
-    @PostMapping("/time_plan/{teamId}")
-    public List<Period> showPeriodsPerTeamAndTimeInterval(@PathVariable long teamId,
+    @GetMapping("/time_plan/{teamId}")
+    public List<PeriodDTO> showPeriodsPerTeamAndTimeInterval(@PathVariable long teamId,
                                                           @RequestBody DateDTO dateDTO) {
+        List<PeriodDTO> periodDTOs = new ArrayList<>();
         Team team = teamService.getTeam(teamId);
         Date dateFrom = dateDTO.getDateFrom();
         Date dateTo = dateDTO.getDateTo();
-        return periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
+        List<Period> periods = periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
+        periods.forEach(p -> periodDTOs.add(periodService.convertToPeriodDTO(p)));
+        return periodDTOs;
     }
-
-    // Eintrag anzeigen ==> done
-
-    // Eintrag loeschen ==> done
-
-    // Neuer Eintrag
-
-    // Eintrag bearbeiten
-
-    // Gib Daten eines bestimmten Purposes eines bestimmten Mitarbeiters zurueck
-    // ==> would be better at frontend, we already have the list of a certain employee
-
-    // Alle Daten eines Mitarbeiters zurueckgeben ==> done
-
-    // Alle Zeiten eines Teams in einem bestimmten Monat weitergeben = Dienstplan !!!! Wichtig!
 
 }

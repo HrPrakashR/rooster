@@ -28,19 +28,22 @@ public class TeamController {
     }
 
     // Create a new Team
+    //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/new")
-    public Team newTeam(@RequestBody TeamDTO teamDTO) {
-        return this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
+    public TeamDTO newTeam(@RequestBody TeamDTO teamDTO) {
+        this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
+        return teamDTO;
     }
 
     //Edit a Team
-    //Attention: Team name cannot be changed, as it is identifier!
+    //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/edit")
-    public Team update(@RequestBody TeamDTO teamDTO) {
-        return this.teamService.updateTeam(this.teamService.convertToTeam(teamDTO));
+    public TeamDTO update(@RequestBody TeamDTO teamDTO) {
+        this.teamService.updateTeam(this.teamService.convertToTeam(teamDTO));
+        return teamDTO;
     }
 
-    // Delete a Team
+    // Delete a Team. First sets the team value of the employees from this team to null.
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable long id) {
         this.teamService.neutralizeEmployeeTeam(this.teamService.getTeam(id));
