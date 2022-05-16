@@ -8,18 +8,18 @@ Table with all Periods
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">Employee</th>
+        <th scope="col">Id</th>
         <th scope="col">Purpose</th>
-        <th scope="col">Request Id</th>
+        <th scope="col">Employee Id</th>
         <th scope="col">Date from</th>
         <th scope="col">Date to</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let period of periods">
-        <th scope="row">{{period.employee}}</th>
+        <th scope="row">{{period.id}}</th>
         <td>{{period.purpose}}</td>
-        <td>{{period.id}}</td>
+        <td>{{period.employee}}</td>
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
         <td>
@@ -35,30 +35,28 @@ Table with all Periods
 Show all Leaves of an Employee
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="showEmployeesLeave()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee
-      <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>
-        <select [(ngModel)]="selectedEmployee">
-          <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
-        </select>
-      </div>
+  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee
   </button>
+  <select [(ngModel)]="employeeId" id="Employee Id"> Select an Employee
+    <option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
+  </select>
   <ng-container *ngIf="periods">
     <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">Employee</th>
+      <th scope="col">Id</th>
       <th scope="col">Purpose</th>
-      <th scope="col">Request Id</th>
+      <th scope="col">Employee Id</th>
       <th scope="col">Date from</th>
       <th scope="col">Date to</th>
     </tr>
     </thead>
-    <tbody>
-    <tr *ngFor="let period of periods">
-      <th scope="row">{{period.employee}}</th>
+    <tbody *ngFor="let period of periods">
+    <tr *ngIf="period.employee == employeeId" >
+      <th scope="row">{{period.id}}</th>
       <td>{{period.purpose}}</td>
-      <td>{{period.id}}</td>
+      <td>{{period.employee}}</td>
       <td>{{period.dateFrom}}</td>
       <td>{{period.dateTo}}</td>
       <td>
@@ -70,7 +68,6 @@ Show all Leaves of an Employee
   </table>
   </ng-container>
 </div>
-
 <!--
 Show all Employees
 -->

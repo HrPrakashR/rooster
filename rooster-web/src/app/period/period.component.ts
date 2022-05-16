@@ -14,6 +14,7 @@ export class PeriodComponent implements OnInit {
   newPeriod: Period = {} as Period;
   periods?: Period[];
   employees?: Employee[];
+  employeeId = 0;
 
   selectedEmployee = "email@email.de"
 
@@ -40,10 +41,6 @@ export class PeriodComponent implements OnInit {
     this.periods = undefined;
   }
 
-  clearAllEmployees() {
-    this.employees = undefined;
-  }
-
   showLeaveRequest(){
     this.newLeave = !this.newLeave;
   }
@@ -55,7 +52,6 @@ export class PeriodComponent implements OnInit {
   saveEntry(){
     this.http.post<Period[]>('/api/periods/new', this.newPeriod)
       .subscribe( np => this.periods = np);
-    // this.periods?.push(this.newPeriod);
     this.newPeriod = {} as Period;
   }
 
@@ -65,8 +61,8 @@ export class PeriodComponent implements OnInit {
       .subscribe( () => this.status = 'Period successfully deleted');
   }
 
-  public showEmployeesLeave () {
-    this.periods = this.periods?.filter(emp => emp.id);
+  public showEmployeesLeave (id: number) {
+    this.periods = this.periods?.filter(emp => emp.employee == id);
     this.http.get('/api/periods/get')
       .subscribe(()=> this.status = "All leave requests of selected Employee")
   }
