@@ -22,6 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // TODO: Decide if sendPassword stays here / Alternative we will have it in user service without exclusive mapping
     @GetMapping("/sendPassword/{userId}")
     public ResponseEntity<String> sendPassword(@PathVariable long userId) {
         Employee employee = this.employeeService.getEmployeeById(userId);

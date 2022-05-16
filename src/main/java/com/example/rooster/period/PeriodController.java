@@ -18,7 +18,6 @@ public class PeriodController {
 
     private final PeriodService periodService;
     private final EmployeeService employeeService;
-
     private final TeamService teamService;
 
     public PeriodController(PeriodService periodService, EmployeeService employeeService, TeamService teamService) {
@@ -61,7 +60,7 @@ public class PeriodController {
     }
 
     //Displaying the periods of a certain team in a certain time interval
-    @GetMapping("/time_plan/{teamId}")
+    @PostMapping("/time_plan/{teamId}")
     public List<PeriodDTO> showPeriodsPerTeamAndTimeInterval(@PathVariable long teamId,
                                                           @RequestBody DateDTO dateDTO) {
         List<PeriodDTO> periodDTOs = new ArrayList<>();
