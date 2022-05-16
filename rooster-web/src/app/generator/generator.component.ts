@@ -21,18 +21,20 @@ export class GeneratorComponent implements OnInit {
   selectedTeamId?: number;
   teams?: Team[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.createCalendar();
+  }
 
   ngOnInit(): void {
     this.month = new Date().getMonth();
     this.createCalendar();
   }
 
-  getMonthName(month: number | string){
+  getMonthName(month: number | string) {
     if (typeof month === "string") {
       month = parseInt(month);
     }
-    switch (month){
+    switch (month) {
       case 0:
         return "January";
       case 1:
@@ -62,42 +64,44 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
-  createCalendar(){
+  createCalendar() {
     this.days = [1];
     this.yearsToChoose = [2022];
     this.monthToChoose = [0];
-    this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
-    if(this.selectedTeamId !== undefined){
+    this.http.get<Team[]>('/api/teams/get_all').subscribe(result => {
+      this.teams = result
+      if (this.selectedTeamId === undefined) this.selectedTeamId = result[0].id;
+    });
+    if (this.selectedTeamId !== undefined) {
       this.setSelectedTeam();
     }
 
     let i = 1;
-    while(new Date(this.year, this.month, i).getMonth().valueOf() == this.month){
-      if(i<=11){
+    while (new Date(this.year, this.month, i).getMonth().valueOf() == this.month) {
+      if (i <= 11) {
         this.monthToChoose.push(i);
       }
-      if(i<20){
+      if (i < 20) {
         this.yearsToChoose.push(this.yearsToChoose[0].valueOf() + i);
       }
-      if(i>1){
+      if (i > 1) {
         this.days.push(i);
       }
       i++;
     }
   }
 
-  setSelectedTeam(){
+  setSelectedTeam() {
     this.http
       .get<Team>('api/teams/get/' + this.selectedTeamId)
       .subscribe(result => this.selectedTeam = result);
   }
 
-  isSpecificDay(day: number, checkWith: number){
+  isSpecificDay(day: number, checkWith: number) {
     let selectedDate = new Date();
     selectedDate.setDate(day);
     selectedDate.setMonth(this.month);
     selectedDate.setFullYear(this.year)
     return selectedDate.getDay() == checkWith;
   }
-
 }
