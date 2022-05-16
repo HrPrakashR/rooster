@@ -113,31 +113,64 @@ public class GeneratorController {
 
         List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
 
-        // TODO add a day to values
-        workingTime.forEach(day -> {
-            switch (day.get(Calendar.DAY_OF_WEEK)) {
-                case 1 -> workingPeriods.add(
-                        new DateDTO(
-                                DateWorker.getDateObject(
-                                        DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.SECOND),
-                                        team.getMondayFrom().toInstant().get(Calendar.MINUTE),
-                                        team.getMondayFrom().toInstant().get(Calendar.HOUR)
-
-                                )
-                                team.getSundayFrom(),
-
-                                team.getSundayTo())
-                );
-                case 2 -> workingPeriods.add(new DateDTO(team.getMondayFrom(), team.getMondayTo()));
-                case 3 -> workingPeriods.add(new DateDTO(team.getTuesdayFrom(), team.getTuesdayTo()));
-                case 4 -> workingPeriods.add(new DateDTO(team.getWednesdayFrom(), team.getWednesdayTo()));
-                case 5 -> workingPeriods.add(new DateDTO(team.getThursdayFrom(), team.getThursdayTo()));
-                case 6 -> workingPeriods.add(new DateDTO(team.getFridayFrom(), team.getFridayTo()));
-                case 7 -> workingPeriods.add(new DateDTO(team.getSaturdayFrom(), team.getSaturdayTo()));
-                default -> throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
-            }
-        });
+        workingTime.forEach(day -> workingPeriods.add(getDateDTOForWorkingPeriod(day)));
 
         return workingPeriods;
+    }
+
+    private DateDTO getDateDTOForWorkingPeriod(Calendar date){
+        Date getFrom;
+        Date getTo;
+
+        switch (date.get(Calendar.DAY_OF_WEEK)) {
+            case 1 -> {
+                getFrom = team.getSundayFrom();
+                getTo = team.getSundayTo();
+            }
+            case 2 -> {
+                getFrom = team.getMondayFrom();
+                getTo = team.getMondayTo();
+            }
+            case 3 -> {
+                getFrom = team.getTuesdayFrom();
+                getTo = team.getTuesdayTo();
+            }
+            case 4 -> {
+                getFrom = team.getWednesdayFrom();
+                getTo = team.getWednesdayTo();
+            }
+            case 5 -> {
+                getFrom = team.getThursdayFrom();
+                getTo = team.getThursdayTo();
+            }
+            case 6 -> {
+                getFrom = team.getFridayFrom();
+                getTo = team.getFridayTo();
+            }
+            case 7 -> {
+                getFrom = team.getSaturdayFrom();
+                getTo = team.getSaturdayTo();
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + date.get(Calendar.DAY_OF_WEEK));
+        }
+
+        return new DateDTO(
+                DateWorker.getDateObject(
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.SECOND),
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.MINUTE),
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.HOUR_OF_DAY),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.YEAR)
+                ),
+                DateWorker.getDateObject(
+                        DateWorker.getCalendarObject(getTo).get(Calendar.SECOND),
+                        DateWorker.getCalendarObject(getTo).get(Calendar.MINUTE),
+                        DateWorker.getCalendarObject(getTo).get(Calendar.HOUR_OF_DAY),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.YEAR)
+                )
+        );
     }
 }
