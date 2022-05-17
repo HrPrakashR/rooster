@@ -30,40 +30,40 @@ Team
 
         <ng-container *ngIf="isSpecificDay(day, 0)">
           <td class="table-primary">{{ day }}. Sunday</td>
-          <td class="table-primary">{{ selectedTeam.sundayFrom | date:'shortTime' }}
-            - {{ selectedTeam.sundayTo | date:'shortTime' }}</td>
+          <td class="table-primary">{{ selectedTeam.sundayFrom }}
+            - {{ selectedTeam.sundayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 1)">
           <td>{{ day }}. Monday</td>
-          <td>{{ selectedTeam.mondayFrom | date:'shortTime' }} - {{ selectedTeam.mondayTo | date:'shortTime' }}</td>
+          <td>{{ selectedTeam.mondayFrom }} - {{ selectedTeam.mondayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 2)">
           <td>{{ day }}. Tuesday</td>
-          <td>{{ selectedTeam.tuesdayFrom | date:'shortTime' }} - {{ selectedTeam.tuesdayTo | date:'shortTime' }}</td>
+          <td>{{ selectedTeam.tuesdayFrom }} - {{ selectedTeam.tuesdayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 3)">
           <td>{{ day }}. Wednesday</td>
-          <td>{{ selectedTeam.wednesdayFrom | date:'shortTime' }}
-            - {{ selectedTeam.wednesdayTo | date:'shortTime' }}</td>
+          <td>{{ selectedTeam.wednesdayFrom }}
+            - {{ selectedTeam.wednesdayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 4)">
           <td>{{ day }}. Thursday</td>
-          <td>{{ selectedTeam.thursdayFrom | date:'shortTime' }} - {{ selectedTeam.thursdayTo | date:'shortTime' }}</td>
+          <td>{{ selectedTeam.thursdayFrom }} - {{ selectedTeam.thursdayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 5)">
           <td>{{ day }}. Friday</td>
-          <td>{{ selectedTeam.fridayFrom | date:'shortTime' }} - {{ selectedTeam.fridayTo | date:'shortTime' }}</td>
+          <td>{{ selectedTeam.fridayFrom }} - {{ selectedTeam.fridayTo }}</td>
         </ng-container>
 
         <ng-container *ngIf="isSpecificDay(day, 6)">
           <td class="table-primary">{{ day }}. Saturday</td>
-          <td class="table-primary">{{ selectedTeam.saturdayFrom | date:'shortTime' }}
-            - {{ selectedTeam.saturdayTo | date:'shortTime' }}</td>
+          <td class="table-primary">{{ selectedTeam.saturdayFrom }}
+            - {{ selectedTeam.saturdayTo }}</td>
         </ng-container>
 
         <th *ngFor="let employee of employees"> -</th>
