@@ -44,12 +44,12 @@ public class TeamService {
 
         if (team.getTuesdayFrom() != null && team.getTuesdayTo() != null) {
             teamDTO.setTuesdayFrom(DateWorker.convertDateToTimeString(team.getTuesdayFrom()));
-            teamDTO.setMondayTo(DateWorker.convertDateToTimeString(team.getMondayTo()));
+            teamDTO.setTuesdayTo(DateWorker.convertDateToTimeString(team.getTuesdayTo()));
         }
 
         if (team.getWednesdayFrom() != null && team.getWednesdayTo() != null) {
             teamDTO.setWednesdayFrom(DateWorker.convertDateToTimeString(team.getWednesdayFrom()));
-            teamDTO.setWednesdayFrom(DateWorker.convertDateToTimeString(team.getWednesdayTo()));
+            teamDTO.setWednesdayTo(DateWorker.convertDateToTimeString(team.getWednesdayTo()));
         }
 
         if (team.getThursdayFrom() != null && team.getThursdayTo() != null) {
