@@ -46,6 +46,23 @@ public class GeneratorController {
         this.teamService = teamService;
     }
 
+
+    // TODO Maybe this does not work
+    @GetMapping("/roster/{employeeId}/{year}/{month}/{day}")
+    public List<PeriodDTO> getByDateAndEmployee(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month, @PathVariable int day) {
+        this.periodService.getPeriodsByEmployee(
+                this.employeeService
+                        .getEmployee(employeeId))
+                .stream().anyMatch(period ->
+                        DateWorker.getDateObject(0,0,0,day,month,year).after(period.getDateFrom()) &&
+                                DateWorker.getDateObject(0,0,0,day+1,month,year).before(period.getDateTo())
+                );
+        this.setDate(month, year);
+        this.setPredefinedRoster();
+        this.setEmployees();
+        return this.roster;
+    }
+
     @GetMapping("/roster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getAll(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
         this.setTeam(this.teamService.getTeam(teamId));
