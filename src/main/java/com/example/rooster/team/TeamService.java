@@ -54,7 +54,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getTuesdayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setTuesdayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.HOUR_OF_DAY))
@@ -69,7 +68,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getWednesdayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getWednesdayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setWednesdayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getWednesdayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getWednesdayTo()).get(Calendar.HOUR_OF_DAY))
@@ -84,7 +82,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getThursdayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getThursdayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setThursdayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getThursdayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getThursdayTo()).get(Calendar.HOUR_OF_DAY))
@@ -99,7 +96,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getFridayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getFridayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setFridayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getFridayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getFridayTo()).get(Calendar.HOUR_OF_DAY))
@@ -114,7 +110,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getSaturdayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getSaturdayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setSaturdayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getSaturdayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getSaturdayTo()).get(Calendar.HOUR_OF_DAY))
@@ -129,7 +124,6 @@ public class TeamService {
                     String.valueOf(DateWorker.getCalendarObject(team.getSundayFrom()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getSundayFrom()).get(Calendar.HOUR_OF_DAY))
             );
-
             teamDTO.setSundayTo(
                     String.valueOf(DateWorker.getCalendarObject(team.getSundayTo()).get(Calendar.MINUTE) + ':' +
                             DateWorker.getCalendarObject(team.getSundayTo()).get(Calendar.HOUR_OF_DAY))
