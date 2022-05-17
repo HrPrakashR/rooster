@@ -42,7 +42,7 @@ public class EmployeeService {
         employee.setHoursPerWeek(employeeDTO.getHoursPerWeek());
         employee.setBalanceHours(employeeDTO.getBalanceHours());
         employee.setBreakTime(employeeDTO.getBreakTime());
-        employee.setRole(this.findRole(employeeDTO.getRole()));
+        employee.setRole(Role.valueOf(employeeDTO.getRole()));
         return employee;
     }
 
@@ -56,13 +56,12 @@ public class EmployeeService {
         employeeDTO.setHoursPerWeek(employee.getHoursPerWeek());
         employeeDTO.setBalanceHours(employee.getBalanceHours());
         employeeDTO.setBreakTime(employee.getBreakTime());
-        employeeDTO.setRole(employee.getRole().ordinal());
+        employeeDTO.setRole(employee.getRole().name());
         return employeeDTO;
     }
 
 
     public List<Employee> getEmployees() {
-
         return this.employeeRepository.findAll();
     }
 
