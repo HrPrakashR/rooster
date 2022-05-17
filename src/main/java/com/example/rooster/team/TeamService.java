@@ -2,14 +2,12 @@ package com.example.rooster.team;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeRepository;
+import com.example.rooster.helpers.DateWorker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TeamService {
@@ -35,9 +33,28 @@ public class TeamService {
         teamDTO.setRestHours(team.getRestHours());
         teamDTO.setRestDays(team.getRestDays());
         teamDTO.setMinBreakTime(team.getMinBreakTime());
-        teamDTO.setMondayFrom(team.getMondayFrom());
-        teamDTO.setMondayTo(team.getMondayTo());
-        teamDTO.setTuesdayFrom(team.getTuesdayFrom());
+
+        teamDTO.setMondayFrom(
+                String.valueOf(DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.MINUTE) + ':' +
+                DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.HOUR_OF_DAY))
+        );
+
+        teamDTO.setMondayTo(
+                String.valueOf(DateWorker.getCalendarObject(team.getMondayTo()).get(Calendar.MINUTE) + ':' +
+                        DateWorker.getCalendarObject(team.getMondayTo()).get(Calendar.HOUR_OF_DAY))
+        );
+
+        teamDTO.setTuesdayFrom(
+                String.valueOf(DateWorker.getCalendarObject(team.getTuesdayFrom()).get(Calendar.MINUTE) + ':' +
+                        DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.HOUR_OF_DAY))
+        );
+
+        teamDTO.setTuesdayTo(
+                String.valueOf(DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.MINUTE) + ':' +
+                        DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.HOUR_OF_DAY))
+        );
+
+
         teamDTO.setTuesdayTo(team.getTuesdayTo());
         teamDTO.setWednesdayFrom(team.getWednesdayFrom());
         teamDTO.setWednesdayTo(team.getWednesdayTo());

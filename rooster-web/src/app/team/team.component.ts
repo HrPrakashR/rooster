@@ -1,8 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder, NgForm} from '@angular/forms';
 import {Team} from "./team";
-import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-team',
