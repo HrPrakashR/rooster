@@ -14,7 +14,7 @@ import {EmployeeService} from "./employee.service";
 export class EmployeeComponent implements OnInit {
 
   employees?: Employee[];
-  teams?: Team[];
+  teams: Team[] = [];
   newEmployee = {} as Employee;
   isFormShown = false;
   public Role = Role;
@@ -62,7 +62,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   saveEmployee(newEmployee: Employee){
-    newEmployee.id = this.getNextEmployeeId(this.employees);
     this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result=>this.employees?.push(result));
     this.isFormShown = false;
   }
