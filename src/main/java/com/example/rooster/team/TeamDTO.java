@@ -1,7 +1,5 @@
 package com.example.rooster.team;
 
-import java.util.Date;
-
 public class TeamDTO {
 
     private long id;
