@@ -31,6 +31,7 @@ public class Employee {
 
     private double breakTime;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Employee() {
