@@ -80,6 +80,14 @@ public class DateWorker {
         return calendar.getTime();
     }
 
+    public static Date getDateObject(int seconds, int minutes, int hours){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, seconds);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        return calendar.getTime();
+    }
+
     public static Calendar getCalendarObject(Date date){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

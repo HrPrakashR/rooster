@@ -114,7 +114,12 @@ public class TeamService {
         team.setRestHours(teamDTO.getRestHours());
         team.setRestDays(teamDTO.getRestDays());
         team.setMinBreakTime(teamDTO.getMinBreakTime());
-        team.setMondayFrom(teamDTO.getMondayFrom());
+        team.setMondayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getMondayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getMondayFrom().substring(0,1)))
+        );
+
         team.setMondayTo(teamDTO.getMondayTo());
         team.setTuesdayFrom(teamDTO.getTuesdayFrom());
         team.setTuesdayTo(teamDTO.getTuesdayTo());
