@@ -5,7 +5,7 @@ Table with all Periods
   <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves</button>
   <ng-container *ngIf="periods">
     <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Leaves</button>
-    <table class="table">
+    <table class="table table-striped text-center">
       <thead>
       <tr>
         <th scope="col">Id</th>
@@ -22,6 +22,10 @@ Table with all Periods
         <td>{{period.employee}}</td>
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
+        <td>
+          <button type="button" class="btn-info" title="Edit Leave request"
+          >Edit</button>
+        </td>
         <td>
           <button type="button" class="btn-danger" title="delete Leave request"
           (click)="deletePeriod(period.id)">Delete</button>
@@ -42,7 +46,7 @@ Show all Leaves of an Employee
   </select>
   <ng-container *ngIf="periods">
     <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>
-  <table class="table">
+  <table class="table text-center">
     <thead>
     <tr>
       <th scope="col">Id</th>
@@ -60,6 +64,10 @@ Show all Leaves of an Employee
       <td>{{period.dateFrom}}</td>
       <td>{{period.dateTo}}</td>
       <td>
+        <button type="button" class="btn-info" title="Edit Leave request"
+        >Edit</button>
+      </td>
+      <td>
         <button type="button" class="btn-danger" title="delete employee"
                 (click)="deletePeriod(period.id)">Delete</button>
       </td>
@@ -75,10 +83,11 @@ Show all Employees
   <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees</button>
   <ng-container *ngIf="showEmployeeList">
     <button (click)="showEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
-    <table class="table">
+    <table class="table table-striped text-center">
       <thead>
       <tr>
-        <th scope="col">Employee</th>
+        <th scope="col">Employee Id</th>
+        <th scope="col">Employee Name</th>
         <th scope="col">Balance Hours</th>
         <th scope="col">Break Time</th>
         <th scope="col">Email</th>
@@ -86,7 +95,8 @@ Show all Employees
       </thead>
       <tbody>
       <tr *ngFor="let e of employees">
-        <th scope="row">{{e.firstName}} {{e.lastName}}</th>
+        <th scope="row">{{e.id}}</th>
+        <td>{{e.firstName}} {{e.lastName}}</td>
         <td>{{e.balanceHours}}</td>
         <td>{{e.breakTime}}</td>
         <td>{{e.email}}</td>

@@ -121,7 +121,7 @@ Table with all teams
   <button (click)="fetchAll()" *ngIf="!teams" class="btn btn-primary" type="button">Show Teams</button>
   <ng-container *ngIf="teams">
     <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Teams</button>
-    <table class="table">
+    <table class="table table-striped">
       <thead>
       <tr>
         <th scope="col">Name</th>

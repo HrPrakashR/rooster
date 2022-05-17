@@ -64,7 +64,7 @@
   <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
   <ng-container *ngIf="employees">
     <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Employees</button>
-    <table class="table">
+    <table class="table table-striped">
       <thead>
       <tr>
         <th scope="col">Employee</th>
