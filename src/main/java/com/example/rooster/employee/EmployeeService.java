@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -82,6 +83,10 @@ public class EmployeeService {
 
     public Employee setEmployee(Employee employee) {
         return this.employeeRepository.save(employee);
+    }
+
+    public Optional<Employee> findEmployeeByEmail(String email){
+        return this.employeeRepository.findEmployeeByEmail(email);
     }
 
     public Employee getEmployeeById(long id) {
