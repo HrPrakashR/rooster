@@ -26,8 +26,8 @@
 
       <p>
         <label for="team">Team:</label>
-        <select [(ngModel)]="newEmployee.team" id="team">
-          <option *ngFor="let team of teams" [value]="team.id">{{team.name}}</option>
+        <select name="team" [(ngModel)]="newEmployee.team" id="team">
+          <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
         </select>
       </p>
 
@@ -48,8 +48,8 @@
 
       <p>
         <label for="role">Role:</label>
-        <select [(ngModel)]="newEmployee.role" id="role">
-          <option *ngFor="let r of Role | keyvalue" [value]="r.key" >{{r.key}} - {{r.value}}</option>
+        <select name="role" [(ngModel)]="newEmployee.role" id="role">
+          <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value" >{{r.key}} - {{r.value}}</option>
         </select>
       </p>
 
@@ -105,7 +105,7 @@
       <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
     </p>
     <p>
-      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
+      <strong>Role:</strong> {{capitalizeFirstLetter(selectedEmployee.role)}}
     </p>
     <button type="button" class="edit" title="edit employee"
             (click)="editModeOn()">Edit</button>
@@ -126,7 +126,7 @@
       <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
     </p>
     <p>
-      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
+      <strong>Role:</strong> {{capitalizeFirstLetter(selectedEmployee.role)}}
     </p>
     <button type="button" class="save" title="edit employee"
             (click)="editEmployee(selectedEmployee)">Save</button>
