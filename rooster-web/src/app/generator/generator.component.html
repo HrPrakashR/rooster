@@ -11,7 +11,7 @@ Year
 </select>
 <br>
 Team
-<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select an Employee
+<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select a Team
   <option *ngFor="let team of teams" [value]="team.id">{{ team.name }} </option>
 </select>
 
@@ -21,6 +21,7 @@ Team
     <tr>
       <th scope="col">Day</th>
       <th scope="col">Compulsory</th>
+      <th *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
     </tr>
     </thead>
     <tbody>
@@ -64,6 +65,8 @@ Team
           <td class="table-primary">{{ selectedTeam.saturdayFrom | date:'shortTime' }}
             - {{ selectedTeam.saturdayTo | date:'shortTime' }}</td>
         </ng-container>
+
+        <th *ngFor="let employee of employees"> - </th>
 
       </tr>
     </ng-container>
