@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
-import { Employee } from './employee';
+import {Employee} from './employee';
+
 // import { MessageService } from './message.service';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class EmployeeService {
 
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
   private employeesUrl = 'api/employees';  // URL to web api
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient) {
+  }
 
   // /** GET heroes from the server */
   // getHeroes(): Observable<Hero[]> {

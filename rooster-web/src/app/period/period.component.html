@@ -23,12 +23,14 @@ Table with all Periods
         <td>{{period.dateFrom}}</td>
         <td>{{period.dateTo}}</td>
         <td>
-          <button type="button" class="btn-info" title="Edit Leave request"
-          >Edit</button>
+          <button class="btn-info" title="Edit Leave request" type="button"
+          >Edit
+          </button>
         </td>
         <td>
-          <button type="button" class="btn-danger" title="delete Leave request"
-          (click)="deletePeriod(period.id)">Delete</button>
+          <button (click)="deletePeriod(period.id)" class="btn-danger" title="delete Leave request"
+                  type="button">Delete
+          </button>
         </td>
       </tr>
       </tbody>
@@ -42,45 +44,51 @@ Show all Leaves of an Employee
   <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee
   </button>
   <select [(ngModel)]="employeeId" id="Employee Id"> Select an Employee
-    <option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
+    <option *ngFor="let employee of employees"
+            [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
   </select>
   <ng-container *ngIf="periods">
-    <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>
-  <table class="table text-center">
-    <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Purpose</th>
-      <th scope="col">Employee Id</th>
-      <th scope="col">Date from</th>
-      <th scope="col">Date to</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let period of periods">
-    <tr *ngIf="period.employee == employeeId" >
-      <th scope="row">{{period.id}}</th>
-      <td>{{period.purpose}}</td>
-      <td>{{period.employee}}</td>
-      <td>{{period.dateFrom}}</td>
-      <td>{{period.dateTo}}</td>
-      <td>
-        <button type="button" class="btn-info" title="Edit Leave request"
-        >Edit</button>
-      </td>
-      <td>
-        <button type="button" class="btn-danger" title="delete employee"
-                (click)="deletePeriod(period.id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an
+      Employee
+    </button>
+    <table class="table text-center">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Purpose</th>
+        <th scope="col">Employee Id</th>
+        <th scope="col">Date from</th>
+        <th scope="col">Date to</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let period of periods">
+      <tr *ngIf="period.employee == employeeId">
+        <th scope="row">{{period.id}}</th>
+        <td>{{period.purpose}}</td>
+        <td>{{period.employee}}</td>
+        <td>{{period.dateFrom}}</td>
+        <td>{{period.dateTo}}</td>
+        <td>
+          <button class="btn-info" title="Edit Leave request" type="button"
+          >Edit
+          </button>
+        </td>
+        <td>
+          <button (click)="deletePeriod(period.id)" class="btn-danger" title="delete employee"
+                  type="button">Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </ng-container>
 </div>
 <!--
 Show all Employees
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees</button>
+  <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees
+  </button>
   <ng-container *ngIf="showEmployeeList">
     <button (click)="showEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
     <table class="table table-striped text-center">
@@ -109,33 +117,35 @@ Show all Employees
 Form to create a new Leave request
 -->
 <div class="container-fluid p-3 my-3">
-  <button (click)="showLeaveRequest()" *ngIf="!newLeave" class="btn btn-primary" >Create Leave Request</button>
+  <button (click)="showLeaveRequest()" *ngIf="!newLeave" class="btn btn-primary">Create Leave Request</button>
   <form [hidden]="!newLeave">
-    <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary" >Hide Leave Request</button>
-  <div class="newLeave">
-    Employee First name:
-    <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>
-      <select [(ngModel)]="selectedEmployee">
-        <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
-      </select>
+    <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary">Hide Leave Request</button>
+    <div class="newLeave">
+      Employee First name:
+      <div [(ngModel)]="newPeriod.employee" style="display: inline-block"><br>
+        <select [(ngModel)]="selectedEmployee">
+          <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
+        </select>
+      </div>
+      <br>
+      Purpose:
+      <div [(ngModel)]="newPeriod.purpose" style="display: inline-block">
+        <select>
+          <option value="0">Vacation Request</option>
+          <option value="1">Confirmed Vacation</option>
+          <option value="2">Sick Leave</option>
+          <option value="3">Working Hours</option>
+          <option value="4">Scheduled Working Hours</option>
+          <option value="5">Absence</option>
+          <option value="6">Free Time Request</option>
+          <option value="7">Working Hour Request</option>
+        </select>
+      </div>
+      <br>
+      Date from: <input [(ngModel)]="newPeriod.dateFrom" type="Date">
+      Date to: <input [(ngModel)]="newPeriod.dateTo" type="Date">
+      <button (click)="saveEntry()" type="submit">Submit</button>
     </div>
-    <br>
-    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
-    <select>
-      <option value="0">Vacation Request</option>
-      <option value="1">Confirmed Vacation</option>
-      <option value="2">Sick Leave</option>
-      <option value="3">Working Hours</option>
-      <option value="4">Scheduled Working Hours</option>
-      <option value="5">Absence</option>
-      <option value="6">Free Time Request</option>
-      <option value="7">Working Hour Request</option>
-    </select>
-  </div><br>
-    Date from: <input [(ngModel)] = "newPeriod.dateFrom" type="Date">
-    Date to: <input [(ngModel)] = "newPeriod.dateTo" type="Date">
-    <button type="submit" (click)="saveEntry()">Submit</button>
-  </div>
   </form>
 </div>
 

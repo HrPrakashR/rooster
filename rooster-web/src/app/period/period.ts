@@ -1,5 +1,3 @@
-import {Employee} from "../employee/employee";
-
 export interface Period {
   id: number;
   purpose: number;

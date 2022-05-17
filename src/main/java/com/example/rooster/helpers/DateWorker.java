@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DateWorker {
 
-    public static String generateTimeString(Date date){
+    public static String generateTimeString(Date date) {
         Calendar calendar = getCalendarObject(date);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
@@ -29,7 +29,7 @@ public class DateWorker {
         return calendar.getTime();
     }
 
-    public static List<Calendar> getAllDaysOfMonth(int year, int month){
+    public static List<Calendar> getAllDaysOfMonth(int year, int month) {
         List<Calendar> days = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
@@ -37,14 +37,14 @@ public class DateWorker {
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         int i = 1;
-        while(i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+        while (i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             days.add(calendar);
             calendar.set(Calendar.DAY_OF_MONTH, ++i);
         }
         return days;
     }
 
-    public static List<Calendar> removeDays(List<Calendar> calendarInput, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
+    public static List<Calendar> removeDays(List<Calendar> calendarInput, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday) {
         List<Calendar> days = new ArrayList<>();
         calendarInput.forEach(day -> {
                     switch (day.get(Calendar.DAY_OF_WEEK)) {
@@ -58,16 +58,16 @@ public class DateWorker {
                             if (!tuesday) days.add(day);
                             break;
                         case 4:
-                            if(!wednesday) days.add(day);
+                            if (!wednesday) days.add(day);
                             break;
                         case 5:
-                            if(!thursday) days.add(day);
+                            if (!thursday) days.add(day);
                             break;
                         case 6:
-                            if(!friday) days.add(day);
+                            if (!friday) days.add(day);
                             break;
                         case 7:
-                            if(!saturday) days.add(day);
+                            if (!saturday) days.add(day);
                             break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
@@ -77,7 +77,7 @@ public class DateWorker {
         return days;
     }
 
-    public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year){
+    public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.SECOND, seconds);
         calendar.set(Calendar.MINUTE, minutes);
@@ -88,7 +88,7 @@ public class DateWorker {
         return calendar.getTime();
     }
 
-    public static Date getDateObject(int seconds, int minutes, int hours){
+    public static Date getDateObject(int seconds, int minutes, int hours) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.SECOND, seconds);
         calendar.set(Calendar.MINUTE, minutes);
@@ -96,7 +96,7 @@ public class DateWorker {
         return calendar.getTime();
     }
 
-    public static Calendar getCalendarObject(Date date){
+    public static Calendar getCalendarObject(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;

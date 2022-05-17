@@ -19,56 +19,57 @@ export class TeamComponent implements OnInit {
   editMode = false;
   status = '';
 
-  constructor(private http: HttpClient) {  }
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
   }
 
   fetchAll() {
-      this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
+    this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
   }
 
   clearAll() {
-      this.teams = undefined;
+    this.teams = undefined;
   }
 
-  clearTeamDTO(){
+  clearTeamDTO() {
     this.newTeam = {} as Team;
   }
 
-  showAddTeamRequest(){
+  showAddTeamRequest() {
     this.addTeam = !this.addTeam;
   }
 
-  public addNewTeam(newTeam: Team){
+  public addNewTeam(newTeam: Team) {
     this.http
-      .post<Team>("api/teams/new",newTeam).subscribe(result => this.teams?.push(result));
+      .post<Team>("api/teams/new", newTeam).subscribe(result => this.teams?.push(result));
     this.addTeam = false;
   }
 
 
-   public deleteTeam(id: number){
-    this.teams = this.teams?.filter(t => t.id !== id );
-  this.http.delete('api/teams/delete/'+ id)
-.subscribe(() => this.status = 'Delete successful');
+  public deleteTeam(id: number) {
+    this.teams = this.teams?.filter(t => t.id !== id);
+    this.http.delete('api/teams/delete/' + id)
+      .subscribe(() => this.status = 'Delete successful');
   }
 
-  public getTeam(id: number){
+  public getTeam(id: number) {
     this.http
       .get<Team>('api/teams/get/' + id)
       .subscribe(result => this.selectedTeam = result);
     this.teamSelected = true;
   }
 
-  public closeTeamDetailsWindow(){
+  public closeTeamDetailsWindow() {
     this.teamSelected = false;
   }
 
-  public editModeOn(){
+  public editModeOn() {
     this.editMode = true;
   }
 
-  public editModeOff(){
+  public editModeOff() {
     this.editMode = false;
   }
 

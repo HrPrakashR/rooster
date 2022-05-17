@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
@@ -19,16 +19,15 @@ export class PeriodComponent implements OnInit {
   employeeId = 0;
 
   selectedEmployee = "email@email.de"
-
-  getEmployees(){
-    this.http.get<Employee[]>('/api/employees/get_all').subscribe(emp => this.employees = emp);
-  }
-
   status = '';
   newLeave = false;
   showEmployeeList = false;
 
   constructor(private http: HttpClient) {
+  }
+
+  getEmployees() {
+    this.http.get<Employee[]>('/api/employees/get_all').subscribe(emp => this.employees = emp);
   }
 
   ngOnInit(): void {
@@ -43,29 +42,29 @@ export class PeriodComponent implements OnInit {
     this.periods = undefined;
   }
 
-  showLeaveRequest(){
+  showLeaveRequest() {
     this.newLeave = !this.newLeave;
   }
 
-  showEmployees(){
+  showEmployees() {
     this.showEmployeeList = !this.showEmployeeList;
   }
 
-  saveEntry(){
+  saveEntry() {
     this.http.post<Period[]>('/api/periods/new', this.newPeriod)
-      .subscribe( np => this.periods = np);
+      .subscribe(np => this.periods = np);
     this.newPeriod = {} as Period;
   }
 
-  public deletePeriod(id: number){
+  public deletePeriod(id: number) {
     this.periods = this.periods?.filter(p => p.id !== id);
     this.http.delete<Period>('/api/periods/delete/' + id)
-      .subscribe( () => this.status = 'Period successfully deleted');
+      .subscribe(() => this.status = 'Period successfully deleted');
   }
 
-  public showEmployeesLeave (id: number) {
+  public showEmployeesLeave(id: number) {
     this.periods = this.periods?.filter(emp => emp.employee == id);
     this.http.get('/api/periods/get')
-      .subscribe(()=> this.status = "All leave requests of selected Employee")
+      .subscribe(() => this.status = "All leave requests of selected Employee")
   }
 }

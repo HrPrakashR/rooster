@@ -1,15 +1,18 @@
 package com.example.rooster.generator;
 
-import com.example.rooster.helpers.DateWorker;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
+import com.example.rooster.helpers.DateWorker;
 import com.example.rooster.period.DateDTO;
 import com.example.rooster.period.Period;
 import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,7 +65,7 @@ public class GeneratorController {
         return this.getWorkingPeriods();
     }
 
-    private void setPredefinedRoster(){
+    private void setPredefinedRoster() {
         this.rosterPredefined.addAll(
                 this.periodService
                         .getPeriodsPerTeamAndTimeInterval(
@@ -94,11 +97,11 @@ public class GeneratorController {
         this.year = year;
     }
 
-    private void setEmployees(){
+    private void setEmployees() {
         this.employees = this.employeeService.getEmployees(this.team);
     }
 
-    private List<DateDTO> getWorkingPeriods(){
+    private List<DateDTO> getWorkingPeriods() {
         List<DateDTO> workingPeriods = new ArrayList<>();
         List<Calendar> allDays = DateWorker.getAllDaysOfMonth(this.year, this.month);
 
@@ -118,7 +121,7 @@ public class GeneratorController {
         return workingPeriods;
     }
 
-    private DateDTO getDateDTOForWorkingPeriod(Calendar date){
+    private DateDTO getDateDTOForWorkingPeriod(Calendar date) {
         Date getFrom;
         Date getTo;
 
