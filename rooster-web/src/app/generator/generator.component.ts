@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Team} from "../team/team";
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
+import {Period} from "../period/period";
 
 @Component({
   selector: 'app-generator',
@@ -22,6 +23,8 @@ export class GeneratorComponent implements OnInit {
   selectedTeamId?: number;
   teams?: Team[];
   employees?: Employee[];
+
+  predefinedPeriods: Period[] | undefined;
 
   constructor(private http: HttpClient) {
     this.createCalendar();
@@ -79,6 +82,7 @@ export class GeneratorComponent implements OnInit {
       this.http
         .get<Employee[]>('api/employees/get_all/' + this.selectedTeamId)
         .subscribe(result => this.employees = result);
+      this.setPredefinedPeriods()
     }
 
     let i = 1;
@@ -96,9 +100,15 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  setPredefinedPeriods(){
+    this.http
+      .get<Period[]>('/api/generator/roster/'+this.selectedTeamId+'/'+this.year+'/'+this.month)
+      .subscribe(result => this.predefinedPeriods = result);
+  }
+
   setSelectedTeam() {
     this.http
-      .get<Team>('api/teams/get/' + this.selectedTeamId)
+      .get<Team>('/api/teams/get/' + this.selectedTeamId)
       .subscribe(result => this.selectedTeam = result);
   }
 
@@ -108,5 +118,13 @@ export class GeneratorComponent implements OnInit {
     selectedDate.setMonth(this.month);
     selectedDate.setFullYear(this.year)
     return selectedDate.getDay() == checkWith;
+  }
+
+  getPeriod(day: number, employee: Employee){
+    let period: Period | undefined;
+    this.http
+      .get<Period>('/api/generator/get/' + employee.id + '/' + this.year + '/' + this.month + '/' + day)
+      .subscribe(result => period = result);
+    return period?.dateTo;
   }
 }
