@@ -1,6 +1,6 @@
 package com.example.rooster.employee;
 
-import com.example.rooster.user.UserController;
+import com.example.rooster.security.user.UserController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

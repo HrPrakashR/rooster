@@ -1,4 +1,4 @@
-package com.example.rooster.user;
+package com.example.rooster.security.user;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
