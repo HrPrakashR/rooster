@@ -49,25 +49,13 @@ export class EmployeeComponent implements OnInit {
     return this.teams?.find(t => t.id === id).name;
   }
 
-  getNextEmployeeId(employees: Employee[] | undefined) {
-    if(employees) {
-      const ids = employees.map(object => {
-        return object.id;
-      });
-      const max = Math.max(...ids);
-      return max + 1;
-    } else {
-      return 0;
-    }
-  }
-
-  saveEmployee(newEmployee: Employee){
-    this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result=>this.employees?.push(result));
+  saveEmployee(newEmployee: Employee) {
+    this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result => this.employees?.push(result));
     this.isFormShown = false;
   }
 
   toggleShow() {
-    this.isFormShown = ! this.isFormShown;
+    this.isFormShown = !this.isFormShown;
   }
 
   clearAll() {
@@ -96,6 +84,7 @@ export class EmployeeComponent implements OnInit {
   editModeOn() {
     this.editMode = true;
   }
+
   editEmployee(employee: Employee) {
     this.employeeService.editEmployee(employee).subscribe();
     this.editMode = false;

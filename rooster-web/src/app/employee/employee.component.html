@@ -114,13 +114,14 @@
     <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">
       <span aria-hidden="true">&times;</span>
     </button>
+    <form #contactForm="ngForm">
     <div>
       <label for="empFirstName">First name: </label>
-      <input id="empFirstName" [(ngModel)]="selectedEmployee.firstName">
+      <input id="empFirstName" name="firstName" [(ngModel)]="selectedEmployee.firstName">
     </div>
     <div>
       <label for="empLastName">Last name: </label>
-      <input id="empLastName" [(ngModel)]="selectedEmployee.lastName">
+      <input id="empLastName" name="lastName" [(ngModel)]="selectedEmployee.lastName">
     </div>
     <p>
       <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
@@ -130,6 +131,7 @@
     </p>
     <button type="button" class="save" title="edit employee"
             (click)="editEmployee(selectedEmployee)">Save</button>
+    </form>
   </div>
 </div>
 
