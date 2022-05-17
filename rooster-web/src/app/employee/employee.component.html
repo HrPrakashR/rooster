@@ -1,137 +1,137 @@
-<div *ngIf="!employeeSelected">
-<div class="container-fluid p-3 my-3">
-  <button (click)="toggleShow()" *ngIf=!isFormShown class="btn btn-primary" type="button">Add New Employees</button>
-  <ng-container *ngIf=isFormShown>
-    <button (click)="toggleShow()" class="btn btn-primary" type="button">Close Form</button>
-    <form #contactForm="ngForm">
-      <p>
-        <label for="firstName">Name:</label>
-        <input type="text" name="firstName" id="firstName" [(ngModel)]="newEmployee.firstName" #firstName="ngModel" placeholder="First Name">
-      </p>
+<!--<div *ngIf="!employeeSelected">-->
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="toggleShow()" *ngIf=!isFormShown class="btn btn-primary" type="button">Add New Employees</button>-->
+<!--  <ng-container *ngIf=isFormShown>-->
+<!--    <button (click)="toggleShow()" class="btn btn-primary" type="button">Close Form</button>-->
+<!--    <form #contactForm="ngForm">-->
+<!--      <p>-->
+<!--        <label for="firstName">Name:</label>-->
+<!--        <input type="text" name="firstName" id="firstName" [(ngModel)]="newEmployee.firstName" #firstName="ngModel" placeholder="First Name">-->
+<!--      </p>-->
 
-      <p>
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName" [(ngModel)]="newEmployee.lastName" #firstName="ngModel" placeholder="Last Name">
-      </p>
+<!--      <p>-->
+<!--        <label for="lastName">Last Name:</label>-->
+<!--        <input type="text" name="lastName" id="lastName" [(ngModel)]="newEmployee.lastName" #firstName="ngModel" placeholder="Last Name">-->
+<!--      </p>-->
 
-      <p>
-        <label for="password">Password:</label>
-        <input type="text" name="password" id="password" [(ngModel)]="newEmployee.password" #passwordName="ngModel" placeholder="Password">
-      </p>
+<!--      <p>-->
+<!--        <label for="password">Password:</label>-->
+<!--        <input type="text" name="password" id="password" [(ngModel)]="newEmployee.password" #passwordName="ngModel" placeholder="Password">-->
+<!--      </p>-->
 
-      <p>
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" [(ngModel)]="newEmployee.email" #email="ngModel" placeholder="Email">
-      </p>
+<!--      <p>-->
+<!--        <label for="email">Email:</label>-->
+<!--        <input type="text" name="email" id="email" [(ngModel)]="newEmployee.email" #email="ngModel" placeholder="Email">-->
+<!--      </p>-->
 
-      <p>
-        <label for="team">Team:</label>
-        <select [(ngModel)]="newEmployee.team" id="team">
-          <option *ngFor="let team of teams" [value]="team.id">{{team.name}}</option>
-        </select>
-      </p>
+<!--      <p>-->
+<!--        <label for="team">Team:</label>-->
+<!--        <select [(ngModel)]="newEmployee.team" id="team">-->
+<!--          <option *ngFor="let team of teams" [value]="team.id">{{team.name}}</option>-->
+<!--        </select>-->
+<!--      </p>-->
 
-      <p>
-        <label for="hoursPerWeek">Hours Per Week:</label>
-        <input type="number" name="hoursPerWeek" id="hoursPerWeek" [(ngModel)]="newEmployee.hoursPerWeek" #hoursPerWeek="ngModel" placeholder="Hours Per Week" [min]="0" step="1">
-      </p>
+<!--      <p>-->
+<!--        <label for="hoursPerWeek">Hours Per Week:</label>-->
+<!--        <input type="number" name="hoursPerWeek" id="hoursPerWeek" [(ngModel)]="newEmployee.hoursPerWeek" #hoursPerWeek="ngModel" placeholder="Hours Per Week" [min]="0" step="1">-->
+<!--      </p>-->
 
-      <p>
-        <label for="balanceHours">Balance Hours:</label>
-        <input type="number" name="balanceHours" id="balanceHours" [(ngModel)]="newEmployee.balanceHours" #balanceHours="ngModel" placeholder="Balance Hours" step="0.25">
-      </p>
+<!--      <p>-->
+<!--        <label for="balanceHours">Balance Hours:</label>-->
+<!--        <input type="number" name="balanceHours" id="balanceHours" [(ngModel)]="newEmployee.balanceHours" #balanceHours="ngModel" placeholder="Balance Hours" step="0.25">-->
+<!--      </p>-->
 
-      <p>
-        <label for="breakTime">Break Time:</label>
-        <input type="number" name="breakTime" id="breakTime" [(ngModel)]="newEmployee.breakTime" #breakTime="ngModel" placeholder="Break Time"[min]="0" step="0,25">
-      </p>
+<!--      <p>-->
+<!--        <label for="breakTime">Break Time:</label>-->
+<!--        <input type="number" name="breakTime" id="breakTime" [(ngModel)]="newEmployee.breakTime" #breakTime="ngModel" placeholder="Break Time"[min]="0" step="0,25">-->
+<!--      </p>-->
 
-      <p>
-        <label for="role">Role:</label>
-        <select [(ngModel)]="newEmployee.role" id="role">
-          <option *ngFor="let r of Role | keyvalue" [value]="r.key" >{{r.key}} - {{r.value}}</option>
-        </select>
-      </p>
+<!--      <p>-->
+<!--        <label for="role">Role:</label>-->
+<!--        <select [(ngModel)]="newEmployee.role" id="role">-->
+<!--          <option *ngFor="let r of Role | keyvalue" [value]="r.key" >{{r.key}} - {{r.value}}</option>-->
+<!--        </select>-->
+<!--      </p>-->
 
-      <p>
-        <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>
-      </p>
-    </form>
-  </ng-container>
-</div>
+<!--      <p>-->
+<!--        <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>-->
+<!--      </p>-->
+<!--    </form>-->
+<!--  </ng-container>-->
+<!--</div>-->
 
-<div class="container-fluid p-3 my-3">
-  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
-  <ng-container *ngIf="employees">
-    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Employees</button>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Employee</th>
-        <th scope="col">Balance Hours</th>
-        <th scope="col">Break Time</th>
-        <th scope="col">Email</th>
-        <th scope="col">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let e of employees">
-        <th scope="row">{{e.firstName}} {{e.lastName}}</th>
-        <td>{{e.balanceHours}}</td>
-        <td>{{e.breakTime}}</td>
-        <td>{{e.email}}</td>
-        <td>
-          <button type="button" class="show" title="employee details"
-                  (click)="getEmployee(e.id)">Details</button>
-        </td>
-        <td>
-          <button type="button" class="delete" title="delete employee"
-                  (click)="deleteEmployee(e)">Delete</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </ng-container>
-</div>
-</div>
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>-->
+<!--  <ng-container *ngIf="employees">-->
+<!--    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Employees</button>-->
+<!--    <table class="table table-striped">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th scope="col">Employee</th>-->
+<!--        <th scope="col">Balance Hours</th>-->
+<!--        <th scope="col">Break Time</th>-->
+<!--        <th scope="col">Email</th>-->
+<!--        <th scope="col">Actions</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let e of employees">-->
+<!--        <th scope="row">{{e.firstName}} {{e.lastName}}</th>-->
+<!--        <td>{{e.balanceHours}}</td>-->
+<!--        <td>{{e.breakTime}}</td>-->
+<!--        <td>{{e.email}}</td>-->
+<!--        <td>-->
+<!--          <button type="button" class="show" title="employee details"-->
+<!--                  (click)="getEmployee(e.id)">Details</button>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--          <button type="button" class="delete" title="delete employee"-->
+<!--                  (click)="deleteEmployee(e)">Delete</button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </ng-container>-->
+<!--</div>-->
 
-<div class="card" *ngIf="employeeSelected"   >
-  <div class="container" *ngIf="!editMode">
-    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>
-    <p>
-      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
-    </p>
-    <p>
-      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
-    </p>
-    <button type="button" class="edit" title="edit employee"
-            (click)="editModeOn()">Edit</button>
-  </div>
-  <div class="container" *ngIf="editMode">
-    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <div>
-      <label for="empFirstName">First name: </label>
-      <input id="empFirstName" [(ngModel)]="selectedEmployee.firstName">
-    </div>
-    <div>
-      <label for="empLastName">Last name: </label>
-      <input id="empLastName" [(ngModel)]="selectedEmployee.lastName">
-    </div>
-    <p>
-      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
-    </p>
-    <p>
-      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}
-    </p>
-    <button type="button" class="save" title="edit employee"
-            (click)="editEmployee(selectedEmployee)">Save</button>
-  </div>
-</div>
+<!---->
+<!--<div class="card" *ngIf="employeeSelected"   >-->
+<!--  <div class="container" *ngIf="!editMode">-->
+<!--    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">-->
+<!--      <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>-->
+<!--    <p>-->
+<!--      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}-->
+<!--    </p>-->
+<!--    <button type="button" class="edit" title="edit employee"-->
+<!--            (click)="editModeOn()">Edit</button>-->
+<!--  </div>-->
+<!--  <div class="container" *ngIf="editMode">-->
+<!--    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">-->
+<!--      <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--    <div>-->
+<!--      <label for="empFirstName">First name: </label>-->
+<!--      <input id="empFirstName" [(ngModel)]="selectedEmployee.firstName">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label for="empLastName">Last name: </label>-->
+<!--      <input id="empLastName" [(ngModel)]="selectedEmployee.lastName">-->
+<!--    </div>-->
+<!--    <p>-->
+<!--      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}-->
+<!--    </p>-->
+<!--    <button type="button" class="save" title="edit employee"-->
+<!--            (click)="editEmployee(selectedEmployee)">Save</button>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 <!--
@@ -140,9 +140,213 @@ Team has to be added first, if no other team exist.
 CEO => info about Manager and all Employees / we can do everything! Can chose any team when adding a new employee.
 Manager => all information about all Employees / can see: EDIT & DELETE, ADD NEW EMPLOYEE and DETAILS of own Employees.
 New employee will automatically be added to manager's team.
-Employee => info about Trainees / can see: DETAILS: List of all employees of each team with email & telephone details
-Trainee => info about themselves / can see: LEAVE REQUEST, info about their own TEAM / only details button
+Employee => info about themselves / can see: LEAVE REQUEST BTN, info about their own TEAM
+Trainee => info about themselves / can see: LEAVE REQUEST BTN, info about their own TEAM / only details button
 
 write a new function to show the info about the person
 -->
+
+<!-- Title Greeting -->
+<section id="greeting" class="pb-5">
+  <div class="container">
+    <h5 class="section-title h1">HELLO, *NAME*!</h5>
+    <div class="row justify-content-center">
+
+      <!-- Card for Trainee -->
+
+<!--      <div class="col-xs-12 col-sm-6 col-md-4">-->
+<!--        <div class="image-flip">-->
+<!--              <div class="card">-->
+<!--                <div class="card-body text-center">-->
+<!--                  <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>-->
+<!--                  <h4 class="card-title">*NAME*</h4>-->
+<!--                  <p class="card-text">*Team:*</p>-->
+<!--                  <p class="card-text">*Position:*</p>-->
+<!--                  <p class="card-text">*Email:*</p>-->
+<!--                  <a href="https://jobs.academicwork.de/" class="btn btn-primary btn-sm">Leave Request</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <!-- ./Card for Trainee -->
+
+      <!-- Card for Employee -->
+<!--      <div class="col-xs-12 col-sm-6 col-md-4">-->
+<!--        <div class="image-flip">-->
+<!--          <div class="card">-->
+<!--            <div class="card-body text-center">-->
+<!--              <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>-->
+<!--              <h4 class="card-title">*NAME*</h4>-->
+<!--              <p class="card-text">*Team:*</p>-->
+<!--              <p class="card-text">*Position:*</p>-->
+<!--              <p class="card-text">*Email:*</p>-->
+<!--              <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">-->
+<!--              <a class="btn btn-primary mr-1" href="https://jobs.academicwork.de/" role="button">Leave Request</a>-->
+<!--              <a href="https://jobs.academicwork.de/" class="btn btn-primary" role="button">My team</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <!-- ./Card for Employee -->
+
+      <!-- Card for Manager -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+                             data-holder-rendered="true"></p>
+                    <h4 class="card-title">*NAME*</h4>
+                    <p class="card-text">*Team:*</p>
+                    <p class="card-text">*Position:*</p>
+                    <p class="card-text">*Email:*</p>
+                    <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">
+                    <a class="btn btn-primary mr-1" href="https://jobs.academicwork.de/" role="button">Leave Request</a>
+                    <a href="https://jobs.academicwork.de/" class="btn btn-primary" role="button">Add new employee</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- ./Card for Manager -->
+    </div>
+</section>
+<!-- Title Greeting -->
+
+<!-- Team for Manager -->
+<!--<section id="team" class="pb-5">-->
+<!--  <div class="container">-->
+<!--    <h5 class="section-title h1">YOUR TEAM</h5>-->
+<!--    <div class="row">-->
+
+      <!-- Team for CEO -->
+      <section id="ceo" class="pb-5">
+        <div class="container">
+          <h5 class="section-title h1">YOUR STAFF</h5>
+          <div class="row">
+
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+      <!-- Team member -->
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">*NAME*</h4>
+              <p class="card-text">*Team:*</p>
+              <p class="card-text">*Position:*</p>
+              <p class="card-text">*Email:*</p>
+              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
+              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ./Team member -->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!-- Team for Manager -->
+    </div>
+  </div>
+</section>
+<!-- Team for CEO -->
+
+
+
 
