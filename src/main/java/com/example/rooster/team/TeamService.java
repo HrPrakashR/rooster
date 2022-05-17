@@ -114,25 +114,91 @@ public class TeamService {
         team.setRestHours(teamDTO.getRestHours());
         team.setRestDays(teamDTO.getRestDays());
         team.setMinBreakTime(teamDTO.getMinBreakTime());
+
         team.setMondayFrom(
                 DateWorker.getDateObject(0,
                         Integer.parseInt(teamDTO.getMondayFrom().substring(2,3)),
                         Integer.parseInt(teamDTO.getMondayFrom().substring(0,1)))
         );
 
-        team.setMondayTo(teamDTO.getMondayTo());
-        team.setTuesdayFrom(teamDTO.getTuesdayFrom());
-        team.setTuesdayTo(teamDTO.getTuesdayTo());
-        team.setWednesdayFrom(teamDTO.getWednesdayFrom());
-        team.setWednesdayTo(teamDTO.getWednesdayTo());
-        team.setThursdayFrom(teamDTO.getThursdayFrom());
-        team.setThursdayTo(teamDTO.getThursdayTo());
-        team.setFridayFrom(teamDTO.getFridayFrom());
-        team.setFridayTo(teamDTO.getFridayTo());
-        team.setSaturdayFrom(teamDTO.getSaturdayFrom());
-        team.setSaturdayTo(teamDTO.getSaturdayTo());
-        team.setSundayFrom(teamDTO.getSundayFrom());
-        team.setSundayTo(teamDTO.getSundayTo());
+        team.setMondayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getMondayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getMondayTo().substring(0,1)))
+        );
+
+        team.setTuesdayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getTuesdayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getTuesdayFrom().substring(0,1)))
+        );
+
+        team.setTuesdayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getTuesdayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getTuesdayTo().substring(0,1)))
+        );
+
+        team.setWednesdayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getWednesdayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getWednesdayFrom().substring(0,1)))
+        );
+
+        team.setWednesdayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getWednesdayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getWednesdayTo().substring(0,1)))
+        );
+
+        team.setThursdayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getThursdayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getThursdayFrom().substring(0,1)))
+        );
+
+        team.setThursdayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getThursdayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getThursdayTo().substring(0,1)))
+        );
+
+        team.setFridayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getFridayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getFridayFrom().substring(0,1)))
+        );
+
+        team.setFridayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getFridayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getFridayTo().substring(0,1)))
+        );
+
+        team.setSaturdayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getSaturdayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getSaturdayFrom().substring(0,1)))
+        );
+
+        team.setSaturdayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getSaturdayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getSaturdayTo().substring(0,1)))
+        );
+
+        team.setSundayFrom(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getSundayFrom().substring(2,3)),
+                        Integer.parseInt(teamDTO.getSundayFrom().substring(0,1)))
+        );
+
+        team.setSundayTo(
+                DateWorker.getDateObject(0,
+                        Integer.parseInt(teamDTO.getSundayTo().substring(2,3)),
+                        Integer.parseInt(teamDTO.getSundayTo().substring(0,1)))
+        );
+
         return team;
     }
 
