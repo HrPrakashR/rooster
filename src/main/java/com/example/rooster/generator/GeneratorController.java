@@ -77,7 +77,7 @@ public class GeneratorController {
                         roster.add(
                                 new PeriodDTO(
                                         period.getId(),
-                                        period.getPurpose().ordinal(),
+                                        period.getPurpose().name(),
                                         period.getDateFrom(),
                                         period.getDateTo(),
                                         period.getEmployee().getId()

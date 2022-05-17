@@ -7,7 +7,7 @@ public class PeriodDTO {
 
     private long id;
 
-    private int purpose;
+    private String purpose;
 
     private Date dateFrom;
 
@@ -18,7 +18,7 @@ public class PeriodDTO {
     public PeriodDTO() {
     }
 
-    public PeriodDTO(long id, int purpose, Date dateFrom, Date dateTo, long employee) {
+    public PeriodDTO(long id, String purpose, Date dateFrom, Date dateTo, long employee) {
         this.id = id;
         this.purpose = purpose;
         this.dateFrom = dateFrom;
@@ -34,11 +34,11 @@ public class PeriodDTO {
         this.id = id;
     }
 
-    public int getPurpose() {
+    public String getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(int purpose) {
+    public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
 

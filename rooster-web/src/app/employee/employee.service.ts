@@ -85,7 +85,7 @@ export class EmployeeService {
 
   editEmployee(employee: Employee): Observable<Employee> {
     const url = `${this.employeesUrl}/edit`;
-    return this.http.post<Employee>(url, this.httpOptions)
+    return this.http.post<Employee>(url, employee, this.httpOptions)
   }
 
   // /** PUT: update the hero on the server */
