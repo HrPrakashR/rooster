@@ -1,7 +1,7 @@
 export interface Period {
   id: number;
   purpose: number;
-  dateFrom: Date;
-  dateTo: Date;
+  dateFrom: string;
+  dateTo: string;
   employee: number;
 }

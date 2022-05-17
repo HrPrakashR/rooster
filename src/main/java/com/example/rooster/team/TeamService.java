@@ -38,38 +38,38 @@ public class TeamService {
         teamDTO.setMinBreakTime(team.getMinBreakTime());
 
         if (team.getMondayFrom() != null && team.getMondayTo() != null) {
-            teamDTO.setMondayFrom(DateWorker.generateTimeString(team.getMondayFrom()));
-            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+            teamDTO.setMondayFrom(DateWorker.convertDateToTimeString(team.getMondayFrom()));
+            teamDTO.setMondayTo(DateWorker.convertDateToTimeString(team.getMondayTo()));
         }
 
         if (team.getTuesdayFrom() != null && team.getTuesdayTo() != null) {
-            teamDTO.setTuesdayFrom(DateWorker.generateTimeString(team.getTuesdayFrom()));
-            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+            teamDTO.setTuesdayFrom(DateWorker.convertDateToTimeString(team.getTuesdayFrom()));
+            teamDTO.setMondayTo(DateWorker.convertDateToTimeString(team.getMondayTo()));
         }
 
         if (team.getWednesdayFrom() != null && team.getWednesdayTo() != null) {
-            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayFrom()));
-            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayTo()));
+            teamDTO.setWednesdayFrom(DateWorker.convertDateToTimeString(team.getWednesdayFrom()));
+            teamDTO.setWednesdayFrom(DateWorker.convertDateToTimeString(team.getWednesdayTo()));
         }
 
         if (team.getThursdayFrom() != null && team.getThursdayTo() != null) {
-            teamDTO.setThursdayFrom(DateWorker.generateTimeString(team.getThursdayFrom()));
-            teamDTO.setThursdayTo(DateWorker.generateTimeString(team.getThursdayTo()));
+            teamDTO.setThursdayFrom(DateWorker.convertDateToTimeString(team.getThursdayFrom()));
+            teamDTO.setThursdayTo(DateWorker.convertDateToTimeString(team.getThursdayTo()));
         }
 
         if (team.getFridayFrom() != null && team.getFridayTo() != null) {
-            teamDTO.setFridayFrom(DateWorker.generateTimeString(team.getFridayFrom()));
-            teamDTO.setFridayTo(DateWorker.generateTimeString(team.getFridayTo()));
+            teamDTO.setFridayFrom(DateWorker.convertDateToTimeString(team.getFridayFrom()));
+            teamDTO.setFridayTo(DateWorker.convertDateToTimeString(team.getFridayTo()));
         }
 
         if (team.getSaturdayFrom() != null && team.getSaturdayTo() != null) {
-            teamDTO.setSaturdayFrom(DateWorker.generateTimeString(team.getSaturdayFrom()));
-            teamDTO.setSaturdayTo(DateWorker.generateTimeString(team.getSaturdayTo()));
+            teamDTO.setSaturdayFrom(DateWorker.convertDateToTimeString(team.getSaturdayFrom()));
+            teamDTO.setSaturdayTo(DateWorker.convertDateToTimeString(team.getSaturdayTo()));
         }
 
         if (team.getSundayFrom() != null && team.getSundayTo() != null) {
-            teamDTO.setSundayFrom(DateWorker.generateTimeString(team.getSundayFrom()));
-            teamDTO.setSundayTo(DateWorker.generateTimeString(team.getSundayTo()));
+            teamDTO.setSundayFrom(DateWorker.convertDateToTimeString(team.getSundayFrom()));
+            teamDTO.setSundayTo(DateWorker.convertDateToTimeString(team.getSundayTo()));
         }
 
 
@@ -250,13 +250,13 @@ public class TeamService {
         return this.teamRepository.findById(id);
     }
 
-    public Team setTeam(Team team) {
-        return this.teamRepository.save(team);
+    public void setTeam(Team team) {
+        this.teamRepository.save(team);
     }
 
-    public ResponseEntity<String> deleteTeam(long id) {
+    public void deleteTeam(long id) {
         this.teamRepository.deleteById((this.teamRepository.getById(id).getId()));
-        return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
+        new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
     }
 
     public void neutralizeEmployeeTeam(Team team) {
@@ -264,7 +264,7 @@ public class TeamService {
         listOfEmployees.forEach(e -> e.setTeam(null));
     }
 
-    public Team updateTeam(Team team) {
+    public void updateTeam(Team team) {
         if (team != null && !Objects.isNull(this.getTeamById(team.getId()))) {
             this.teamRepository.save(team);
         }

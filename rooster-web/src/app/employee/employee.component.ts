@@ -22,7 +22,6 @@ export class EmployeeComponent implements OnInit {
   selectedEmployee = {} as Employee;
   editMode = false;
 
-
   constructor(private http: HttpClient,
               private employeeService: EmployeeService) {
   }

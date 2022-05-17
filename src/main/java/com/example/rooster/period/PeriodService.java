@@ -2,6 +2,7 @@ package com.example.rooster.period;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
+import com.example.rooster.helpers.DateWorker;
 import com.example.rooster.team.Team;
 import org.springframework.stereotype.Service;
 
@@ -49,8 +50,8 @@ public class PeriodService {
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
         period.setPurpose(Purpose.valueOf(periodDTO.getPurpose()));
-        period.setDateFrom(periodDTO.getDateFrom());
-        period.setDateTo(periodDTO.getDateTo());
+        period.setDateFrom(DateWorker.convertDateStringToDate(periodDTO.getDateFrom()));
+        period.setDateTo(DateWorker.convertDateStringToDate(periodDTO.getDateTo()));
         period.setEmployee(this.employeeService.getEmployee(periodDTO.getEmployee()));
         return period;
     }
@@ -59,8 +60,8 @@ public class PeriodService {
         PeriodDTO periodDTO = new PeriodDTO();
         periodDTO.setId(period.getId());
         periodDTO.setPurpose(period.getPurpose().name());
-        periodDTO.setDateFrom(period.getDateFrom());
-        periodDTO.setDateTo(period.getDateTo());
+        periodDTO.setDateFrom(DateWorker.convertDateToDateString(period.getDateFrom()));
+        periodDTO.setDateTo(DateWorker.convertDateToDateString(period.getDateTo()));
         periodDTO.setEmployee(period.getEmployee().getId());
         return periodDTO;
     }
