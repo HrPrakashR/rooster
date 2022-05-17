@@ -39,10 +39,10 @@ public class EmployeeController {
     //Creating a new employee
     //We save an employee and send password to him in the same line
     @PostMapping("/new")
-    public EmployeeDTO addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee newEmployee = employeeService.convertToEmployee(employeeDTO);
-        this.userController.sendPassword(employeeService.setEmployee(newEmployee).getId()); //Send user a password after adding him/her to the database
-        return employeeService.convertToDTO(newEmployee);
+    public Employee addNewEmployee(Employee employee) {
+//        Employee newEmployee = employeeService.convertToEmployee(employee);
+        this.userController.sendPassword(employeeService.setEmployee(employee).getId()); //Send user a password after adding him/her to the database
+        return employee;
     }
 
     //Editing an existing employee
