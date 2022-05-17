@@ -11,5 +11,5 @@ export interface Employee {
   hoursPerWeek: number;
   balanceHours: number;
   breakTime: number;
-  role: number;
+  role: string;
 }
