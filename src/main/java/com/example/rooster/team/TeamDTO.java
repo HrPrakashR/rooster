@@ -1,7 +1,5 @@
 package com.example.rooster.team;
 
-import java.util.Date;
-
 public class TeamDTO {
 
     private long id;
@@ -14,29 +12,32 @@ public class TeamDTO {
 
     private double minBreakTime;
 
-    private Date mondayFrom;
-    private Date mondayTo;
+    private String mondayFrom;
+    private String mondayTo;
 
-    private Date tuesdayFrom;
-    private Date tuesdayTo;
+    private String tuesdayFrom;
+    private String tuesdayTo;
 
-    private Date wednesdayFrom;
-    private Date wednesdayTo;
+    private String wednesdayFrom;
+    private String wednesdayTo;
 
-    private Date thursdayFrom;
-    private Date thursdayTo;
-    private Date fridayFrom;
-    private Date fridayTo;
-    private Date saturdayFrom;
-    private Date saturdayTo;
-    private Date sundayFrom;
-    private Date sundayTo;
+    private String thursdayFrom;
+    private String thursdayTo;
+
+    private String fridayFrom;
+    private String fridayTo;
+
+    private String saturdayFrom;
+    private String saturdayTo;
+
+    private String sundayFrom;
+    private String sundayTo;
 
     public TeamDTO() {
 
     }
 
-    public TeamDTO(long id, String name, double restHours, int restDays, double minBreakTime, Date mondayFrom, Date mondayTo, Date tuesdayFrom, Date tuesdayTo, Date wednesdayFrom, Date wednesdayTo, Date thursdayFrom, Date thursdayTo, Date fridayFrom, Date fridayTo, Date saturdayFrom, Date saturdayTo, Date sundayFrom, Date sundayTo) {
+    public TeamDTO(long id, String name, double restHours, int restDays, double minBreakTime, String mondayFrom, String mondayTo, String tuesdayFrom, String tuesdayTo, String wednesdayFrom, String wednesdayTo, String thursdayFrom, String thursdayTo, String fridayFrom, String fridayTo, String saturdayFrom, String saturdayTo, String sundayFrom, String sundayTo) {
         this.id = id;
         this.name = name;
         this.restHours = restHours;
@@ -98,116 +99,115 @@ public class TeamDTO {
         this.minBreakTime = minBreakTime;
     }
 
-    public Date getMondayFrom() {
+    public String getMondayFrom() {
         return mondayFrom;
     }
 
-    public void setMondayFrom(Date mondayFrom) {
+    public void setMondayFrom(String mondayFrom) {
         this.mondayFrom = mondayFrom;
     }
 
-    public Date getMondayTo() {
+    public String getMondayTo() {
         return mondayTo;
     }
 
-    public void setMondayTo(Date mondayTo) {
+    public void setMondayTo(String mondayTo) {
         this.mondayTo = mondayTo;
     }
 
-    public Date getTuesdayFrom() {
+    public String getTuesdayFrom() {
         return tuesdayFrom;
     }
 
-    public void setTuesdayFrom(Date tuesdayFrom) {
+    public void setTuesdayFrom(String tuesdayFrom) {
         this.tuesdayFrom = tuesdayFrom;
     }
 
-    public Date getTuesdayTo() {
+    public String getTuesdayTo() {
         return tuesdayTo;
     }
 
-    public void setTuesdayTo(Date tuesdayTo) {
+    public void setTuesdayTo(String tuesdayTo) {
         this.tuesdayTo = tuesdayTo;
     }
 
-    public Date getWednesdayFrom() {
+    public String getWednesdayFrom() {
         return wednesdayFrom;
     }
 
-    public void setWednesdayFrom(Date wednesdayFrom) {
+    public void setWednesdayFrom(String wednesdayFrom) {
         this.wednesdayFrom = wednesdayFrom;
     }
 
-    public Date getWednesdayTo() {
+    public String getWednesdayTo() {
         return wednesdayTo;
     }
 
-    public void setWednesdayTo(Date wednesdayTo) {
+    public void setWednesdayTo(String wednesdayTo) {
         this.wednesdayTo = wednesdayTo;
     }
 
-    public Date getThursdayFrom() {
+    public String getThursdayFrom() {
         return thursdayFrom;
     }
 
-    public void setThursdayFrom(Date thursdayFrom) {
+    public void setThursdayFrom(String thursdayFrom) {
         this.thursdayFrom = thursdayFrom;
     }
 
-    public Date getThursdayTo() {
+    public String getThursdayTo() {
         return thursdayTo;
     }
 
-    public void setThursdayTo(Date thursdayTo) {
+    public void setThursdayTo(String thursdayTo) {
         this.thursdayTo = thursdayTo;
     }
 
-    public Date getFridayFrom() {
+    public String getFridayFrom() {
         return fridayFrom;
     }
 
-    public void setFridayFrom(Date fridayFrom) {
+    public void setFridayFrom(String fridayFrom) {
         this.fridayFrom = fridayFrom;
     }
 
-    public Date getFridayTo() {
+    public String getFridayTo() {
         return fridayTo;
     }
 
-    public void setFridayTo(Date fridayTo) {
+    public void setFridayTo(String fridayTo) {
         this.fridayTo = fridayTo;
     }
 
-    public Date getSaturdayFrom() {
+    public String getSaturdayFrom() {
         return saturdayFrom;
     }
 
-    public void setSaturdayFrom(Date saturdayFrom) {
+    public void setSaturdayFrom(String saturdayFrom) {
         this.saturdayFrom = saturdayFrom;
     }
 
-    public Date getSaturdayTo() {
+    public String getSaturdayTo() {
         return saturdayTo;
     }
 
-    public void setSaturdayTo(Date saturdayTo) {
+    public void setSaturdayTo(String saturdayTo) {
         this.saturdayTo = saturdayTo;
     }
 
-    public Date getSundayFrom() {
+    public String getSundayFrom() {
         return sundayFrom;
     }
 
-    public void setSundayFrom(Date sundayFrom) {
+    public void setSundayFrom(String sundayFrom) {
         this.sundayFrom = sundayFrom;
     }
 
-    public Date getSundayTo() {
+    public String getSundayTo() {
         return sundayTo;
     }
 
-    public void setSundayTo(Date sundayTo) {
+    public void setSundayTo(String sundayTo) {
         this.sundayTo = sundayTo;
     }
-
 }

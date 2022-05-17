@@ -6,6 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 public class DateWorker {
+
+    public static String generateTimeString(Date date){
+        Calendar calendar = getCalendarObject(date);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        return String.format("%02d:%02d", hours, minutes);
+    }
+
     public static Date getDate(boolean lastDayOfMonth, int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -63,7 +71,7 @@ public class DateWorker {
                             break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
-                    };
+                    }
                 }
         );
         return days;
@@ -77,6 +85,14 @@ public class DateWorker {
         calendar.set(Calendar.DAY_OF_MONTH, day);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
+    }
+
+    public static Date getDateObject(int seconds, int minutes, int hours){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, seconds);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
         return calendar.getTime();
     }
 

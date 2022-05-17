@@ -2,14 +2,12 @@ package com.example.rooster.team;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeRepository;
+import com.example.rooster.helpers.DateWorker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TeamService {
@@ -35,20 +33,45 @@ public class TeamService {
         teamDTO.setRestHours(team.getRestHours());
         teamDTO.setRestDays(team.getRestDays());
         teamDTO.setMinBreakTime(team.getMinBreakTime());
-        teamDTO.setMondayFrom(team.getMondayFrom());
-        teamDTO.setMondayTo(team.getMondayTo());
-        teamDTO.setTuesdayFrom(team.getTuesdayFrom());
-        teamDTO.setTuesdayTo(team.getTuesdayTo());
-        teamDTO.setWednesdayFrom(team.getWednesdayFrom());
-        teamDTO.setWednesdayTo(team.getWednesdayTo());
-        teamDTO.setThursdayFrom(team.getThursdayFrom());
-        teamDTO.setThursdayTo(team.getThursdayTo());
-        teamDTO.setFridayFrom(team.getFridayFrom());
-        teamDTO.setFridayTo(team.getFridayTo());
-        teamDTO.setSaturdayFrom(team.getSaturdayFrom());
-        teamDTO.setSaturdayTo(team.getSaturdayTo());
-        teamDTO.setSundayFrom(team.getSundayFrom());
-        teamDTO.setSundayTo(team.getSundayTo());
+
+        if (team.getMondayFrom() != null && team.getMondayTo() != null) {
+            teamDTO.setMondayFrom(DateWorker.generateTimeString(team.getMondayFrom()));
+            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+        }
+
+        if (team.getTuesdayFrom() != null && team.getTuesdayTo() != null) {
+            teamDTO.setTuesdayFrom(DateWorker.generateTimeString(team.getTuesdayFrom()));
+            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+        }
+
+        if (team.getWednesdayFrom() != null && team.getWednesdayTo() != null) {
+            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayFrom()));
+            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayTo()));
+        }
+
+        if (team.getThursdayFrom() != null && team.getThursdayTo() != null) {
+            teamDTO.setThursdayFrom(DateWorker.generateTimeString(team.getThursdayFrom()));
+            teamDTO.setThursdayTo(DateWorker.generateTimeString(team.getThursdayTo()));
+        }
+
+        if (team.getFridayFrom() != null && team.getFridayTo() != null) {
+            teamDTO.setFridayFrom(DateWorker.generateTimeString(team.getFridayFrom()));
+            teamDTO.setFridayTo(DateWorker.generateTimeString(team.getFridayTo()));
+        }
+
+        if (team.getSaturdayFrom() != null && team.getSaturdayTo() != null) {
+            teamDTO.setSaturdayFrom(DateWorker.generateTimeString(team.getSaturdayFrom()));
+            teamDTO.setSaturdayTo(DateWorker.generateTimeString(team.getSaturdayTo()));
+        }
+
+        if (team.getSundayFrom() != null && team.getSundayTo() != null) {
+            teamDTO.setSundayFrom(DateWorker.generateTimeString(team.getSundayFrom()));
+            teamDTO.setSundayTo(DateWorker.generateTimeString(team.getSundayTo()));
+        }
+
+
+
+
         return teamDTO;
     }
 
@@ -59,20 +82,162 @@ public class TeamService {
         team.setRestHours(teamDTO.getRestHours());
         team.setRestDays(teamDTO.getRestDays());
         team.setMinBreakTime(teamDTO.getMinBreakTime());
-        team.setMondayFrom(teamDTO.getMondayFrom());
-        team.setMondayTo(teamDTO.getMondayTo());
-        team.setTuesdayFrom(teamDTO.getTuesdayFrom());
-        team.setTuesdayTo(teamDTO.getTuesdayTo());
-        team.setWednesdayFrom(teamDTO.getWednesdayFrom());
-        team.setWednesdayTo(teamDTO.getWednesdayTo());
-        team.setThursdayFrom(teamDTO.getThursdayFrom());
-        team.setThursdayTo(teamDTO.getThursdayTo());
-        team.setFridayFrom(teamDTO.getFridayFrom());
-        team.setFridayTo(teamDTO.getFridayTo());
-        team.setSaturdayFrom(teamDTO.getSaturdayFrom());
-        team.setSaturdayTo(teamDTO.getSaturdayTo());
-        team.setSundayFrom(teamDTO.getSundayFrom());
-        team.setSundayTo(teamDTO.getSundayTo());
+
+        if (
+                teamDTO.getMondayFrom() != null &&
+                        teamDTO.getMondayTo() != null &&
+                        !teamDTO.getMondayFrom().isEmpty() &&
+                        !teamDTO.getMondayTo().isEmpty() &&
+                        !teamDTO.getMondayFrom().equals(teamDTO.getMondayTo()) &&
+                        !teamDTO.getMondayFrom().isBlank() &&
+                        !teamDTO.getMondayTo().isBlank()
+
+        ) {
+            team.setMondayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getMondayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getMondayFrom().substring(0, 1)))
+            );
+            team.setMondayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getMondayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getMondayTo().substring(0, 1)))
+            );
+        }
+
+        if (
+                teamDTO.getTuesdayFrom() != null &&
+                        teamDTO.getTuesdayTo() != null &&
+                        !teamDTO.getTuesdayFrom().isEmpty() &&
+                        !teamDTO.getTuesdayTo().isEmpty() &&
+                        !teamDTO.getTuesdayFrom().equals(teamDTO.getTuesdayTo()) &&
+                        !teamDTO.getTuesdayFrom().isBlank() &&
+                        !teamDTO.getTuesdayTo().isBlank()
+        ) {
+            team.setTuesdayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(0, 1)))
+            );
+            team.setTuesdayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getTuesdayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getTuesdayTo().substring(0, 1)))
+            );
+        }
+
+
+        if (
+                teamDTO.getWednesdayFrom() != null &&
+                        teamDTO.getWednesdayTo() != null &&
+                        !teamDTO.getWednesdayFrom().isEmpty() &&
+                        !teamDTO.getWednesdayTo().isEmpty() &&
+                        !teamDTO.getWednesdayFrom().equals(teamDTO.getWednesdayTo()) &&
+                        !teamDTO.getWednesdayFrom().isBlank() &&
+                        !teamDTO.getWednesdayTo().isBlank()
+        ) {
+            team.setWednesdayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(0, 1)))
+            );
+
+            team.setWednesdayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getWednesdayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getWednesdayTo().substring(0, 1)))
+            );
+        }
+
+        if (
+                teamDTO.getThursdayFrom() != null &&
+                        teamDTO.getThursdayTo() != null &&
+                        !teamDTO.getThursdayTo().isEmpty() &&
+                        !teamDTO.getThursdayFrom().isEmpty() &&
+                        !teamDTO.getThursdayFrom().equals(teamDTO.getThursdayTo()) &&
+                        !teamDTO.getThursdayFrom().isBlank() &&
+                        !teamDTO.getThursdayTo().isBlank()
+        ) {
+            team.setThursdayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getThursdayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getThursdayFrom().substring(0, 1)))
+            );
+
+            team.setThursdayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getThursdayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getThursdayTo().substring(0, 1)))
+            );
+        }
+
+        if (
+                teamDTO.getFridayFrom() != null &&
+                        teamDTO.getFridayTo() != null &&
+                        !teamDTO.getFridayFrom().isEmpty() &&
+                        !teamDTO.getFridayTo().isEmpty() &&
+                        !teamDTO.getFridayFrom().equals(teamDTO.getFridayTo()) &&
+                        !teamDTO.getFridayFrom().isBlank() &&
+                        !teamDTO.getFridayTo().isBlank()
+        ) {
+            team.setFridayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getFridayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getFridayFrom().substring(0, 1)))
+            );
+
+            team.setFridayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getFridayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getFridayTo().substring(0, 1)))
+            );
+        }
+
+        if (
+                teamDTO.getSaturdayFrom() != null &&
+                        teamDTO.getSaturdayTo() != null &&
+                        !teamDTO.getSaturdayFrom().isEmpty() &&
+                        !teamDTO.getSaturdayTo().isEmpty() &&
+                        !teamDTO.getSaturdayFrom().equals(teamDTO.getSaturdayTo()) &&
+                        !teamDTO.getSaturdayFrom().isBlank() &&
+                        !teamDTO.getSaturdayTo().isBlank()
+        ) {
+            team.setSaturdayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(0, 1)))
+            );
+
+            team.setSaturdayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getSaturdayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getSaturdayTo().substring(0, 1)))
+            );
+        }
+
+        if (
+                teamDTO.getSundayFrom() != null &&
+                        teamDTO.getSundayTo() != null &&
+                        !teamDTO.getSundayFrom().isEmpty() &&
+                        !teamDTO.getSundayTo().isEmpty() &&
+                        !teamDTO.getSundayFrom().isBlank() &&
+                        !teamDTO.getSundayTo().isBlank() &&
+                        !teamDTO.getSundayFrom().equals(teamDTO.getSundayTo())
+
+        ) {
+            team.setSundayFrom(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getSundayFrom().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getSundayFrom().substring(0, 1)))
+            );
+
+            team.setSundayTo(
+                    DateWorker.getDateObject(0,
+                            Integer.parseInt(teamDTO.getSundayTo().substring(3, 4)),
+                            Integer.parseInt(teamDTO.getSundayTo().substring(0, 1)))
+            );
+        }
+
         return team;
     }
 
