@@ -48,7 +48,7 @@ public class PeriodService {
     // TODO in DTO einbinden
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
-        period.setPurpose(this.findPurpose(periodDTO.getPurpose()));
+        period.setPurpose(Purpose.valueOf(periodDTO.getPurpose()));
         period.setDateFrom(periodDTO.getDateFrom());
         period.setDateTo(periodDTO.getDateTo());
         period.setEmployee(this.employeeService.getEmployee(periodDTO.getEmployee()));
@@ -58,7 +58,7 @@ public class PeriodService {
     public PeriodDTO convertToPeriodDTO(Period period) {
         PeriodDTO periodDTO = new PeriodDTO();
         periodDTO.setId(period.getId());
-        periodDTO.setPurpose(period.getPurpose().ordinal());
+        periodDTO.setPurpose(period.getPurpose().name());
         periodDTO.setDateFrom(period.getDateFrom());
         periodDTO.setDateTo(period.getDateTo());
         periodDTO.setEmployee(period.getEmployee().getId());

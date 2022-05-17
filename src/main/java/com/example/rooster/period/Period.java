@@ -14,6 +14,7 @@ public class Period {
     @Column(name = "id", nullable = false)
     private long id;
 
+    @Enumerated(EnumType.STRING)
     private Purpose purpose;
 
     private Date dateFrom;
