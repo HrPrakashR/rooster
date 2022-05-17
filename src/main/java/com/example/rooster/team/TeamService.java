@@ -34,83 +34,43 @@ public class TeamService {
         teamDTO.setRestDays(team.getRestDays());
         teamDTO.setMinBreakTime(team.getMinBreakTime());
 
-        if (teamDTO.getMondayFrom() != null && teamDTO.getMondayTo() != null) {
-            teamDTO.setMondayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setMondayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getMondayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getMondayTo()).get(Calendar.HOUR_OF_DAY))
-            );
+        if (team.getMondayFrom() != null && team.getMondayTo() != null) {
+            teamDTO.setMondayFrom(DateWorker.generateTimeString(team.getMondayFrom()));
+            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+        }
+
+        if (team.getTuesdayFrom() != null && team.getTuesdayTo() != null) {
+            teamDTO.setTuesdayFrom(DateWorker.generateTimeString(team.getTuesdayFrom()));
+            teamDTO.setMondayTo(DateWorker.generateTimeString(team.getMondayTo()));
+        }
+
+        if (team.getWednesdayFrom() != null && team.getWednesdayTo() != null) {
+            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayFrom()));
+            teamDTO.setWednesdayFrom(DateWorker.generateTimeString(team.getWednesdayTo()));
+        }
+
+        if (team.getThursdayFrom() != null && team.getThursdayTo() != null) {
+            teamDTO.setThursdayFrom(DateWorker.generateTimeString(team.getThursdayFrom()));
+            teamDTO.setThursdayTo(DateWorker.generateTimeString(team.getThursdayTo()));
+        }
+
+        if (team.getFridayFrom() != null && team.getFridayTo() != null) {
+            teamDTO.setFridayFrom(DateWorker.generateTimeString(team.getFridayFrom()));
+            teamDTO.setFridayTo(DateWorker.generateTimeString(team.getFridayTo()));
+        }
+
+        if (team.getSaturdayFrom() != null && team.getSaturdayTo() != null) {
+            teamDTO.setSaturdayFrom(DateWorker.generateTimeString(team.getSaturdayFrom()));
+            teamDTO.setSaturdayTo(DateWorker.generateTimeString(team.getSaturdayTo()));
+        }
+
+        if (team.getSundayFrom() != null && team.getSundayTo() != null) {
+            teamDTO.setSundayFrom(DateWorker.generateTimeString(team.getSundayFrom()));
+            teamDTO.setSundayTo(DateWorker.generateTimeString(team.getSundayTo()));
         }
 
 
-        if (teamDTO.getTuesdayFrom() != null && teamDTO.getTuesdayTo() != null) {
-            teamDTO.setTuesdayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getTuesdayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getMondayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setTuesdayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getTuesdayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
 
-        if (teamDTO.getWednesdayFrom() != null && teamDTO.getWednesdayTo() != null) {
-            teamDTO.setWednesdayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getWednesdayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getWednesdayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setWednesdayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getWednesdayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getWednesdayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
-
-        if (teamDTO.getThursdayFrom() != null && teamDTO.getThursdayTo() != null) {
-            teamDTO.setThursdayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getThursdayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getThursdayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setThursdayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getThursdayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getThursdayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
-
-        if (teamDTO.getFridayFrom() != null && teamDTO.getFridayTo() != null) {
-            teamDTO.setFridayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getFridayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getFridayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setFridayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getFridayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getFridayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
-
-        if (teamDTO.getSaturdayFrom() != null && teamDTO.getSaturdayTo() != null) {
-            teamDTO.setSaturdayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getSaturdayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getSaturdayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setSaturdayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getSaturdayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getSaturdayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
-
-        if (teamDTO.getSundayFrom() != null && teamDTO.getSundayTo() != null) {
-            teamDTO.setSundayFrom(
-                    String.valueOf(DateWorker.getCalendarObject(team.getSundayFrom()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getSundayFrom()).get(Calendar.HOUR_OF_DAY))
-            );
-            teamDTO.setSundayTo(
-                    String.valueOf(DateWorker.getCalendarObject(team.getSundayTo()).get(Calendar.MINUTE) + ':' +
-                            DateWorker.getCalendarObject(team.getSundayTo()).get(Calendar.HOUR_OF_DAY))
-            );
-        }
 
         return teamDTO;
     }
