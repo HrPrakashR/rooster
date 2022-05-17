@@ -7,11 +7,30 @@ import java.util.List;
 
 public class DateWorker {
 
-    public static String generateTimeString(Date date) {
+    public static String convertDateToTimeString(Date date) {
         Calendar calendar = getCalendarObject(date);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
         return String.format("%02d:%02d", hours, minutes);
+    }
+
+    public static String convertDateToDateString(Date date) {
+        Calendar calendar = getCalendarObject(date);
+        int minutes = calendar.get(Calendar.MINUTE);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        return String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes);
+    }
+
+    public static Date convertDateStringToDate(String dateTime){
+        int year = Integer.parseInt(dateTime.substring(0,3));
+        int month = Integer.parseInt(dateTime.substring(5,6));
+        int day = Integer.parseInt(dateTime.substring(8,9));
+        int hours = Integer.parseInt(dateTime.substring(11,12));
+        int minutes = Integer.parseInt(dateTime.substring(14,15));
+        return getDateObject(0, minutes, hours, day, month,year);
     }
 
     public static Date getDate(boolean lastDayOfMonth, int year, int month) {

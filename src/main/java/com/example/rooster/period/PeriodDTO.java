@@ -9,16 +9,16 @@ public class PeriodDTO {
 
     private String purpose;
 
-    private Date dateFrom;
+    private String dateFrom;
 
-    private Date dateTo;
+    private String dateTo;
 
     private long employee;
 
     public PeriodDTO() {
     }
 
-    public PeriodDTO(long id, String purpose, Date dateFrom, Date dateTo, long employee) {
+    public PeriodDTO(long id, String purpose, String dateFrom, String dateTo, long employee) {
         this.id = id;
         this.purpose = purpose;
         this.dateFrom = dateFrom;
@@ -42,19 +42,19 @@ public class PeriodDTO {
         this.purpose = purpose;
     }
 
-    public Date getDateFrom() {
+    public String getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    public void setDateFrom(String dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    public String getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(String dateTo) {
         this.dateTo = dateTo;
     }
 

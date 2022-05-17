@@ -2,6 +2,7 @@ import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
+import {Purpose} from "./purpose";
 
 @Component({
   selector: 'app-period',
@@ -22,6 +23,8 @@ export class PeriodComponent implements OnInit {
   status = '';
   newLeave = false;
   showEmployeeList = false;
+
+  public Purpose = Purpose;
 
   constructor(private http: HttpClient) {
   }
@@ -57,7 +60,7 @@ export class PeriodComponent implements OnInit {
   }
 
   public deletePeriod(id: number) {
-    this.periods = this.periods?.filter(p => p.id !== id);
+    this.periods = this.periods?.filter(period => period.id !== id);
     this.http.delete<Period>('/api/periods/delete/' + id)
       .subscribe(() => this.status = 'Period successfully deleted');
   }

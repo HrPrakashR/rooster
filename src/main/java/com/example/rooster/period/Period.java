@@ -49,6 +49,10 @@ public class Period {
         this.purpose = purpose;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Date getDateFrom() {
         return dateFrom;
     }

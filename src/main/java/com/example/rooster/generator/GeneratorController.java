@@ -81,8 +81,8 @@ public class GeneratorController {
                                 new PeriodDTO(
                                         period.getId(),
                                         period.getPurpose().name(),
-                                        period.getDateFrom(),
-                                        period.getDateTo(),
+                                        DateWorker.convertDateToDateString(period.getDateFrom()),
+                                        DateWorker.convertDateToDateString(period.getDateTo()),
                                         period.getEmployee().getId()
                                 )));
     }
