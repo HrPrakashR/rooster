@@ -116,7 +116,9 @@ public class TeamService {
         team.setMinBreakTime(teamDTO.getMinBreakTime());
 
         if (
-                !teamDTO.getMondayFrom().isEmpty() &&
+                teamDTO.getMondayFrom() != null &&
+                        teamDTO.getMondayTo() != null &&
+                        !teamDTO.getMondayFrom().isEmpty() &&
                         !teamDTO.getMondayTo().isEmpty() &&
                         !teamDTO.getMondayFrom().equals(teamDTO.getMondayTo()) &&
                         !teamDTO.getMondayFrom().isBlank() &&
@@ -136,7 +138,9 @@ public class TeamService {
         }
 
         if (
-                !teamDTO.getTuesdayFrom().isEmpty() &&
+                teamDTO.getTuesdayFrom() != null &&
+                        teamDTO.getTuesdayTo() != null &&
+                        !teamDTO.getTuesdayFrom().isEmpty() &&
                         !teamDTO.getTuesdayTo().isEmpty() &&
                         !teamDTO.getTuesdayFrom().equals(teamDTO.getTuesdayTo()) &&
                         !teamDTO.getTuesdayFrom().isBlank() &&
@@ -156,7 +160,9 @@ public class TeamService {
 
 
         if (
-                !teamDTO.getWednesdayFrom().isEmpty() &&
+                teamDTO.getWednesdayFrom() != null &&
+                        teamDTO.getWednesdayTo() != null &&
+                        !teamDTO.getWednesdayFrom().isEmpty() &&
                         !teamDTO.getWednesdayTo().isEmpty() &&
                         !teamDTO.getWednesdayFrom().equals(teamDTO.getWednesdayTo()) &&
                         !teamDTO.getWednesdayFrom().isBlank() &&
@@ -176,7 +182,9 @@ public class TeamService {
         }
 
         if (
-                !teamDTO.getThursdayTo().isEmpty() &&
+                teamDTO.getThursdayFrom() != null &&
+                        teamDTO.getThursdayTo() != null &&
+                        !teamDTO.getThursdayTo().isEmpty() &&
                         !teamDTO.getThursdayFrom().isEmpty() &&
                         !teamDTO.getThursdayFrom().equals(teamDTO.getThursdayTo()) &&
                         !teamDTO.getThursdayFrom().isBlank() &&
@@ -196,7 +204,9 @@ public class TeamService {
         }
 
         if (
-                !teamDTO.getFridayFrom().isEmpty() &&
+                teamDTO.getFridayFrom() != null &&
+                        teamDTO.getFridayTo() != null &&
+                        !teamDTO.getFridayFrom().isEmpty() &&
                         !teamDTO.getFridayTo().isEmpty() &&
                         !teamDTO.getFridayFrom().equals(teamDTO.getFridayTo()) &&
                         !teamDTO.getFridayFrom().isBlank() &&
@@ -216,7 +226,9 @@ public class TeamService {
         }
 
         if (
-                !teamDTO.getSaturdayFrom().isEmpty() &&
+                teamDTO.getSaturdayFrom() != null &&
+                        teamDTO.getSaturdayTo() != null &&
+                        !teamDTO.getSaturdayFrom().isEmpty() &&
                         !teamDTO.getSaturdayTo().isEmpty() &&
                         !teamDTO.getSaturdayFrom().equals(teamDTO.getSaturdayTo()) &&
                         !teamDTO.getSaturdayFrom().isBlank() &&
@@ -236,7 +248,9 @@ public class TeamService {
         }
 
         if (
-                !teamDTO.getSundayFrom().isEmpty() &&
+                teamDTO.getSundayFrom() != null &&
+                        teamDTO.getSundayTo() != null &&
+                        !teamDTO.getSundayFrom().isEmpty() &&
                         !teamDTO.getSundayTo().isEmpty() &&
                         !teamDTO.getSundayFrom().isBlank() &&
                         !teamDTO.getSundayTo().isBlank() &&
