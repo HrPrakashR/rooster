@@ -18,12 +18,12 @@ public class EmployeeDTO {
 
     private double breakTime;
 
-    private int role;
+    private String role;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(long id, String firstName, String lastName, String email, long team, double hoursPerWeek, double balanceHours, double breakTime, int role) {
+    public EmployeeDTO(long id, String firstName, String lastName, String email, long team, double hoursPerWeek, double balanceHours, double breakTime, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -99,11 +99,11 @@ public class EmployeeDTO {
         this.breakTime = breakTime;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }
