@@ -2,8 +2,6 @@ package com.example.rooster.security.auth;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
-import com.example.rooster.security.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

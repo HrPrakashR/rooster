@@ -22,7 +22,7 @@ public class Authcontroller {
         return EmployeeConverter.convertToDTO(this.authService.login(userLogin.getUsername(), userLogin.getPassword()));
     }
 
-    private static class UserLogin{
+    private static class UserLogin {
 
         private String email;
         private String password;
