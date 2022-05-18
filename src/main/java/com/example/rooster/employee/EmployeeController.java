@@ -49,9 +49,7 @@ public class EmployeeController {
     //Editing an existing employee
     @PostMapping("/edit")
     public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee newEmployee = employeeService.convertToEmployee(employeeDTO);
-        employeeService.setEmployee(newEmployee);
-        return employeeService.convertToDTO(newEmployee);
+        return this.addNewEmployee(employeeDTO);
     }
 
     //Deleting an existing employee
