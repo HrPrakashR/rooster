@@ -31,7 +31,7 @@ public class UserController {
     public ResponseEntity<String> sendPassword(@PathVariable long userId) {
         Employee employee = this.employeeService.getEmployeeById(userId);
         String password = this.userService.getPassword();
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(employee.getPassword());
         employee.setPassword(encodedPassword);
         this.employeeService.setEmployee(employee);
         this.userService.sendPassword(employee.getEmail(), password);
