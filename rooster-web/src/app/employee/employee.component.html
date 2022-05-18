@@ -1,5 +1,3 @@
-
-
 <!--
 TODO:
 Team has to be added first, if no other team exist.
@@ -16,78 +14,43 @@ write a new function to show the info about the person
 <figure class="text-center h1">
     <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
 </figure>
+
+  <div class="card text-center mx-auto" style="width: 18rem;">
+    <img src="/assets/pictures/profile_picture.png" class="card-img-top" alt="profile">
+    <div class="card-body">
+      <h5 class="card-title">{{ currentUser.firstName }} {{ currentUser.lastName }}</h5>
+      <p class="card-text">Team: {{ getTeamName(currentUser.team) }}</p>
+      <p class="card-text">Position: {{ currentUser.role.substring(0,1)}}{{ currentUser.role.substring(1, currentUser.role.length.valueOf()).toLocaleLowerCase() }}</p>
+      <p class="card-text">E-Mail: {{ currentUser.email.toLocaleLowerCase() }}</p>
+      <a (click)="leaveRequest = !leaveRequest" class="btn btn-primary m-1">Leave Request</a>
+      <a (click)="createEmployee = !createEmployee" class="btn btn-primary m-1" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'">Add a New Employee</a>
+      <a (click)="myTeam = !myTeam" class="btn btn-primary m-1" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'">Show My Team</a>
+      <div class="dropdown m-3" *ngIf="currentUser.role == 'OWNER'">
+        <label for="team">Select a Team:</label>
+        <select [(ngModel)]="selectedTeam" id="team" name="team">
+          <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <figure class="text-center" *ngIf="leaveRequest">
+    CREATE LEAVE REQUEST HERE
+  </figure>
+
+  <figure class="text-center" *ngIf="createEmployee">
+    CREATE NEW EMPLOYEE HERE
+  </figure>
+
+  <figure class="text-center" *ngIf="selectedTeam != undefined">
+    {{selectedTeam.name}}
+    CREATE NEW EMPLOYEE HERE
+  </figure>
+
 </ng-container>
 
 
-<section id="greeting" class="pb-5">
-  <div class="container">
-    <h5 class="section-title h1">HELLO, *NAME*!</h5>
-    <div class="row justify-content-center">
 
-      <!-- Card for Trainee -->
-
-      <!--      <div class="col-xs-12 col-sm-6 col-md-4">-->
-      <!--        <div class="image-flip">-->
-      <!--              <div class="card">-->
-      <!--                <div class="card-body text-center">-->
-      <!--                  <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>-->
-      <!--                  <h4 class="card-title">*NAME*</h4>-->
-      <!--                  <p class="card-text">*Team:*</p>-->
-      <!--                  <p class="card-text">*Position:*</p>-->
-      <!--                  <p class="card-text">*Email:*</p>-->
-      <!--                  <a href="https://jobs.academicwork.de/" class="btn btn-primary btn-sm">Leave Request</a>-->
-      <!--                </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
-      <!-- ./Card for Trainee -->
-
-      <!-- Card for Employee -->
-      <!--      <div class="col-xs-12 col-sm-6 col-md-4">-->
-      <!--        <div class="image-flip">-->
-      <!--          <div class="card">-->
-      <!--            <div class="card-body text-center">-->
-      <!--              <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>-->
-      <!--              <h4 class="card-title">*NAME*</h4>-->
-      <!--              <p class="card-text">*Team:*</p>-->
-      <!--              <p class="card-text">*Position:*</p>-->
-      <!--              <p class="card-text">*Email:*</p>-->
-      <!--              <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">-->
-      <!--              <a class="btn btn-primary mr-1" href="https://jobs.academicwork.de/" role="button">Leave Request</a>-->
-      <!--              <a href="https://jobs.academicwork.de/" class="btn btn-primary" role="button">My team</a>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--    </div>-->
-      <!-- ./Card for Employee -->
-
-      <!-- Card for Manager -->
-      <div class="col-xs-12 col-sm-6 col-md-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-                       data-holder-rendered="true"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">
-                <a class="btn btn-primary mr-1" href="https://jobs.academicwork.de/" role="button">Leave Request</a>
-                <a href="https://jobs.academicwork.de/" class="btn btn-primary" role="button">Add new employee</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ./Card for Manager -->
-  </div>
-</section>
 <!-- Title Greeting -->
 
 <!-- Team for Manager -->
@@ -218,3 +181,161 @@ write a new function to show the info about the person
   </div>
 </section>
 <!-- Team for CEO -->
+
+
+
+
+
+
+<!--
+OLD To take a look for logic:
+
+
+<div *ngIf="!employeeSelected">
+  <div class="container-fluid p-3 my-3">
+    <button (click)="toggleShow()" *ngIf=!isFormShown class="btn btn-primary" type="button">Add New Employees</button>
+    <ng-container *ngIf=isFormShown>
+      <button (click)="toggleShow()" class="btn btn-primary" type="button">Close Form</button>
+      <form #contactForm="ngForm">
+        <p>
+          <label for="firstName">Name:</label>
+          <input #firstName="ngModel" [(ngModel)]="newEmployee.firstName" id="firstName" name="firstName" placeholder="First Name"
+                 type="text">
+        </p>
+
+        <p>
+          <label for="lastName">Last Name:</label>
+          <input #firstName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
+                 type="text">
+        </p>
+
+        <p>
+          <label for="password">Password:</label>
+          <input #passwordName="ngModel" [(ngModel)]="newEmployee.password" id="password" name="password" placeholder="Password"
+                 type="text">
+        </p>
+
+<p>
+  <label for="email">Email:</label>
+  <input #email="ngModel" [(ngModel)]="newEmployee.email" id="email" name="email" placeholder="Email"
+         type="text">
+</p>
+
+<p>
+  <label for="team">Team:</label>
+  <select [(ngModel)]="newEmployee.team" id="team" name="team">
+    <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+  </select>
+</p>
+
+<p>
+  <label for="hoursPerWeek">Hours Per Week:</label>
+  <input #hoursPerWeek="ngModel" [(ngModel)]="newEmployee.hoursPerWeek" [min]="0" id="hoursPerWeek"
+         name="hoursPerWeek" placeholder="Hours Per Week" step="1" type="number">
+</p>
+
+<p>
+  <label for="balanceHours">Balance Hours:</label>
+  <input #balanceHours="ngModel" [(ngModel)]="newEmployee.balanceHours" id="balanceHours" name="balanceHours"
+         placeholder="Balance Hours" step="0.25" type="number">
+</p>
+
+<p>
+  <label for="breakTime">Break Time:</label>
+  <input #breakTime="ngModel" [(ngModel)]="newEmployee.breakTime" [min]="0" id="breakTime" name="breakTime"
+         placeholder="Break Time" step="0,25" type="number">
+</p>
+
+<p>
+  <label for="role">Role:</label>
+  <select [(ngModel)]="newEmployee.role" id="role" name="role">
+    <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value">{{r.key}} - {{r.value}}</option>
+  </select>
+</p>
+
+<p>
+  <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>
+</p>
+</form>
+</ng-container>
+</div>
+
+<div class="container-fluid p-3 my-3">
+  <button (click)="getEmployees()" *ngIf="!employees" class="btn btn-primary" type="button">Show Employees</button>
+  <ng-container *ngIf="employees">
+    <button (click)="clearAll()" class="btn btn-primary" type="button">Hide Employees</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Employee</th>
+        <th scope="col">Balance Hours</th>
+        <th scope="col">Break Time</th>
+        <th scope="col">Email</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let e of employees">
+        <th scope="row">{{e.firstName}} {{e.lastName}}</th>
+        <td>{{e.balanceHours}}</td>
+        <td>{{e.breakTime}}</td>
+        <td>{{e.email}}</td>
+        <td>
+          <button (click)="getEmployee(e.id)" class="show" title="employee details"
+                  type="button">Details
+          </button>
+        </td>
+        <td>
+          <button (click)="deleteEmployee(e)" class="delete" title="delete employee"
+                  type="button">Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
+</div>
+
+<div *ngIf="employeeSelected" class="card">
+  <div *ngIf="!editMode" class="container">
+    <button (click)="closeEmployeeDetails()" aria-label="Close alert" class="close-button" data-close type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>
+    <p>
+      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
+    </p>
+    <p>
+      <strong>Role:</strong> {{capitalizeFirstLetter(selectedEmployee.role)}}
+    </p>
+    <button (click)="editModeOn()" class="edit" title="edit employee"
+            type="button">Edit
+    </button>
+  </div>
+  <div *ngIf="editMode" class="container">
+    <button (click)="closeEmployeeDetails()" aria-label="Close alert" class="close-button" data-close type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <form #contactForm="ngForm">
+      <div>
+        <label for="empFirstName">First name: </label>
+        <input [(ngModel)]="selectedEmployee.firstName" id="empFirstName" name="firstName">
+      </div>
+      <div>
+        <label for="empLastName">Last name: </label>
+        <input [(ngModel)]="selectedEmployee.lastName" id="empLastName" name="lastName">
+      </div>
+      <p>
+        <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}
+      </p>
+      <p>
+        <strong>Role:</strong> {{capitalizeFirstLetter(selectedEmployee.role)}}
+      </p>
+      <button (click)="editEmployee(selectedEmployee)" class="save" title="edit employee"
+              type="button">Save
+      </button>
+    </form>
+  </div>
+</div>
+-->

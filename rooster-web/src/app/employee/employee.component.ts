@@ -4,7 +4,6 @@ import {Employee} from './employee';
 import {Team} from "../team/team";
 import {Role} from "./role";
 import {EmployeeService} from "./employee.service";
-import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-employee',
@@ -24,8 +23,12 @@ export class EmployeeComponent implements OnInit {
   editMode = false;
 
   currentUser?: Employee;
+  leaveRequest: boolean = false;
+  createEmployee: boolean = false;
+  myTeam: boolean = false;
+  selectedTeam?: Team;
 
-  constructor(private http: HttpClient, private employeeService: EmployeeService,  public authService: AuthService) {
+  constructor(private http: HttpClient, private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
