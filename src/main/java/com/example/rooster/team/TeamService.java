@@ -250,8 +250,8 @@ public class TeamService {
         return this.teamRepository.findById(id);
     }
 
-    public void setTeam(Team team) {
-        this.teamRepository.save(team);
+    public Team setTeam(Team team) {
+        return this.teamRepository.save(team);
     }
 
     public void deleteTeam(long id) {
@@ -264,10 +264,4 @@ public class TeamService {
         listOfEmployees.forEach(e -> e.setTeam(null));
     }
 
-    public void updateTeam(Team team) {
-        if (team != null && !Objects.isNull(this.getTeamById(team.getId()))) {
-            this.teamRepository.save(team);
-        }
-        throw new RuntimeException("Cannot find Team");
-    }
 }
