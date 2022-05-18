@@ -33,7 +33,6 @@ export class GeneratorComponent implements OnInit {
   ngOnInit(): void {
     this.month = new Date().getMonth();
     this.year = new Date().getFullYear();
-    //this.createCalendar();
   }
 
   getMonthName(month: number | string) {
@@ -84,7 +83,15 @@ export class GeneratorComponent implements OnInit {
       this.setSelectedTeam();
       this.http
         .get<Employee[]>('api/employees/get_all/' + this.selectedTeamId)
-        .subscribe(result => this.employees = result);
+        .subscribe(result => {
+            this.employees = result
+
+            this.predefinedPeriods = [];
+            this.employees?.forEach(employee =>
+              this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
+                .subscribe(result => this.predefinedPeriods?.push(...result)));
+          }
+        );
     }
 
     let i = 1;
@@ -100,11 +107,6 @@ export class GeneratorComponent implements OnInit {
       }
       i++;
     }
-
-      this.employees?.forEach(employee =>
-        this.http.get<Period[]>('/api/periods/employee/'+employee.id+'/'+this.year+'/'+this.month)
-          .subscribe(result => this.predefinedPeriods = result)
-    );
   }
 
   setSelectedTeam() {

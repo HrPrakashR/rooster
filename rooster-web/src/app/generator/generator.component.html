@@ -67,7 +67,8 @@ Team
             <ng-container *ngIf="predefinedPeriods">
               <ng-container *ngFor="let period of predefinedPeriods">
                 <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
-                  {{period.dateFrom}} - {{period.dateTo}}
+                  {{period.dateFrom.substring(period.dateFrom.length-5, period.dateFrom.length)}} -
+                  {{period.dateTo.substring(period.dateTo.length-5, period.dateTo.length)}}
                 </ng-container>
               </ng-container>
             </ng-container>
