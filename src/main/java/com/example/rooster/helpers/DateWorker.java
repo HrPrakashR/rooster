@@ -1,5 +1,8 @@
 package com.example.rooster.helpers;
 
+import com.example.rooster.period.DateDTO;
+import com.example.rooster.team.Team;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -119,5 +122,81 @@ public class DateWorker {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
+    }
+
+    private List<DateDTO> getWorkingPeriods(Team team, int year, int month) {
+        List<DateDTO> workingPeriods = new ArrayList<>();
+        List<Calendar> allDays = DateWorker.getAllDaysOfMonth(year, month);
+
+        // if times are the same, at that day is no working day
+        boolean monday = team.getMondayFrom() == team.getMondayTo();
+        boolean tuesday = team.getTuesdayFrom() == team.getTuesdayTo();
+        boolean wednesday = team.getWednesdayFrom() == team.getWednesdayTo();
+        boolean thursday = team.getThursdayFrom() == team.getThursdayTo();
+        boolean friday = team.getFridayFrom() == team.getFridayTo();
+        boolean saturday = team.getSaturdayFrom() == team.getSaturdayTo();
+        boolean sunday = team.getSundayFrom() == team.getSundayTo();
+
+        List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+
+        workingTime.forEach(day -> workingPeriods.add(getDateDTOForWorkingPeriod(day, team)));
+
+        return workingPeriods;
+    }
+
+    public DateDTO getDateDTOForWorkingPeriod(Calendar date, Team team) {
+        Date getFrom;
+        Date getTo;
+
+        switch (date.get(Calendar.DAY_OF_WEEK)) {
+            case 1 -> {
+                getFrom = team.getSundayFrom();
+                getTo = team.getSundayTo();
+            }
+            case 2 -> {
+                getFrom = team.getMondayFrom();
+                getTo = team.getMondayTo();
+            }
+            case 3 -> {
+                getFrom = team.getTuesdayFrom();
+                getTo = team.getTuesdayTo();
+            }
+            case 4 -> {
+                getFrom = team.getWednesdayFrom();
+                getTo = team.getWednesdayTo();
+            }
+            case 5 -> {
+                getFrom = team.getThursdayFrom();
+                getTo = team.getThursdayTo();
+            }
+            case 6 -> {
+                getFrom = team.getFridayFrom();
+                getTo = team.getFridayTo();
+            }
+            case 7 -> {
+                getFrom = team.getSaturdayFrom();
+                getTo = team.getSaturdayTo();
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + date.get(Calendar.DAY_OF_WEEK));
+        }
+
+        return new DateDTO(
+                DateWorker.getDateObject(
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.SECOND),
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.MINUTE),
+                        DateWorker.getCalendarObject(getFrom).get(Calendar.HOUR_OF_DAY),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.YEAR)
+                ),
+                DateWorker.getDateObject(
+                        DateWorker.getCalendarObject(getTo).get(Calendar.SECOND),
+                        DateWorker.getCalendarObject(getTo).get(Calendar.MINUTE),
+                        DateWorker.getCalendarObject(getTo).get(Calendar.HOUR_OF_DAY),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.YEAR)
+                )
+        );
     }
 }

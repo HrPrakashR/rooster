@@ -24,7 +24,7 @@ export class GeneratorComponent implements OnInit {
   teams?: Team[];
   employees?: Employee[];
 
-  predefinedPeriods: Period[] | undefined;
+  predefinedPeriods?: Period[];
 
   constructor(private http: HttpClient) {
     this.createCalendar();
@@ -32,7 +32,8 @@ export class GeneratorComponent implements OnInit {
 
   ngOnInit(): void {
     this.month = new Date().getMonth();
-    this.createCalendar();
+    this.year = new Date().getFullYear();
+    //this.createCalendar();
   }
 
   getMonthName(month: number | string) {
@@ -70,6 +71,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   createCalendar() {
+
     this.days = [1];
     this.yearsToChoose = [2022];
     this.monthToChoose = [0];
@@ -77,12 +79,12 @@ export class GeneratorComponent implements OnInit {
       this.teams = result
       if (this.selectedTeamId === undefined) this.selectedTeamId = result[0].id;
     });
+
     if (this.selectedTeamId !== undefined) {
       this.setSelectedTeam();
       this.http
         .get<Employee[]>('api/employees/get_all/' + this.selectedTeamId)
         .subscribe(result => this.employees = result);
-      this.setPredefinedPeriods()
     }
 
     let i = 1;
@@ -98,12 +100,11 @@ export class GeneratorComponent implements OnInit {
       }
       i++;
     }
-  }
 
-  setPredefinedPeriods(){
-    this.http
-      .get<Period[]>('/api/generator/roster/'+this.selectedTeamId+'/'+this.year+'/'+this.month)
-      .subscribe(result => this.predefinedPeriods = result);
+      this.employees?.forEach(employee =>
+        this.http.get<Period[]>('/api/periods/employee/'+employee.id+'/'+this.year+'/'+this.month)
+          .subscribe(result => this.predefinedPeriods = result)
+    );
   }
 
   setSelectedTeam() {
@@ -118,13 +119,5 @@ export class GeneratorComponent implements OnInit {
     selectedDate.setMonth(this.month);
     selectedDate.setFullYear(this.year)
     return selectedDate.getDay() == checkWith;
-  }
-
-  getPeriod(day: number, employee: Employee){
-    let period: Period | undefined;
-    this.http
-      .get<Period>('/api/generator/get/' + employee.id + '/' + this.year + '/' + this.month + '/' + day)
-      .subscribe(result => period = result);
-    return period?.dateTo;
   }
 }

@@ -23,4 +23,5 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
 
     List<Period> findAllByEmployeeTeamAndDateFromBetween(Team employee_team, Date dateFrom, Date dateFrom2);
 
+    List<Period> findAllByEmployeeAndDateFromBetween(Employee employee, Date start, Date end);
 }

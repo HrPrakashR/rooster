@@ -63,11 +63,15 @@ Team
             <td class="table-primary">{{ selectedTeam.saturdayFrom }} - {{ selectedTeam.saturdayTo }}</td>
           </ng-container>
 
-          <!-- TODO Achtung Kostet viele Ressourcen und funktioniert noch nicht!
-            <th *ngFor="let employee of employees">
-                {{ getPeriod(day, employee) }}
-            </th>
-          -->
+          <td *ngFor="let employee of employees">
+            <ng-container *ngIf="predefinedPeriods">
+              <ng-container *ngFor="let period of predefinedPeriods">
+                <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
+                  {{period.dateFrom}} - {{period.dateTo}}
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </td>
         </tr>
     </ng-container>
     </tbody>

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,9 +34,20 @@ public class PeriodController {
     }
 
     //Showing requests of a certain employee
-    @GetMapping("/employee/get_all")
-    public List<Period> showPeriodRequestFromEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return periodService.getPeriodsByEmployee(employeeService.getEmployeeById(employeeDTO.getId()));
+    @GetMapping("/employee/{employeeId}/{year}/{month}")
+    public List<PeriodDTO> showByEmployeeAndBetween(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+
+        Calendar from = Calendar.getInstance();
+        from.set(Calendar.YEAR, year);
+        from.set(Calendar.MONTH, month);
+        from.set(Calendar.DAY_OF_MONTH, from.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        Calendar to = Calendar.getInstance();
+        to.set(Calendar.YEAR, year);
+        to.set(Calendar.MONTH, month);
+        to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        return periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
     }
 
     //Showing all of the periods
