@@ -148,135 +148,145 @@ Manager => Manager can create leave request for his employees and for himself / 
 
 <!-- Title Greeting -->
 
-<section id="greeting" class="pb-5">
-  <h5 class="section-title h1">YOUR LEAVE REQUESTS</h5>
 
-<div class="row justify-content-center">
-  <div class="column col-xs-12 col-sm-6 col-md-3">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-                       data-holder-rendered="true"></p>
-              <h4 class="card-title">MARIE MUSTERFRAU</h4>
-              <div style="display: inline-block" [(ngModel)] = "newPeriod.employee">
-                    </div>
-                    <br>
-                    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
-                    <select class="custom-select">
-                      <option selected>Choose a purpose...</option>
-                      <option value="0">Vacation Request</option>
-                      <option value="1">Confirmed Vacation</option>
-                      <option value="2">Sick Leave</option>
-                      <option value="3">Working Hours</option>
-                      <option value="4">Scheduled Working Hours</option>
-                      <option value="5">Absence</option>
-                      <option value="6">Free Time Request</option>
-                      <option value="7">Working Hour Request</option>
-                    </select>
-                  </div>
-              <br>
-              <label>From:</label>
-                <input [(ngModel)] = "newPeriod.dateFrom" type="Date">
-              <br>
-              <label>To:</label> <input [(ngModel)] = "newPeriod.dateTo" type="Date">
-                  </div>
-              <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">
-                <a class="btn btn-primary mr-1 mb-4 justify-content-center" href="https://jobs.academicwork.de/" role="button">Submit</a>
-              </div>
+<section class="pb-5 column justify-content-center row justify-content-center" id="greeting">
+  <!--  <h5 class="section-title h1">YOUR LEAVE REQUESTS</h5>-->
+
+  <div class="row justify-content-center">
+    <div>
+      <div class="image-flip">
+        <div class="card">
+          <div class="card-body text-center">
+            <p><img alt="100x100" class="rounded-circle z-depth-2"
+                    data-holder-rendered="true"
+                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></p>
+            <h4 class="card-title">MARIE MUSTERFRAU</h4>
+            <div [(ngModel)]="newPeriod.employee" style="display: inline-block">
             </div>
+            <br>
+            Purpose:
+            <div [(ngModel)]="newPeriod.purpose" style="display: inline-block">
+              <select class="custom-select">
+                <option selected>Choose a purpose...</option>
+                <option value="0">Vacation Request</option>
+                <option value="1">Confirmed Vacation</option>
+                <option value="2">Sick Leave</option>
+                <option value="3">Working Hours</option>
+                <option value="4">Scheduled Working Hours</option>
+                <option value="5">Absence</option>
+                <option value="6">Free Time Request</option>
+                <option value="7">Working Hour Request</option>
+              </select>
+            </div>
+            <br>
+            <label>From:</label>
+            <input [(ngModel)]="newPeriod.dateFrom" type="Date">
+            <br>
+            <label>To:</label> <input [(ngModel)]="newPeriod.dateTo" type="Date">
           </div>
+          <div aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
+            <a class="btn btn-primary mr-1 mb-4 justify-content-center" href="https://jobs.academicwork.de/"
+               role="button">Submit</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-    <!-- ./Card for Trainee/Employee -->
-    <!-- /Table for Trainee/Employee -->
-<div class="column col-xs-12 col-sm-6 col-md-8">
+  <!-- ./Card for Trainee/Employee -->
+  <!-- /Table for Trainee/Employee -->
+<section class="column justify-content-center row justify-content-center" id="cards">
+  <div class="col-md-9 table-responsive embed-responsive">
+    <div class="mb-4"> <!-- class="col-md-9 mb-4">-->
       <div class="card">
         <div class="card-body text-center">
-    <table class="table table-sm">
-      <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Purpose</th>
-        <th scope="col">From</th>
-        <th scope="col">To</th>
-        <th scope="col">Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr class="table-warning">
-        <th scope="row">1</th>
-        <td>Sick Leave</td>
-        <td>17/05/2022</td>
-        <td>19/05/2022</td>
-        <td>Pending</td>
-      </tr>
-      <tr class="table-success">
-        <th scope="row">2</th>
-        <td>Vacation</td>
-        <td>01/06/2022</td>
-        <td>14/06/2022</td>
-        <td>Approved</td>
-      </tr>
-      <tr class="table-danger">
-        <th scope="row">3</th>
-        <td>Vacation</td>
-        <td>24/12/2022</td>
-        <td>03/01/2023</td>
-        <td>Disapproved</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+          <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Purpose</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-warning">
+              <th scope="row">1</th>
+              <td>Sick Leave</td>
+              <td>17/05/2022</td>
+              <td>19/05/2022</td>
+              <td>Pending</td>
+            </tr>
+            <tr class="table-success">
+              <th scope="row">2</th>
+              <td>Vacation</td>
+              <td>01/06/2022</td>
+              <td>14/06/2022</td>
+              <td>Approved</td>
+            </tr>
+            <tr class="table-danger">
+              <th scope="row">3</th>
+              <td>Vacation</td>
+              <td>24/12/2022</td>
+              <td>03/01/2023</td>
+              <td>Disapproved</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+<!--    <div class="column justify-content-center col-md-9">-->
+      <div>
+      <div class="card">
+        <div class="card-body text-center">
+          <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-warning">
+              <th scope="row">1</th>
+              <td></td>
+              <td>Sick Leave</td>
+              <td>17/05/2022</td>
+              <td>19/05/2022</td>
+              <td>Pending</td>
+            </tr>
+            <tr class="table-warning">
+              <th scope="row">2</th>
+              <td></td>
+              <td>Vacation</td>
+              <td>01/06/2022</td>
+              <td>14/06/2022</td>
+              <td>Pending</td>
+            </tr>
+            <tr class="table-warning">
+              <th scope="row">3</th>
+              <td></td>
+              <td>Vacation</td>
+              <td>24/12/2022</td>
+              <td>03/01/2023</td>
+              <td>Pending</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-  <div class="column col-xs-12 col-sm-6 col-md-8">
-    <div class="card">
-      <div class="card-body text-center">
-        <table class="table table-sm">
-          <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col">Purpose</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">Status</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr class="table-warning">
-            <th scope="row">1</th>
-            <td></td>
-            <td>Sick Leave</td>
-            <td>17/05/2022</td>
-            <td>19/05/2022</td>
-            <td>Pending</td>
-          </tr>
-          <tr class="table-warning">
-            <th scope="row">2</th>
-            <td></td>
-            <td>Vacation</td>
-            <td>01/06/2022</td>
-            <td>14/06/2022</td>
-            <td>Pending</td>
-          </tr>
-          <tr class="table-warning">
-            <th scope="row">3</th>
-            <td></td>
-            <td>Vacation</td>
-            <td>24/12/2022</td>
-            <td>03/01/2023</td>
-            <td>Pending</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
-</div>
-<!-- ./Table for personal leave requests -->
+
+  <!-- ./Table for personal leave requests -->
 
   <!-- Section Greeting closed-->
 </section>
