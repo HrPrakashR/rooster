@@ -1,6 +1,7 @@
 package com.example.rooster.security.config;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeConverter;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.employee.Role;
 import org.springframework.security.core.GrantedAuthority;

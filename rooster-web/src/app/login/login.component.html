@@ -5,7 +5,7 @@
   <label for="password">Password: </label>
   <input type="password" id="password" name="password" [(ngModel)]="credentials.password" required>
 
-  <div *ngIf="loginError"><small style="color: darkred">{{ loginError | json }}</small></div>
+  <div *ngIf="loginError"><small class="alert-danger">{{ loginError | json }}</small></div>
 
   <button (click)="login()" [disabled]="!valid()">Login</button>
 

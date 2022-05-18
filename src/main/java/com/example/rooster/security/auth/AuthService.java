@@ -15,7 +15,6 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final EmployeeService employeeService;
-//    private final UserService userService;
 
     public AuthService(PasswordEncoder passwordEncoder, EmployeeService employeeService) {
         this.passwordEncoder = passwordEncoder;
