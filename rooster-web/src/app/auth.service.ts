@@ -65,7 +65,7 @@ export class AuthService {
         if (employee) {
           this.employee = employee;
           this.authenticated = true;
-          AuthService.saveLoginState(this.employee);
+          AuthService.saveLoginState(employee);
         } else {
           this.employee = undefined;
           this.authenticated = false;

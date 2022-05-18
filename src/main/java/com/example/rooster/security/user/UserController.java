@@ -42,10 +42,11 @@ public class UserController {
     }
 
     @GetMapping("/current")
-    public EmployeeDTO current(Employee employee) {
-        if (employee != null) {
-            return employeeService.convertToDTO(employeeService.findEmployeeByEmail(employee.getEmail()).orElseThrow());
+    public EmployeeDTO current(Principal principal) {
+        if (principal != null) {
+            return employeeService.convertToDTO(employeeService.findEmployeeByEmail(principal.getName()).orElseThrow());
         }
         return null;
     }
+
 }
