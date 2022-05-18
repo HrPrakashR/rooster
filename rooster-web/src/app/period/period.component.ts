@@ -18,6 +18,8 @@ export class PeriodComponent implements OnInit {
   periods?: Period[];
   employees?: Employee[];
   employeeId = 0;
+  periodUrl = '/api/periods';
+  editMode = false;
 
   selectedEmployee = "email@email.de"
   status = '';
@@ -69,5 +71,15 @@ export class PeriodComponent implements OnInit {
     this.periods = this.periods?.filter(emp => emp.employee == id);
     this.http.get('/api/periods/get')
       .subscribe(() => this.status = "All leave requests of selected Employee")
+  }
+
+  editModeOn() {
+    this.editMode = true;
+  }
+
+  editPeriod(period: Period) {
+    const url = `${this.periodUrl}/edit`;
+    this.http.post<Period>(url, period).subscribe();
+    this.editMode = false;
   }
 }
