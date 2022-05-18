@@ -19,7 +19,7 @@ public class Authcontroller {
 
     @PostMapping("/login")
     public EmployeeDTO login(@RequestBody UserLogin userLogin) {
-        return EmployeeConverter.convertToDTO(this.authService.login(userLogin.getUsername(), userLogin.getPassword()));
+        return EmployeeConverter.convertToDTO(this.authService.login(userLogin.getEmail(), userLogin.getPassword()));
     }
 
     private static class UserLogin{
@@ -27,7 +27,7 @@ public class Authcontroller {
         private String email;
         private String password;
 
-        public String getUsername() {
+        public String getEmail() {
             return email;
         }
 
