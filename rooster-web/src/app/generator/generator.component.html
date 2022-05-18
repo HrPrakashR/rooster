@@ -35,13 +35,35 @@ Team
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
-                {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                <ng-container [ngSwitch]="period.purpose">
+                  <ng-container *ngSwitchCase="'WORKING_HOURS' || 'SHEDULED_WORKING_HOURS'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'CONFIRMED_VACATION'">Vacation/Absense</ng-container>
+                  <ng-container *ngSwitchCase="'SICK_LEAVE'">Sick Leave</ng-container>
+                  <ng-container *ngSwitchCase="'VACATION_REQUEST'">Vacation/Free-Time Request</ng-container>
+                  <ng-container *ngSwitchCase="'WORKING_HOUR_REQUEST'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Request)
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'ABSENCE'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Absence)
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'FREE_TIME_REQUEST'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Free-Time Request)
+                  </ng-container>
+                </ng-container>
+
               </ng-container>
             </ng-container>
           </ng-container>
         </td>
-
       </tr>
     </ng-container>
     </tbody>

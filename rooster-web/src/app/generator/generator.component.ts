@@ -138,7 +138,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   returnCompulsory(day: number) {
-    switch (day){
+    switch (this.createDate(day).getDay()){
       case 0:
         return this.selectedTeam?.sundayFrom + ' - ' + this.selectedTeam?.sundayTo;
       case 1:
