@@ -49,6 +49,7 @@ public class PeriodService {
     // TODO in DTO einbinden
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
+        period.setId(periodDTO.getId());
         period.setPurpose(Purpose.valueOf(periodDTO.getPurpose()));
         period.setDateFrom(DateWorker.convertDateStringToDate(periodDTO.getDateFrom()));
         period.setDateTo(DateWorker.convertDateStringToDate(periodDTO.getDateTo()));
@@ -66,8 +67,8 @@ public class PeriodService {
         return periodDTO;
     }
 
-    public void addPeriod(Period period) {
-        periodRepository.save(period);
+    public Period addPeriod(Period period) {
+        return periodRepository.save(period);
     }
 
     public void deletePeriod(Period period) {

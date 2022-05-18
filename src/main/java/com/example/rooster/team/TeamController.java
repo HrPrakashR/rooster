@@ -31,15 +31,17 @@ public class TeamController {
     //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/new")
     public TeamDTO newTeam(@RequestBody TeamDTO teamDTO) {
-        this.teamService.setTeam(this.teamService.convertToTeam(teamDTO));
-        return teamDTO;
+        Team newTeam = teamService.convertToTeam(teamDTO);
+        Team savedTeam = teamService.setTeam(newTeam);
+        return teamService.convertToTeamDTO(savedTeam);
     }
 
     //Edit a Team
     //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/edit")
     public TeamDTO update(@RequestBody TeamDTO teamDTO) {
-        this.teamService.updateTeam(this.teamService.convertToTeam(teamDTO));
+        Team teamToEdit = teamService.convertToTeam(teamDTO);
+        teamService.setTeam(teamToEdit);
         return teamDTO;
     }
 

@@ -133,7 +133,7 @@ Form to create a new Leave request
       <br>
       Date from: <input [(ngModel)]="newPeriod.dateFrom" name="dateFrom" type="datetime-local">
       Date to: <input [(ngModel)]="newPeriod.dateTo" name="dateTo" type="datetime-local">
-      <button (click)="saveEntry()" type="submit">Submit</button>
+      <button (click)="saveEntry(newPeriod)" type="submit">Submit</button>
     </div>
   </form>
 </div>

@@ -1,5 +1,7 @@
 package com.example.rooster.period;
 
+import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
@@ -57,10 +59,13 @@ public class PeriodController {
 
     //Creating a new period request. Returns all period requests of an employee.
     @PostMapping("/new")
-    public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
+    public List<PeriodDTO> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
         periodService.addPeriod(period);
-        return periodService.getPeriodsByEmployee(period.getEmployee());
+        List<Period> periods = periodService.getPeriodsByEmployee(period.getEmployee());
+        List<PeriodDTO> periodDTOs = new ArrayList<>();
+        periods.forEach(p->periodDTOs.add(periodService.convertToPeriodDTO(p)));
+        return periodDTOs;
     }
 
     //Deleting a certain request. Returns the list of remaining requests of the employee.
@@ -68,6 +73,13 @@ public class PeriodController {
     public ResponseEntity<String> deletePeriodRequest(@PathVariable long id) {
         periodService.deletePeriod(periodService.getPeriod(id));
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
+    }
+
+    @PostMapping("/edit")
+    public PeriodDTO updatePeriod(@RequestBody PeriodDTO periodDTO) {
+        Period newPeriod = periodService.convertToPeriod(periodDTO);
+        Period savedPeriod = periodService.addPeriod(newPeriod);
+        return periodService.convertToPeriodDTO(savedPeriod);
     }
 
     //Displaying the periods of a certain team in a certain time interval
