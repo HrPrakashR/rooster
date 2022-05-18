@@ -1,7 +1,5 @@
 package com.example.rooster.period;
 
-import java.util.Date;
-
 public class PeriodDTO {
 
 

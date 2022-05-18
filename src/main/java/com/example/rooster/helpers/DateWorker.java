@@ -27,13 +27,13 @@ public class DateWorker {
         return String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes);
     }
 
-    public static Date convertDateStringToDate(String dateTime){
-        int year = Integer.parseInt(dateTime.substring(0,3));
-        int month = Integer.parseInt(dateTime.substring(5,6));
-        int day = Integer.parseInt(dateTime.substring(8,9));
-        int hours = Integer.parseInt(dateTime.substring(11,12));
-        int minutes = Integer.parseInt(dateTime.substring(14,15));
-        return getDateObject(0, minutes, hours, day, month,year);
+    public static Date convertDateStringToDate(String dateTime) {
+        int year = Integer.parseInt(dateTime.substring(0, 3));
+        int month = Integer.parseInt(dateTime.substring(5, 6));
+        int day = Integer.parseInt(dateTime.substring(8, 9));
+        int hours = Integer.parseInt(dateTime.substring(11, 12));
+        int minutes = Integer.parseInt(dateTime.substring(14, 15));
+        return getDateObject(0, minutes, hours, day, month, year);
     }
 
     public static Date getDate(boolean lastDayOfMonth, int year, int month) {

@@ -2,7 +2,7 @@ package com.example.rooster.employee;
 
 public class EmployeeConverter {
 
-    public static EmployeeDTO convertToDTO(Employee employee){
+    public static EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
         employeeDTO.setFirstName(employee.getFirstName());

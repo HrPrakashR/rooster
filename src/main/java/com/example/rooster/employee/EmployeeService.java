@@ -85,7 +85,7 @@ public class EmployeeService {
         return this.employeeRepository.save(employee);
     }
 
-    public Optional<Employee> findEmployeeByEmail(String email){
+    public Optional<Employee> findEmployeeByEmail(String email) {
         return this.employeeRepository.findEmployeeByEmail(email);
     }
 
@@ -94,10 +94,9 @@ public class EmployeeService {
         return this.employeeRepository.findEmployeeById(id);
     }
 
-    public Employee deleteEmployeeById(long id) {
+    public void deleteEmployeeById(long id) {
         Employee employee = this.getEmployeeById(id);
         this.employeeRepository.delete(employee);
-        return employee;
     }
 
     public void deletePeriodsOfEmployee(Employee employee) {

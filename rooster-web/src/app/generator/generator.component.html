@@ -26,54 +26,54 @@ Team
     </thead>
     <tbody>
     <ng-container *ngIf="selectedTeam">
-        <tr *ngFor="let day of days">
+      <tr *ngFor="let day of days">
 
-          <ng-container *ngIf="isSpecificDay(day, 0)">
-            <td class="table-primary">{{ day }}. Sunday</td>
-            <td class="table-primary">{{ selectedTeam.sundayFrom }} - {{ selectedTeam.sundayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 0)">
+          <td class="table-primary">{{ day }}. Sunday</td>
+          <td class="table-primary">{{ selectedTeam.sundayFrom }} - {{ selectedTeam.sundayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 1)">
-            <td>{{ day }}. Monday</td>
-            <td>{{ selectedTeam.mondayFrom }} - {{ selectedTeam.mondayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 1)">
+          <td>{{ day }}. Monday</td>
+          <td>{{ selectedTeam.mondayFrom }} - {{ selectedTeam.mondayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 2)">
-            <td>{{ day }}. Tuesday</td>
-            <td>{{ selectedTeam.tuesdayFrom }} - {{ selectedTeam.tuesdayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 2)">
+          <td>{{ day }}. Tuesday</td>
+          <td>{{ selectedTeam.tuesdayFrom }} - {{ selectedTeam.tuesdayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 3)">
-            <td>{{ day }}. Wednesday</td>
-            <td>{{ selectedTeam.wednesdayFrom }} - {{ selectedTeam.wednesdayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 3)">
+          <td>{{ day }}. Wednesday</td>
+          <td>{{ selectedTeam.wednesdayFrom }} - {{ selectedTeam.wednesdayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 4)">
-            <td>{{ day }}. Thursday</td>
-            <td>{{ selectedTeam.thursdayFrom }} - {{ selectedTeam.thursdayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 4)">
+          <td>{{ day }}. Thursday</td>
+          <td>{{ selectedTeam.thursdayFrom }} - {{ selectedTeam.thursdayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 5)">
-            <td>{{ day }}. Friday</td>
-            <td>{{ selectedTeam.fridayFrom }} - {{ selectedTeam.fridayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 5)">
+          <td>{{ day }}. Friday</td>
+          <td>{{ selectedTeam.fridayFrom }} - {{ selectedTeam.fridayTo }}</td>
+        </ng-container>
 
-          <ng-container *ngIf="isSpecificDay(day, 6)">
-            <td class="table-primary">{{ day }}. Saturday</td>
-            <td class="table-primary">{{ selectedTeam.saturdayFrom }} - {{ selectedTeam.saturdayTo }}</td>
-          </ng-container>
+        <ng-container *ngIf="isSpecificDay(day, 6)">
+          <td class="table-primary">{{ day }}. Saturday</td>
+          <td class="table-primary">{{ selectedTeam.saturdayFrom }} - {{ selectedTeam.saturdayTo }}</td>
+        </ng-container>
 
-          <td *ngFor="let employee of employees">
-            <ng-container *ngIf="predefinedPeriods">
-              <ng-container *ngFor="let period of predefinedPeriods">
-                <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
-                  {{period.dateFrom.substring(period.dateFrom.length-5, period.dateFrom.length)}} -
-                  {{period.dateTo.substring(period.dateTo.length-5, period.dateTo.length)}}
-                </ng-container>
+        <td *ngFor="let employee of employees">
+          <ng-container *ngIf="predefinedPeriods">
+            <ng-container *ngFor="let period of predefinedPeriods">
+              <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
+                {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
               </ng-container>
             </ng-container>
-          </td>
-        </tr>
+          </ng-container>
+        </td>
+      </tr>
     </ng-container>
     </tbody>
   </table>

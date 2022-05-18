@@ -41,16 +41,16 @@ public class Period {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Purpose getPurpose() {
         return purpose;
     }
 
     public void setPurpose(Purpose purpose) {
         this.purpose = purpose;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Date getDateFrom() {
