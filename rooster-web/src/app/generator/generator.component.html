@@ -63,7 +63,8 @@ Team
           <td class="table-primary">{{ selectedTeam.saturdayFrom }} - {{ selectedTeam.saturdayTo }}</td>
         </ng-container>
 
-        <td *ngFor="let employee of employees">
+
+        <td *ngFor="let employee of employees" [ngClass]="isSpecificDay(day, 6) || isSpecificDay(day, 0) ? 'table-primary' : ''">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
@@ -73,6 +74,7 @@ Team
             </ng-container>
           </ng-container>
         </td>
+
       </tr>
     </ng-container>
     </tbody>
