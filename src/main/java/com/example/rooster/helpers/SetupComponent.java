@@ -5,11 +5,13 @@ import com.example.rooster.employee.*;
 import com.example.rooster.period.PeriodController;
 import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.PeriodRepository;
+import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamController;
 import com.example.rooster.team.TeamDTO;
 import com.example.rooster.team.TeamRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,15 +23,17 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private final TeamRepository teamRepository;
     private final PeriodController periodController;
     private final PeriodRepository periodRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public SetupComponent(EmployeeController employeeController, EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PeriodRepository periodRepository) {
+    public SetupComponent(EmployeeController employeeController, EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PeriodRepository periodRepository, PasswordEncoder passwordEncoder) {
         this.employeeController = employeeController;
         this.employeeRepository = employeeRepository;
         this.teamController = teamController;
         this.teamRepository = teamRepository;
         this.periodController = periodController;
         this.periodRepository = periodRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -100,15 +104,19 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         }
 
         if (this.employeeRepository.count() <= 8) { // only create users if the database is empty
-            EmployeeDTO owner = new EmployeeDTO();
+            Employee owner = new Employee();
+            Team team = this.teamRepository.getById(1L);
             owner.setFirstName("The");
             owner.setLastName("Owner");
             owner.setEmail("owner@owner.owner");
-            owner.setTeam(1);
+            owner.setTeam(team);
             owner.setHoursPerWeek(40);
             owner.setBalanceHours(0);
-            owner.setRole("OWNER");
-            this.employeeController.addNewEmployee(owner);
+            owner.setRole(Role.OWNER);
+            String password = "owner123";
+            String encodedPassword = passwordEncoder.encode(password);
+            owner.setPassword(encodedPassword);
+            this.employeeRepository.save(owner);
 
             EmployeeDTO manager = new EmployeeDTO();
             manager.setFirstName("The");
