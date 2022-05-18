@@ -1,4 +1,4 @@
-package com.example.rooster.user;
+package com.example.rooster.security.user;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
