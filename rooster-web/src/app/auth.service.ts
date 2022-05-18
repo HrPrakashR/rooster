@@ -61,9 +61,9 @@ export class AuthService {
   }
 
   private refreshSession() {
-    this.http.get<Employee>('/api/users/current').subscribe(user => {
-        if (user) {
-          this.employee = user;
+    this.http.get<Employee>('/api/users/current').subscribe(employee => {
+        if (employee) {
+          this.employee = employee;
           this.authenticated = true;
           AuthService.saveLoginState(this.employee);
         } else {
