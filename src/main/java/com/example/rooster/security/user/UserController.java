@@ -1,6 +1,7 @@
 package com.example.rooster.security.user;
 
 import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/users/")
@@ -36,5 +39,13 @@ public class UserController {
         this.employeeService.setEmployee(employee);
         this.userService.sendPassword(employee.getEmail(), password);
         return new ResponseEntity<>("Successfully sent", HttpStatus.OK);
+    }
+
+    @GetMapping("/current")
+    public EmployeeDTO current(Employee employee) {
+        if (employee != null) {
+            return employeeService.convertToDTO(employeeService.findEmployeeByEmail(employee.getEmail()).orElseThrow());
+        }
+        return null;
     }
 }
