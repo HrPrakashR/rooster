@@ -115,11 +115,54 @@ export class GeneratorComponent implements OnInit {
       .subscribe(result => this.selectedTeam = result);
   }
 
-  isSpecificDay(day: number, checkWith: number) {
-    let selectedDate = new Date();
-    selectedDate.setDate(day);
-    selectedDate.setMonth(this.month);
-    selectedDate.setFullYear(this.year)
-    return selectedDate.getDay() == checkWith;
+  returnDayName(day: number) {
+    let selectedDate = this.createDate(day);
+    switch (selectedDate.getDay()){
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return  "Unknown";
+    }
+  }
+
+  returnCompulsory(day: number) {
+    switch (this.createDate(day).getDay()){
+      case 0:
+        return this.selectedTeam?.sundayFrom + ' - ' + this.selectedTeam?.sundayTo;
+      case 1:
+        return this.selectedTeam?.mondayFrom + ' - ' + this.selectedTeam?.mondayTo;
+      case 2:
+        return this.selectedTeam?.tuesdayFrom + ' - ' + this.selectedTeam?.tuesdayTo;
+      case 3:
+        return this.selectedTeam?.wednesdayFrom + ' - ' + this.selectedTeam?.wednesdayTo;
+      case 4:
+        return this.selectedTeam?.thursdayFrom + ' - ' + this.selectedTeam?.thursdayTo;
+      case 5:
+        return this.selectedTeam?.fridayFrom + ' - ' + this.selectedTeam?.fridayTo;
+      case 6:
+        return this.selectedTeam?.saturdayFrom + ' - ' + this.selectedTeam?.saturdayTo;
+      default:
+        return  "Unknown";
+    }
+  }
+
+  private createDate(day: number){
+    let date = new Date();
+    date.setDate(day);
+    date.setMonth(this.month);
+    date.setFullYear(this.year)
+    return date;
   }
 }

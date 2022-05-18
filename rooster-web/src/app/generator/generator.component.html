@@ -28,53 +28,42 @@ Team
     <ng-container *ngIf="selectedTeam">
       <tr *ngFor="let day of days">
 
-        <ng-container *ngIf="isSpecificDay(day, 0)">
-          <td class="table-primary">{{ day }}. Sunday</td>
-          <td class="table-primary">{{ selectedTeam.sundayFrom }} - {{ selectedTeam.sundayTo }}</td>
-        </ng-container>
+          <td class="table-primary" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">{{ day }}. {{ returnDayName(day) }}</td>
+          <td class="table-primary" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">{{ returnCompulsory(day) }}</td>
 
-        <ng-container *ngIf="isSpecificDay(day, 1)">
-          <td>{{ day }}. Monday</td>
-          <td>{{ selectedTeam.mondayFrom }} - {{ selectedTeam.mondayTo }}</td>
-        </ng-container>
-
-        <ng-container *ngIf="isSpecificDay(day, 2)">
-          <td>{{ day }}. Tuesday</td>
-          <td>{{ selectedTeam.tuesdayFrom }} - {{ selectedTeam.tuesdayTo }}</td>
-        </ng-container>
-
-        <ng-container *ngIf="isSpecificDay(day, 3)">
-          <td>{{ day }}. Wednesday</td>
-          <td>{{ selectedTeam.wednesdayFrom }} - {{ selectedTeam.wednesdayTo }}</td>
-        </ng-container>
-
-        <ng-container *ngIf="isSpecificDay(day, 4)">
-          <td>{{ day }}. Thursday</td>
-          <td>{{ selectedTeam.thursdayFrom }} - {{ selectedTeam.thursdayTo }}</td>
-        </ng-container>
-
-        <ng-container *ngIf="isSpecificDay(day, 5)">
-          <td>{{ day }}. Friday</td>
-          <td>{{ selectedTeam.fridayFrom }} - {{ selectedTeam.fridayTo }}</td>
-        </ng-container>
-
-        <ng-container *ngIf="isSpecificDay(day, 6)">
-          <td class="table-primary">{{ day }}. Saturday</td>
-          <td class="table-primary">{{ selectedTeam.saturdayFrom }} - {{ selectedTeam.saturdayTo }}</td>
-        </ng-container>
-
-
-        <td *ngFor="let employee of employees" [ngClass]="isSpecificDay(day, 6) || isSpecificDay(day, 0) ? 'table-primary' : ''">
+        <td *ngFor="let employee of employees" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
-                {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                <ng-container [ngSwitch]="period.purpose">
+                  <ng-container *ngSwitchCase="'WORKING_HOURS' || 'SHEDULED_WORKING_HOURS'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'CONFIRMED_VACATION'">Vacation/Absense</ng-container>
+                  <ng-container *ngSwitchCase="'SICK_LEAVE'">Sick Leave</ng-container>
+                  <ng-container *ngSwitchCase="'VACATION_REQUEST'">Vacation/Free-Time Request</ng-container>
+                  <ng-container *ngSwitchCase="'WORKING_HOUR_REQUEST'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Request)
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'ABSENCE'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Absence)
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'FREE_TIME_REQUEST'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    (Free-Time Request)
+                  </ng-container>
+                </ng-container>
+
               </ng-container>
             </ng-container>
           </ng-container>
         </td>
-
       </tr>
     </ng-container>
     </tbody>

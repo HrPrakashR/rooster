@@ -22,11 +22,17 @@ export class EmployeeComponent implements OnInit {
   selectedEmployee = {} as Employee;
   editMode = false;
 
-  constructor(private http: HttpClient,
-              private employeeService: EmployeeService) {
+  currentUser?: Employee;
+  leaveRequest: boolean = false;
+  createEmployee: boolean = false;
+  myTeam: boolean = false;
+  selectedTeam?: Team;
+
+  constructor(private http: HttpClient, private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
+    this.http.get<Employee>('/api/users/current').subscribe(user => this.currentUser = user);
     this.getEmployees();
     this.getTeams();
   }
