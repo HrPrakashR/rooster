@@ -66,8 +66,8 @@ public class PeriodService {
         return periodDTO;
     }
 
-    public void addPeriod(Period period) {
-        periodRepository.save(period);
+    public Period addPeriod(Period period) {
+        return periodRepository.save(period);
     }
 
     public void deletePeriod(Period period) {

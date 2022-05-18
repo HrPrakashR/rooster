@@ -1,5 +1,7 @@
 package com.example.rooster.period;
 
+import com.example.rooster.employee.Employee;
+import com.example.rooster.employee.EmployeeDTO;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
@@ -71,6 +73,13 @@ public class PeriodController {
     public ResponseEntity<String> deletePeriodRequest(@PathVariable long id) {
         periodService.deletePeriod(periodService.getPeriod(id));
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
+    }
+
+    @PostMapping("/edit")
+    public PeriodDTO updatePeriod(@RequestBody PeriodDTO periodDTO) {
+        Period newPeriod = periodService.convertToPeriod(periodDTO);
+        Period savedPeriod = periodService.addPeriod(newPeriod);
+        return periodService.convertToPeriodDTO(savedPeriod);
     }
 
     //Displaying the periods of a certain team in a certain time interval
