@@ -1,143 +1,143 @@
-<!--
-Table with all Periods
--->
-<div class="container-fluid p-3 my-3">
-  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves</button>
-  <ng-container *ngIf="periods">
-    <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Leaves</button>
-    <table class="table table-striped text-center">
-      <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Purpose</th>
-        <th scope="col">Employee Id</th>
-        <th scope="col">Date from</th>
-        <th scope="col">Date to</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let period of periods">
-        <th scope="row">{{period.id}}</th>
-        <td>{{period.purpose}}</td>
-        <td>{{period.employee}}</td>
-        <td>{{period.dateFrom}}</td>
-        <td>{{period.dateTo}}</td>
-        <td>
-          <button type="button" class="btn-info" title="Edit Leave request"
-          >Edit</button>
-        </td>
-        <td>
-          <button type="button" class="btn-danger" title="delete Leave request"
-          (click)="deletePeriod(period.id)">Delete</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </ng-container>
-</div>
-<!--
-Show all Leaves of an Employee
--->
-<div class="container-fluid p-3 my-3">
-  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee
-  </button>
-  <select [(ngModel)]="employeeId" id="Employee Id"> Select an Employee
-    <option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>
-  </select>
-  <ng-container *ngIf="periods">
-    <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>
-  <table class="table text-center">
-    <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Purpose</th>
-      <th scope="col">Employee Id</th>
-      <th scope="col">Date from</th>
-      <th scope="col">Date to</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let period of periods">
-    <tr *ngIf="period.employee == employeeId" >
-      <th scope="row">{{period.id}}</th>
-      <td>{{period.purpose}}</td>
-      <td>{{period.employee}}</td>
-      <td>{{period.dateFrom}}</td>
-      <td>{{period.dateTo}}</td>
-      <td>
-        <button type="button" class="btn-info" title="Edit Leave request"
-        >Edit</button>
-      </td>
-      <td>
-        <button type="button" class="btn-danger" title="delete employee"
-                (click)="deletePeriod(period.id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  </ng-container>
-</div>
-<!--
-Show all Employees
--->
-<div class="container-fluid p-3 my-3">
-  <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees</button>
-  <ng-container *ngIf="showEmployeeList">
-    <button (click)="showEmployees()" class="btn btn-primary" type="button">Hide Employees</button>
-    <table class="table table-striped text-center">
-      <thead>
-      <tr>
-        <th scope="col">Employee Id</th>
-        <th scope="col">Employee Name</th>
-        <th scope="col">Balance Hours</th>
-        <th scope="col">Break Time</th>
-        <th scope="col">Email</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let e of employees">
-        <th scope="row">{{e.id}}</th>
-        <td>{{e.firstName}} {{e.lastName}}</td>
-        <td>{{e.balanceHours}}</td>
-        <td>{{e.breakTime}}</td>
-        <td>{{e.email}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </ng-container>
-</div>
-<!--
-Form to create a new Leave request
--->
-<div class="container-fluid p-3 my-3">
-  <button (click)="showLeaveRequest()" *ngIf="!newLeave" class="btn btn-primary" >Create Leave Request</button>
-  <form [hidden]="!newLeave">
-    <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary" >Hide Leave Request</button>
-  <div class="newLeave">
-    Employee First name:
-    <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>
-      <select [(ngModel)]="selectedEmployee">
-        <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>
-      </select>
-    </div>
-    <br>
-    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
-    <select>
-      <option value="0">Vacation Request</option>
-      <option value="1">Confirmed Vacation</option>
-      <option value="2">Sick Leave</option>
-      <option value="3">Working Hours</option>
-      <option value="4">Scheduled Working Hours</option>
-      <option value="5">Absence</option>
-      <option value="6">Free Time Request</option>
-      <option value="7">Working Hour Request</option>
-    </select>
-  </div><br>
-    Date from: <input [(ngModel)] = "newPeriod.dateFrom" type="Date">
-    Date to: <input [(ngModel)] = "newPeriod.dateTo" type="Date">
-    <button type="submit" (click)="saveEntry()">Submit</button>
-  </div>
-  </form>
-</div>
+<!--&lt;!&ndash;-->
+<!--Table with all Periods-->
+<!--&ndash;&gt;-->
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves</button>-->
+<!--  <ng-container *ngIf="periods">-->
+<!--    <button (click)="clearAllPeriods()" class="btn btn-primary" type="button">Hide Leaves</button>-->
+<!--    <table class="table table-striped text-center">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th scope="col">Id</th>-->
+<!--        <th scope="col">Purpose</th>-->
+<!--        <th scope="col">Employee Id</th>-->
+<!--        <th scope="col">Date from</th>-->
+<!--        <th scope="col">Date to</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let period of periods">-->
+<!--        <th scope="row">{{period.id}}</th>-->
+<!--        <td>{{period.purpose}}</td>-->
+<!--        <td>{{period.employee}}</td>-->
+<!--        <td>{{period.dateFrom}}</td>-->
+<!--        <td>{{period.dateTo}}</td>-->
+<!--        <td>-->
+<!--          <button type="button" class="btn-info" title="Edit Leave request"-->
+<!--          >Edit</button>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--          <button type="button" class="btn-danger" title="delete Leave request"-->
+<!--          (click)="deletePeriod(period.id)">Delete</button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </ng-container>-->
+<!--</div>-->
+<!--&lt;!&ndash;-->
+<!--Show all Leaves of an Employee-->
+<!--&ndash;&gt;-->
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee-->
+<!--  </button>-->
+<!--  <select [(ngModel)]="employeeId" id="Employee Id"> Select an Employee-->
+<!--    <option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>-->
+<!--  </select>-->
+<!--  <ng-container *ngIf="periods">-->
+<!--    <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>-->
+<!--  <table class="table text-center">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col">Id</th>-->
+<!--      <th scope="col">Purpose</th>-->
+<!--      <th scope="col">Employee Id</th>-->
+<!--      <th scope="col">Date from</th>-->
+<!--      <th scope="col">Date to</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody *ngFor="let period of periods">-->
+<!--    <tr *ngIf="period.employee == employeeId" >-->
+<!--      <th scope="row">{{period.id}}</th>-->
+<!--      <td>{{period.purpose}}</td>-->
+<!--      <td>{{period.employee}}</td>-->
+<!--      <td>{{period.dateFrom}}</td>-->
+<!--      <td>{{period.dateTo}}</td>-->
+<!--      <td>-->
+<!--        <button type="button" class="btn-info" title="Edit Leave request"-->
+<!--        >Edit</button>-->
+<!--      </td>-->
+<!--      <td>-->
+<!--        <button type="button" class="btn-danger" title="delete employee"-->
+<!--                (click)="deletePeriod(period.id)">Delete</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  </ng-container>-->
+<!--</div>-->
+<!--&lt;!&ndash;-->
+<!--Show all Employees-->
+<!--&ndash;&gt;-->
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="showEmployees()" *ngIf="!showEmployeeList" class="btn btn-primary" type="button">Show Employees</button>-->
+<!--  <ng-container *ngIf="showEmployeeList">-->
+<!--    <button (click)="showEmployees()" class="btn btn-primary" type="button">Hide Employees</button>-->
+<!--    <table class="table table-striped text-center">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th scope="col">Employee Id</th>-->
+<!--        <th scope="col">Employee Name</th>-->
+<!--        <th scope="col">Balance Hours</th>-->
+<!--        <th scope="col">Break Time</th>-->
+<!--        <th scope="col">Email</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let e of employees">-->
+<!--        <th scope="row">{{e.id}}</th>-->
+<!--        <td>{{e.firstName}} {{e.lastName}}</td>-->
+<!--        <td>{{e.balanceHours}}</td>-->
+<!--        <td>{{e.breakTime}}</td>-->
+<!--        <td>{{e.email}}</td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </ng-container>-->
+<!--</div>-->
+<!--&lt;!&ndash;-->
+<!--Form to create a new Leave request-->
+<!--&ndash;&gt;-->
+<!--<div class="container-fluid p-3 my-3">-->
+<!--  <button (click)="showLeaveRequest()" *ngIf="!newLeave" class="btn btn-primary" >Create Leave Request</button>-->
+<!--  <form [hidden]="!newLeave">-->
+<!--    <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary" >Hide Leave Request</button>-->
+<!--  <div class="newLeave">-->
+<!--    Employee First name:-->
+<!--    <div style="display: inline-block" [(ngModel)] = "newPeriod.employee"><br>-->
+<!--      <select [(ngModel)]="selectedEmployee">-->
+<!--        <option *ngFor="let e of employees" [value]='e.email'>{{e.firstName}} {{e.lastName}}</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    <br>-->
+<!--    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">-->
+<!--    <select>-->
+<!--      <option value="0">Vacation Request</option>-->
+<!--      <option value="1">Confirmed Vacation</option>-->
+<!--      <option value="2">Sick Leave</option>-->
+<!--      <option value="3">Working Hours</option>-->
+<!--      <option value="4">Scheduled Working Hours</option>-->
+<!--      <option value="5">Absence</option>-->
+<!--      <option value="6">Free Time Request</option>-->
+<!--      <option value="7">Working Hour Request</option>-->
+<!--    </select>-->
+<!--  </div><br>-->
+<!--    Date from: <input [(ngModel)] = "newPeriod.dateFrom" type="Date">-->
+<!--    Date to: <input [(ngModel)] = "newPeriod.dateTo" type="Date">-->
+<!--    <button type="submit" (click)="saveEntry()">Submit</button>-->
+<!--  </div>-->
+<!--  </form>-->
+<!--</div>-->
 
 <!--
 TODO:
@@ -145,3 +145,138 @@ CEO => CEO can do everything!
 Manager => Manager can create leave request for his employees and for himself / can see the details
 [Employee, Trainee] => can create leave request for himself and see details of his requests
 -->
+
+<!-- Title Greeting -->
+
+<section id="greeting" class="pb-5">
+  <h5 class="section-title h1">YOUR LEAVE REQUESTS</h5>
+
+<div class="row justify-content-center">
+  <div class="column col-xs-12 col-sm-6 col-md-3">
+        <div class="image-flip">
+          <div class="card">
+            <div class="card-body text-center">
+              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+                       data-holder-rendered="true"></p>
+              <h4 class="card-title">MARIE MUSTERFRAU</h4>
+              <div style="display: inline-block" [(ngModel)] = "newPeriod.employee">
+                    </div>
+                    <br>
+                    Purpose: <div style="display: inline-block" [(ngModel)] = "newPeriod.purpose">
+                    <select class="custom-select">
+                      <option selected>Choose a purpose...</option>
+                      <option value="0">Vacation Request</option>
+                      <option value="1">Confirmed Vacation</option>
+                      <option value="2">Sick Leave</option>
+                      <option value="3">Working Hours</option>
+                      <option value="4">Scheduled Working Hours</option>
+                      <option value="5">Absence</option>
+                      <option value="6">Free Time Request</option>
+                      <option value="7">Working Hour Request</option>
+                    </select>
+                  </div>
+              <br>
+              <label>From:</label>
+                <input [(ngModel)] = "newPeriod.dateFrom" type="Date">
+              <br>
+              <label>To:</label> <input [(ngModel)] = "newPeriod.dateTo" type="Date">
+                  </div>
+              <div class="btn-toolbar justify-content-center" aria-label="Toolbar with button groups" role="toolbar">
+                <a class="btn btn-primary mr-1 mb-4 justify-content-center" href="https://jobs.academicwork.de/" role="button">Submit</a>
+              </div>
+            </div>
+          </div>
+  </div>
+
+    <!-- ./Card for Trainee/Employee -->
+    <!-- /Table for Trainee/Employee -->
+<div class="column col-xs-12 col-sm-6 col-md-8">
+      <div class="card">
+        <div class="card-body text-center">
+    <table class="table table-sm">
+      <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Purpose</th>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
+        <th scope="col">Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="table-warning">
+        <th scope="row">1</th>
+        <td>Sick Leave</td>
+        <td>17/05/2022</td>
+        <td>19/05/2022</td>
+        <td>Pending</td>
+      </tr>
+      <tr class="table-success">
+        <th scope="row">2</th>
+        <td>Vacation</td>
+        <td>01/06/2022</td>
+        <td>14/06/2022</td>
+        <td>Approved</td>
+      </tr>
+      <tr class="table-danger">
+        <th scope="row">3</th>
+        <td>Vacation</td>
+        <td>24/12/2022</td>
+        <td>03/01/2023</td>
+        <td>Disapproved</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+      </div>
+    </div>
+
+  <div class="column col-xs-12 col-sm-6 col-md-8">
+    <div class="card">
+      <div class="card-body text-center">
+        <table class="table table-sm">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="table-warning">
+            <th scope="row">1</th>
+            <td></td>
+            <td>Sick Leave</td>
+            <td>17/05/2022</td>
+            <td>19/05/2022</td>
+            <td>Pending</td>
+          </tr>
+          <tr class="table-warning">
+            <th scope="row">2</th>
+            <td></td>
+            <td>Vacation</td>
+            <td>01/06/2022</td>
+            <td>14/06/2022</td>
+            <td>Pending</td>
+          </tr>
+          <tr class="table-warning">
+            <th scope="row">3</th>
+            <td></td>
+            <td>Vacation</td>
+            <td>24/12/2022</td>
+            <td>03/01/2023</td>
+            <td>Pending</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./Table for personal leave requests -->
+
+  <!-- Section Greeting closed-->
+</section>
