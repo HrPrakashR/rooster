@@ -117,7 +117,7 @@ export class GeneratorComponent implements OnInit {
 
   returnDayName(day: number) {
     let selectedDate = this.createDate(day);
-    switch (selectedDate.getDay()){
+    switch (selectedDate.getDay()) {
       case 0:
         return "Sunday";
       case 1:
@@ -133,12 +133,12 @@ export class GeneratorComponent implements OnInit {
       case 6:
         return "Saturday";
       default:
-        return  "Unknown";
+        return "Unknown";
     }
   }
 
   returnCompulsory(day: number) {
-    switch (this.createDate(day).getDay()){
+    switch (this.createDate(day).getDay()) {
       case 0:
         return this.selectedTeam?.sundayFrom + ' - ' + this.selectedTeam?.sundayTo;
       case 1:
@@ -154,11 +154,11 @@ export class GeneratorComponent implements OnInit {
       case 6:
         return this.selectedTeam?.saturdayFrom + ' - ' + this.selectedTeam?.saturdayTo;
       default:
-        return  "Unknown";
+        return "Unknown";
     }
   }
 
-  private createDate(day: number){
+  private createDate(day: number) {
     let date = new Date();
     date.setDate(day);
     date.setMonth(this.month);

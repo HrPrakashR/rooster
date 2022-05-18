@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {Employee} from './employee';
-import {AuthService} from "../auth.service";
 
 // import { MessageService } from './message.service';
 
@@ -17,7 +16,8 @@ export class EmployeeService {
   };
   private employeesUrl = 'api/employees';  // URL to web api
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // /** GET heroes from the server */
   // getHeroes(): Observable<Hero[]> {

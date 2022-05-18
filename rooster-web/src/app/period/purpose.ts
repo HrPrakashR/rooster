@@ -1,4 +1,4 @@
-export enum Purpose{
+export enum Purpose {
   VACATION_REQUEST,
   CONFIRMED_VACATION,
   SICK_LEAVE,

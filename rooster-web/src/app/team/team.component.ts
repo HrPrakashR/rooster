@@ -1,7 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Team} from "./team";
-import {Period} from "../period/period";
 
 @Component({
   selector: 'app-team',
@@ -52,7 +51,7 @@ export class TeamComponent implements OnInit {
 
   editTeam(team: Team) {
     const url = `${this.teamUrl}/edit`;
-    this.http.post<Team>(url, team).subscribe(()=> this.fetchAll());
+    this.http.post<Team>(url, team).subscribe(() => this.fetchAll());
     this.editMode = false;
   }
 

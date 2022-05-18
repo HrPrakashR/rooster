@@ -122,9 +122,9 @@ Form to create a new Leave request
     <button (click)="showLeaveRequest()" *ngIf="newLeave" class="btn btn-primary">Hide Leave Request</button>
     <div class="newLeave">
       Employee First name:
-        <select [(ngModel)]="newPeriod.employee" name="employee">
-          <option *ngFor="let e of employees" [ngValue]='e.id'>{{e.firstName}} {{e.lastName}}</option>
-        </select>
+      <select [(ngModel)]="newPeriod.employee" name="employee">
+        <option *ngFor="let e of employees" [ngValue]='e.id'>{{e.firstName}} {{e.lastName}}</option>
+      </select>
       <br>
       Purpose:
       <select [(ngModel)]="newPeriod.purpose" id="purpose" name="purpose">

@@ -11,21 +11,24 @@ write a new function to show the info about the person
 
 <!-- Title Greeting -->
 <ng-container *ngIf="currentUser">
-<figure class="text-center h1">
+  <figure class="text-center h1">
     <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
-</figure>
+  </figure>
 
   <div class="card text-center mx-auto" style="width: 18rem;">
-    <img src="/assets/pictures/profile_picture.png" class="card-img-top" alt="profile">
+    <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
     <div class="card-body">
       <h5 class="card-title">{{ currentUser.firstName }} {{ currentUser.lastName }}</h5>
       <p class="card-text">Team: {{ getTeamName(currentUser.team) }}</p>
-      <p class="card-text">Position: {{ currentUser.role.substring(0,1)}}{{ currentUser.role.substring(1, currentUser.role.length.valueOf()).toLocaleLowerCase() }}</p>
+      <p class="card-text">
+        Position: {{ currentUser.role.substring(0, 1)}}{{ currentUser.role.substring(1, currentUser.role.length.valueOf()).toLocaleLowerCase() }}</p>
       <p class="card-text">E-Mail: {{ currentUser.email.toLocaleLowerCase() }}</p>
       <a (click)="leaveRequest = !leaveRequest" class="btn btn-primary m-1">Leave Request</a>
-      <a (click)="createEmployee = !createEmployee" class="btn btn-primary m-1" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'">Add a New Employee</a>
-      <a (click)="myTeam = !myTeam" class="btn btn-primary m-1" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'">Show My Team</a>
-      <div class="dropdown m-3" *ngIf="currentUser.role == 'OWNER'">
+      <a (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'"
+         class="btn btn-primary m-1">Add a New Employee</a>
+      <a (click)="myTeam = !myTeam" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'"
+         class="btn btn-primary m-1">Show My Team</a>
+      <div *ngIf="currentUser.role == 'OWNER'" class="dropdown m-3">
         <label for="team">Select a Team:</label>
         <select [(ngModel)]="selectedTeam" id="team" name="team">
           <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
@@ -34,21 +37,20 @@ write a new function to show the info about the person
     </div>
   </div>
 
-  <figure class="text-center" *ngIf="leaveRequest">
+  <figure *ngIf="leaveRequest" class="text-center">
     CREATE LEAVE REQUEST HERE
   </figure>
 
-  <figure class="text-center" *ngIf="createEmployee">
+  <figure *ngIf="createEmployee" class="text-center">
     CREATE NEW EMPLOYEE HERE
   </figure>
 
-  <figure class="text-center" *ngIf="selectedTeam != undefined">
+  <figure *ngIf="selectedTeam != undefined" class="text-center">
     {{selectedTeam.name}}
-    CREATE NEW EMPLOYEE HERE
+    SHOW SELECTED TEAM HERE
   </figure>
 
 </ng-container>
-
 
 
 <!-- Title Greeting -->
@@ -60,7 +62,7 @@ write a new function to show the info about the person
 <!--    <div class="row">-->
 
 <!-- Team for CEO -->
-<section id="ceo" class="pb-5">
+<section class="pb-5" id="ceo">
   <div class="container">
     <h5 class="section-title h1">YOUR STAFF</h5>
     <div class="row">
@@ -70,14 +72,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -88,14 +91,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -106,14 +110,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -124,14 +129,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -142,14 +148,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -160,14 +167,15 @@ write a new function to show the info about the person
         <div class="image-flip">
           <div class="card">
             <div class="card-body text-center">
-              <p> <img class="rounded-circle z-depth-2" alt="100x100" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                       data-holder-rendered="true"></p>
+              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                      data-holder-rendered="true"
+                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
               <h4 class="card-title">*NAME*</h4>
               <p class="card-text">*Team:*</p>
               <p class="card-text">*Position:*</p>
               <p class="card-text">*Email:*</p>
-              <a href="https://jobs.academicwork.de/" class="btn edit btn-primary btn-sm mr-1">Edit</a>
-              <a href="https://jobs.academicwork.de/" class="btn delete btn-primary btn-sm">Delete</a>
+              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
+              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
@@ -181,10 +189,6 @@ write a new function to show the info about the person
   </div>
 </section>
 <!-- Team for CEO -->
-
-
-
-
 
 
 <!--

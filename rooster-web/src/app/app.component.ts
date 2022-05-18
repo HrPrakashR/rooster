@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {AuthService} from "./auth.service";
-import {HttpClient} from "@angular/common/http";
-import {Employee} from "./employee/employee";
 
 @Component({
   selector: 'app-root',

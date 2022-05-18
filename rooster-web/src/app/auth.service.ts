@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 // import { User } from './model/user';
-import { Employee } from './employee/employee';
+import {Employee} from './employee/employee';
 
 const SECURITY_LOGIN_STATE = 'SECURITY_LOGIN_STATE';
 
@@ -17,6 +17,18 @@ export class AuthService {
     if (AuthService.checkLoginState()) {
       this.refreshSession();
     }
+  }
+
+  get currentUser() {
+    return this.employee;
+  }
+
+  get isAuthenticated() {
+    return this.authenticated;
+  }
+
+  get isAdmin() {
+    return this.employee?.role ?? false;   //TODO Rolle bestimmen
   }
 
   private static createToken(username: string, password: string) {
@@ -60,6 +72,13 @@ export class AuthService {
     )
   }
 
+  public logout() {
+    this.http.post('/api/auth/logout', {}).subscribe(() => console.log('logout successful'))
+    this.employee = undefined;
+    this.authenticated = false;
+    localStorage.removeItem(SECURITY_LOGIN_STATE);
+  }
+
   private refreshSession() {
     this.http.get<Employee>('/api/users/current').subscribe(employee => {
         if (employee) {
@@ -73,25 +92,6 @@ export class AuthService {
         }
       }
     )
-  }
-
-  public logout() {
-    this.http.post('/api/auth/logout', {}).subscribe(() => console.log('logout successful'))
-    this.employee = undefined;
-    this.authenticated = false;
-    localStorage.removeItem(SECURITY_LOGIN_STATE);
-  }
-
-  get currentUser() {
-    return this.employee;
-  }
-
-  get isAuthenticated() {
-    return this.authenticated;
-  }
-
-  get isAdmin() {
-    return this.employee?.role ?? false;   //TODO Rolle bestimmen
   }
 
 

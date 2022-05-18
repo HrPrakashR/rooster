@@ -28,10 +28,14 @@ Team
     <ng-container *ngIf="selectedTeam">
       <tr *ngFor="let day of days">
 
-          <td class="table-primary" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">{{ day }}. {{ returnDayName(day) }}</td>
-          <td class="table-primary" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">{{ returnCompulsory(day) }}</td>
+        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'"
+            class="table-primary">{{ day }}
+          . {{ returnDayName(day) }}</td>
+        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'"
+            class="table-primary">{{ returnCompulsory(day) }}</td>
 
-        <td *ngFor="let employee of employees" [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">
+        <td *ngFor="let employee of employees"
+            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
