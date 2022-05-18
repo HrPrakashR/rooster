@@ -37,7 +37,6 @@ public class EmployeeController {
     }
 
     //Creating a new employee
-    //We save an employee and send password to him in the same line
     @PostMapping("/new")
     public EmployeeDTO addNewEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee newEmployee = employeeService.convertToEmployee(employeeDTO);
