@@ -2,7 +2,6 @@ export interface Employee {
   id: number
   firstName: string;
   lastName: string;
-  password: string;
   email: string;
   team: number;
   hoursPerWeek: number;
