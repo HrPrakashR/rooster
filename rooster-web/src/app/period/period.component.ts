@@ -53,8 +53,8 @@ export class PeriodComponent implements OnInit {
     this.showEmployeeList = !this.showEmployeeList;
   }
 
-  saveEntry() {
-    this.http.post<Period[]>('/api/periods/new', this.newPeriod)
+  saveEntry(newPeriod: Period) {
+    this.http.post<Period[]>('/api/periods/new', newPeriod)
       .subscribe(np => this.periods = np);
     this.newPeriod = {} as Period;
   }

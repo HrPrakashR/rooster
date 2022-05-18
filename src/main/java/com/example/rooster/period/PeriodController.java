@@ -57,10 +57,13 @@ public class PeriodController {
 
     //Creating a new period request. Returns all period requests of an employee.
     @PostMapping("/new")
-    public List<Period> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
+    public List<PeriodDTO> submitPeriodRequest(@RequestBody PeriodDTO periodDTO) {
         Period period = periodService.convertToPeriod(periodDTO);
         periodService.addPeriod(period);
-        return periodService.getPeriodsByEmployee(period.getEmployee());
+        List<Period> periods = periodService.getPeriodsByEmployee(period.getEmployee());
+        List<PeriodDTO> periodDTOs = new ArrayList<>();
+        periods.forEach(p->periodDTOs.add(periodService.convertToPeriodDTO(p)));
+        return periodDTOs;
     }
 
     //Deleting a certain request. Returns the list of remaining requests of the employee.
