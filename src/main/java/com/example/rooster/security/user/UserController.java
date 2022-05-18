@@ -4,6 +4,7 @@ import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final EmployeeService employeeService;
+
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
 
-    public UserController(EmployeeService employeeService, UserService userService) {
+    public UserController(EmployeeService employeeService, PasswordEncoder passwordEncoder, UserService userService) {
         this.employeeService = employeeService;
+        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
 
@@ -27,7 +31,8 @@ public class UserController {
     public ResponseEntity<String> sendPassword(@PathVariable long userId) {
         Employee employee = this.employeeService.getEmployeeById(userId);
         String password = this.userService.getPassword();
-        employee.setPassword(password);
+        String encodedPassword = passwordEncoder.encode(employee.getPassword());
+        employee.setPassword(encodedPassword);
         this.employeeService.setEmployee(employee);
         this.userService.sendPassword(employee.getEmail(), password);
         return new ResponseEntity<>("Successfully sent", HttpStatus.OK);

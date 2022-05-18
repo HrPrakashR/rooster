@@ -3,6 +3,7 @@ package com.example.rooster;
 import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeController;
 import com.example.rooster.employee.EmployeeRepository;
+import com.example.rooster.employee.Role;
 import com.example.rooster.security.auth.AuthService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -27,6 +28,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             Employee bob = new Employee();
             bob.setEmail("bob@gmail.com");
             bob.setPassword("abcdefg");
+            bob.setRole(Role.OWNER);
             this.employeeController.addNewEmployee(bob);
         }
     }
