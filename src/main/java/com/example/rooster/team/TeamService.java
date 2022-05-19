@@ -95,13 +95,13 @@ public class TeamService {
         ) {
             team.setMondayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getMondayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getMondayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getMondayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getMondayFrom().substring(0, 2)))
             );
             team.setMondayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getMondayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getMondayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getMondayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getMondayTo().substring(0, 2)))
             );
         }
 
@@ -116,13 +116,13 @@ public class TeamService {
         ) {
             team.setTuesdayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getTuesdayFrom().substring(0, 2)))
             );
             team.setTuesdayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getTuesdayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getTuesdayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getTuesdayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getTuesdayTo().substring(0, 2)))
             );
         }
 
@@ -138,14 +138,14 @@ public class TeamService {
         ) {
             team.setWednesdayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getWednesdayFrom().substring(0, 2)))
             );
 
             team.setWednesdayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getWednesdayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getWednesdayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getWednesdayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getWednesdayTo().substring(0, 2)))
             );
         }
 
@@ -160,14 +160,14 @@ public class TeamService {
         ) {
             team.setThursdayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getThursdayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getThursdayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getThursdayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getThursdayFrom().substring(0, 2)))
             );
 
             team.setThursdayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getThursdayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getThursdayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getThursdayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getThursdayTo().substring(0, 2)))
             );
         }
 
@@ -182,14 +182,14 @@ public class TeamService {
         ) {
             team.setFridayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getFridayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getFridayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getFridayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getFridayFrom().substring(0, 2)))
             );
 
             team.setFridayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getFridayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getFridayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getFridayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getFridayTo().substring(0, 2)))
             );
         }
 
@@ -204,14 +204,14 @@ public class TeamService {
         ) {
             team.setSaturdayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getSaturdayFrom().substring(0, 2)))
             );
 
             team.setSaturdayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getSaturdayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getSaturdayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getSaturdayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getSaturdayTo().substring(0, 2)))
             );
         }
 
@@ -227,14 +227,14 @@ public class TeamService {
         ) {
             team.setSundayFrom(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getSundayFrom().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getSundayFrom().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getSundayFrom().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getSundayFrom().substring(0, 2)))
             );
 
             team.setSundayTo(
                     DateWorker.getDateObject(0,
-                            Integer.parseInt(teamDTO.getSundayTo().substring(3, 4)),
-                            Integer.parseInt(teamDTO.getSundayTo().substring(0, 1)))
+                            Integer.parseInt(teamDTO.getSundayTo().substring(3, 5)),
+                            Integer.parseInt(teamDTO.getSundayTo().substring(0, 2)))
             );
         }
 
