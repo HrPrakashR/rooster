@@ -1,11 +1,50 @@
-<div class="container" *ngIf="employee">
-  <div class="row">
-    <div class="card article">
-      <div class="card-body">
-        <h5 class="card-title">{{ employee.firstName }} {{employee.lastName}}</h5>
-        <p class="card-text">{{ employee.team }}</p>
-        <p class="card-text">{{ employee.role }}</p>
-      </div>
+<div *ngIf="employee" class="card">
+  <div *ngIf="!editMode" class="container">
+    <h4>First name: <b>{{employee.firstName}}</b></h4>
+    <h4>Last name:<b>{{employee.lastName}}</b></h4>
+    <p>
+      <strong>Position: </strong> {{capitalizeFirstLetter(employee.role)}}
+    </p>
+    <p>
+      <strong>Team: </strong> {{getTeamName(employee.team)}}
+    </p>
+    <p>
+      <strong>Email: </strong> {{employee.email}}
+    </p>
+    <button (click)="editModeOn()" class="btn btn-info" title="edit team" type="button">Edit</button>
+  </div>
+  <div *ngIf="editMode" class="container">
+    <button (click)="editModeOff()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
+      <span aria-hidden="true">X</span>
+    </button>
+    <div>
+      <label for="firstName">First name: </label>
+      <input [(ngModel)]="employee.firstName" id="firstName">
     </div>
+    <div>
+      <label for="lastName">Last name: </label>
+      <input [(ngModel)]="employee.lastName" id="lastName">
+    </div>
+    <div>
+      <label for="employeePosition">Position: </label>
+      <select [(ngModel)]="employee.role" id="employeePosition" name="role">
+        <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value">{{capitalizeFirstLetter(r.value.toString())}}</option>
+      </select>
+    </div>
+    <div>
+      <label for="employeeTeam">Team:</label>
+      <select [(ngModel)]="employee.team" id="employeeTeam" name="employeeTeam">
+        <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+      </select>
+    </div>
+    <div>
+      <label for="employeeEmail">Email address: </label>
+      <input [(ngModel)]="employee.email" id="employeeEmail">
+    </div>
+    <div>
+      <label for="employeeHoursPerWeek">Hours per Week: </label>
+      <input [(ngModel)]="employee.hoursPerWeek" id="employeeHoursPerWeek" type="number">
+    </div>
+    <button (click)="editEmployee(employee)" class="btn btn-success" title="edit team" type="button">Save</button>
   </div>
 </div>
