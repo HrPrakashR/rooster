@@ -56,7 +56,8 @@ export class EmployeeComponent implements OnInit {
 
   saveEmployee(newEmployee: Employee) {
     this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result => this.employees?.push(result));
-    this.isFormShown = false;
+    this.createEmployee = false;
+    this.newEmployee = {} as Employee;
   }
 
   toggleShow() {
@@ -72,10 +73,10 @@ export class EmployeeComponent implements OnInit {
     this.employeeSelected = true;
   }
 
-  deleteEmployee(employee: Employee): void {
-    // @ts-ignore
-    this.employees = this.employees.filter(e => e !== employee);
-    this.employeeService.deleteEmployee(employee.id).subscribe();
+  deleteEmployee(id: number): void {
+    this.employees = this.employees?.filter(employee => employee.id !== id);
+    this.http.delete('api/employees/delete/' + id)
+      .subscribe();
   }
 
   closeEmployeeDetails() {
