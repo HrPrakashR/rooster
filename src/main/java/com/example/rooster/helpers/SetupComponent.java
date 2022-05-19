@@ -126,7 +126,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             TeamDTO team5 =new TeamDTO();
             team5.setName("Production");
             team5.setRestHours(12);
-            team5. setRestDays(2);
+            team5.setRestDays(2);
             team5.setMinBreakTime(1);
             team5.setMondayFrom("08:30");
             team5.setMondayTo("17:00");
@@ -313,7 +313,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             period12.setPurpose("FREE_TIME_REQUEST");
             period12.setDateFrom("2022-06-27T08:30");
             period12.setDateTo("2022-06-30T08:30");
-            period12.setEmployee(5);
+            period12.setEmployee(7);
             this.periodController.submitPeriodRequest(period12);
         }
     }
