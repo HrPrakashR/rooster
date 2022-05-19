@@ -44,13 +44,28 @@ write a new function to show the info about the person
   <figure *ngIf="createEmployee" class="text-center">
     CREATE NEW EMPLOYEE HERE
   </figure>
-
-  <figure *ngIf="selectedTeam != undefined" class="text-center">
-    {{selectedTeam.name}}
-    SHOW SELECTED TEAM HERE
-  </figure>
-
 </ng-container>
+
+
+<!--<button type="button" class="show" title="employee details"-->
+<!--        (click)="getEmployee(employee.id)">Details</button>-->
+
+<!--<div class="card" *ngIf="employeeSelected"   >-->
+<!--  <div class="container" *ngIf="!editMode">-->
+<!--    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">-->
+<!--      <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>-->
+<!--    <p>-->
+<!--      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}-->
+<!--    </p>-->
+<!--    &lt;!&ndash;                  <p>&ndash;&gt;-->
+<!--    &lt;!&ndash;                    <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}&ndash;&gt;-->
+<!--    &lt;!&ndash;                  </p>&ndash;&gt;-->
+<!--    <button type="button" class="edit" title="edit employee"-->
+<!--            (click)="editModeOn()">Edit</button>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 <!-- Title Greeting -->
@@ -64,126 +79,77 @@ write a new function to show the info about the person
 <!-- Team for CEO -->
 <section class="pb-5" id="ceo">
   <div class="container">
-    <h5 class="section-title h1">YOUR STAFF</h5>
-    <div class="row">
+
+    <figure *ngIf="selectedTeam != undefined" class="text-center" >
+      <div *ngFor="let team of teams">
+          <h5 *ngIf="team.id == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
+      </div>
+    </figure>
+
+    <div class="row justify-content-evenly ">
 
       <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
+      <div class="col-xs-12 col-sm-6 col-md-4 mb-4" *ngFor="let employee of employees">
+        <div class="image-flip" *ngIf="employee.team == selectedTeam">
           <div class="card">
             <div class="card-body text-center">
               <p><img alt="100x100" class="rounded-circle z-depth-2"
                       data-holder-rendered="true"
                       src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
+              <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
+                <div *ngFor="let team of teams">
+                  <p  *ngIf="team.id == selectedTeam" class="card-text">Team: {{team.name}}</p>
+                </div>
+              <p class="card-text">Position: {{employee.role}}</p>
+              <p class="card-text">Email: {{employee.email}}</p>
+
               <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
               <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
             </div>
           </div>
         </div>
       </div>
-      <!-- ./Team member -->
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                      data-holder-rendered="true"
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ./Team member -->
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                      data-holder-rendered="true"
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ./Team member -->
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                      data-holder-rendered="true"
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ./Team member -->
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                      data-holder-rendered="true"
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ./Team member -->
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4 mb-4">
-        <div class="image-flip">
-          <div class="card">
-            <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                      data-holder-rendered="true"
-                      src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-              <h4 class="card-title">*NAME*</h4>
-              <p class="card-text">*Team:*</p>
-              <p class="card-text">*Position:*</p>
-              <p class="card-text">*Email:*</p>
-              <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ./Team member -->
-      <!--    </div>-->
-      <!--  </div>-->
-      <!--</section>-->
+
+<!--      <div class="container-fluid p-3 my-3">-->
+<!--        <button (click)="fetchAll()" *ngIf="!periods" class="btn btn-primary" type="button">Show Leaves of an Employee-->
+<!--        </button>-->
+<!--        <select [(ngModel)]="employeeId" id="Employee Id"> Select an Employee-->
+<!--          <option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</option>-->
+<!--        </select>-->
+<!--        <ng-container *ngIf="periods">-->
+<!--          <button (click)="clearAllPeriods()" *ngIf="periods" class="btn btn-primary" type="button">Hide Leaves of an Employee</button>-->
+<!--        <table class="table text-center">-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th scope="col">Id</th>-->
+<!--            <th scope="col">Purpose</th>-->
+<!--            <th scope="col">Employee Id</th>-->
+<!--            <th scope="col">Date from</th>-->
+<!--            <th scope="col">Date to</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody *ngFor="let period of periods">-->
+<!--          <tr *ngIf="period.employee == employeeId" >-->
+<!--            <th scope="row">{{period.id}}</th>-->
+<!--            <td>{{period.purpose}}</td>-->
+<!--            <td>{{period.employee}}</td>-->
+<!--            <td>{{period.dateFrom}}</td>-->
+<!--            <td>{{period.dateTo}}</td>-->
+<!--            <td>-->
+<!--              <button type="button" class="btn-info" title="Edit Leave request"-->
+<!--              >Edit</button>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <button type="button" class="btn-danger" title="delete employee"-->
+<!--                      (click)="deletePeriod(period.id)">Delete</button>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--        </ng-container>-->
+<!--      </div>-->
+
+
       <!-- Team for Manager -->
     </div>
   </div>

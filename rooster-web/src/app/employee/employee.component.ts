@@ -26,7 +26,7 @@ export class EmployeeComponent implements OnInit {
   leaveRequest: boolean = false;
   createEmployee: boolean = false;
   myTeam: boolean = false;
-  selectedTeam?: Team;
+  selectedTeam?: number = 0;
 
   constructor(private http: HttpClient, private employeeService: EmployeeService) {
   }
