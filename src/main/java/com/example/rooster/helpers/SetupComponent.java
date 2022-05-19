@@ -108,7 +108,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             Team team = this.teamRepository.getById(1L);
             owner.setFirstName("The");
             owner.setLastName("Owner");
-            owner.setEmail("owner@owner.owner");
+            owner.setEmail("owner@owner.rooster");
             owner.setTeam(team);
             owner.setHoursPerWeek(40);
             owner.setBalanceHours(0);
@@ -121,7 +121,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO manager = new EmployeeDTO();
             manager.setFirstName("The");
             manager.setLastName("Manager");
-            manager.setEmail("manager@manager.manager");
+            manager.setEmail("manager@manager.rooster");
             manager.setTeam(1);
             manager.setHoursPerWeek(40);
             manager.setBalanceHours(0);
@@ -131,7 +131,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff1 = new EmployeeDTO();
             staff1.setFirstName("Elias");
             staff1.setLastName("Akbari");
-            staff1.setEmail("staff1@staff1.staff1");
+            staff1.setEmail("elias.akbari@staff.rooster");
             staff1.setTeam(1);
             staff1.setHoursPerWeek(40);
             staff1.setBalanceHours(0);
@@ -141,7 +141,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff2 = new EmployeeDTO();
             staff2.setFirstName("Prakash");
             staff2.setLastName("Rathinasamy");
-            staff2.setEmail("staff2@staff2.staff2");
+            staff2.setEmail("prakash.rathinasamy@staff.rooster");
             staff2.setTeam(1);
             staff2.setHoursPerWeek(40);
             staff2.setBalanceHours(0);
@@ -151,7 +151,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff3 = new EmployeeDTO();
             staff3.setFirstName("Mehmet");
             staff3.setLastName("Katran");
-            staff3.setEmail("staff3@staff3.staff3");
+            staff3.setEmail("mehmet.katran@staff.rooster");
             staff3.setTeam(2);
             staff3.setHoursPerWeek(40);
             staff3.setBalanceHours(0);
@@ -161,7 +161,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff4 = new EmployeeDTO();
             staff4.setFirstName("Pia");
             staff4.setLastName("Stitzing");
-            staff4.setEmail("staff4@staff4.staff4");
+            staff4.setEmail("pia.stitzing@staff.rooster");
             staff4.setTeam(2);
             staff4.setHoursPerWeek(40);
             staff4.setBalanceHours(0);
@@ -171,7 +171,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff5 = new EmployeeDTO();
             staff5.setFirstName("Philipp");
             staff5.setLastName("Bomers");
-            staff5.setEmail("staff5@staff5.staff5");
+            staff5.setEmail("philipp.bomers@staff.rooster");
             staff5.setTeam(3);
             staff5.setHoursPerWeek(40);
             staff5.setBalanceHours(0);
@@ -181,7 +181,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             EmployeeDTO staff6 = new EmployeeDTO();
             staff6.setFirstName("Georg");
             staff6.setLastName("Brune");
-            staff6.setEmail("staff6@staff6.staff6");
+            staff6.setEmail("georg.brune@staff.rooster");
             staff6.setTeam(3);
             staff6.setHoursPerWeek(40);
             staff6.setBalanceHours(0);
@@ -189,7 +189,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             this.employeeController.addNewEmployee(staff6);
         }
 
-        if (this.periodRepository.count() <= 8) {
+        if (this.periodRepository.count() <= 12) {
             PeriodDTO period1 = new PeriodDTO();
             period1.setPurpose("VACATION_REQUEST");
             period1.setDateFrom("2022-05-24T08:30");
@@ -245,6 +245,34 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             period8.setDateTo("2022-05-25T08:30");
             period8.setEmployee(10);
             this.periodController.submitPeriodRequest(period8);
+
+            PeriodDTO period9 = new PeriodDTO();
+            period9.setPurpose("SICK_LEAVE");
+            period9.setDateFrom("2022-06-27T08:30");
+            period9.setDateTo("2022-06-28T08:30");
+            period9.setEmployee(7);
+            this.periodController.submitPeriodRequest(period9);
+
+            PeriodDTO period10 = new PeriodDTO();
+            period10.setPurpose("VACATION_REQUEST");
+            period10.setDateFrom("2022-06-15T08:30");
+            period10.setDateTo("2022-06-19T08:30");
+            period10.setEmployee(11);
+            this.periodController.submitPeriodRequest(period10);
+
+            PeriodDTO period11 = new PeriodDTO();
+            period11.setPurpose("WORKING_HOURS");
+            period11.setDateFrom("2022-06-20T08:30");
+            period11.setDateTo("2022-06-21T08:30");
+            period11.setEmployee(11);
+            this.periodController.submitPeriodRequest(period11);
+
+            PeriodDTO period12 = new PeriodDTO();
+            period12.setPurpose("FREE_TIME_REQUEST");
+            period12.setDateFrom("2022-06-27T08:30");
+            period12.setDateTo("2022-06-30T08:30");
+            period12.setEmployee(5);
+            this.periodController.submitPeriodRequest(period12);
         }
     }
 }

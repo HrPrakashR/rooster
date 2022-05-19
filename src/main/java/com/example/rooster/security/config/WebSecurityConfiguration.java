@@ -24,11 +24,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/api/users/sendPassword/email/{email}").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
-                .antMatchers("/api/period/**").authenticated()
-                .antMatchers("/api/employee/**").authenticated()
-                .antMatchers("/api/team/**").authenticated()
-                .antMatchers("/api/secret/admin").hasRole(SecurityService.OWNER_ROLE)
+                .antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated();
 
         http
