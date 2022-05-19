@@ -140,19 +140,19 @@ export class GeneratorComponent implements OnInit {
   returnCompulsory(day: number) {
     switch (this.createDate(day).getDay()) {
       case 0:
-        return this.selectedTeam?.sundayFrom + ' - ' + this.selectedTeam?.sundayTo;
+        return this.selectedTeam?.sundayFrom != null ? this.selectedTeam?.sundayFrom + ' - ' + this.selectedTeam?.sundayTo : "";
       case 1:
-        return this.selectedTeam?.mondayFrom + ' - ' + this.selectedTeam?.mondayTo;
+        return this.selectedTeam?.mondayFrom != null ? this.selectedTeam?.mondayFrom + ' - ' + this.selectedTeam?.mondayTo : "";
       case 2:
-        return this.selectedTeam?.tuesdayFrom + ' - ' + this.selectedTeam?.tuesdayTo;
+        return this.selectedTeam?.tuesdayFrom != null ? this.selectedTeam?.tuesdayFrom + ' - ' + this.selectedTeam?.tuesdayTo : "";
       case 3:
-        return this.selectedTeam?.wednesdayFrom + ' - ' + this.selectedTeam?.wednesdayTo;
+        return this.selectedTeam?.wednesdayFrom != null ? this.selectedTeam?.wednesdayFrom + ' - ' + this.selectedTeam?.wednesdayTo : "";
       case 4:
-        return this.selectedTeam?.thursdayFrom + ' - ' + this.selectedTeam?.thursdayTo;
+        return this.selectedTeam?.thursdayFrom != null ? this.selectedTeam?.thursdayFrom + ' - ' + this.selectedTeam?.thursdayTo : "";
       case 5:
-        return this.selectedTeam?.fridayFrom + ' - ' + this.selectedTeam?.fridayTo;
+        return this.selectedTeam?.fridayFrom != null ? this.selectedTeam?.fridayFrom + ' - ' + this.selectedTeam?.fridayTo : "";
       case 6:
-        return this.selectedTeam?.saturdayFrom + ' - ' + this.selectedTeam?.saturdayTo;
+        return this.selectedTeam?.saturdayFrom != null ? this.selectedTeam?.saturdayFrom + ' - ' + this.selectedTeam?.saturdayTo : "";
       default:
         return "Unknown";
     }

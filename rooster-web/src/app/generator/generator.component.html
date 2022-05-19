@@ -36,32 +36,31 @@ Team
             [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
-              <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
+              <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == '0'+day.toString().substring(day.toString().length-1, day.toString().length)">
                 <ng-container [ngSwitch]="period.purpose">
-                  <ng-container *ngSwitchCase="'WORKING_HOURS' || 'SCHEDULED_WORKING_HOURS'">
+                  <div *ngSwitchCase="'WORKING_HOURS' || 'SCHEDULED_WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="'CONFIRMED_VACATION'" class="table-info">Vacation/Absense</ng-container>
-                  <ng-container *ngSwitchCase="'SICK_LEAVE'" class="table-warning">Sick Leave</ng-container>
-                  <ng-container *ngSwitchCase="'VACATION_REQUEST'" class="table-secondary">Vacation/Free-Time Request</ng-container>
-                  <ng-container *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="table-secondary">
+                  </div>
+                  <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation/Absense</span>
+                  <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
+                  <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation/Free-Time Request</span>
+                  <span *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Request)
-                  </ng-container>
-                  <ng-container *ngSwitchCase="'ABSENCE'" class="table-warning">
+                  </span>
+                  <span *ngSwitchCase="'ABSENCE'" class="text-primary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Absence)
-                  </ng-container>
-                  <ng-container *ngSwitchCase="'FREE_TIME_REQUEST'" class="table-secondary">
+                  </span>
+                  <span *ngSwitchCase="'FREE_TIME_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Free-Time Request)
-                  </ng-container>
+                  </span>
                 </ng-container>
-
               </ng-container>
             </ng-container>
           </ng-container>
