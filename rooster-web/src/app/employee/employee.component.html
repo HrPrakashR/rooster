@@ -134,7 +134,7 @@ write a new function to show the info about the person
               <p class="card-text">Email: {{employee.email}}</p>
 
               <a class="btn edit btn-primary btn-sm mr-1" href="https://jobs.academicwork.de/">Edit</a>
-              <a class="btn delete btn-primary btn-sm" href="https://jobs.academicwork.de/">Delete</a>
+              <button (click)="deleteEmployee(employee.id)" class="btn btn-danger" value="delete">Delete</button>
             </div>
           </div>
         </div>
