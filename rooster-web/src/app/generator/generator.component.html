@@ -21,43 +21,41 @@ Team
     <tr>
       <th scope="col">Day</th>
       <th scope="col">Compulsory</th>
-      <th *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
+      <th scope="col" *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
     </tr>
     </thead>
     <tbody>
     <ng-container *ngIf="selectedTeam">
       <tr *ngFor="let day of days">
 
-        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'"
-            class="table-primary">{{ day }}
+        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ day }}
           . {{ returnDayName(day) }}</td>
-        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'"
-            class="table-primary">{{ returnCompulsory(day) }}</td>
+        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
 
         <td *ngFor="let employee of employees"
-            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-primary' : 'table-secondary'">
+            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,9) == day.toString()">
                 <ng-container [ngSwitch]="period.purpose">
-                  <ng-container *ngSwitchCase="'WORKING_HOURS' || 'SHEDULED_WORKING_HOURS'">
+                  <ng-container *ngSwitchCase="'WORKING_HOURS' || 'SCHEDULED_WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                   </ng-container>
-                  <ng-container *ngSwitchCase="'CONFIRMED_VACATION'">Vacation/Absense</ng-container>
-                  <ng-container *ngSwitchCase="'SICK_LEAVE'">Sick Leave</ng-container>
-                  <ng-container *ngSwitchCase="'VACATION_REQUEST'">Vacation/Free-Time Request</ng-container>
-                  <ng-container *ngSwitchCase="'WORKING_HOUR_REQUEST'">
+                  <ng-container *ngSwitchCase="'CONFIRMED_VACATION'" class="table-info">Vacation/Absense</ng-container>
+                  <ng-container *ngSwitchCase="'SICK_LEAVE'" class="table-warning">Sick Leave</ng-container>
+                  <ng-container *ngSwitchCase="'VACATION_REQUEST'" class="table-secondary">Vacation/Free-Time Request</ng-container>
+                  <ng-container *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="table-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Request)
                   </ng-container>
-                  <ng-container *ngSwitchCase="'ABSENCE'">
+                  <ng-container *ngSwitchCase="'ABSENCE'" class="table-warning">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Absence)
                   </ng-container>
-                  <ng-container *ngSwitchCase="'FREE_TIME_REQUEST'">
+                  <ng-container *ngSwitchCase="'FREE_TIME_REQUEST'" class="table-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     (Free-Time Request)
