@@ -26,6 +26,7 @@ export class GeneratorComponent implements OnInit {
 
   predefinedPeriods?: Period[];
 
+
   constructor(private http: HttpClient) {
     this.createCalendar();
   }
@@ -85,11 +86,15 @@ export class GeneratorComponent implements OnInit {
         .get<Employee[]>('api/employees/get_all/' + this.selectedTeamId)
         .subscribe(result => {
             this.employees = result
-
             this.predefinedPeriods = [];
-            this.employees?.forEach(employee =>
-              this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
-                .subscribe(result => this.predefinedPeriods?.push(...result)));
+            this.employees?.forEach(employee => {
+
+              this.predefinedPeriods = [];
+
+                this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
+                  .subscribe(result => this.predefinedPeriods?.push(...result));
+              }
+            );
           }
         );
     }
@@ -167,12 +172,9 @@ export class GeneratorComponent implements OnInit {
   }
 
   getWorkingHours(employee: Employee) {
-    let i: number = 0;
-    this.predefinedPeriods?.forEach((period) => {
-      if(period.employee == employee.id){
-        i = i + (parseInt(period.dateTo.substring(0,1)) - parseInt(period.dateFrom.substring(0,1)))
-      }
-    });
-    return i.valueOf();
+      let i = 0;
+      this.http.get<number>('/api/periods/employee/workingHour/' + employee.id + '/' + this.year + '/' + this.month)
+        .subscribe(result => i = result);
+      return i;
   }
 }

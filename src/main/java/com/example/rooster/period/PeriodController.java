@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -47,6 +48,37 @@ public class PeriodController {
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
         return periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+    }
+
+    @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
+    public int returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+
+        Calendar from = Calendar.getInstance();
+        from.set(Calendar.YEAR, year);
+        from.set(Calendar.MONTH, month);
+        from.set(Calendar.DAY_OF_MONTH, from.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        Calendar to = Calendar.getInstance();
+        to.set(Calendar.YEAR, year);
+        to.set(Calendar.MONTH, month);
+        to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        List<PeriodDTO> workingHours = periodService.findAllByEmployeePAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+       AtomicInteger i = new AtomicInteger();
+        workingHours.forEach(period -> {
+            if (period.getEmployee() == employeeId) {
+                if (Integer.parseInt(period.getDateTo().substring(12, 14)) == 0 &&
+                        Integer.parseInt(period.getDateFrom().substring(12, 14)) != 0) {
+                    i.set(Integer.parseInt(period.getDateTo().substring(12, 14)));
+                } else if (Integer.parseInt(period.getDateFrom().substring(12, 14)) != 0 &&
+                        Integer.parseInt(period.getDateTo().substring(12, 14)) == 0) {
+                    i.set(24 - Integer.parseInt(period.getDateFrom().substring(12, 14)));
+                } else {
+                    i.set(Integer.parseInt(period.getDateTo().substring(12, 14)) - Integer.parseInt(period.getDateFrom().substring(12, 14)));
+                }
+            }
+        });
+        return i.get();
     }
 
     //Showing all of the periods
