@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users/")
@@ -40,6 +41,17 @@ public class UserController {
         this.userService.sendPassword(employee.getEmail(), password);
         return new ResponseEntity<>("Successfully sent", HttpStatus.OK);
     }
+
+    @GetMapping("/sendPassword/email/{email}")
+    public String sendPassword(@PathVariable String email) {
+        Optional<Employee> employee = this.employeeService.findEmployeeByEmail(email);
+        if(employee.isPresent()){
+            sendPassword(employee.get().getId());
+            return "Your new password was sent by E-Mail";
+        }
+        return "The email does not exist";
+    }
+
 
     @GetMapping("/current")
     public EmployeeDTO current(Principal principal) {
