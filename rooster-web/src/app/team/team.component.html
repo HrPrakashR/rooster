@@ -244,7 +244,7 @@ show the team members of each team as details
                 </button>
               </p>
               <div class="collapse" id="collapseExample" *ngFor="let employee of employees">
-                <div class="card card-body">
+                <div class="card card-body" *ngIf="employee.team === team.id">
                 {{employee.firstName}} {{employee.lastName}}
                 </div>
               </div>
