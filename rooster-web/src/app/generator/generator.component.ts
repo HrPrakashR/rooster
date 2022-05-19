@@ -168,8 +168,11 @@ export class GeneratorComponent implements OnInit {
 
   getWorkingHours(employee: Employee) {
     let i: number = 0;
-    let employeeWorkingHours?: Period[];
-    this.predefinedPeriods?.forEach((per) => per.employee == employee.id).forEach((period?) => i = i + (parseInt(period.dateTo.substring(0,1)) - parseInt(period.dateFrom.substring(0,1))));
+    this.predefinedPeriods?.forEach((period) => {
+      if(period.employee == employee.id){
+        i = i + (parseInt(period.dateTo.substring(0,1)) - parseInt(period.dateFrom.substring(0,1)))
+      }
+    });
     return i.valueOf();
   }
 }
