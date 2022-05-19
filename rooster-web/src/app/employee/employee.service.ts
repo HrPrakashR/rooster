@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {Employee} from './employee';
+import {Team} from "../team/team";
 
 // import { MessageService } from './message.service';
 
@@ -34,6 +35,10 @@ export class EmployeeService {
   editEmployee(employee: Employee): Observable<Employee> {
     const url = `${this.employeesUrl}/edit`;
     return this.http.post<Employee>(url, employee, this.httpOptions)
+  }
+
+  getTeams(): Observable<Team[]> {
+    return this.http.get<Team[]>('/api/teams/get_all');
   }
 
   /**

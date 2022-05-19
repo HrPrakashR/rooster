@@ -45,8 +45,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   getTeams() {
-    this.http
-      .get<Team[]>('/api/teams/get_all')
+    this.employeeService.getTeams()
       .subscribe(result => this.teams = result);
   }
 
@@ -74,10 +73,7 @@ export class EmployeeComponent implements OnInit {
       .subscribe(result => this.selectedEmployee = result);
     this.employeeSelected = true;
   }
-  public closeEmployeeDetailsWindow() {
-    this.employeeSelected = false;
-    this.editMode = false;
-  }
+
   deleteEmployee(id: number): void {
     this.employees = this.employees?.filter(employee => employee.id !== id);
     this.http.delete('api/employees/delete/' + id)
@@ -92,18 +88,5 @@ export class EmployeeComponent implements OnInit {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 
-  editModeOn() {
-    this.editMode = true;
-  }
 
-  public editModeOff() {
-    this.editMode = false;
-  }
-
-  editEmployee(employee: Employee) {
-    this.employees = this.employees?.filter(e => e.id !== employee.id);
-    this.employeeService.editEmployee(employee).subscribe();
-    this.employees?.push(employee);
-    this.editMode = false;
-  }
 }

@@ -130,10 +130,11 @@ write a new function to show the info about the person
               <div *ngFor="let team of teams">
                 <p *ngIf="team.id == selectedTeam" class="card-text">Team: {{team.name}}</p>
               </div>
-              <p class="card-text">Position: {{employee.role}}</p>
+              <p class="card-text">Position: {{capitalizeFirstLetter(employee.role)}}</p>
               <p class="card-text">Email: {{employee.email}}</p>
 
-              <button (click)="getEmployee(employee.id)" class="btn btn-info" value="details">Details</button>
+              <a [routerLink]="['/employee', employee.id]" class="btn btn-primary">Details</a>
+<!--              <button (click)="getEmployee(employee.id)" class="btn btn-info" value="details">Details</button>-->
 
               <button (click)="deleteEmployee(employee.id)" class="btn btn-danger" value="delete">Delete</button>
             </div>
@@ -141,62 +142,6 @@ write a new function to show the info about the person
         </div>
       </ng-container>
     </div>
-
-    <div *ngIf="employeeSelected" class="card">
-      <div *ngIf="!editMode" class="container">
-        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
-          <span aria-hidden="true">X</span>
-        </button>
-        <h4>First name: <b>{{selectedEmployee.firstName}}</b></h4>
-        <h4>Last name:<b>{{selectedEmployee.lastName}}</b></h4>
-        <p>
-          <strong>Position: </strong> {{selectedEmployee.role}}
-        </p>
-        <p>
-          <strong>Team: </strong> {{selectedEmployee.team}}
-        </p>
-        <p>
-          <strong>Email: </strong> {{selectedEmployee.email}}
-        </p>
-        <button (click)="editModeOn()" class="btn btn-info" title="edit team" type="button">Edit</button>
-      </div>
-      <div *ngIf="editMode" class="container">
-        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
-          <span aria-hidden="true">X</span>
-        </button>
-        <div>
-          <label for="firstName">First name: </label>
-          <input [(ngModel)]="selectedEmployee.firstName" id="employeeFirstName">
-        </div>
-        <div>
-          <label for="lastName">Last name: </label>
-          <input [(ngModel)]="selectedEmployee.lastName" id="employeeLastName">
-        </div>
-        <div>
-          <label for="role">Position: </label>
-          <select [(ngModel)]="selectedEmployee.role" id="employeePosition" name="role">
-            <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value">{{r.key}} - {{r.value}}</option>
-          </select>
-        </div>
-        <div>
-          <label for="employeeTeam">Team:</label>
-          <select [(ngModel)]="selectedEmployee.team" id="employeeTeam" name="employeeTeam">
-            <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
-          </select>
-        </div>
-        <div>
-          <label for="employeeEmail">Email address: </label>
-          <input [(ngModel)]="selectedEmployee.email" id="employeeEmail">
-        </div>
-        <div>
-          <label for="employeeHoursPerWeek">Hours per Week: </label>
-          <input [(ngModel)]="selectedEmployee.hoursPerWeek" id="employeeHoursPerWeek">
-        </div>
-        <button (click)="editEmployee(selectedEmployee)" class="btn btn-success" title="edit team" type="button">Save</button>
-      </div>
-    </div>
-
-
   </figure>
 
 
@@ -358,3 +303,4 @@ write a new function to show the info about the person
   </div>
   -->
 </ng-container>
+<app-employee-details [teams]="teams"></app-employee-details>
