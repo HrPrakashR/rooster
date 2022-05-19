@@ -21,7 +21,10 @@ Team
     <tr>
       <th scope="col">Day</th>
       <th scope="col">Compulsory</th>
-      <th scope="col" *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
+      <th scope="col" *ngFor="let employee of employees">
+        <p>{{ employee.firstName }} {{ employee.lastName }}</p>
+        <p class="small text-secondary">{{ employee.hoursPerWeek }} hours per week</p>
+      </th>
     </tr>
     </thead>
     <tbody>
