@@ -21,22 +21,28 @@ Team
     <tr>
       <th scope="col">Day</th>
       <th scope="col">Compulsory</th>
-      <th scope="col" *ngFor="let employee of employees">{{ employee.firstName }} {{ employee.lastName }}</th>
+      <th scope="col" *ngFor="let employee of employees">
+        <p>{{ employee.firstName }} {{ employee.lastName }}</p>
+        <p class="small text-secondary">{{ employee.hoursPerWeek }} hours per week</p>
+      </th>
     </tr>
     </thead>
     <tbody>
     <ng-container *ngIf="selectedTeam">
       <tr *ngFor="let day of days">
 
-        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ day }}
+        <td
+          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ day }}
           . {{ returnDayName(day) }}</td>
-        <td [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
+        <td
+          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
 
         <td *ngFor="let employee of employees"
             [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
-              <ng-container *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == '0'+day.toString().substring(day.toString().length-1, day.toString().length)">
+              <ng-container
+                *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == '0'+day.toString().substring(day.toString().length-1, day.toString().length)">
                 <ng-container [ngSwitch]="period.purpose">
                   <div *ngSwitchCase="'WORKING_HOURS' || 'SCHEDULED_WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
@@ -64,6 +70,13 @@ Team
               </ng-container>
             </ng-container>
           </ng-container>
+        </td>
+      </tr>
+      <tr>
+        <td>Balance Hours</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours }}</p>
         </td>
       </tr>
     </ng-container>
