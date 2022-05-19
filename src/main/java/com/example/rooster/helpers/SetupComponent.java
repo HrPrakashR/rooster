@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 @Component
@@ -72,25 +73,48 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private void generateRandomTeam(){
         TeamDTO team1 = new TeamDTO();
-        Random random = new Random();
+        Random random = new java.util.Random();
         team1.setName("Team_"+random.nextInt(0,10000));
         team1.setRestHours(random.nextDouble(10,14));
         team1.setRestDays(random.nextInt(1,4));
         team1.setMinBreakTime(random.nextDouble(0.5,2));
-        team1.setMondayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setMondayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setTuesdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setTuesdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setWednesdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setWednesdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setThursdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setThursdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setFridayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setFridayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setSaturdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setSaturdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
-        team1.setSundayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
-        team1.setSundayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+
+        if(1 != random.nextInt(7)+1){
+            team1.setMondayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setMondayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setTuesdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setTuesdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setWednesdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setWednesdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setThursdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setThursdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setFridayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setFridayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setSaturdayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setSaturdayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+        if(1 != random.nextInt(7)+1){
+            team1.setSundayFrom(String.format("%02d:%02d",random.nextInt(0,12),random.nextInt(0,59)));
+            team1.setSundayTo(String.format("%02d:%02d", random.nextInt(13,23),random.nextInt(0,59)));
+        }
+
+
         this.teamController.newTeam(team1);
     }
 }
