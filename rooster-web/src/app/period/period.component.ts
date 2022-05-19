@@ -3,6 +3,7 @@ import {Period} from './period';
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
 import {Purpose} from "./purpose";
+import {EmployeeService} from "../employee/employee.service";
 
 @Component({
   selector: 'app-period',
@@ -21,14 +22,15 @@ export class PeriodComponent implements OnInit {
   periodUrl = '/api/periods';
   editMode = false;
 
-  selectedEmployee = "email@email.de"
+  currentUser?: Employee;
+
   status = '';
-  newLeave = false;
+  allLeave = false;
   showEmployeeList = false;
 
   public Purpose = Purpose;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private employeeService: EmployeeService) {
   }
 
   getEmployees() {
@@ -36,7 +38,9 @@ export class PeriodComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.http.get<Employee>('/api/users/current').subscribe(user => this.currentUser = user);
     this.getEmployees();
+    this.fetchAll();
   }
 
   fetchAll() {
@@ -48,7 +52,7 @@ export class PeriodComponent implements OnInit {
   }
 
   showLeaveRequest() {
-    this.newLeave = !this.newLeave;
+    this.allLeave = !this.allLeave;
   }
 
   showEmployees() {
