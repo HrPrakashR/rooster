@@ -38,7 +38,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        if (this.teamRepository.count() <= 3) {
+        if (this.teamRepository.count() <= 5) {
             TeamDTO team1 =new TeamDTO();
             team1.setName("Sales");
             team1.setRestHours(12);
@@ -101,6 +101,48 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             team3.setSundayFrom("08:30");
             team3.setSundayTo("17:00");
             this.teamController.newTeam(team3);
+
+            TeamDTO team4 =new TeamDTO();
+            team4.setName("Operations");
+            team4.setRestHours(12);
+            team4. setRestDays(2);
+            team4.setMinBreakTime(1);
+            team4.setMondayFrom("08:30");
+            team4.setMondayTo("17:00");
+            team4.setTuesdayFrom("08:30");
+            team4.setTuesdayTo("17:00");
+            team4.setWednesdayFrom("08:30");
+            team4.setWednesdayTo("17:00");
+            team4.setThursdayFrom("08:30");
+            team4.setThursdayTo("17:00");
+            team4.setFridayFrom("08:30");
+            team4.setFridayTo("17:00");
+            team4.setSaturdayFrom("08:30");
+            team4.setSaturdayTo("17:00");
+            team4.setSundayFrom("08:30");
+            team4.setSundayTo("17:00");
+            this.teamController.newTeam(team4);
+
+            TeamDTO team5 =new TeamDTO();
+            team5.setName("Production");
+            team5.setRestHours(12);
+            team5. setRestDays(2);
+            team5.setMinBreakTime(1);
+            team5.setMondayFrom("08:30");
+            team5.setMondayTo("17:00");
+            team5.setTuesdayFrom("08:30");
+            team5.setTuesdayTo("17:00");
+            team5.setWednesdayFrom("08:30");
+            team5.setWednesdayTo("17:00");
+            team5.setThursdayFrom("08:30");
+            team5.setThursdayTo("17:00");
+            team5.setFridayFrom("08:30");
+            team5.setFridayTo("17:00");
+            team5.setSaturdayFrom("08:30");
+            team5.setSaturdayTo("17:00");
+            team5.setSundayFrom("08:30");
+            team5.setSundayTo("17:00");
+            this.teamController.newTeam(team5);
         }
 
         if (this.employeeRepository.count() <= 8) { // only create users if the database is empty
