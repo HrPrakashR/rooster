@@ -165,4 +165,11 @@ export class GeneratorComponent implements OnInit {
     date.setFullYear(this.year)
     return date;
   }
+
+  getWorkingHours(employee: Employee) {
+    let i: number = 0;
+    let employeeWorkingHours?: Period[];
+    this.predefinedPeriods?.forEach((per) => per.employee == employee.id).forEach((period?) => i = i + (parseInt(period.dateTo.substring(0,1)) - parseInt(period.dateFrom.substring(0,1))));
+    return i.valueOf();
+  }
 }

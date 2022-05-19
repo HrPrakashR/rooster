@@ -70,6 +70,13 @@ Team
         </td>
       </tr>
       <tr>
+        <td>Working Hours</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p>{{ getWorkingHours(employee) }}</p>
+        </td>
+      </tr>
+      <tr>
         <td>Balance Hours</td>
         <td></td>
         <td *ngFor="let employee of employees">
