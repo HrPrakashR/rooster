@@ -24,7 +24,7 @@
 
                   <div class="form-outline mb-4">
                     <input [(ngModel)]="credentials.password" class="form-control" id="password" name="password"
-                           required type="password"/>
+                           required type="password" (keydown.enter)="login()"/>
                     <label class="form-label" for="password">Password</label>
                   </div>
 
