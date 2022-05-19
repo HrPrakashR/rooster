@@ -1,0 +1,11 @@
+<div class="container" *ngIf="employee">
+  <div class="row">
+    <div class="card article">
+      <div class="card-body">
+        <h5 class="card-title">{{ employee.firstName }} {{employee.lastName}}</h5>
+        <p class="card-text">{{ employee.team }}</p>
+        <p class="card-text">{{ employee.role }}</p>
+      </div>
+    </div>
+  </div>
+</div>
