@@ -23,7 +23,7 @@ write a new function to show the info about the person
       <p class="card-text">
         Position: {{ currentUser.role.substring(0, 1)}}{{ currentUser.role.substring(1, currentUser.role.length.valueOf()).toLocaleLowerCase() }}</p>
       <p class="card-text">E-Mail: {{ currentUser.email.toLocaleLowerCase() }}</p>
-      <a (click)="leaveRequest = !leaveRequest" class="btn btn-primary m-1">Leave Request</a>
+
       <a (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'"
          class="btn btn-primary m-1">Add a New Employee</a>
       <a (click)="myTeam = !myTeam" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'"
@@ -37,35 +37,69 @@ write a new function to show the info about the person
     </div>
   </div>
 
-  <figure *ngIf="leaveRequest" class="text-center">
-    CREATE LEAVE REQUEST HERE
-  </figure>
-
   <figure *ngIf="createEmployee" class="text-center">
-    CREATE NEW EMPLOYEE HERE
+
+    <div class="container-fluid p-3 my-3">
+      <ng-container *ngIf=createEmployee>
+        <button (click)="createEmployee = !createEmployee" class="btn btn-primary" type="button">Close Form</button>
+        <form #contactForm="ngForm">
+          <p>
+            <label for="firstName">Name:</label>
+            <input #firstName="ngModel" [(ngModel)]="newEmployee.firstName" id="firstName" name="firstName" placeholder="First Name"
+                   type="text">
+          </p>
+
+          <p>
+            <label for="lastName">Last Name:</label>
+            <input #firstName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
+                   type="text">
+          </p>
+
+          <p>
+            <label for="email">Email:</label>
+            <input #email="ngModel" [(ngModel)]="newEmployee.email" id="email" name="email" placeholder="Email"
+                   type="text">
+          </p>
+
+          <p>
+            <label for="teamId">Team:</label>
+            <select [(ngModel)]="newEmployee.team" id="teamId" name="team">
+              <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="hoursPerWeek">Hours Per Week:</label>
+            <input #hoursPerWeek="ngModel" [(ngModel)]="newEmployee.hoursPerWeek" [min]="0" id="hoursPerWeek"
+                   name="hoursPerWeek" placeholder="Hours Per Week" step="1" type="number">
+          </p>
+
+          <p>
+            <label for="balanceHours">Balance Hours:</label>
+            <input #balanceHours="ngModel" [(ngModel)]="newEmployee.balanceHours" id="balanceHours" name="balanceHours"
+                   placeholder="Balance Hours" step="0.25" type="number">
+          </p>
+
+          <p>
+            <label for="breakTime">Break Time:</label>
+            <input #breakTime="ngModel" [(ngModel)]="newEmployee.breakTime" [min]="0" id="breakTime" name="breakTime"
+                   placeholder="Break Time" step="0,25" type="number">
+          </p>
+
+          <p>
+            <label for="role">Role:</label>
+            <select [(ngModel)]="newEmployee.role" id="role" name="role">
+              <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value">{{r.key}} - {{r.value}}</option>
+            </select>
+          </p>
+
+          <p>
+            <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>
+          </p>
+        </form>
+      </ng-container>
+    </div>
   </figure>
-
-
-  <!--<button type="button" class="show" title="employee details"-->
-  <!--        (click)="getEmployee(employee.id)">Details</button>-->
-
-  <!--<div class="card" *ngIf="employeeSelected"   >-->
-  <!--  <div class="container" *ngIf="!editMode">-->
-  <!--    <button class="close-button" aria-label="Close alert" type="button" data-close (click)="closeEmployeeDetails()">-->
-  <!--      <span aria-hidden="true">&times;</span>-->
-  <!--    </button>-->
-  <!--    <h4><b>{{selectedEmployee.firstName + " " + selectedEmployee.lastName}}</b></h4>-->
-  <!--    <p>-->
-  <!--      <strong>Team:</strong> {{getTeamName(selectedEmployee.team)}}-->
-  <!--    </p>-->
-  <!--    &lt;!&ndash;                  <p>&ndash;&gt;-->
-  <!--    &lt;!&ndash;                    <strong>Role:</strong> {{capitalizeFirstLetter(Role[selectedEmployee.role])}}&ndash;&gt;-->
-  <!--    &lt;!&ndash;                  </p>&ndash;&gt;-->
-  <!--    <button type="button" class="edit" title="edit employee"-->
-  <!--            (click)="editModeOn()">Edit</button>-->
-  <!--  </div>-->
-  <!--</div>-->
-
 
   <!-- Title Greeting -->
 
