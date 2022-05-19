@@ -126,3 +126,12 @@ section .section-title {
   height: 120px;
   border-radius: 50%;
 }
+
+.container-fluid {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#buttonAdd {
+margin-left: 525px;
+}
