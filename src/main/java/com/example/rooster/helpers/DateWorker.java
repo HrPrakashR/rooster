@@ -28,11 +28,11 @@ public class DateWorker {
     }
 
     public static Date convertDateStringToDate(String dateTime) {
-        int year = Integer.parseInt(dateTime.substring(0, 3));
-        int month = Integer.parseInt(dateTime.substring(5, 6));
-        int day = Integer.parseInt(dateTime.substring(8, 9));
-        int hours = Integer.parseInt(dateTime.substring(11, 12));
-        int minutes = Integer.parseInt(dateTime.substring(14, 15));
+        int year = Integer.parseInt(dateTime.substring(0, 4));
+        int month = Integer.parseInt(dateTime.substring(5, 7));
+        int day = Integer.parseInt(dateTime.substring(8, 10));
+        int hours = Integer.parseInt(dateTime.substring(11, 13));
+        int minutes = Integer.parseInt(dateTime.substring(14, 16));
         return getDateObject(0, minutes, hours, day, month, year);
     }
 
