@@ -11,6 +11,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginComponent} from './login/login.component';
 import {AuthInterceptor} from "./auth.interceptor";
 import {AppRoutingModule} from "./app-routing.module";
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {AppRoutingModule} from "./app-routing.module";
     PeriodComponent,
     TeamComponent,
     GeneratorComponent,
-    LoginComponent
+    LoginComponent,
+    EmployeeDetailsComponent
   ],
   imports: [
     BrowserModule,
