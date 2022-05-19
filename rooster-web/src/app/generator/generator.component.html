@@ -69,6 +69,13 @@ Team
           </ng-container>
         </td>
       </tr>
+      <tr>
+        <td>Balance Hours</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{employee.balanceHours}}</p>
+        </td>
+      </tr>
     </ng-container>
     </tbody>
   </table>
