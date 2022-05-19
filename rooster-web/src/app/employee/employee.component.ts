@@ -4,6 +4,7 @@ import {Employee} from './employee';
 import {Team} from "../team/team";
 import {Role} from "./role";
 import {EmployeeService} from "./employee.service";
+import {Period} from "../period/period";
 
 @Component({
   selector: 'app-employee',
@@ -75,6 +76,7 @@ export class EmployeeComponent implements OnInit {
   }
   public closeEmployeeDetailsWindow() {
     this.employeeSelected = false;
+    this.editMode = false;
   }
   deleteEmployee(id: number): void {
     this.employees = this.employees?.filter(employee => employee.id !== id);
@@ -99,7 +101,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   editEmployee(employee: Employee) {
+    this.employees = this.employees?.filter(e => e.id !== employee.id);
     this.employeeService.editEmployee(employee).subscribe();
+    this.employees?.push(employee);
     this.editMode = false;
   }
 }

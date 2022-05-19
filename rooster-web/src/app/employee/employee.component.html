@@ -144,8 +144,8 @@ write a new function to show the info about the person
 
     <div *ngIf="employeeSelected" class="card">
       <div *ngIf="!editMode" class="container">
-        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="close-button" data-close type="button">
-          <span aria-hidden="true">&times;</span>
+        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
+          <span aria-hidden="true">X</span>
         </button>
         <h4>First name: <b>{{selectedEmployee.firstName}}</b></h4>
         <h4>Last name:<b>{{selectedEmployee.lastName}}</b></h4>
@@ -158,11 +158,11 @@ write a new function to show the info about the person
         <p>
           <strong>Email: </strong> {{selectedEmployee.email}}
         </p>
-        <button (click)="editModeOn()" class="edit" title="edit team" type="button">Edit</button>
+        <button (click)="editModeOn()" class="btn btn-info" title="edit team" type="button">Edit</button>
       </div>
       <div *ngIf="editMode" class="container">
-        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="close-button" data-close type="button">
-          <span aria-hidden="true">&times;</span>
+        <button (click)="closeEmployeeDetailsWindow()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
+          <span aria-hidden="true">X</span>
         </button>
         <div>
           <label for="firstName">First name: </label>
@@ -188,7 +188,11 @@ write a new function to show the info about the person
           <label for="employeeEmail">Email address: </label>
           <input [(ngModel)]="selectedEmployee.email" id="employeeEmail">
         </div>
-        <button (click)="editModeOff()" class="save" title="edit team" type="button">Save</button>
+        <div>
+          <label for="employeeHoursPerWeek">Hours per Week: </label>
+          <input [(ngModel)]="selectedEmployee.hoursPerWeek" id="employeeHoursPerWeek">
+        </div>
+        <button (click)="editEmployee(selectedEmployee)" class="btn btn-success" title="edit team" type="button">Save</button>
       </div>
     </div>
 
