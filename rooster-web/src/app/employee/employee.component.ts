@@ -56,7 +56,8 @@ export class EmployeeComponent implements OnInit {
 
   saveEmployee(newEmployee: Employee) {
     this.http.post<Employee>("/api/employees/new", newEmployee).subscribe(result => this.employees?.push(result));
-    this.isFormShown = false;
+    this.createEmployee = false;
+    this.newEmployee = {} as Employee;
   }
 
   toggleShow() {
@@ -68,14 +69,17 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(id: number) {
-    this.employeeService.getEmployee(id).subscribe(result => this.selectedEmployee = result);
+    this.http.get<Employee>('api/employees/get/'+id)
+      .subscribe(result => this.selectedEmployee = result);
     this.employeeSelected = true;
   }
-
-  deleteEmployee(employee: Employee): void {
-    // @ts-ignore
-    this.employees = this.employees.filter(e => e !== employee);
-    this.employeeService.deleteEmployee(employee.id).subscribe();
+  public closeEmployeeDetailsWindow() {
+    this.employeeSelected = false;
+  }
+  deleteEmployee(id: number): void {
+    this.employees = this.employees?.filter(employee => employee.id !== id);
+    this.http.delete('api/employees/delete/' + id)
+      .subscribe();
   }
 
   closeEmployeeDetails() {
@@ -88,6 +92,10 @@ export class EmployeeComponent implements OnInit {
 
   editModeOn() {
     this.editMode = true;
+  }
+
+  public editModeOff() {
+    this.editMode = false;
   }
 
   editEmployee(employee: Employee) {
