@@ -1,6 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Team} from "./team";
+import {Employee} from "../employee/employee";
+import {EmployeeService} from "../employee/employee.service";
 
 @Component({
   selector: 'app-team',
@@ -10,10 +12,11 @@ import {Team} from "./team";
 @Injectable()
 export class TeamComponent implements OnInit {
 
+  currentUser?: Employee;
+  employees?: Employee[];
   newTeam: Team = {} as Team;
-  teams?: Team[];
+  teams: Team[] = [];
   selectedTeam = {} as Team;
-
   teamSelected = false;
   addTeam = false;
   editMode = false;
@@ -21,18 +24,39 @@ export class TeamComponent implements OnInit {
   teamUrl = '/api/teams';
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
+    this.http.get<Employee>('/api/users/current').subscribe(user => this.currentUser = user);
+    this.getEmployees();
+    this.getTeams();
+  }
+
+  getEmployees() {
+    this.http
+      .get<Employee[]>('/api/employees/get_all')
+      .subscribe(result => this.employees = result);
+  }
+
+  getTeams() {
+    this.http
+      .get<Team[]>('/api/teams/get_all')
+      .subscribe(result => this.teams = result);
+  }
+
+  // getTeamName(id: number) {
+  //   // @ts-ignore
+  //   return this.teams?.find(t => t.id === id).name;
+  // }
+
+  getTeamName(id: number) {
+    // @ts-ignore
+    return this.teams?.find(t => t.id === id).name;
   }
 
   fetchAll() {
     this.http.get<Team[]>('/api/teams/get_all').subscribe(result => this.teams = result);
-  }
-
-  clearAll() {
-    this.teams = undefined;
   }
 
   clearTeamDTO() {
