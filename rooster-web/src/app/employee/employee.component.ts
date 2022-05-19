@@ -69,10 +69,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployee(id: number) {
-    this.employeeService.getEmployee(id).subscribe(result => this.selectedEmployee = result);
+    this.http.get<Employee>('api/employees/get/'+id)
+      .subscribe(result => this.selectedEmployee = result);
     this.employeeSelected = true;
   }
-
+  public closeEmployeeDetailsWindow() {
+    this.employeeSelected = false;
+  }
   deleteEmployee(id: number): void {
     this.employees = this.employees?.filter(employee => employee.id !== id);
     this.http.delete('api/employees/delete/' + id)
@@ -89,6 +92,10 @@ export class EmployeeComponent implements OnInit {
 
   editModeOn() {
     this.editMode = true;
+  }
+
+  public editModeOff() {
+    this.editMode = false;
   }
 
   editEmployee(employee: Employee) {
