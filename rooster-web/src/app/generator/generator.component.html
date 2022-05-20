@@ -42,9 +42,13 @@ Team
           <ng-container *ngIf="predefinedPeriods">
             <ng-container *ngFor="let period of predefinedPeriods">
               <ng-container
-                *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == '0'+day.toString().substring(day.toString().length-1, day.toString().length)">
+                *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == addNull(day)">
                 <ng-container [ngSwitch]="period.purpose">
-                  <div *ngSwitchCase="'WORKING_HOURS' || 'SCHEDULED_WORKING_HOURS'">
+                  <div *ngSwitchCase="'WORKING_HOURS'">
+                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                  </div>
+                  <div *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="text-light">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                   </div>
@@ -70,6 +74,21 @@ Team
               </ng-container>
             </ng-container>
           </ng-container>
+        </td>
+      </tr>
+      <tr>
+        <td>Working Times</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p>
+            <ng-container *ngIf="workingPeriods">
+              <ng-container *ngFor="let workingPeriod of workingPeriods">
+                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+                  {{ workingPeriod.workingTime }}
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </p>
         </td>
       </tr>
       <tr>

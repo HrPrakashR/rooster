@@ -90,11 +90,11 @@ public class PeriodService {
         return periodDTOList;
     }
 
-    public List<PeriodDTO> findAllByEmployeePAndPurposeAndDateFromBetween(Employee employeeById, Date from, Date to) {
+    public List<PeriodDTO> findAllByEmployeeAndPurposeAndDateFromBetween(Employee employeeById, Date from, Date to) {
         List<PeriodDTO> periodDTOList = new ArrayList<>();
         List<Period> periods = periodRepository.findAllByEmployeeAndDateFromBetween(employeeById, from, to);
         periods.forEach(period -> {
-            if(period.getPurpose() == Purpose.WORKING_HOURS)
+            if(period.getPurpose().equals(Purpose.WORKING_HOURS))
                     periodDTOList.add(this.convertToPeriodDTO(period));
         });
         return periodDTOList;
