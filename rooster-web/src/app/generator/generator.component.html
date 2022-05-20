@@ -44,10 +44,10 @@ Team
               <ng-container
                 *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == addNull(day)">
                 <ng-container [ngSwitch]="period.purpose">
-                  <div *ngSwitchCase="'WORKING_HOURS'">
+                  <b *ngSwitchCase="'WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                  </div>
+                  </b>
                   <div *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="text-light">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
