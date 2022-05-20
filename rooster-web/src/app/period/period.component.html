@@ -34,12 +34,13 @@
   </div>
 </section>
 
-<!-- /Table for Trainee/Employee -->
+<!-- Table for Personal Leave Summary of any User (Current user) -->
 <section class="column justify-content-center row justify-content-center" id="cards">
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4"> <!-- class="col-md-9 mb-4">-->
-      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button"> Personal Leave Summary</button>
-      <div class="card" *ngIf="allLeave">
+      <button (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary" type="button">Show Personal Leave Summary</button>
+      <button (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>
+      <div class="card" *ngIf="userLeave">
         <div class="card-body text-center">
           <table class="table table-primary table-responsive-sm table-hover" *ngIf="currentUser != undefined">
             <thead>
@@ -62,56 +63,37 @@
         </div>
       </div>
     </div>
-    <!--    <div class="column justify-content-center col-md-9">-->
-<!--    <div>-->
-<!--      <div class="card">-->
-<!--        <div class="card-body text-center">-->
-<!--          <table class="table table-responsive-sm">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--              <th scope="col"></th>-->
-<!--              <th scope="col">Name</th>-->
-<!--              <th scope="col">Purpose</th>-->
-<!--              <th scope="col">From</th>-->
-<!--              <th scope="col">To</th>-->
-<!--              <th scope="col">Status</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr class="table-warning">-->
-<!--              <th scope="row">1</th>-->
-<!--              <td></td>-->
-<!--              <td>Sick Leave</td>-->
-<!--              <td>17/05/2022</td>-->
-<!--              <td>19/05/2022</td>-->
-<!--              <td>Pending</td>-->
-<!--            </tr>-->
-<!--            <tr class="table-warning">-->
-<!--              <th scope="row">2</th>-->
-<!--              <td></td>-->
-<!--              <td>Vacation</td>-->
-<!--              <td>01/06/2022</td>-->
-<!--              <td>14/06/2022</td>-->
-<!--              <td>Pending</td>-->
-<!--            </tr>-->
-<!--            <tr class="table-warning">-->
-<!--              <th scope="row">3</th>-->
-<!--              <td></td>-->
-<!--              <td>Vacation</td>-->
-<!--              <td>24/12/2022</td>-->
-<!--              <td>03/01/2023</td>-->
-<!--              <td>Pending</td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--          </table>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
   </div>
-
-  <!-- ./Table for personal leave requests -->
-
-  <!-- Section Greeting closed-->
 </section>
 
+    <!-- Table for Personal Leave Summary of all Employees -->
+    <section class="column justify-content-center row justify-content-center" id="all_leaves">
+      <div class="col-md-9 table-responsive embed-responsive">
+        <div class="mb-4"> <!-- class="col-md-9 mb-4">-->
+          <button (click)="clearAllPeriods()" *ngIf="!allLeave" class="btn btn-primary" type="button">Show Leave Summary of all Employees</button>
+          <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-primary" type="button">Hide Leave Summary of all Employees</button>
+          <div class="card" *ngIf="allLeave">
+            <div class="card-body text-center">
+              <table class="table table-primary table-responsive-sm table-hover" *ngIf="currentUser != undefined">
+                <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Purpose</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let period of periods" >
+                  <th scope="row"></th>
+                  <td>{{period.purpose}}</td>
+                  <td>{{period.dateFrom}}</td>
+                  <td>{{period.dateTo}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
