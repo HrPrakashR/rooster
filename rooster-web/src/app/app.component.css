@@ -1,0 +1,17 @@
+#footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+
+a {
+  text-decoration:none;
+  color: white;
+}
+
+html, body {
+  height: 100%;
+}
+

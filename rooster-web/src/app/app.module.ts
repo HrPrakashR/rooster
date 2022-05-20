@@ -12,6 +12,7 @@ import {LoginComponent} from './login/login.component';
 import {AuthInterceptor} from "./auth.interceptor";
 import {AppRoutingModule} from "./app-routing.module";
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
     TeamComponent,
     GeneratorComponent,
     LoginComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
+      {path: '', component: LandingComponent, pathMatch: 'full'},
       {path: 'employee', component: EmployeeComponent},
       {path: 'period', component: PeriodComponent},
       {path: 'team', component: TeamComponent},
