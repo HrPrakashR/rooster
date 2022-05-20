@@ -96,8 +96,9 @@ export class TeamComponent implements OnInit {
     this.teamSelected = false;
   }
 
-  public editModeOn() {
+  public editModeOn(team: Team) {
     this.editMode = true;
+    this.selectedTeam = team;
   }
 
   public editModeOff() {
