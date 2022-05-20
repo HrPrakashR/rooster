@@ -31,11 +31,11 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private long employeeId = 0;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private List<String> names = Names.names;
-    private List<String> lastNames = Names.lastNames;
-    private List<String> teamNames = List.of("Sales", "Marketing", "Human Resources", "Production", "Customer Service");
+    private final List<String> names = Names.names;
+    private final List<String> lastNames = Names.lastNames;
+    private final List<String> teamNames = List.of("Sales", "Marketing", "Human Resources", "Production", "Customer Service");
 
     public SetupComponent(EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
@@ -50,7 +50,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
         int maxTeamId = teamNames.size();
 
-        IntStream.rangeClosed(0, maxTeamId - 1).forEachOrdered(i -> this.generateRandomTeam(i));
+        IntStream.rangeClosed(0, maxTeamId - 1).forEachOrdered(this::generateRandomTeam);
 
         for (int i = 1; i <= maxTeamId; i++) {
             for (int n = 1; n <= random.nextInt(5, 10); n++) {
@@ -86,13 +86,13 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 4,
                 day,
                 random.nextInt(8, 11),
-                30 * random.nextInt(0, 2))));
+                15 * random.nextInt(0, 4))));
         period.setDateTo((String.format("%04d-%02d-%02dT%02d:%02d",
                 2022,
                 4,
                 day,
                 random.nextInt(16, 18),
-                30 * random.nextInt(0, 2))));
+                15 * random.nextInt(0, 4))));
         period.setEmployee(employee.getId());
 
         this.periodController.submitPeriodRequest(period);
@@ -101,29 +101,22 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private String getRandomPurpose() {
         int x = random.nextInt(10);
 
-        switch (x) {
-            case 0, 1, 2, 3, 4, 5, 6:
-                return Purpose.WORKING_HOURS.name();
-            case 7:
-                return Purpose.SICK_LEAVE.name();
-            case 8:
-                return Purpose.CONFIRMED_VACATION.name();
-            case 9:
-                return Purpose.VACATION_REQUEST.name();
-            default:
-                return Purpose.SCHEDULED_WORKING_HOURS.name();
-        }
+        return switch (x) {
+            case 0, 1, 2, 3, 4, 5, 6 -> Purpose.WORKING_HOURS.name();
+            case 7 -> Purpose.SICK_LEAVE.name();
+            case 8 -> Purpose.CONFIRMED_VACATION.name();
+            case 9 -> Purpose.VACATION_REQUEST.name();
+            default -> Purpose.SCHEDULED_WORKING_HOURS.name();
+        };
     }
 
     private Role getRandomRole() {
         int x = random.nextInt(4);
 
-        switch (x) {
-            case 0:
-                return Role.TRAINEE;
-            default:
-                return Role.STAFF;
+        if (x == 0) {
+            return Role.TRAINEE;
         }
+        return Role.STAFF;
     }
 
     private void generateRandomEmployee(long teamId) {
@@ -135,7 +128,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         employee.setLastName(lastNames.get(random.nextInt(lastNames.size())));
         employee.setEmail(firstName + "@rooster.bestapp");
         employee.setTeam(team);
-        employee.setBreakTime(0.5 * (random.nextInt(1, 5)));
+        employee.setBreakTime(0.25 * (random.nextInt(2, 5)));
         employee.setHoursPerWeek(5 * (random.nextInt(2, 9)));
         employee.setBalanceHours(random.nextInt(-20, 21));
         employee.setRole(getRandomRole());
@@ -150,7 +143,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         team.setName(teamNames.get(i));
         team.setRestHours(random.nextInt(10, 14));
         team.setRestDays(random.nextInt(1, 4));
-        team.setMinBreakTime(0.5 * (random.nextInt(1, 5)));
+        team.setMinBreakTime(0.25 * (random.nextInt(2, 5)));
 
         team.setMondayFrom(setRandomShiftBegin());
         team.setMondayTo(setRandomShiftEnd());
@@ -178,10 +171,10 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     public String setRandomShiftBegin() {
-        return String.format("%02d:%02d", random.nextInt(8, 10), 30 * random.nextInt(0, 2));
+        return String.format("%02d:%02d", random.nextInt(8, 10), 15 * random.nextInt(0, 4));
     }
 
     public String setRandomShiftEnd() {
-        return String.format("%02d:%02d", random.nextInt(16, 18), 30 * random.nextInt(0, 2));
+        return String.format("%02d:%02d", random.nextInt(16, 18), 15 * random.nextInt(0, 4));
     }
 }
