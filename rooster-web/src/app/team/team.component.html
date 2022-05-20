@@ -131,12 +131,6 @@ show the team members of each team as details
       </div>
       <hr>
 
-
-      <!--    <button (click)="addNewTeam(newTeam)" class="btn btn-success" type="button">-->
-      <!--      Add new team-->
-      <!--    </button>-->
-
-
       <!-- Team member -->
       <div class="justify-content-center row" *ngIf="teams != undefined">
         <ng-container *ngFor="let team of teams">
@@ -153,9 +147,16 @@ show the team members of each team as details
                           data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Team members
                   </button>
-                  <button (click)="editModeOn(team)" class="btn btn-info" type="button">
+<!--                  -->
+<!--                  <button (click)="editModeOn(team)" class="btn btn-info" type="button">-->
+<!--                    Edit-->
+<!--                  </button>-->
+
+                  <!-- Button trigger modal -->
+                  <button (click)="editModeOn(team)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Edit
                   </button>
+
                   <button (click)="deleteTeam(team.id)" class="btn btn-danger" type="button">
                     Delete
                   </button>
@@ -169,31 +170,75 @@ show the team members of each team as details
             </div>
           </div>
         </ng-container>
-<!--Edit Feature-->
-        <div *ngIf="editMode">
-          <button type="button" (click)="editModeOff()" class="btn btn-danger">X</button>
-          <div>
-            <label for="teamName1">Name: </label>
-            <input #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
-                   type="text">
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+
+                <!--Edit Feature-->
+                <div *ngIf="editMode">
+                  <div>
+                    <label for="teamName1">Name: </label>
+                    <input #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
+                           type="text">
+                  </div>
+                  <div>
+                    <label for="restHours1">Rest Hours: </label>
+                    <input #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
+                           type="text">
+                  </div>
+                  <div>
+                    <label for="restDays1">Rest Days: </label>
+                    <input #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
+                           type="text">
+                  </div>
+                  <div>
+                    <label for="minBreakTime1">Min Break Time: </label>
+                    <input #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
+                           type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button (click)="editModeOff()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+              </div>
+            </div>
           </div>
-          <div>
-            <label for="restHours1">Rest Hours: </label>
-            <input #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
-                   type="text">
-          </div>
-          <div>
-            <label for="restDays1">Rest Days: </label>
-            <input #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
-                   type="text">
-          </div>
-          <div>
-            <label for="minBreakTime1">Min Break Time: </label>
-            <input #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
-                   type="text">
-          </div>
-          <button type="button" (click)="editTeam(selectedTeam)" class="btn btn-success">Save</button>
         </div>
+
+
+<!--        &lt;!&ndash;Edit Feature&ndash;&gt;-->
+<!--        <div *ngIf="editMode">-->
+<!--          <button type="button" (click)="editModeOff()" class="btn btn-danger">X</button>-->
+<!--          <div>-->
+<!--            <label for="teamName1">Name: </label>-->
+<!--            <input #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"-->
+<!--                   type="text">-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <label for="restHours1">Rest Hours: </label>-->
+<!--            <input #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"-->
+<!--                   type="text">-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <label for="restDays1">Rest Days: </label>-->
+<!--            <input #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"-->
+<!--                   type="text">-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <label for="minBreakTime1">Min Break Time: </label>-->
+<!--            <input #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"-->
+<!--                   type="text">-->
+<!--          </div>-->
+<!--          <button type="button" (click)="editTeam(selectedTeam)" class="btn btn-success">Save</button>-->
+<!--        </div>-->
 
         <figure *ngIf="selectedTeam != undefined" class="text-center">
           <div *ngFor="let team of teams">
