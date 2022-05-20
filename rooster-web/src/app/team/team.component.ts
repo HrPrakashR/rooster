@@ -22,6 +22,7 @@ export class TeamComponent implements OnInit {
   editMode = false;
   status = '';
   teamUrl = '/api/teams';
+  team?: Team;
 
 
   constructor(private http: HttpClient, private employeeService: EmployeeService) {
@@ -96,8 +97,9 @@ export class TeamComponent implements OnInit {
     this.teamSelected = false;
   }
 
-  public editModeOn() {
+  public editModeOn(team: Team) {
     this.editMode = true;
+    this.selectedTeam = team;
   }
 
   public editModeOff() {
