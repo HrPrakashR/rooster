@@ -51,7 +51,7 @@ public class PeriodController {
     }
 
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
-    public Integer returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+    public Double returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
 
         Calendar from = Calendar.getInstance();
         from.set(Calendar.YEAR, year);
@@ -65,15 +65,18 @@ public class PeriodController {
 
         List<PeriodDTO> workingHours = periodService.findAllByEmployeeAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
         if(workingHours.isEmpty()){
-            return 0;
+            return 0.0;
         }
 
         return workingHours
                 .stream()
                 .filter(period ->
                         period.getEmployee() == employeeId)
-                .mapToInt(period ->
-                        Math.abs(Integer.parseInt(period.getDateTo().substring(11, 13)) - Integer.parseInt(period.getDateFrom().substring(11, 13))))
+                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo())
+/*
+                        Math.abs(Integer.parseInt(period.getDateTo().substring(11, 13)) - Integer.parseInt(period.getDateFrom().substring(11, 13)))
+*/
+                )
                 .sum();
     }
 

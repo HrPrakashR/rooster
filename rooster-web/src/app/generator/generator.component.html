@@ -77,14 +77,14 @@ Team
         </td>
       </tr>
       <tr>
-        <td>Working Times</td>
+        <td>Working Hours</td>
         <td></td>
         <td *ngFor="let employee of employees">
           <p>
             <ng-container *ngIf="workingPeriods">
               <ng-container *ngFor="let workingPeriod of workingPeriods">
                 <ng-container *ngIf="workingPeriod.employeeId == employee.id">
-                  {{ workingPeriod.workingTime }}
+                  {{ workingPeriod.workingTime.toFixed(2) }}
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -95,7 +95,24 @@ Team
         <td>Balance Hours</td>
         <td></td>
         <td *ngFor="let employee of employees">
-          <p [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours }}</p>
+          <p [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours.toFixed(2) }}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Working Hours</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p>
+            <ng-container *ngIf="workingPeriods">
+              <ng-container *ngFor="let workingPeriod of workingPeriods">
+                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+                  <span [ngClass]="returnTotal(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
+                                      {{ returnTotal(workingPeriod.workingTime, employee) }}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </p>
         </td>
       </tr>
     </ng-container>

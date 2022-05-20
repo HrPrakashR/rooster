@@ -27,6 +27,7 @@ export class GeneratorComponent implements OnInit {
   predefinedPeriods?: Period[];
 
   workingPeriods?: { "employeeId": number, "workingTime": number }[];
+  totalWorkingTimes?: { "employeeId": number, "workingTime": number }[];
 
 
   constructor(private http: HttpClient) {
@@ -181,5 +182,10 @@ export class GeneratorComponent implements OnInit {
       return '0' + day;
     }
     return '' + day;
+  }
+
+  returnTotal(workingTime: number, employee: Employee) {
+    let total = workingTime + employee.balanceHours;
+    return total.toFixed(2)
   }
 }

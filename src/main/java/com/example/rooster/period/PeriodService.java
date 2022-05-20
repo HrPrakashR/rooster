@@ -94,9 +94,16 @@ public class PeriodService {
         List<PeriodDTO> periodDTOList = new ArrayList<>();
         List<Period> periods = periodRepository.findAllByEmployeeAndDateFromBetween(employeeById, from, to);
         periods.forEach(period -> {
-            if(period.getPurpose().equals(Purpose.WORKING_HOURS))
-                    periodDTOList.add(this.convertToPeriodDTO(period));
+            if (period.getPurpose().equals(Purpose.WORKING_HOURS))
+                periodDTOList.add(this.convertToPeriodDTO(period));
         });
         return periodDTOList;
+    }
+
+    public double calculateHours(String dateFrom, String dateTo) {
+        Date from = DateWorker.convertDateStringToDate(dateFrom);
+        Date to = DateWorker.convertDateStringToDate(dateTo);
+        double diff = to.getTime() - from.getTime();
+        return diff / (1000 * 60 * 60);
     }
 }
