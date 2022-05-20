@@ -328,9 +328,6 @@ show the team members of each team as details
     </div>
       <hr>
 
-
-
-
 <!--    <button (click)="addNewTeam(newTeam)" class="btn btn-success" type="button">-->
 <!--      Add new team-->
 <!--    </button>-->
@@ -350,8 +347,14 @@ show the team members of each team as details
               <p>
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                 Details
+                Team members
                 </button>
+                <br>
+                <!-- Button trigger modal -->
+                <button (click)="editModeOn()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Edit
+                </button>
+
                 <button (click)="deleteTeam(team.id)" class="btn btn-danger" type="button">
                   Delete
                 </button>
@@ -365,6 +368,46 @@ show the team members of each team as details
           </div>
         </div>
       </ng-container>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+<!--              Fnction for Edit Team-->
+<!--              <form #teamForm="ngForm" *ngIf="editMode">-->
+<!--                <button class="btn btn-primary" (click)="showAddTeamRequest()" *ngIf="addTeam">Hide Menu</button><br><br>-->
+<!--                <label for="name1">Name</label>-->
+<!--                <input type="text" name="name" id="name1" [(ngModel)]="newTeam.name" #name="ngModel" placeholder="Name" required>-->
+
+<!--                <div *ngIf="name.invalid" class="error">-->
+<!--                  <div *ngIf="name.hasError('required')">-->
+<!--                    Name ist ein Pflichtfeld.-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-group">-->
+<!--                  <label for="restHours1">Rest Hours</label>-->
+<!--                  <input type="text" name="restHours" id="restHours1" [(ngModel)]="newTeam.restHours" placeholder="Rest Hours">-->
+<!--                </div>-->
+<!--                <button class="btn btn-success" (click)="addNewTeam(newTeam)" value="submit" [disabled]="!teamForm?.valid">Submit</button>-->
+<!--              </form>-->
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
       <figure *ngIf="selectedTeam != undefined" class="text-center">
         <div *ngFor="let team of teams">

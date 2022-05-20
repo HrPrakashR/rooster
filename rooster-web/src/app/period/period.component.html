@@ -8,6 +8,7 @@
                     data-holder-rendered="true"
                     src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></p>
             <h4 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
+            Employee Id: {{currentUser.id}}
             </h4>
             <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
             </div>
@@ -18,10 +19,15 @@
               </select>
             </p>
             <br>
-            <label>From:</label>
-            <input [(ngModel)]="newPeriod.dateFrom" type="Date">
+            <label>Employee Id</label>
+            <select [(ngModel)]="newPeriod.employee" id="periodId" name="periodId">
+              <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
+            </select>
             <br>
-            <label>To:</label> <input [(ngModel)]="newPeriod.dateTo" type="Date">
+            <label>From:</label>
+            <input [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
+            <br>
+            <label>To:</label> <input [(ngModel)]="newPeriod.dateTo" type="datetime-local">
           </div>
           <div aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
             <button (click)="saveEntry(newPeriod)" class="btn btn-primary mr-1 mb-4 justify-content-center"
