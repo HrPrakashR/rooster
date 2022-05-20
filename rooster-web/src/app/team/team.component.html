@@ -140,22 +140,26 @@ show the team members of each team as details
                    alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">{{ team.name }}</h5>
-                <p class="card-text">Hier sollen die Dienstplaneinstellungen für das jeweilige Team stehen und
-                  bearbeitet werden können</p>
+<!--                <p class="card-text">Hier sollen die Dienstplaneinstellungen für das jeweilige Team stehen und-->
+<!--                  bearbeitet werden können</p>-->
                 <p>
-                  <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+<!--                  <button class="btn btn-primary" type="button" data-bs-toggle="collapse"-->
+<!--                          data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
+                  <button id="showTeam" (click)="getTeam(team.id)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalShow">
                     Team members
                   </button>
+                  <br>
 <!--                  -->
 <!--                  <button (click)="editModeOn(team)" class="btn btn-info" type="button">-->
 <!--                    Edit-->
 <!--                  </button>-->
 
                   <!-- Button trigger modal -->
-                  <button (click)="editModeOn(team)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button id="editTeam" (click)="editModeOn(team)" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal">
                     Edit
                   </button>
+                  <br>
 
                   <button (click)="deleteTeam(team.id)" class="btn btn-danger" type="button">
                     Delete
@@ -171,7 +175,7 @@ show the team members of each team as details
           </div>
         </ng-container>
 
-        <!-- Modal -->
+        <!-- Edit Function with Bootstrap Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -240,31 +244,52 @@ show the team members of each team as details
 <!--          <button type="button" (click)="editTeam(selectedTeam)" class="btn btn-success">Save</button>-->
 <!--        </div>-->
 
-        <figure *ngIf="selectedTeam != undefined" class="text-center">
-          <div *ngFor="let team of teams">
-            <h5 *ngIf="team == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
-          </div>
-          <div class="row">
-            <ng-container *ngFor="let employee of employees">
-              <div class="col-sm-3" *ngIf="employee.team == selectedTeam.id">
-                <div class="card m-5">
-                  <div class="card-body text-center">
-                    <p><img alt="100x100" class="rounded-circle z-depth-2"
-                            data-holder-rendered="true"
-                            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-                    <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
-                    <div *ngFor="let team of teams">
-                      <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
-                    </div>
-                    <p class="card-text">Position: {{employee.role}}</p>
-                    <p class="card-text">Email: {{employee.email}}</p>
-                  </div>
-                </div>
+        <div class="modal fade" id="exampleModalShow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelShow">Team Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-            </ng-container>
-          </div>
-        </figure>
-        <!-- ./Team member -->
+
+              <div class="modal-body">
+                <p *ngIf="selectedTeam == undefined"> No team Members in your team</p>
+                <section *ngIf="selectedTeam != undefined" class="text-center">
+                  <div *ngFor="let team of teams">
+                    <h5 *ngIf="team == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
+                  </div>
+                  <div class="row">
+                    <ng-container *ngFor="let employee of employees">
+                        <div class="col-sm-3" *ngIf="employee.team == selectedTeam.id">
+                          <div class="card m-5">
+                            <div class="card-body text-center">
+                              <p><img alt="100x100" class="rounded-circle z-depth-2"
+                              data-holder-rendered="true"
+                              src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
+                              <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
+                              <ul *ngFor="let team of teams">
+                                <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
+
+                              <li class="card-text">Position: {{employee.role}}</li>
+                              <li class="card-text">Email: {{employee.email}}</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </ng-container>
+                  </div>
+                </section>
+              </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ./Team member -->
 
       </div>
     </div>
