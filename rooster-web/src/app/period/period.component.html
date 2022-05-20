@@ -50,8 +50,8 @@
       <!--      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>-->
       <div class="card">
         <div class="card-body text-center">
-          <table class="table table-responsive-sm" *ngIf="currentUser != undefined">
-            <thead class="table table-info">
+          <table class="table table-responsive-sm table-hover table-primary" *ngIf="currentUser != undefined">
+            <thead>
             <tr>
               <th scope="col"></th>
               <th scope="col">Purpose</th>
@@ -59,7 +59,7 @@
               <th scope="col">To</th>
             </tr>
             </thead>
-            <tbody class="table table-striped" *ngFor="let period of periods">
+            <tbody *ngFor="let period of periods">
             <tr *ngIf="period.employee == currentUser.id">
               <th scope="row"></th>
               <td>{{period.purpose}}</td>
@@ -90,14 +90,16 @@
             <thead>
             <tr>
               <th scope="col"></th>
+              <th scope="col">EmployeeId</th>
               <th scope="col">Purpose</th>
               <th scope="col">From</th>
               <th scope="col">To</th>
             </tr>
             </thead>
-            <tbody class="table table-striped">
+            <tbody>
             <tr *ngFor="let period of periods">
               <th scope="row"></th>
+              <td>{{period.employee}}</td>
               <td>{{period.purpose}}</td>
               <td>{{period.dateFrom}}</td>
               <td>{{period.dateTo}}</td>
