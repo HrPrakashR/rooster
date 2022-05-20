@@ -344,42 +344,6 @@ show the team members of each team as details
       <hr>
 
 
-<!--    <button (click)="addNewTeam(newTeam)" class="btn btn-success" type="button">-->
-<!--      Add new team-->
-<!--    </button>-->
-
-
-    <!-- Team member -->
-    <div class="justify-content-center row" *ngIf="teams != undefined">
-      <ng-container *ngFor="let team of teams">
-        <div class="col-sm-3 m-3 mb-4">
-          <div class="card">
-            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{ team.name }}</h5>
-              <p class="card-text">Hier sollen die Dienstplaneinstellungen für das jeweilige Team stehen und
-                bearbeitet werden können</p>
-              <p>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Team members
-                </button>
-                <br>
-                <!-- Button trigger modal -->
-                <button (click)="editModeOn(team)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Edit
-                </button>
-
-                <button (click)="deleteTeam(team.id)" class="btn btn-danger" type="button">
-                  Delete
-                </button>
-              </p>
-              <div class="collapse" id="collapseExample" *ngFor="let employee of employees">
-                <div class="card card-body" *ngIf="employee.team === team.id">
-                {{employee.firstName}} {{employee.lastName}}
-
-
       <!--    <button (click)="addNewTeam(newTeam)" class="btn btn-success" type="button">-->
       <!--      Add new team-->
       <!--    </button>-->
@@ -412,7 +376,6 @@ show the team members of each team as details
                   <div class="card card-body" *ngIf="employee.team === team.id">
                     {{employee.firstName}} {{employee.lastName}}
                   </div>
-
                 </div>
               </div>
             </div>
@@ -444,67 +407,6 @@ show the team members of each team as details
           <button type="button" (click)="editTeam(selectedTeam)" class="btn btn-success">Save</button>
         </div>
 
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-              <!--Edit Feature-->
-              <div *ngIf="editMode">
-                <div>
-                  <label for="teamName1">Name: </label>
-                  <input #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
-                         type="text">
-                </div>
-                <div>
-                  <label for="restHours1">Rest Hours: </label>
-                  <input #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
-                         type="text">
-                </div>
-                <div>
-                  <label for="restDays1">Rest Days: </label>
-                  <input #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
-                         type="text">
-                </div>
-                <div>
-                  <label for="minBreakTime1">Min Break Time: </label>
-                  <input #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
-                         type="text">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button (click)="editModeOff()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <figure *ngIf="selectedTeam != undefined" class="text-center">
-        <div *ngFor="let team of teams">
-          <h5 *ngIf="team == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
-        </div>
-        <div class="row">
-          <ng-container *ngFor="let employee of employees">
-            <div class="col-sm-3" *ngIf="employee.team == selectedTeam.id">
-              <div class="card m-5">
-                <div class="card-body text-center">
-                  <p><img alt="100x100" class="rounded-circle z-depth-2"
-                          data-holder-rendered="true"
-                          src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"></p>
-                  <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
-                  <div *ngFor="let team of teams">
-                    <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
-
         <figure *ngIf="selectedTeam != undefined" class="text-center">
           <div *ngFor="let team of teams">
             <h5 *ngIf="team == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
@@ -523,7 +425,6 @@ show the team members of each team as details
                     </div>
                     <p class="card-text">Position: {{employee.role}}</p>
                     <p class="card-text">Email: {{employee.email}}</p>
-
                   </div>
                 </div>
               </div>
