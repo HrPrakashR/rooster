@@ -1,12 +1,13 @@
-<section class="pb-5 column justify-content-center row justify-content-center" id="greeting">
-  <div class="card text-center mx-auto" style="width: 24rem;">
+<div class="card text-center mx-auto" style="width: 18rem;">
+<!--  <div class="card text-center mx-auto" style="width: 24rem;">-->
     <div>
       <div class="image-flip">
-        <div class="card">
+<!--        <div class="card">-->
           <div class="card-body text-center">
-            <p><img alt="100x100" class="rounded-circle z-depth-2"
+            <p><img alt="100x100" class="card-img-top"
+                    style="width:500px;height:500px;"
                     data-holder-rendered="true"
-                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></p>
+                    src="/assets/pictures/profile_picture.png"></p>
             <h4 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
             </h4>
             <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
@@ -30,9 +31,9 @@
           </div>
         </div>
       </div>
-    </div>
+<!--    </div>-->
   </div>
-</section>
+<!--</div>-->
 
 <!-- Table for Personal Leave Summary of any User (Current user) -->
 <section class="column justify-content-center row justify-content-center" id="cards">
