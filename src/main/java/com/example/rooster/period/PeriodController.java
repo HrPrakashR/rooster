@@ -51,7 +51,7 @@ public class PeriodController {
     }
 
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
-    public int returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+    public Double returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
 
         Calendar from = Calendar.getInstance();
         from.set(Calendar.YEAR, year);
@@ -63,22 +63,21 @@ public class PeriodController {
         to.set(Calendar.MONTH, month);
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<PeriodDTO> workingHours = periodService.findAllByEmployeePAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
-       AtomicInteger i = new AtomicInteger();
-        workingHours.forEach(period -> {
-            if (period.getEmployee() == employeeId) {
-                if (Integer.parseInt(period.getDateTo().substring(12, 14)) == 0 &&
-                        Integer.parseInt(period.getDateFrom().substring(12, 14)) != 0) {
-                    i.set(Integer.parseInt(period.getDateTo().substring(12, 14)));
-                } else if (Integer.parseInt(period.getDateFrom().substring(12, 14)) != 0 &&
-                        Integer.parseInt(period.getDateTo().substring(12, 14)) == 0) {
-                    i.set(24 - Integer.parseInt(period.getDateFrom().substring(12, 14)));
-                } else {
-                    i.set(Integer.parseInt(period.getDateTo().substring(12, 14)) - Integer.parseInt(period.getDateFrom().substring(12, 14)));
-                }
-            }
-        });
-        return i.get();
+        List<PeriodDTO> workingHours = periodService.findAllByEmployeeAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+        if(workingHours.isEmpty()){
+            return 0.0;
+        }
+
+        return workingHours
+                .stream()
+                .filter(period ->
+                        period.getEmployee() == employeeId)
+                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo())
+/*
+                        Math.abs(Integer.parseInt(period.getDateTo().substring(11, 13)) - Integer.parseInt(period.getDateFrom().substring(11, 13)))
+*/
+                )
+                .sum();
     }
 
     //Showing all of the periods

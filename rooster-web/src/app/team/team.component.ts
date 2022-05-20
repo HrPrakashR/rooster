@@ -22,6 +22,7 @@ export class TeamComponent implements OnInit {
   editMode = false;
   status = '';
   teamUrl = '/api/teams';
+  team?: Team;
 
 
   constructor(private http: HttpClient, private employeeService: EmployeeService) {
