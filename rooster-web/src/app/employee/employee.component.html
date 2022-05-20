@@ -89,7 +89,7 @@ write a new function to show the info about the person
           <p>
             <label for="role">Role:</label>
             <select [(ngModel)]="newEmployee.role" id="role" name="role">
-              <option *ngFor="let r of Role | keyvalue" [ngValue]="r.value">{{r.key}} - {{r.value}}</option>
+              <option *ngFor="let r of role | keyvalue" [ngValue]="r.key">{{r.value}}</option>
             </select>
           </p>
 
