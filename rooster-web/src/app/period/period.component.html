@@ -84,6 +84,7 @@
                 <thead>
                 <tr>
                   <th scope="col"></th>
+                  <th scope="col">Employee Id</th>
                   <th scope="col">Purpose</th>
                   <th scope="col">From</th>
                   <th scope="col">To</th>
@@ -92,6 +93,7 @@
                 <tbody>
                 <tr *ngFor="let period of periods" >
                   <th scope="row"></th>
+                  <td>{{period.employee}}</td>
                   <td>{{period.purpose}}</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
