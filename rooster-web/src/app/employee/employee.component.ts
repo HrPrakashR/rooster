@@ -18,7 +18,7 @@ export class EmployeeComponent implements OnInit {
   teams: Team[] = [];
   newEmployee = {} as Employee;
   isFormShown = false;
-  public Role = Role;
+  public role = Role;
   employeeSelected = false;
   selectedEmployee = {} as Employee;
   editMode = false;
