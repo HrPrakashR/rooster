@@ -1,22 +1,27 @@
-<section class="pb-5 column justify-content-center row justify-content-center" id="greeting">
-  <div class="card text-center mx-auto" style="width: 24rem;">
-    <div>
-      <div class="image-flip">
-        <div class="card">
-          <div class="card-body text-center">
-            <p><img alt="100x100" class="rounded-circle z-depth-2"
-                    data-holder-rendered="true"
-                    src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></p>
-            <h4 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
-            </h4>
+<ng-container *ngIf="currentUser">
+<figure class="text-center h1">
+  <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+</figure>
+</ng-container>
+
+<div class="card text-center mx-auto" style="width: 22rem;">
+<!--  <div class="card text-center mx-auto" style="width: 24rem;">-->
+<!--    <div>-->
+<!--      <div class="image-flip">-->
+<!--        <div class="card">-->
+<!--          <div class="card-body text-center">-->
+            <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
+            <div class="card-body">
+            <h5 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
+            </h5>
             <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
             </div>
             <br>
-            <p style="display: inline-block">Purpose:
+            <label style="display: inline-block">Purpose:
               <select [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
                 <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
               </select>
-            </p>
+            </label>
             <br>
             <label>From:</label>
             <input [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
@@ -29,15 +34,16 @@
             </button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <!-- Table for Personal Leave Summary of any User (Current user) -->
+<br>
 <section class="column justify-content-center row justify-content-center" id="cards">
   <div class="col-md-9 table-responsive embed-responsive">
-    <div class="mb-4"> <!-- class="col-md-9 mb-4">-->
+    <div class="mb-4 text-center"> <!-- class="col-md-9 mb-4">-->
       <button (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary" type="button">Show Personal Leave Summary</button>
       <button (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>
       <div class="card" *ngIf="userLeave">
@@ -69,7 +75,7 @@
     <!-- Table for Personal Leave Summary of all Employees -->
     <section class="column justify-content-center row justify-content-center" id="all_leaves">
       <div class="col-md-9 table-responsive embed-responsive">
-        <div class="mb-4"> <!-- class="col-md-9 mb-4">-->
+        <div class="mb-4 text-center"> <!-- class="col-md-9 mb-4">-->
           <button (click)="clearAllPeriods()" *ngIf="!allLeave" class="btn btn-primary" type="button">Show Leave Summary of all Employees</button>
           <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-primary" type="button">Hide Leave Summary of all Employees</button>
           <div class="card" *ngIf="allLeave">
