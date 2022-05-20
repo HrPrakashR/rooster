@@ -58,21 +58,22 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             }
         }
 
-        this.employeeRepository.findAll().forEach(employee -> {
-                    for (int day = 0; day <= 30; day++) {
-                        this.generateRandomPeriodDTO(employee, day);
-                    }
-                }
+        this.employeeRepository.findAll().forEach(employee -> IntStream
+                .rangeClosed(0, 30)
+                .filter(day ->
+                        (new Random()).nextInt(0, 30) <= 5)
+                .forEachOrdered(day ->
+                        this.generateRandomPeriodDTO(employee, day))
         );
 
         for (int i = 1; i < 6; i++) {
             List<Employee> teamMembers = this.employeeRepository.findAllByTeamId(i);
-            Employee manager = teamMembers.stream().findFirst().get();
+            Employee manager = teamMembers.stream().findFirst().orElseThrow();
             manager.setRole(Role.MANAGER);
             this.employeeRepository.save(manager);
         }
 
-        Employee boss = this.employeeRepository.findAll().stream().findFirst().get();
+        Employee boss = this.employeeRepository.findAll().stream().findFirst().orElseThrow();
         boss.setRole(Role.OWNER);
         this.employeeRepository.save(boss);
 
