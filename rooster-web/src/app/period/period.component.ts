@@ -25,6 +25,7 @@ export class PeriodComponent implements OnInit {
   currentUser?: Employee;
 
   status = '';
+  userLeave = false
   allLeave = false;
   showEmployeeList = false;
 
@@ -48,11 +49,12 @@ export class PeriodComponent implements OnInit {
   }
 
   clearAllPeriods() {
-    this.periods = undefined;
+    this.allLeave = !this.allLeave;
+    // this.periods = undefined;
   }
 
   showLeaveRequest() {
-    this.allLeave = !this.allLeave;
+    this.userLeave = !this.userLeave
   }
 
   showEmployees() {
