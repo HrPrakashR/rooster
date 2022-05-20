@@ -1,7 +1,7 @@
 export enum Role {
-  TRAINEE,
-  STAFF,
-  SUBSTITUTE_MANAGER,
-  MANAGER,
-  OWNER
+  TRAINEE = "Trainee",
+  STAFF = "Staff",
+  SUBSTITUTE_MANAGER = "Substitute Manager",
+  MANAGER = "Manager",
+  OWNER = "Owner"
 }
