@@ -8,7 +8,6 @@
                     data-holder-rendered="true"
                     src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></p>
             <h4 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
-            Employee Id: {{currentUser.id}}
             </h4>
             <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
             </div>
@@ -18,11 +17,6 @@
                 <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
               </select>
             </p>
-            <br>
-            <label>Employee Id</label>
-            <select [(ngModel)]="newPeriod.employee" id="periodId" name="periodId">
-              <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
-            </select>
             <br>
             <label>From:</label>
             <input [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
@@ -84,7 +78,6 @@
                 <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">Employee Id</th>
                   <th scope="col">Purpose</th>
                   <th scope="col">From</th>
                   <th scope="col">To</th>
@@ -93,7 +86,6 @@
                 <tbody>
                 <tr *ngFor="let period of periods" >
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
                   <td>{{period.purpose}}</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
