@@ -17,7 +17,7 @@
     <form class="form-group">
     <label style="display: inline-block">Purpose:
       <select class="form-control" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
-        <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
+        <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.key">{{p.value}}</option>
       </select>
     </label>
       <br>
