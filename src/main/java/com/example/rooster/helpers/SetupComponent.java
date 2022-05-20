@@ -100,9 +100,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private String getRandomPurpose() {
-        int x = random.nextInt(10);
-
-        return switch (x) {
+        return switch (random.nextInt(10)) {
             case 0, 1, 2, 3, 4, 5, 6 -> Purpose.WORKING_HOURS.name();
             case 7 -> Purpose.SICK_LEAVE.name();
             case 8 -> Purpose.CONFIRMED_VACATION.name();
@@ -112,12 +110,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private Role getRandomRole() {
-        int x = random.nextInt(4);
-
-        if (x == 0) {
-            return Role.TRAINEE;
-        }
-        return Role.STAFF;
+        return random.nextInt(4) == 0 ? Role.TRAINEE : Role.STAFF;
     }
 
     private void generateRandomEmployee(long teamId) {
