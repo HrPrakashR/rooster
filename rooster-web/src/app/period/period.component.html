@@ -1,54 +1,56 @@
 <ng-container *ngIf="currentUser">
-<figure class="text-center h1">
-  <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
-</figure>
+  <figure class="text-center h1">
+    <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+  </figure>
 </ng-container>
 
 <div class="card text-center mx-auto" style="width: 22rem;">
-<!--  <div class="card text-center mx-auto" style="width: 24rem;">-->
-<!--    <div>-->
-<!--      <div class="image-flip">-->
-<!--        <div class="card">-->
-<!--          <div class="card-body text-center">-->
-            <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
-            <div class="card-body">
-            <h5 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
-            </h5>
-            <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
-            </div>
-            <br>
-            <label style="display: inline-block">Purpose:
-              <select [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
-                <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
-              </select>
-            </label>
-            <br>
-            <label>From:</label>
-            <input [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
-            <br>
-            <label>To:</label> <input [(ngModel)]="newPeriod.dateTo" type="datetime-local">
-          </div>
-          <div aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
-            <button (click)="saveEntry(newPeriod)" class="btn btn-primary mr-1 mb-4 justify-content-center"
-                    role="button">Submit
-            </button>
-          </div>
-        </div>
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+
+  <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
+  <div class="card-body">
+    <h5 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
+      <br> Employee Id: {{currentUser.id}}
+    </h5>
+    <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
+    </div>
+
+    <form class="form-group">
+    <label style="display: inline-block">Purpose:
+      <select class="form-control" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
+        <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
+      </select>
+    </label>
+      <br>
+    <label>Employee Id: </label>
+    <select class="form-control" [(ngModel)]="newPeriod.employee" id="periodId" name="periodId">
+      <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
+    </select>
+    <label>From:</label>
+    <input class="form-control" [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
+    <label>To:</label>
+      <input class="form-control" [(ngModel)]="newPeriod.dateTo" type="datetime-local">
+
+    </form>
+
+  </div>
+  <div aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
+    <button (click)="saveEntry(newPeriod)" class="btn btn-primary mr-1 mb-4 justify-content-center"
+            role="button">Submit
+    </button>
+  </div>
+</div>
 
 <!-- Table for Personal Leave Summary of any User (Current user) -->
 <br>
 <section class="column justify-content-center row justify-content-center" id="cards">
   <div class="col-md-9 table-responsive embed-responsive">
-    <div class="mb-4 text-center"> <!-- class="col-md-9 mb-4">-->
-      <button (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary" type="button">Show Personal Leave Summary</button>
-      <button (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>
-      <div class="card" *ngIf="userLeave">
+    <div class="mb-4 text-center">
+      <h5 class="btn btn-primary">Your Leave summary</h5>
+      <!--      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button">Show Personal Leave Summary</button>-->
+      <!--      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>-->
+      <div class="card">
         <div class="card-body text-center">
-          <table class="table table-primary table-responsive-sm table-hover" *ngIf="currentUser != undefined">
+          <table class="table table-responsive-sm table-hover table-primary" *ngIf="currentUser != undefined">
             <thead>
             <tr>
               <th scope="col"></th>
@@ -58,7 +60,7 @@
             </tr>
             </thead>
             <tbody *ngFor="let period of periods">
-            <tr *ngIf="period.employee == currentUser.id" >
+            <tr *ngIf="period.employee == currentUser.id">
               <th scope="row"></th>
               <td>{{period.purpose}}</td>
               <td>{{period.dateFrom}}</td>
@@ -72,34 +74,40 @@
   </div>
 </section>
 
-    <!-- Table for Personal Leave Summary of all Employees -->
-    <section class="column justify-content-center row justify-content-center" id="all_leaves">
-      <div class="col-md-9 table-responsive embed-responsive">
-        <div class="mb-4 text-center"> <!-- class="col-md-9 mb-4">-->
-          <button (click)="clearAllPeriods()" *ngIf="!allLeave" class="btn btn-primary" type="button">Show Leave Summary of all Employees</button>
-          <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-primary" type="button">Hide Leave Summary of all Employees</button>
-          <div class="card" *ngIf="allLeave">
-            <div class="card-body text-center">
-              <table class="table table-primary table-responsive-sm table-hover" *ngIf="currentUser != undefined">
-                <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Purpose</th>
-                  <th scope="col">From</th>
-                  <th scope="col">To</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let period of periods" >
-                  <th scope="row"></th>
-                  <td>{{period.purpose}}</td>
-                  <td>{{period.dateFrom}}</td>
-                  <td>{{period.dateTo}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+<!-- Table for Personal Leave Summary of all Employees -->
+<section class="column justify-content-center row justify-content-center" id="all_leaves">
+  <div class="col-md-9 table-responsive embed-responsive">
+    <div class="mb-4 text-center">
+      <button (click)="clearAllPeriods()" *ngIf="!allLeave" class="btn btn-primary" type="button">Leave Summary of
+        all Employees
+      </button>
+      <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-primary" type="button">Leave Summary of
+        all Employees
+      </button>
+      <div class="card" *ngIf="allLeave">
+        <div class="card-body text-center">
+          <table class="table table-primary table-responsive-sm table-hover" *ngIf="currentUser != undefined">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">EmployeeId</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let period of periods">
+              <th scope="row"></th>
+              <td>{{period.employee}}</td>
+              <td>{{period.purpose}}</td>
+              <td>{{period.dateFrom}}</td>
+              <td>{{period.dateTo}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
