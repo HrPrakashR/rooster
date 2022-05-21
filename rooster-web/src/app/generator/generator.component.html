@@ -1,148 +1,163 @@
-<h1>Roster for {{ getMonthName(month) }} {{ year }}</h1>
+<div style="margin-top: 70px; margin-left: 10px;">
 
-Month
-<select (change)="createCalendar()" [(ngModel)]="month">
-  <option *ngFor="let monthChose of monthToChoose" value="{{ monthChose }}"> {{ getMonthName(monthChose) }} </option>
-</select>
-<br>
-Year
-<select (change)="createCalendar()" [(ngModel)]="year">
-  <option *ngFor="let year of yearsToChoose" value="{{ year }}"> {{ year }} </option>
-</select>
-<br>
-Team
-<select (change)="createCalendar()" [(ngModel)]="selectedTeamId"> Select a Team
-  <option *ngFor="let team of teams" [value]="team.id">{{ team.name }} </option>
-</select>
+  <div class="container w-25 ">
+    <div class="row text-center">
+      <span class="h1 card-header m-5">Roster for {{ getMonthName(month) }} {{ year }}</span>
 
-<div class="container-fluid p-3 my-3">
-  <table class="table table-striped table-hover">
-    <thead>
-    <tr>
-      <th scope="col">Day</th>
-      <th scope="col">Compulsory</th>
-      <th scope="col" *ngFor="let employee of employees">
-        <p>{{ employee.firstName }} {{ employee.lastName }}</p>
-        <p class="small text-secondary">{{ employee.hoursPerWeek }} hours per week</p>
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <ng-container *ngIf="selectedTeam">
-      <tr *ngFor="let day of days">
-        <td
-          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''" class="fw-bold">{{ day }}
-          . {{ returnDayName(day) }}</td>
-        <td
-          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
+      <div class="mb-3">
+        <label class="form-select-label">Month</label>
+        <select (change)="createCalendar()" [(ngModel)]="month" class="form-select">
+          <option *ngFor="let monthChose of monthToChoose"
+                  value="{{ monthChose }}" class="text-center"> {{ getMonthName(monthChose) }} </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-select-label">Year</label>
+        <select (change)="createCalendar()" [(ngModel)]="year" class="form-select">
+          <option *ngFor="let year of yearsToChoose" value="{{ year }}" class="text-center"> {{ year }} </option>
+        </select>
+      </div>
+      <div class="mb-3 form-check">
+        <label class="form-select-label">Team</label>
+        <select (change)="createCalendar()" [(ngModel)]="selectedTeamId" class="form-select"> Select a Team
+          <option *ngFor="let team of teams" [value]="team.id" class="text-center">{{ team.name }} </option>
+        </select>
+      </div>
+    </div>
+  </div>
 
-        <td *ngFor="let employee of employees"
-            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">
-          <ng-container *ngIf="predefinedPeriods">
-            <ng-container *ngFor="let period of predefinedPeriods">
-              <ng-container
-                *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == addNull(day)">
-                <ng-container [ngSwitch]="period.purpose">
-                  <b *ngSwitchCase="'WORKING_HOURS'">
+
+  <div class="container-fluid p-3 my-3 mb-5">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Compulsory</th>
+        <th scope="col" *ngFor="let employee of employees">
+          <p>{{ employee.firstName }} {{ employee.lastName }}</p>
+          <p class="small text-secondary">{{ employee.hoursPerWeek }} hours per week</p>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngIf="selectedTeam">
+        <tr *ngFor="let day of days">
+          <td
+            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''"
+            class="fw-bold">{{ day }}
+            . {{ returnDayName(day) }}</td>
+          <td
+            [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
+
+          <td *ngFor="let employee of employees"
+              [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">
+            <ng-container *ngIf="predefinedPeriods">
+              <ng-container *ngFor="let period of predefinedPeriods">
+                <ng-container
+                  *ngIf="period.employee == employee.id && period.dateFrom.substring(8,10) == addNull(day)">
+                  <ng-container [ngSwitch]="period.purpose">
+                    <b *ngSwitchCase="'WORKING_HOURS'">
+                      {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    </b>
+                    <div *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="text-light">
+                      {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
+                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    </div>
+                    <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
+                    <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
+                    <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation Request</span>
+                    <span *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                  </b>
-                  <div *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="text-light">
-                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                  </div>
-                  <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
-                  <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
-                  <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation Request</span>
-                  <span *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="text-secondary">
-                    {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                    (Request)
+                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                      (Request)
                   </span>
-                  <span *ngSwitchCase="'ABSENCE'" class="text-primary">
+                    <span *ngSwitchCase="'ABSENCE'" class="text-primary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                    (Absence)
+                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                      (Absence)
                   </span>
-                  <span *ngSwitchCase="'FREE_TIME_REQUEST'" class="text-secondary">
+                    <span *ngSwitchCase="'FREE_TIME_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                    (Free-Time Request)
+                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                      (Free-Time Request)
                   </span>
+                  </ng-container>
                 </ng-container>
               </ng-container>
             </ng-container>
-          </ng-container>
-        </td>
-      </tr>
-      <tr class="table-primary">
-        <td class="fw-bold">Hours Worked</td>
-        <td></td>
-        <td *ngFor="let employee of employees">
-          <p>
-            <ng-container *ngIf="workingPeriods">
-              <ng-container *ngFor="let workingPeriod of workingPeriods">
-                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
-                  {{ workingPeriod.workingTime.toFixed(2) }}
+          </td>
+        </tr>
+        <tr class="table-primary">
+          <td class="fw-bold">Hours Worked</td>
+          <td></td>
+          <td *ngFor="let employee of employees">
+            <p>
+              <ng-container *ngIf="workingPeriods">
+                <ng-container *ngFor="let workingPeriod of workingPeriods">
+                  <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+                    {{ workingPeriod.workingTime.toFixed(2) }}
+                  </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </p>
-        </td>
-      </tr>
-      <tr class="table-primary">
-        <td class="fw-bold">Balance Hours</td>
-        <td></td>
-        <td *ngFor="let employee of employees">
-          <p
-            [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours.toFixed(2) }}</p>
-        </td>
-      </tr>
-      <tr class="table-primary">
-        <td class="fw-bold">Total</td>
-        <td>(Hours Worked + Balance Hours)</td>
-        <td *ngFor="let employee of employees">
-          <p>
-            <ng-container *ngIf="workingPeriods">
-              <ng-container *ngFor="let workingPeriod of workingPeriods">
-                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
-                  <span [ngClass]="returnTotal(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
+            </p>
+          </td>
+        </tr>
+        <tr class="table-primary">
+          <td class="fw-bold">Balance Hours</td>
+          <td></td>
+          <td *ngFor="let employee of employees">
+            <p
+              [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours.toFixed(2) }}</p>
+          </td>
+        </tr>
+        <tr class="table-primary">
+          <td class="fw-bold">Total</td>
+          <td>(Hours Worked + Balance Hours)</td>
+          <td *ngFor="let employee of employees">
+            <p>
+              <ng-container *ngIf="workingPeriods">
+                <ng-container *ngFor="let workingPeriod of workingPeriods">
+                  <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+                  <span
+                    [ngClass]="returnTotal(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
                                       {{ returnTotal(workingPeriod.workingTime, employee) }}
                   </span>
+                  </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </p>
-        </td>
-      </tr>
-      <tr class="table-primary">
-        <td class="fw-bold">Compulsory</td>
-        <td></td>
-        <td *ngFor="let employee of employees">
-          <p>
-            {{ returnMonthlyWorkingHours(employee).toFixed(2) }}
-          </p>
-        </td>
-      </tr>
-      <tr class="table-info fw-bold">
-        <td>Difference</td>
-        <td>(New balance)</td>
-        <td *ngFor="let employee of employees">
-          <p>
-            <ng-container *ngIf="workingPeriods">
-              <ng-container *ngFor="let workingPeriod of workingPeriods">
-                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+            </p>
+          </td>
+        </tr>
+        <tr class="table-primary">
+          <td class="fw-bold">Compulsory</td>
+          <td></td>
+          <td *ngFor="let employee of employees">
+            <p>
+              {{ returnMonthlyWorkingHours(employee).toFixed(2) }}
+            </p>
+          </td>
+        </tr>
+        <tr class="table-info fw-bold">
+          <td>Difference</td>
+          <td>(New balance)</td>
+          <td *ngFor="let employee of employees">
+            <p>
+              <ng-container *ngIf="workingPeriods">
+                <ng-container *ngFor="let workingPeriod of workingPeriods">
+                  <ng-container *ngIf="workingPeriod.employeeId == employee.id">
                   <span
                     [ngClass]="returnNewBalance(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
                                       {{ returnNewBalance(workingPeriod.workingTime, employee) }}
                   </span>
+                  </ng-container>
                 </ng-container>
               </ng-container>
-            </ng-container>
-          </p>
-        </td>
-      </tr>
-    </ng-container>
-    </tbody>
-  </table>
+            </p>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
 </div>
