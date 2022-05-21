@@ -90,7 +90,7 @@ export class TeamComponent implements OnInit {
     this.http
       .get<Team>('api/teams/get/' + id)
       .subscribe(result => this.selectedTeam = result);
-    this.teamSelected = true;
+    // this.teamSelected = true;
   }
 
   public closeTeamDetailsWindow() {
