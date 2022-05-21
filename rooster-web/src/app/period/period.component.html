@@ -3,7 +3,7 @@
     <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
   </figure>
 </ng-container>
-
+<section>
 <div class="card text-center mx-auto" style="width: 22rem;">
 
   <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
@@ -16,20 +16,20 @@
 
     <form class="form-group">
     <label style="display: inline-block">Purpose:
+    </label>
       <select class="form-control" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
         <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.value">{{p.key}} - {{p.value}}</option>
       </select>
-    </label>
       <br>
     <label>Employee Id: </label>
     <select class="form-control" [(ngModel)]="newPeriod.employee" id="periodId" name="periodId">
       <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
     </select>
     <label>From:</label>
-    <input class="form-control" [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
-    <label>To:</label>
-      <input class="form-control" [(ngModel)]="newPeriod.dateTo" type="datetime-local">
-      <div aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
+    <input class="form-control text-center" [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
+    <label>To: </label>
+      <input class="form-control text-center" [(ngModel)]="newPeriod.dateTo" type="datetime-local">
+      <div class="form-control" aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center" role="toolbar">
         <button (click)="saveEntry(newPeriod)" class="btn btn-primary mr-1 mb-4 justify-content-center"
                 role="button">Submit
         </button>
@@ -38,6 +38,7 @@
 
   </div>
 </div>
+</section>
 
 <!-- Table for Personal Leave Summary of any User (Current user) -->
 <br>
