@@ -26,9 +26,11 @@
           <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
         </select>
         <label>From:</label>
-        <input class="form-control text-center" [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
+        <input class="form-control text-center" [(ngModel)]="newPeriod.dateFrom" type="datetime-local"
+               name="periodDateFrom">
         <label>To: </label>
-        <input class="form-control text-center" [(ngModel)]="newPeriod.dateTo" type="datetime-local">
+        <input class="form-control text-center" [(ngModel)]="newPeriod.dateTo" type="datetime-local"
+        name="periodDateTo">
         <br>
         <div class="form-control" aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center"
              role="toolbar">
@@ -66,49 +68,49 @@
                 <ng-container [ngSwitch]="period.purpose">
                   <tr *ngSwitchCase="'SICK_LEAVE'" class="sick">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Sick leave</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'WORKING_HOURS'" class="wHours">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Working hours</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'VACATION_REQUEST'" class="vacation">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Vacation request</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'CONFIRMED_VACATION'" class="cVacation">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Confirmed vacation</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="sWorkingH">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Scheduled working hours</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'ABSENCE'" class="absence">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Absence</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'FREE_TIME_REQUEST'" class="freeTime">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Free time request</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
                   <tr *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="wHourRequest">
                     <th scope="row"></th>
-                    <td>{{period.purpose}}</td>
+                    <td>Working hour request</td>
                     <td>{{period.dateFrom}}</td>
                     <td>{{period.dateTo}}</td>
                   </tr>
@@ -148,62 +150,66 @@
             <tbody>
             <ng-container *ngFor="let period of periods">
               <ng-container [ngSwitch]="period.purpose">
+                <ng-container *ngFor="let employee of employees">
+                  <ng-container *ngIf="employee.id == period.employee">
                 <tr *ngSwitchCase="'VACATION_REQUEST'" class="vacation">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Vacation request</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'SICK_LEAVE'" class="sick">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Sick leave</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'CONFIRMED_VACATION'" class="cVacation">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Confirmed vacation</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'WORKING_HOURS'" class="wHours">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Working hours</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="sWorkingH">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Scheduled working hours</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'ABSENCE'" class="absence">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Absence</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'FREE_TIME_REQUEST'" class="freeTime">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Free time request</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
                 <tr *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="wHourRequest">
                   <th scope="row"></th>
-                  <td>{{period.employee}}</td>
-                  <td>{{period.purpose}}</td>
+                  <td>{{employee.firstName}} {{employee.lastName}}</td>
+                  <td>Working hour request</td>
                   <td>{{period.dateFrom}}</td>
                   <td>{{period.dateTo}}</td>
                 </tr>
+                </ng-container>
+              </ng-container>
               </ng-container>
             </ng-container>
             </tbody>
