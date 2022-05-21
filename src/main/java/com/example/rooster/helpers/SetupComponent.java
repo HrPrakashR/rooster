@@ -28,15 +28,12 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private final TeamRepository teamRepository;
     private final PeriodController periodController;
     private final PasswordEncoder passwordEncoder;
-
-    private long employeeId = 0;
-
     private final Random random = new Random();
-
     private final List<String> names = Names.names;
     private final List<String> lastNames = Names.lastNames;
     private final List<String> teamNames = List.of("Sales", "Marketing", "Human Resources", "Production", "Customer Service");
     private final int maxTeamId = this.teamNames.size();
+    private long employeeId = 0;
 
     public SetupComponent(EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
