@@ -7,11 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -63,21 +59,29 @@ public class PeriodController {
         to.set(Calendar.MONTH, month);
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<PeriodDTO> workingHours = periodService.findAllByEmployeeAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
-        if(workingHours.isEmpty()){
+        List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+
+        if (workingHours.isEmpty()) {
             return 0.0;
         }
 
-        return workingHours
+        double dailyWorkingHours = employeeService.getEmployeeById(employeeId).getHoursPerWeek() / 5;
+
+        double wh = workingHours
                 .stream()
-                .filter(period ->
-                        period.getEmployee() == employeeId)
-                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo())
-/*
-                        Math.abs(Integer.parseInt(period.getDateTo().substring(11, 13)) - Integer.parseInt(period.getDateFrom().substring(11, 13)))
-*/
-                )
+                .filter(period -> period.getEmployee() == employeeId)
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) || Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name()))
+                .mapToDouble(period -> dailyWorkingHours)
                 .sum();
+
+        wh += workingHours
+                .stream()
+                .filter(period -> period.getEmployee() == employeeId)
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
+                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo()))
+                .sum();
+
+        return wh;
     }
 
     //Showing all of the periods
