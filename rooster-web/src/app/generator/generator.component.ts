@@ -230,15 +230,16 @@ export class GeneratorComponent implements OnInit {
   }
 
   saveNewRoster() {
-/*
-    TODO:
-    this.generatedPeriods beinhaltet den neu generierten Dienstplan.
-    Bitte durchiterieren und jede Period abspeichern.
-    Wenn es am gleichen Tag und beim gleichen Employee ein Period besteht, dann wird die alte Period von der neuen ueberschrieben.
-     this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
-*/
+    this.http.post<Period[]>('/api/periods/saveNewRoster', this.generatedPeriods).subscribe(() => this.createCalendar());
+    /*
+        TODO:
+        this.generatedPeriods beinhaltet den neu generierten Dienstplan.
+        Bitte durchiterieren und jede Period abspeichern.
+        Wenn es am gleichen Tag und beim gleichen Employee ein Period besteht, dann wird die alte Period von der neuen ueberschrieben.
+         this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
+    */
     // Danach (bitte subscribe verwenden, wie in createCalendar):
-    this.clearGeneratedValues();
+    //this.clearGeneratedValues();
   }
 
   clearGeneratedValues() {
