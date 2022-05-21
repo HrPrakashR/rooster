@@ -16,7 +16,7 @@ Team
 </select>
 
 <div class="container-fluid p-3 my-3">
-  <table class="table table-striped">
+  <table class="table table-striped table-hover">
     <thead>
     <tr>
       <th scope="col">Day</th>
@@ -30,9 +30,8 @@ Team
     <tbody>
     <ng-container *ngIf="selectedTeam">
       <tr *ngFor="let day of days">
-
         <td
-          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ day }}
+          [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''" class="fw-bold">{{ day }}
           . {{ returnDayName(day) }}</td>
         <td
           [ngClass]="returnDayName(day) == 'Saturday'  || returnDayName(day) == 'Sunday' ? 'table-danger' : ''">{{ returnCompulsory(day) }}</td>
@@ -76,8 +75,8 @@ Team
           </ng-container>
         </td>
       </tr>
-      <tr>
-        <td>Working Hours</td>
+      <tr class="table-primary">
+        <td class="fw-bold">Hours Worked</td>
         <td></td>
         <td *ngFor="let employee of employees">
           <p>
@@ -91,16 +90,17 @@ Team
           </p>
         </td>
       </tr>
-      <tr>
-        <td>Balance Hours</td>
+      <tr class="table-primary">
+        <td class="fw-bold">Balance Hours</td>
         <td></td>
         <td *ngFor="let employee of employees">
-          <p [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours.toFixed(2) }}</p>
+          <p
+            [ngClass]="employee.balanceHours.toString().startsWith('-') ? 'text-danger' : 'text-success'">{{ employee.balanceHours.toFixed(2) }}</p>
         </td>
       </tr>
-      <tr>
-        <td>Total Working Hours</td>
-        <td></td>
+      <tr class="table-primary">
+        <td class="fw-bold">Total</td>
+        <td>(Hours Worked + Balance Hours)</td>
         <td *ngFor="let employee of employees">
           <p>
             <ng-container *ngIf="workingPeriods">
@@ -108,6 +108,33 @@ Team
                 <ng-container *ngIf="workingPeriod.employeeId == employee.id">
                   <span [ngClass]="returnTotal(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
                                       {{ returnTotal(workingPeriod.workingTime, employee) }}
+                  </span>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </p>
+        </td>
+      </tr>
+      <tr class="table-primary">
+        <td class="fw-bold">Compulsory</td>
+        <td></td>
+        <td *ngFor="let employee of employees">
+          <p>
+            {{ returnMonthlyWorkingHours(employee).toFixed(2) }}
+          </p>
+        </td>
+      </tr>
+      <tr class="table-info fw-bold">
+        <td>Difference</td>
+        <td>(New balance)</td>
+        <td *ngFor="let employee of employees">
+          <p>
+            <ng-container *ngIf="workingPeriods">
+              <ng-container *ngFor="let workingPeriod of workingPeriods">
+                <ng-container *ngIf="workingPeriod.employeeId == employee.id">
+                  <span
+                    [ngClass]="returnNewBalance(workingPeriod.workingTime, employee).toString().startsWith('-') ? 'text-danger' : 'text-success'">
+                                      {{ returnNewBalance(workingPeriod.workingTime, employee) }}
                   </span>
                 </ng-container>
               </ng-container>

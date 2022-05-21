@@ -46,7 +46,6 @@ public class PeriodService {
         return Arrays.stream(Purpose.values()).filter(purpose -> purpose.ordinal() == id).findFirst().orElse(null);
     }
 
-    // TODO in DTO einbinden
     public Period convertToPeriod(PeriodDTO periodDTO) {
         Period period = new Period();
         period.setId(periodDTO.getId());

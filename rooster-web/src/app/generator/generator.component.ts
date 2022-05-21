@@ -27,7 +27,6 @@ export class GeneratorComponent implements OnInit {
   predefinedPeriods?: Period[];
 
   workingPeriods?: { "employeeId": number, "workingTime": number }[];
-  totalWorkingTimes?: { "employeeId": number, "workingTime": number }[];
 
 
   constructor(private http: HttpClient) {
@@ -187,5 +186,32 @@ export class GeneratorComponent implements OnInit {
   returnTotal(workingTime: number, employee: Employee) {
     let total = workingTime + employee.balanceHours;
     return total.toFixed(2)
+  }
+
+  returnMonthlyWorkingHours(employee: Employee) {
+    return (employee.hoursPerWeek / 5) * this.numberOfWeekDays();
+  }
+
+  returnNewBalance(workingTime: number, employee: Employee) {
+    let total = (this.returnMonthlyWorkingHours(employee) - workingTime - employee.balanceHours.valueOf());
+    return total.toFixed();
+  }
+
+  private numberOfWeekDays() {
+    return this.days.filter(day => this.isWeekDay(day)).length;
+  }
+
+  isWeekDay(day: number) {
+    let selectedDate = this.createDate(day);
+    switch (selectedDate.getDay()) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+        return true;
+      default:
+        return false;
+    }
   }
 }
