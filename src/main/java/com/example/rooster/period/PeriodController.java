@@ -1,7 +1,9 @@
 package com.example.rooster.period;
 
+import com.example.rooster.employee.Employee;
 import com.example.rooster.employee.EmployeeService;
 import com.example.rooster.helpers.DateWorker;
+import com.example.rooster.helpers.GeneratorWorker;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
 import org.springframework.http.HttpStatus;
@@ -9,9 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -108,12 +110,20 @@ public class PeriodController {
 
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+
+        // fetching necessary information
         List<PeriodDTO> generatedPlan;
+        Team team = this.teamService.getTeam(teamId);
+        List<Employee> employees = this.employeeService.getEmployees(team);
+        List<Calendar> days = DateWorker.getAllDaysOfMonth(year, month);
+
+        // adding the predefined periods to the generated plan
         List<Period> predefinedPeriods = this.periodService
                 .getPeriodsPerTeamAndTimeInterval(
-                        this.teamService.getTeam(teamId),
+                        team,
                         DateWorker.getDateObject(year, month, false),
                         DateWorker.getDateObject(year, month, true));
+
         generatedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose ->
@@ -121,6 +131,38 @@ public class PeriodController {
                                                 .equals(purpose)))
                 .map(periodService::convertToPeriodDTO)
                 .collect(Collectors.toList());
+
+        // iterating through employees
+        employees.forEach(employee -> {
+            // check if they have enough time to work at another day
+            if (DateWorker.getWorkingTime(
+                    GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
+                    GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
+            ) <= GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
+            ) {
+                // iterate through days
+                days.forEach(day -> {
+
+                    // initialize values WORK AND CALCULATE HERE
+                    Purpose purpose = Purpose.WORKING_HOURS;
+                    int hourFrom = 0;
+                    int hourTo = 0;
+                    int minuteFrom = 0;
+                    int minuteTo = 0;
+
+
+                    // add working times
+                    generatedPlan.add(GeneratorWorker.createDTO(
+                            day,
+                            hourFrom,
+                            minuteFrom,
+                            hourTo,
+                            minuteTo,
+                            employee.getId(),
+                            purpose.name()));
+                });
+            }
+        });
 
         return generatedPlan;
     }
