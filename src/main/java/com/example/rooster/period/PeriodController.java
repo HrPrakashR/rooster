@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
@@ -64,20 +61,27 @@ public class PeriodController {
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
         List<PeriodDTO> workingHours = periodService.findAllByEmployeeAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
-        if(workingHours.isEmpty()){
+
+        if (workingHours.isEmpty()) {
             return 0.0;
         }
 
-        return workingHours
+        double dailyWorkingHours = employeeService.getEmployeeById(employeeId).getHoursPerWeek() / 5;
+
+        double wh = workingHours
                 .stream()
-                .filter(period ->
-                        period.getEmployee() == employeeId)
-                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo())
-/*
-                        Math.abs(Integer.parseInt(period.getDateTo().substring(11, 13)) - Integer.parseInt(period.getDateFrom().substring(11, 13)))
-*/
-                )
+                .filter(period -> period.getEmployee() == employeeId)
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.VACATION_REQUEST.name()) || Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name()))
+                .mapToDouble(period -> dailyWorkingHours)
                 .sum();
+
+        wh += workingHours
+                .stream()
+                .filter(period -> period.getEmployee() == employeeId)
+                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo()))
+                .sum();
+
+        return wh;
     }
 
     //Showing all of the periods
