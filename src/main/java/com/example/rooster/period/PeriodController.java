@@ -140,7 +140,7 @@ public class PeriodController {
                         DateWorker.getDateObject(year, month, false),
                         DateWorker.getDateObject(year, month, true));
 
-        List<PeriodDTO> generatedPlan = predefinedPeriods.stream().filter(period ->
+        List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose ->
                                         period.getPurpose()
@@ -158,10 +158,16 @@ public class PeriodController {
                     GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
                     GeneratorWorker.getCompulsory(generatedPlan, employee)
             ) > 0 &&*/
-                    GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()).stream().noneMatch(periodDTO -> periodDTO.getDateFrom().contains(i.get() + "T"))
+                    predefinedPlan
+                            .stream()
+                            .filter(periodDTO ->
+                                    periodDTO.getEmployee()
+                                            == employee.getId())
+                            .noneMatch(periodDTO ->
+                                    periodDTO.getDateFrom()
+                                            .contains(
+                                                    String.format("%02dT", i.get())))
             ) {
-
-
                 // initialize values WORK AND CALCULATE HERE
                 Purpose purpose = Purpose.WORKING_HOURS;
                 int hourFrom = 8;
@@ -171,8 +177,8 @@ public class PeriodController {
 
 
                 // add working times
-                generatedPlan.add(GeneratorWorker.createPeriodDTO(
-                        i.getAndIncrement(),
+                predefinedPlan.add(GeneratorWorker.createPeriodDTO(
+                        i.get(),
                         month,
                         year,
                         hourFrom,
@@ -183,8 +189,9 @@ public class PeriodController {
                         purpose.name())
                 );
             }
+            i.incrementAndGet();
         }));
 
-        return generatedPlan;
+        return predefinedPlan;
     }
 }
