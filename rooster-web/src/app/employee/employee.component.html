@@ -11,10 +11,6 @@ write a new function to show the info about the person
 
 <!-- Title Greeting -->
 <ng-container *ngIf="currentUser">
-  <figure class="text-center h1">
-    <p>Hello {{ currentUser.firstName }} {{ currentUser.lastName }}</p>
-  </figure>
-
   <div class="card text-center mx-auto" style="width: 22rem;">
     <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
     <div class="card-body">
@@ -25,7 +21,10 @@ write a new function to show the info about the person
       <p class="card-text">E-Mail: {{ currentUser.email.toLocaleLowerCase() }}</p>
 
       <a (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'"
-         class="btn btn-primary m-1">Add a New Employee</a>
+         class="btn btn-add m-1">
+      New employee
+        <span><i class="fa-solid fa-user-plus"></i></span>
+      </a>
       <a (click)="myTeam = !myTeam" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'"
          class="btn btn-primary m-1">Show My Team</a>
       <div *ngIf="currentUser.role == 'OWNER'" class="dropdown m-3">
@@ -127,16 +126,20 @@ write a new function to show the info about the person
               <p><img alt="100x100" class="card-img-top card-img-bottom"
                       data-holder-rendered="true"
                       src="/assets/pictures/profile_picture.png"></p>
-              <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
+              <h4 class="card-title">Name: {{employee.firstName}} {{employee.lastName}}</h4>
               <div *ngFor="let team of teams">
                 <p *ngIf="team.id == selectedTeam" class="card-text">Team: {{team.name}}</p>
               </div>
               <p class="card-text">Position: {{capitalizeFirstLetter(employee.role)}}</p>
               <p class="card-text">Email: {{employee.email}}</p>
-
-              <a [routerLink]="['/employee', employee.id]" class="btn btn-primary">Details</a>
-<!--              <button (click)="getEmployee(employee.id)" class="btn btn-info" value="details">Details</button>-->
-              <button (click)="deleteEmployee(employee.id)" class="btn btn-danger" value="delete">Delete</button>
+              <div class="gap-2 d-md-block">
+              <a [routerLink]="['/employee', employee.id]" class="btn btn-details m-2">Details
+              <span><i class="fa-solid fa-circle-info"></i></span>
+              </a>
+              <button (click)="deleteEmployee(employee.id)" class="btn btn-delete" value="delete">Delete
+              <span><i class="fa-solid fa-user-xmark"></i></span>
+              </button>
+              </div>
             </div>
           </div>
         </div>

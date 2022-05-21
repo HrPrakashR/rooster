@@ -11,7 +11,10 @@
     <p>
       <strong>Email: </strong> {{employee.email}}
     </p>
-    <button (click)="editModeOn()" class="btn btn-info" title="edit team" type="button">Edit</button>
+    <button (click)="editModeOn()" class="btn btn-edit" title="edit team" type="button">
+      Edit
+      <span><i class="fa-solid fa-pencil"></i></span>
+    </button>
   </div>
   <div *ngIf="editMode" class="container">
     <button (click)="editModeOff()" aria-label="Close alert" class="btn btn-danger" data-close type="button">
@@ -45,6 +48,13 @@
       <label for="employeeHoursPerWeek">Hours per Week: </label>
       <input [(ngModel)]="employee.hoursPerWeek" id="employeeHoursPerWeek" type="number">
     </div>
-    <button (click)="editEmployee(employee)" class="btn btn-success" title="edit team" type="button">Save</button>
+    <div class="gap-2 d-md-block">
+    <button (click)="editEmployee(employee)" class="btn btn-save m-2" title="edit team" type="button">Save
+    <span><i class="fa-solid fa-floppy-disk"></i></span>
+    </button>
+    <button (click)="goBack()" class="btn btn-return" title="return" type="button">Return
+      <span><i class="fa-solid fa-rotate-left"></i></span>
+    </button>
+    </div>
   </div>
 </div>
