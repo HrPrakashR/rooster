@@ -8,7 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -39,13 +44,9 @@ public class PeriodController {
                 DateWorker.getDateObject(year, month, true));
     }
 
-    @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
-    public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
-        return new ArrayList<>();
-    }
-
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
     public Double returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+
 
         List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(
                 employeeService.getEmployeeById(employeeId),
@@ -58,21 +59,7 @@ public class PeriodController {
 
         double dailyWorkingHours = employeeService.getEmployeeById(employeeId).getHoursPerWeek() / 5;
 
-        double wh = workingHours
-                .stream()
-                .filter(period -> period.getEmployee() == employeeId)
-                .filter(period -> Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) || Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name()))
-                .mapToDouble(period -> dailyWorkingHours)
-                .sum();
-
-        wh += workingHours
-                .stream()
-                .filter(period -> period.getEmployee() == employeeId)
-                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
-                .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo()))
-                .sum();
-
-        return wh;
+        return DateWorker.getWorkingTime(workingHours, dailyWorkingHours);
     }
 
     //Showing all of the periods
@@ -117,6 +104,25 @@ public class PeriodController {
         List<Period> periods = periodService.getPeriodsPerTeamAndTimeInterval(team, dateFrom, dateTo);
         periods.forEach(p -> periodDTOs.add(periodService.convertToPeriodDTO(p)));
         return periodDTOs;
+    }
+
+    @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
+    public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+        List<PeriodDTO> generatedPlan;
+        List<Period> predefinedPeriods = this.periodService
+                .getPeriodsPerTeamAndTimeInterval(
+                        this.teamService.getTeam(teamId),
+                        DateWorker.getDateObject(year, month, false),
+                        DateWorker.getDateObject(year, month, true));
+        generatedPlan = predefinedPeriods.stream().filter(period ->
+                        Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
+                                .anyMatch(purpose ->
+                                        period.getPurpose()
+                                                .equals(purpose)))
+                .map(periodService::convertToPeriodDTO)
+                .collect(Collectors.toList());
+
+        return generatedPlan;
     }
 
 }
