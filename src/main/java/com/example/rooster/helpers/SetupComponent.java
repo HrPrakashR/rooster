@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -36,6 +35,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private final List<String> names = Names.names;
     private final List<String> lastNames = Names.lastNames;
     private final List<String> teamNames = List.of("Sales", "Marketing", "Human Resources", "Production", "Customer Service");
+    private final int maxTeamId = this.teamNames.size();
 
     public SetupComponent(EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
@@ -48,16 +48,44 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        int maxTeamId = teamNames.size();
 
         IntStream.rangeClosed(0, maxTeamId - 1).forEachOrdered(this::generateRandomTeam);
 
-        for (int i = 1; i <= maxTeamId; i++) {
-            for (int n = 1; n <= random.nextInt(5, 10); n++) {
-                generateRandomEmployee(i);
-            }
-        }
+        this.generateRandomEmployees();
 
+        this.generateRandomPeriods();
+
+        this.generateRandomManagers();
+
+        this.generateRandomBoss();
+
+    }
+
+    private void generateRandomBoss() {
+        Employee boss = this.employeeRepository.findAll().stream().findFirst().orElseThrow();
+        boss.setRole(Role.OWNER);
+        this.employeeRepository.save(boss);
+    }
+
+    private void generateRandomManagers() {
+        if(IntStream.range(1, 6).mapToObj(this.employeeRepository::findAllByTeamId).findAny().isEmpty()){
+            generateRandomManagers();
+        }else{
+            IntStream.range(1, 6)
+                    .mapToObj(this.employeeRepository::findAllByTeamId)
+                    .map(teamMembers ->
+                            teamMembers
+                                    .stream()
+                                    .findFirst()
+                                    .orElseThrow()
+                    ).forEachOrdered(manager -> {
+                        manager.setRole(Role.MANAGER);
+                        this.employeeRepository.save(manager);
+                    });
+        }
+    }
+
+    private void generateRandomPeriods() {
         this.employeeRepository.findAll().forEach(employee -> IntStream
                 .rangeClosed(0, 30)
                 .filter(day ->
@@ -65,17 +93,14 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 .forEachOrdered(day ->
                         this.generateRandomPeriodDTO(employee, day))
         );
+    }
 
-        for (int i = 1; i < 6; i++) {
-            List<Employee> teamMembers = this.employeeRepository.findAllByTeamId(i);
-            Employee manager = teamMembers.stream().findFirst().orElseThrow();
-            manager.setRole(Role.MANAGER);
-            this.employeeRepository.save(manager);
+    private void generateRandomEmployees() {
+        for (int i = 1; i <= this.maxTeamId; i++) {
+            for (int n = 1; n <= random.nextInt(5, 10); n++) {
+                generateRandomEmployee(i);
+            }
         }
-
-        Employee boss = this.employeeRepository.findAll().stream().findFirst().orElseThrow();
-        boss.setRole(Role.OWNER);
-        this.employeeRepository.save(boss);
 
     }
 
