@@ -71,7 +71,7 @@ public class PeriodController {
         double wh = workingHours
                 .stream()
                 .filter(period -> period.getEmployee() == employeeId)
-                .filter(period -> Objects.equals(period.getPurpose(), Purpose.VACATION_REQUEST.name()) || Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name()))
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) || Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name()))
                 .mapToDouble(period -> dailyWorkingHours)
                 .sum();
 

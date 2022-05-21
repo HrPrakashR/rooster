@@ -95,7 +95,7 @@ public class PeriodService {
         List<Period> periods = periodRepository.findAllByEmployeeAndDateFromBetween(employeeById, from, to);
         periods.forEach(period -> {
             if (period.getPurpose().equals(Purpose.WORKING_HOURS) ||
-                    period.getPurpose().equals(Purpose.VACATION_REQUEST) ||
+                    period.getPurpose().equals(Purpose.CONFIRMED_VACATION) ||
                     period.getPurpose().equals(Purpose.SICK_LEAVE))
                 periodDTOList.add(this.convertToPeriodDTO(period));
         });
