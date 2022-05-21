@@ -48,7 +48,7 @@
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4 text-center">
       <button type="button" (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-primary">Your Leave summary</button>
-      <button type="button" (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary">Hide Your Leave summary</button>
+      <button type="button" (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary">Hide your Leave summary</button>
       <div class="card" *ngIf="!userLeave">
         <div class="card-body text-center">
           <table class="table table-responsive-sm table-hover" *ngIf="currentUser != undefined">
