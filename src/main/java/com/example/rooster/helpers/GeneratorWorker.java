@@ -29,6 +29,6 @@ public class GeneratorWorker {
     }
 
     public static Double WorkingHourAndCompulsoryDifference(double workingHours, double compulsory) {
-        return workingHours - compulsory;
+        return compulsory - workingHours;
     }
 }
