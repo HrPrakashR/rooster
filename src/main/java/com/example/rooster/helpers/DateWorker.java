@@ -1,12 +1,11 @@
 package com.example.rooster.helpers;
 
 import com.example.rooster.period.DateDTO;
+import com.example.rooster.period.PeriodDTO;
+import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateWorker {
 
@@ -206,5 +205,36 @@ public class DateWorker {
                         date.get(Calendar.YEAR)
                 )
         );
+    }
+
+    public static double calculateHours(String dateFrom, String dateTo) {
+        Date from = DateWorker.convertDateStringToDate(dateFrom);
+        Date to = DateWorker.convertDateStringToDate(dateTo);
+        double diff = to.getTime() - from.getTime();
+        return diff / (1000 * 60 * 60);
+    }
+
+    public static Double getWorkingTime(List<PeriodDTO> workingHours, double dailyWorkingHours){
+
+        if (workingHours.isEmpty()) {
+            return 0.0;
+        }
+
+        double wh = workingHours
+                .stream()
+                .filter(period ->
+                        Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
+                                Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
+                )
+                .mapToDouble(period -> dailyWorkingHours)
+                .sum();
+
+        wh += workingHours
+                .stream()
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
+                .mapToDouble(period -> DateWorker.calculateHours(period.getDateFrom(), period.getDateTo()))
+                .sum();
+
+        return wh;
     }
 }

@@ -84,11 +84,4 @@ public class PeriodService {
         periods.forEach(period -> periodDTOList.add(this.convertToPeriodDTO(period)));
         return periodDTOList;
     }
-
-    public double calculateHours(String dateFrom, String dateTo) {
-        Date from = DateWorker.convertDateStringToDate(dateFrom);
-        Date to = DateWorker.convertDateStringToDate(dateTo);
-        double diff = to.getTime() - from.getTime();
-        return diff / (1000 * 60 * 60);
-    }
 }
