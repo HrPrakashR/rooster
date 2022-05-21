@@ -185,7 +185,7 @@ public class PeriodController {
                         generatedPlan.add(
                                 GeneratorWorker.createPeriodDTO(
                                         day,
-                                        month,
+                                        month+1,
                                         year,
                                         hourFrom,
                                         minuteFrom,

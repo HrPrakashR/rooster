@@ -92,7 +92,7 @@ export class GeneratorComponent implements OnInit {
             this.predefinedPeriods = [];
             this.employees?.forEach(employee => {
 
-              if(this.generatedPeriods?.length == undefined){
+              if(this.generatedPeriods == undefined || this.generatedPeriods.length < 1){
                 this.predefinedPeriods = [];
                 this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
                   .subscribe(result => this.predefinedPeriods?.push(...result));
@@ -224,9 +224,12 @@ export class GeneratorComponent implements OnInit {
   generateNewRoster() {
     this.generatedPeriods = [];
     this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
-      .subscribe(result => this.generatedPeriods = result);
-    this.enableSaveRoster = true;
-    this.createCalendar();
+      .subscribe(result => {
+        this.generatedPeriods = result
+        this.enableSaveRoster = true;
+        this.createCalendar();
+      });
+
   }
 
   saveNewRoster() {
