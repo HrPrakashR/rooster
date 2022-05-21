@@ -124,3 +124,45 @@
 /*  height: 120px;*/
 /*  border-radius: 50%;*/
 /*}*/
+
+.sick{
+  background: #0dcaf0;
+  color: white;
+}
+
+.wHours{
+  background: white;
+  color: black;
+}
+
+.vacation{
+  background: orange;
+  color: white;
+}
+
+.cVacation{
+  background: green;
+  color: white;
+}
+
+.sWorkingH{
+  background: #0c63e4;
+  color: white;
+}
+
+.absence{
+  background: black;
+  color: white;
+}
+
+.freeTime{
+  background: #d63384;
+  color: white;
+}
+
+.wHourRequest{
+  background: magenta;
+  color: white;
+}
+
+
