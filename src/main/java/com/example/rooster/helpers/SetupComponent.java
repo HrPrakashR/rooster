@@ -122,11 +122,10 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private String getRandomPurpose() {
         return switch (random.nextInt(10)) {
-            case 0, 1, 2, 3, 4, 5, 6 -> Purpose.WORKING_HOURS.name();
             case 7 -> Purpose.SICK_LEAVE.name();
             case 8 -> Purpose.CONFIRMED_VACATION.name();
             case 9 -> Purpose.VACATION_REQUEST.name();
-            default -> Purpose.SCHEDULED_WORKING_HOURS.name();
+            default -> Purpose.WORKING_HOURS.name();
         };
     }
 

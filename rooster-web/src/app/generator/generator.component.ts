@@ -28,6 +28,9 @@ export class GeneratorComponent implements OnInit {
 
   workingPeriods?: { "employeeId": number, "workingTime": number }[];
 
+  generatedPeriods?: Period[];
+  enableSaveRoster: boolean = false;
+
 
   constructor(private http: HttpClient) {}
 
@@ -211,5 +214,13 @@ export class GeneratorComponent implements OnInit {
       default:
         return false;
     }
+  }
+
+  generateNewRoster() {
+    this.enableSaveRoster = true;
+  }
+
+  saveNewRoster() {
+
   }
 }
