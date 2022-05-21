@@ -214,7 +214,7 @@ public class DateWorker {
         return diff / (1000 * 60 * 60);
     }
 
-    public static Double getWorkingTime(List<PeriodDTO> workingHours, double dailyWorkingHours){
+    public static Double getWorkingTime(List<PeriodDTO> workingHours, Double dailyWorkingHours){
 
         if (workingHours.isEmpty()) {
             return 0.0;
@@ -238,3 +238,5 @@ public class DateWorker {
         return wh;
     }
 }
+
+

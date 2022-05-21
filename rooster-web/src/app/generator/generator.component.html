@@ -28,13 +28,14 @@
     </div>
   </div>
 
+  <ng-container *ngIf="selectedTeam">
+
   <div class="text-center">
     <button type="button" class="btn btn-outline-primary m-3" (click)="generateNewRoster()">Generate a new Roster</button>
     <button type="button" class="btn btn-outline-success m-3" (click)="saveNewRoster()" *ngIf="enableSaveRoster">Save the new Roster</button>
     <button type="button" class="btn btn-outline-info m-3" (click)="clearGeneratedValues()" *ngIf="enableSaveRoster">Clear Generated Values</button>
   </div>
 
-  <ng-container *ngIf="selectedTeam">
     <div class="container-fluid p-3 my-3 mb-5">
       <table class="table table-striped table-hover">
         <thead>
