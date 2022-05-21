@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -41,6 +44,11 @@ public class PeriodController {
 
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+        List<Period> predefinedPeriods = this.periodService
+                .getPeriodsPerTeamAndTimeInterval(
+                        this.teamService.getTeam(teamId),
+                        DateWorker.getDateObject(year, month, false),
+                        DateWorker.getDateObject(year, month, true));
         return new ArrayList<>();
     }
 
