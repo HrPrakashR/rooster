@@ -68,21 +68,17 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private void generateRandomManagers() {
-        if(IntStream.range(1, 6).mapToObj(this.employeeRepository::findAllByTeamId).findAny().isEmpty()){
-            generateRandomManagers();
-        }else{
-            IntStream.range(1, 6)
-                    .mapToObj(this.employeeRepository::findAllByTeamId)
-                    .map(teamMembers ->
-                            teamMembers
-                                    .stream()
-                                    .findFirst()
-                                    .get()
-                    ).forEachOrdered(manager -> {
-                        manager.setRole(Role.MANAGER);
-                        this.employeeRepository.save(manager);
-                    });
-        }
+        IntStream.range(1, this.maxTeamId-1)
+                .mapToObj(this.employeeRepository::findAllByTeamId)
+                .map(teamMembers ->
+                        teamMembers
+                                .stream()
+                                .findFirst()
+                                .orElseThrow()
+                ).forEachOrdered(manager -> {
+                    manager.setRole(Role.MANAGER);
+                    this.employeeRepository.save(manager);
+                });
     }
 
     private void generateRandomPeriods() {

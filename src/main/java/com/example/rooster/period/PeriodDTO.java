@@ -2,7 +2,6 @@ package com.example.rooster.period;
 
 public class PeriodDTO {
 
-
     private long id;
 
     private String purpose;
