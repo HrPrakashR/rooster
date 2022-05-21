@@ -60,7 +60,7 @@ public class PeriodController {
         to.set(Calendar.MONTH, month);
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<PeriodDTO> workingHours = periodService.findAllByEmployeeAndPurposeAndDateFromBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+        List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
 
         if (workingHours.isEmpty()) {
             return 0.0;
@@ -78,6 +78,7 @@ public class PeriodController {
         wh += workingHours
                 .stream()
                 .filter(period -> period.getEmployee() == employeeId)
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
                 .mapToDouble(period -> periodService.calculateHours(period.getDateFrom(), period.getDateTo()))
                 .sum();
 
