@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GeneratorWorker {
 
-    public static Double getDailyWorkingHours(double weeklyWorkingTime) {
+    public static Double getDailyWorkingHours(Double weeklyWorkingTime) {
         return weeklyWorkingTime / 5;
     }
 
@@ -26,5 +26,9 @@ public class GeneratorWorker {
         newPeriodDTO.setPurpose(purposeString);
 
         return newPeriodDTO;
+    }
+
+    public static Double WorkingHourAndCompulsoryDifference(double workingHours, double compulsory) {
+        return workingHours - compulsory;
     }
 }

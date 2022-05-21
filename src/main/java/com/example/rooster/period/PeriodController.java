@@ -15,7 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -129,7 +131,6 @@ public class PeriodController {
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
 
         // fetching necessary information
-        List<PeriodDTO> generatedPlan = new ArrayList<>();
         Team team = this.teamService.getTeam(teamId);
         List<Employee> employees = this.employeeService.getEmployees(team);
         int i = 0;
@@ -141,36 +142,40 @@ public class PeriodController {
                         DateWorker.getDateObject(year, month, false),
                         DateWorker.getDateObject(year, month, true));
 
-/*        generatedPlan = predefinedPeriods.stream().filter(period ->
+        List<PeriodDTO> generatedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose ->
                                         period.getPurpose()
                                                 .equals(purpose)))
                 .map(periodService::convertToPeriodDTO)
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
 
         // iterate through days and employees
         IntStream
                 .rangeClosed(
-                        0,
+                        1,
                         DateWorker
                                 .getCalendarObject(DateWorker
                                         .getDateObject(
                                                 year,
                                                 month,
-                                                true))
-                                .getActualMaximum(Calendar.DAY_OF_MONTH))
-                .<Consumer<? super Employee>>mapToObj(day -> employee -> {
+                                                true)
+                                ).getActualMaximum(Calendar.DAY_OF_MONTH)
+                ).<Consumer<? super Employee>>mapToObj(day -> employee -> {
 
                     // check if they have enough time to work at another day
-                    if (DateWorker.getWorkingTime(
-                            GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
-                            GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
-                    ) >= DateWorker.getWorkingTime(
-                            GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
-                            GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()))
-                            - GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
-                    ) {
+                    if (GeneratorWorker.WorkingHourAndCompulsoryDifference(
+                            DateWorker.getWorkingTime(
+                                    generatedPlan.stream().filter(periodDTO -> periodDTO.getEmployee() == employee.getId())
+                                            .toList(),
+                                    GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())),
+                                    DateWorker.getWorkingTime(GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()).stream().toList(),
+                                            GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())))
+                             > 0 &&
+                    generatedPlan.stream().noneMatch(periodDTO ->
+                            DateWorker.getCalendarObject(
+                                    DateWorker.convertDateStringToDate(periodDTO.getDateFrom()))
+                                    .get(Calendar.DAY_OF_MONTH) == day)) {
 
 
                         // initialize values WORK AND CALCULATE HERE
@@ -185,7 +190,7 @@ public class PeriodController {
                         generatedPlan.add(
                                 GeneratorWorker.createPeriodDTO(
                                         day,
-                                        month+1,
+                                        month + 1,
                                         year,
                                         hourFrom,
                                         minuteFrom,
