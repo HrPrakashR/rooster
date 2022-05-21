@@ -1,7 +1,11 @@
 package com.example.rooster.helpers;
 
+import com.example.rooster.employee.Employee;
 import com.example.rooster.period.PeriodDTO;
+import org.assertj.core.api.InstanceOfAssertFactories;
 
+import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +33,21 @@ public class GeneratorWorker {
     }
 
     public static Double WorkingHourAndCompulsoryDifference(double workingHours, double compulsory) {
-        return workingHours - compulsory;
+        return compulsory - workingHours;
+    }
+
+    public static double getWorkingHours(List<PeriodDTO> workingTimes, long employeeId) {
+        return workingTimes.stream().filter(periodDTO -> periodDTO.getEmployee() == employeeId).mapToDouble(periodDTO ->
+                // Stunden zaehlen
+                        Duration.between(
+                                DateWorker.convertDateStringToDate(periodDTO.getDateFrom()).toInstant(),
+                                DateWorker.convertDateStringToDate(periodDTO.getDateTo()).toInstant()
+                                ).toHours()
+        ).sum();
+    }
+
+    public static double getCompulsory(List<PeriodDTO> workingTimes, Employee employee) {
+        return DateWorker.getWorkingTime(GeneratorWorker.filterByEmployee(workingTimes, employee.getId()).stream().toList(),
+                GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()));
     }
 }
