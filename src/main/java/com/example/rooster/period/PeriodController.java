@@ -132,7 +132,7 @@ public class PeriodController {
                 .map(periodService::convertToPeriodDTO)
                 .collect(Collectors.toList());
 
-        // iterating through employees
+/*        // iterating through employees
         employees.forEach(employee -> {
             // check if they have enough time to work at another day
             if (DateWorker.getWorkingTime(
@@ -162,7 +162,7 @@ public class PeriodController {
                             purpose.name()));
                 });
             }
-        });
+        });*/
 
         return generatedPlan;
     }
