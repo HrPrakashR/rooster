@@ -75,9 +75,12 @@ export class EmployeeComponent implements OnInit {
   }
 
   deleteEmployee(id: number): void {
-    this.employees = this.employees?.filter(employee => employee.id !== id);
-    this.http.delete('api/employees/delete/' + id)
-      .subscribe();
+    var result = confirm("Are you sure you want to delete this employee?");
+    if (result) {
+      this.employees = this.employees?.filter(employee => employee.id !== id);
+      this.http.delete('api/employees/delete/' + id)
+        .subscribe();
+    }
   }
 
   closeEmployeeDetails() {

@@ -51,7 +51,6 @@ export class EmployeeDetailsComponent implements OnInit {
 
   editEmployee(employee: Employee) {
     this.employeeService.editEmployee(employee).subscribe();
-    this.editMode = false;
   }
 
   capitalizeFirstLetter(word: string) {
