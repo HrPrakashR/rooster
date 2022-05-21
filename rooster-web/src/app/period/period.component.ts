@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
 import {Purpose} from "./purpose";
 import {EmployeeService} from "../employee/employee.service";
+import {Team} from "../team/team";
 
 @Component({
   selector: 'app-period',
@@ -21,6 +22,7 @@ export class PeriodComponent implements OnInit {
   employeeId = 0;
   periodUrl = '/api/periods';
   editMode = false;
+  selectedPeriod = {} as Period;
 
   currentUser?: Employee;
 
@@ -28,6 +30,7 @@ export class PeriodComponent implements OnInit {
   userLeave = false
   allLeave = false;
   showEmployeeList = false;
+  periodSelected = false;
 
   public Purpose = Purpose;
 
@@ -87,5 +90,16 @@ export class PeriodComponent implements OnInit {
     const url = `${this.periodUrl}/edit`;
     this.http.post<Period>(url, period).subscribe();
     this.editMode = false;
+  }
+
+  public showRequest(id: number) {
+    this.http
+      .get<Period>('api/periods/get/' + id)
+      .subscribe(result => this.selectedPeriod = result);
+    this.periodSelected = true;
+  }
+
+  public removeTFromDate(date: string){
+    return date.replace('T', ' ')
   }
 }
