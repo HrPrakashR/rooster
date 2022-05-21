@@ -129,6 +129,15 @@
   background: #0dcaf0;
   color: white;
 }
+.btn-add {
+  background-color: #71bbbc;
+  color: white;
+}
+
+.btn-add:hover {
+  background-color: #aad6d7;
+  color: white;
+}
 
 .wHours{
   background: white;
