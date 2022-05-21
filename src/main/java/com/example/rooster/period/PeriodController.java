@@ -79,6 +79,18 @@ public class PeriodController {
         return periodDTOs;
     }
 
+    @PostMapping("/saveNewRoster")
+    public void saveNewRoster(@RequestBody PeriodDTO[] periodDTOs) {
+        //TODO: Get team, month and year from the incoming periods
+        //TODO: Then delete all periods from this team within this month
+        //List<Long> employeeIDs = Arrays.stream(periodDTOs).map(PeriodDTO::getEmployee).toList();
+        //this.periodService.deleteAllPeriodsByTeamByMonth(Team team, String  month, String Year);
+        this.periodService.deleteAllPeriods();
+        for (PeriodDTO periodDTO : periodDTOs) {
+            this.submitPeriodRequest(periodDTO);
+        }
+    }
+
     //Deleting a certain request. Returns the list of remaining requests of the employee.
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePeriodRequest(@PathVariable long id) {

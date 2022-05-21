@@ -84,4 +84,8 @@ public class PeriodService {
         periods.forEach(period -> periodDTOList.add(this.convertToPeriodDTO(period)));
         return periodDTOList;
     }
+
+    public void deleteAllPeriods() {
+        this.periodRepository.deleteAll();
+    }
 }
