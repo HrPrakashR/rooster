@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -68,14 +69,17 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private void generateRandomManagers() {
-        IntStream.range(1, this.maxTeamId-1)
+        IntStream.rangeClosed(0, this.maxTeamId - 1)
                 .mapToObj(this.employeeRepository::findAllByTeamId)
-                .map(teamMembers ->
-                        teamMembers
-                                .stream()
-                                .findFirst()
-                                .orElseThrow()
-                ).forEachOrdered(manager -> {
+                .map(teamMember -> {
+                            if (teamMember.stream().findFirst().isPresent()) {
+                                return teamMember.stream().findFirst().get();
+                            }
+                            return null;
+                        }
+                )
+                .filter(Objects::nonNull)
+                .forEach(manager -> {
                     manager.setRole(Role.MANAGER);
                     this.employeeRepository.save(manager);
                 });
@@ -122,11 +126,10 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private String getRandomPurpose() {
         return switch (random.nextInt(10)) {
-            case 0, 1, 2, 3, 4, 5, 6 -> Purpose.WORKING_HOURS.name();
             case 7 -> Purpose.SICK_LEAVE.name();
             case 8 -> Purpose.CONFIRMED_VACATION.name();
             case 9 -> Purpose.VACATION_REQUEST.name();
-            default -> Purpose.SCHEDULED_WORKING_HOURS.name();
+            default -> Purpose.WORKING_HOURS.name();
         };
     }
 

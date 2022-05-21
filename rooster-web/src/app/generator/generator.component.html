@@ -14,16 +14,24 @@
       <div class="mb-3">
         <label class="form-select-label">Year</label>
         <select (change)="createCalendar()" [(ngModel)]="year" class="form-select">
-          <option *ngFor="let year of yearsToChoose" value="{{ year }}" class="text-center form-select"> {{ year }} </option>
+          <option *ngFor="let year of yearsToChoose" value="{{ year }}"
+                  class="text-center form-select"> {{ year }} </option>
         </select>
       </div>
       <div class="mb-3 form-check">
         <label class="form-select-label">Select a Team</label>
         <select (change)="createCalendar()" [(ngModel)]="selectedTeamId" class="form-select">
-          <option *ngFor="let team of teams" [value]="team.id" class="text-center form-select"> {{ team.name }} </option>
+          <option *ngFor="let team of teams" [value]="team.id"
+                  class="text-center form-select"> {{ team.name }} </option>
         </select>
       </div>
     </div>
+  </div>
+
+  <div class="text-center">
+    <button type="button" class="btn btn-outline-primary m-3" (click)="generateNewRoster()">Generate a new Roster</button>
+    <button type="button" class="btn btn-outline-success m-3" (click)="saveNewRoster()" *ngIf="enableSaveRoster">Save the new Roster</button>
+    <button type="button" class="btn btn-outline-info m-3" (click)="clearGeneratedValues()" *ngIf="enableSaveRoster">Clear Generated Values</button>
   </div>
 
   <ng-container *ngIf="selectedTeam">
@@ -59,10 +67,6 @@
                       {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                       {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     </b>
-                    <div *ngSwitchCase="'SCHEDULED_WORKING_HOURS'" class="text-light">
-                      {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                      {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                    </div>
                     <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
                     <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
                     <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation Request</span>
