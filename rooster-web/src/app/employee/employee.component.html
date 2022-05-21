@@ -114,7 +114,8 @@ write a new function to show the info about the person
 
   <figure *ngIf="selectedTeam != undefined" class="text-center">
     <div *ngFor="let team of teams">
-      <h5 *ngIf="team.id == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
+      <br>
+      <h5 *ngIf="team.id == selectedTeam" class="section-title h1">Members of {{team.name}}</h5>
     </div>
 
 
@@ -123,7 +124,7 @@ write a new function to show the info about the person
         <div class="col-sm-3" *ngIf="employee.team.valueOf() == selectedTeam">
           <div class="card m-5">
             <div class="card-body text-center">
-              <p><img alt="100x100" class="rounded-circle z-depth-2"
+              <p><img alt="100x100" class="card-img-top card-img-bottom"
                       data-holder-rendered="true"
                       src="/assets/pictures/profile_picture.png"></p>
               <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
@@ -135,7 +136,6 @@ write a new function to show the info about the person
 
               <a [routerLink]="['/employee', employee.id]" class="btn btn-primary">Details</a>
 <!--              <button (click)="getEmployee(employee.id)" class="btn btn-info" value="details">Details</button>-->
-
               <button (click)="deleteEmployee(employee.id)" class="btn btn-danger" value="delete">Delete</button>
             </div>
           </div>
