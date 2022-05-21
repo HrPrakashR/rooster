@@ -92,9 +92,14 @@ export class GeneratorComponent implements OnInit {
             this.predefinedPeriods = [];
             this.employees?.forEach(employee => {
 
+              if(this.generatedPeriods?.length == undefined){
                 this.predefinedPeriods = [];
                 this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
                   .subscribe(result => this.predefinedPeriods?.push(...result));
+              }else{
+                this.predefinedPeriods = this.generatedPeriods;
+              }
+
 
                 this.workingPeriods = [];
                 this.http.get<number>('/api/periods/employee/workingHour/' + employee.id + '/' + this.year + '/' + this.month)
@@ -217,6 +222,9 @@ export class GeneratorComponent implements OnInit {
   }
 
   generateNewRoster() {
+    this.generatedPeriods = undefined;
+    this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
+      .subscribe(result => this.generatedPeriods = result);
     this.enableSaveRoster = true;
   }
 
@@ -224,12 +232,18 @@ export class GeneratorComponent implements OnInit {
 /*
     TODO:
     this.generatedPeriods beinhaltet den neu generierten Dienstplan.
-    Bitte durchitererieren und jede Period abspeichern.
+    Bitte durchiterieren und jede Period abspeichern.
     Wenn es am gleichen Tag und beim gleichen Employee ein Period besteht, dann wird die alte Period von der neuen ueberschrieben.
      this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
 */
     // Danach (bitte subscribe verwenden, wie in createCalendar):
     this.enableSaveRoster = false;
+    this.generatedPeriods = undefined;
+    this.createCalendar();
+  }
+
+  clearGeneratedValues() {
+    this.generatedPeriods = undefined;
     this.createCalendar();
   }
 }
