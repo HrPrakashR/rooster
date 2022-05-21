@@ -79,26 +79,10 @@ public class PeriodService {
         return periodRepository.findAllByEmployeeTeamAndDateFromBetween(team, start, end);
     }
 
-    public List<Period> getPeriodsPerEmployeeAndTimeInterval(Employee employee, Date start, Date end) {
-        return periodRepository.findAllByEmployeeAndDateFromBetween(employee, start, end);
-    }
-
     public List<PeriodDTO> getPeriodsByEmployeeAndBetween(Employee employeeById, Date from, Date to) {
         List<PeriodDTO> periodDTOList = new ArrayList<>();
         List<Period> periods = periodRepository.findAllByEmployeeAndDateFromBetween(employeeById, from, to);
         periods.forEach(period -> periodDTOList.add(this.convertToPeriodDTO(period)));
-        return periodDTOList;
-    }
-
-    public List<PeriodDTO> findAllByEmployeeAndPurposeAndDateFromBetween(Employee employeeById, Date from, Date to) {
-        List<PeriodDTO> periodDTOList = new ArrayList<>();
-        List<Period> periods = periodRepository.findAllByEmployeeAndDateFromBetween(employeeById, from, to);
-        periods.forEach(period -> {
-            if (period.getPurpose().equals(Purpose.WORKING_HOURS) ||
-                    period.getPurpose().equals(Purpose.CONFIRMED_VACATION) ||
-                    period.getPurpose().equals(Purpose.SICK_LEAVE))
-                periodDTOList.add(this.convertToPeriodDTO(period));
-        });
         return periodDTOList;
     }
 
