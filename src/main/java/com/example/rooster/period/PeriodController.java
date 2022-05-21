@@ -47,16 +47,6 @@ public class PeriodController {
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
     public Double returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
 
-        Calendar from = Calendar.getInstance();
-        from.set(Calendar.YEAR, year);
-        from.set(Calendar.MONTH, month);
-        from.set(Calendar.DAY_OF_MONTH, from.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-        Calendar to = Calendar.getInstance();
-        to.set(Calendar.YEAR, year);
-        to.set(Calendar.MONTH, month);
-        to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
-
         List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(
                 employeeService.getEmployeeById(employeeId),
                 DateWorker.getDateObject(year, month, false),
