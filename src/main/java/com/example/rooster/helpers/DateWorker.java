@@ -56,7 +56,10 @@ public class DateWorker {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(
+                Calendar.DAY_OF_MONTH,
+                calendar.getActualMinimum(Calendar.DAY_OF_MONTH)
+        );
         int i = 1;
         while (i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             days.add(calendar);
@@ -121,7 +124,15 @@ public class DateWorker {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, dayMax? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, dayMax ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
+    }
+
+    public static Date getDateObjectYMD(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
         return calendar.getTime();
     }
 
@@ -129,6 +140,37 @@ public class DateWorker {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
+    }
+
+    public static double calculateHours(String dateFrom, String dateTo) {
+        Date from = DateWorker.convertDateStringToDate(dateFrom);
+        Date to = DateWorker.convertDateStringToDate(dateTo);
+        double diff = to.getTime() - from.getTime();
+        return diff / (1000 * 60 * 60);
+    }
+
+    public static Double getWorkingTime(List<PeriodDTO> workingHours, Double dailyWorkingHours) {
+
+        if (workingHours.isEmpty()) {
+            return 0.0;
+        }
+
+        double wh = workingHours
+                .stream()
+                .filter(period ->
+                        Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
+                                Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
+                )
+                .mapToDouble(period -> dailyWorkingHours)
+                .sum();
+
+        wh += workingHours
+                .stream()
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
+                .mapToDouble(period -> DateWorker.calculateHours(period.getDateFrom(), period.getDateTo()))
+                .sum();
+
+        return wh;
     }
 
     private List<DateDTO> getWorkingPeriods(Team team, int year, int month) {
@@ -206,37 +248,4 @@ public class DateWorker {
                 )
         );
     }
-
-    public static double calculateHours(String dateFrom, String dateTo) {
-        Date from = DateWorker.convertDateStringToDate(dateFrom);
-        Date to = DateWorker.convertDateStringToDate(dateTo);
-        double diff = to.getTime() - from.getTime();
-        return diff / (1000 * 60 * 60);
-    }
-
-    public static Double getWorkingTime(List<PeriodDTO> workingHours, Double dailyWorkingHours){
-
-        if (workingHours.isEmpty()) {
-            return 0.0;
-        }
-
-        double wh = workingHours
-                .stream()
-                .filter(period ->
-                        Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
-                                Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
-                )
-                .mapToDouble(period -> dailyWorkingHours)
-                .sum();
-
-        wh += workingHours
-                .stream()
-                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
-                .mapToDouble(period -> DateWorker.calculateHours(period.getDateFrom(), period.getDateTo()))
-                .sum();
-
-        return wh;
-    }
 }
-
-

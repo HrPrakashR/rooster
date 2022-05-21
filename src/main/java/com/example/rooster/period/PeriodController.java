@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/periods/")
@@ -129,10 +129,10 @@ public class PeriodController {
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
 
         // fetching necessary information
-        List<PeriodDTO> generatedPlan;
+        List<PeriodDTO> generatedPlan = new ArrayList<>();
         Team team = this.teamService.getTeam(teamId);
         List<Employee> employees = this.employeeService.getEmployees(team);
-        List<Calendar> days = DateWorker.getAllDaysOfMonth(year, month);
+        int i = 0;
 
         // adding the predefined periods to the generated plan
         List<Period> predefinedPeriods = this.periodService
@@ -141,47 +141,61 @@ public class PeriodController {
                         DateWorker.getDateObject(year, month, false),
                         DateWorker.getDateObject(year, month, true));
 
-        generatedPlan = predefinedPeriods.stream().filter(period ->
+/*        generatedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose ->
                                         period.getPurpose()
                                                 .equals(purpose)))
                 .map(periodService::convertToPeriodDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
-/*        // iterating through employees
-        employees.forEach(employee -> {
-            // check if they have enough time to work at another day
-            if (DateWorker.getWorkingTime(
-                    GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
-                    GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
-            ) <= GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
-            ) {
-                // iterate through days
-                days.forEach(day -> {
+        // iterate through days and employees
+        IntStream
+                .rangeClosed(
+                        0,
+                        DateWorker
+                                .getCalendarObject(DateWorker
+                                        .getDateObject(
+                                                year,
+                                                month,
+                                                true))
+                                .getActualMaximum(Calendar.DAY_OF_MONTH))
+                .<Consumer<? super Employee>>mapToObj(day -> employee -> {
 
-                    // initialize values WORK AND CALCULATE HERE
-                    Purpose purpose = Purpose.WORKING_HOURS;
-                    int hourFrom = 0;
-                    int hourTo = 0;
-                    int minuteFrom = 0;
-                    int minuteTo = 0;
+                    // check if they have enough time to work at another day
+                    if (DateWorker.getWorkingTime(
+                            GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
+                            GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
+                    ) >= DateWorker.getWorkingTime(
+                            GeneratorWorker.filterByEmployee(generatedPlan, employee.getId()),
+                            GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()))
+                            - GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
+                    ) {
 
 
-                    // add working times
-                    generatedPlan.add(GeneratorWorker.createDTO(
-                            day,
-                            hourFrom,
-                            minuteFrom,
-                            hourTo,
-                            minuteTo,
-                            employee.getId(),
-                            purpose.name()));
-                });
-            }
-        });*/
+                        // initialize values WORK AND CALCULATE HERE
+                        Purpose purpose = Purpose.WORKING_HOURS;
+                        int hourFrom = 8;
+                        int hourTo = 15;
+                        int minuteFrom = 18;
+                        int minuteTo = 45;
+
+
+                        // add working times
+                        generatedPlan.add(
+                                GeneratorWorker.createPeriodDTO(
+                                        day,
+                                        month,
+                                        year,
+                                        hourFrom,
+                                        minuteFrom,
+                                        hourTo,
+                                        minuteTo,
+                                        employee.getId(),
+                                        purpose.name()));
+                    }
+                }).forEachOrdered(employees::forEach);
 
         return generatedPlan;
     }
-
 }

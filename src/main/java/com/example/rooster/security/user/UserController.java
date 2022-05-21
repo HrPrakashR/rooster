@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/sendPassword/email/{email}")
     public String sendPassword(@PathVariable String email) {
         Optional<Employee> employee = this.employeeService.findEmployeeByEmail(email);
-        if(employee.isPresent()){
+        if (employee.isPresent()) {
             sendPassword(employee.get().getId());
             return "Your new password was sent by E-Mail";
         }
