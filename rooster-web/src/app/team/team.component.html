@@ -214,38 +214,39 @@ show the team members of each team as details
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+                <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Exit</button>
               </div>
               <div class="modal-body">
 
                 <!--Edit Feature-->
-                <div *ngIf="editMode">
+                <div *ngIf="editMode" class="text-center">
                   <div>
                     <label for="teamName1">Name: </label>
-                    <input #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
+                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
                            type="text">
                   </div>
                   <div>
                     <label for="restHours1">Rest Hours: </label>
-                    <input #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
+                    <input class="form-control" #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
                            type="text">
                   </div>
                   <div>
                     <label for="restDays1">Rest Days: </label>
-                    <input #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
+                    <input class="form-control" #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
                            type="text">
                   </div>
                   <div>
                     <label for="minBreakTime1">Min Break Time: </label>
-                    <input #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
+                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
                            type="text">
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button (click)="editModeOff()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
-              </div>
+<!--              <div class="modal-footer">-->
+<!--                <button (click)="editModeOff()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                -->
+<!--              </div>-->
             </div>
           </div>
         </div>
