@@ -4,6 +4,7 @@ package com.example.rooster.helpers;
 import com.example.rooster.period.PeriodDTO;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class GeneratorWorker {
@@ -16,15 +17,9 @@ public class GeneratorWorker {
         return periodDTOList.stream().filter(periodDTO -> periodDTO.getEmployee() == employeeId).toList();
     }
 
-    public static PeriodDTO createDTO(Calendar day, int hourFrom, int minuteFrom, int hourTo, int minuteTo, long employeeId, String purposeString) {
-        // add working times - please do not change!
-        Calendar from = day;
-        from.set(Calendar.HOUR_OF_DAY, hourFrom);
-        from.set(Calendar.MINUTE, minuteFrom);
-
-        Calendar to = day;
-        from.set(Calendar.HOUR_OF_DAY, hourTo);
-        from.set(Calendar.MINUTE, minuteTo);
+    public static PeriodDTO createPeriodDTO(int day, int month, int year, int hourFrom, int minuteFrom, int hourTo, int minuteTo, long employeeId, String purposeString) {
+        Date from = DateWorker.getDateObject(0, minuteFrom, hourFrom, day, month, year);
+        Date to = DateWorker.getDateObject(0, minuteTo, hourTo, day, month, year);
 
         PeriodDTO newPeriodDTO = new PeriodDTO();
         newPeriodDTO.setDateFrom(from.toInstant().toString());
