@@ -135,3 +135,33 @@
 /*#buttonAdd {*/
 /*margin-left: 525px;*/
 /*}*/
+
+.btn-add {
+  background-color: #71bbbc;
+  color: white;
+}
+
+.btn-add:hover {
+  background-color: #aad6d7;
+  color: white;
+}
+
+.btn-exit {
+  background-color: #fe0957;
+  color: white;
+}
+
+.btn-exit:hover {
+  background-color: #ff5f8d;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #ea914d;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #f2bd94;
+  color: white;
+}

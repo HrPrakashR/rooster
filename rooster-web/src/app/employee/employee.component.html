@@ -1,17 +1,6 @@
-<!--
-TODO:
-Team has to be added first, if no other team exist.
-CEO => info about Manager and all Employees / we can do everything! Can chose any team when adding a new employee.
-Manager => all information about all Employees / can see: EDIT & DELETE, ADD NEW EMPLOYEE and DETAILS of own Employees.
-New employee will automatically be added to manager's team.
-Employee => info about themselves / can see: LEAVE REQUEST BTN, info about their own TEAM
-Trainee => info about themselves / can see: LEAVE REQUEST BTN, info about their own TEAM / only details button
-write a new function to show the info about the person
--->
-
 <!-- Title Greeting -->
 <ng-container *ngIf="currentUser">
-  <div class="card text-center mx-auto" style="width: 22rem;">
+  <div class="card text-center mx-auto" style="width: 22rem; margin-top: 70px">
     <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
     <div class="card-body">
       <h5 class="card-title">{{ currentUser.firstName }} {{ currentUser.lastName }}</h5>
@@ -126,7 +115,7 @@ write a new function to show the info about the person
               <p><img alt="100x100" class="card-img-top card-img-bottom"
                       data-holder-rendered="true"
                       src="/assets/pictures/profile_picture.png"></p>
-              <h4 class="card-title">Name: {{employee.firstName}} {{employee.lastName}}</h4>
+              <h5 class="card-title">Name: {{employee.firstName}} {{employee.lastName}}</h5>
               <div *ngFor="let team of teams">
                 <p *ngIf="team.id == selectedTeam" class="card-text">Team: {{team.name}}</p>
               </div>
