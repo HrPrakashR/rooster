@@ -85,7 +85,15 @@ public class PeriodService {
         return periodDTOList;
     }
 
-    public void deleteAllPeriods() {
-        this.periodRepository.deleteAll();
+    public void deleteAllPeriodsByTeamAndByMonthAndByYear(Team team, int month, int year) {
+        List<Period> teamPeriods = this.periodRepository.findAllByEmployeeTeam(team);
+        Date firstDay = DateWorker.getDate(false, year, month);
+        Date lastDay = DateWorker.getDate(true, year, month);
+
+        for (Period teamPeriod : teamPeriods) {
+            if (teamPeriod.getDateFrom().after(firstDay) && teamPeriod.getDateTo().before(lastDay)) {
+                this.periodRepository.delete(teamPeriod);
+            }
+        }
     }
 }
