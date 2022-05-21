@@ -77,7 +77,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                             teamMembers
                                     .stream()
                                     .findFirst()
-                                    .orElseThrow()
+                                    .get()
                     ).forEachOrdered(manager -> {
                         manager.setRole(Role.MANAGER);
                         this.employeeRepository.save(manager);
