@@ -118,6 +118,14 @@ public class DateWorker {
         return calendar.getTime();
     }
 
+    public static Date getDateObject(int year, int month, boolean dayMax) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayMax? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
+    }
+
     public static Calendar getCalendarObject(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

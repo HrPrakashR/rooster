@@ -86,8 +86,8 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private void generateRandomPeriods() {
-        this.employeeRepository.findAll().forEach(employee -> IntStream
-                .rangeClosed(0, 30)
+        this.employeeRepository.findAll().forEach(employee ->
+                IntStream.rangeClosed(0, 30)
                 .filter(day ->
                         (new Random()).nextInt(0, 30) <= 5)
                 .forEachOrdered(day ->

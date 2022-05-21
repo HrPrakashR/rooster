@@ -1,6 +1,7 @@
 package com.example.rooster.period;
 
 import com.example.rooster.employee.EmployeeService;
+import com.example.rooster.helpers.DateWorker;
 import com.example.rooster.team.Team;
 import com.example.rooster.team.TeamService;
 import org.springframework.http.HttpStatus;
@@ -32,18 +33,15 @@ public class PeriodController {
     //Showing requests of a certain employee
     @GetMapping("/employee/{employeeId}/{year}/{month}")
     public List<PeriodDTO> showByEmployeeAndBetween(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
+        return periodService.getPeriodsByEmployeeAndBetween(
+                employeeService.getEmployeeById(employeeId),
+                DateWorker.getDateObject(year, month, false),
+                DateWorker.getDateObject(year, month, true));
+    }
 
-        Calendar from = Calendar.getInstance();
-        from.set(Calendar.YEAR, year);
-        from.set(Calendar.MONTH, month);
-        from.set(Calendar.DAY_OF_MONTH, from.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-        Calendar to = Calendar.getInstance();
-        to.set(Calendar.YEAR, year);
-        to.set(Calendar.MONTH, month);
-        to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
-
-        return periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+    @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
+    public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
+        return new ArrayList<>();
     }
 
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
@@ -59,7 +57,10 @@ public class PeriodController {
         to.set(Calendar.MONTH, month);
         to.set(Calendar.DAY_OF_MONTH, from.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-        List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(employeeService.getEmployeeById(employeeId), from.getTime(), to.getTime());
+        List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(
+                employeeService.getEmployeeById(employeeId),
+                DateWorker.getDateObject(year, month, false),
+                DateWorker.getDateObject(year, month, true));
 
         if (workingHours.isEmpty()) {
             return 0.0;
