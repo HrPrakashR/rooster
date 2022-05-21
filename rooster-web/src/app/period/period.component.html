@@ -29,6 +29,7 @@
         <input class="form-control text-center" [(ngModel)]="newPeriod.dateFrom" type="datetime-local">
         <label>To: </label>
         <input class="form-control text-center" [(ngModel)]="newPeriod.dateTo" type="datetime-local">
+        <br>
         <div class="form-control" aria-label="Toolbar with button groups" class="btn-toolbar justify-content-center"
              role="toolbar">
           <button (click)="saveEntry(newPeriod)" class="btn btn-primary mr-1 mb-4 justify-content-center"
@@ -46,10 +47,9 @@
 <section class="column justify-content-center row justify-content-center" id="cards">
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4 text-center">
-      <h5 class="btn btn-primary">Your Leave summary</h5>
-      <!--      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button">Show Personal Leave Summary</button>-->
-      <!--      <button (click)="showLeaveRequest()" class="btn btn-primary" type="button">Hide Personal Leave Summary</button>-->
-      <div class="card">
+      <button type="button" (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-primary">Your Leave summary</button>
+      <button type="button" (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-primary">Hide Your Leave summary</button>
+      <div class="card" *ngIf="!userLeave">
         <div class="card-body text-center">
           <table class="table table-responsive-sm table-hover" *ngIf="currentUser != undefined">
             <thead>
