@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -68,14 +69,17 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private void generateRandomManagers() {
-        IntStream.range(1, this.maxTeamId-1)
+        IntStream.rangeClosed(0, this.maxTeamId - 1)
                 .mapToObj(this.employeeRepository::findAllByTeamId)
-                .map(teamMembers ->
-                        teamMembers
-                                .stream()
-                                .findFirst()
-                                .orElseThrow()
-                ).forEachOrdered(manager -> {
+                .map(teamMember -> {
+                            if (teamMember.stream().findFirst().isPresent()) {
+                                return teamMember.stream().findFirst().get();
+                            }
+                            return null;
+                        }
+                )
+                .filter(Objects::nonNull)
+                .forEach(manager -> {
                     manager.setRole(Role.MANAGER);
                     this.employeeRepository.save(manager);
                 });
