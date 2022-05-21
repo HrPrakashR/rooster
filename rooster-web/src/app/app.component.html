@@ -26,7 +26,7 @@
           </li>
         </ul>
         <form class="d-flex" role="search">
-          <button (click)="authService.logout()" *ngIf="authService.isAuthenticated" class="btn btn-outline-danger"
+          <button (click)="authService.logout()" *ngIf="authService.isAuthenticated" class="btn btn-danger"
                   routerLink="/"
                   type="submit">Logout
           </button>
@@ -42,21 +42,7 @@
   <app-login></app-login>
 </ng-container>
 
-
-<!--Footer-->
-<!--<div id="footer" class="navbar navbar-default navbar-fixed-bottom navbar-dark bg-dark">-->
-<!--  <div class="container-footer">-->
-<!--    <p class="navbar-text">Plan smart. Plan Rooster.-->
-<!--      <a href="https://github.com/HrPrakashR/rooster" target="_blank"></a>-->
-<!--      <a target="_blank" href="https://github.com/HrPrakashR/rooster">-->
-<!--        <i class="fa-brands fa-github"></i>-->
-<!--      </a>-->
-<!--    </p>-->
-<!--  </div>-->
-<!--</div>-->
-
 <footer class="bg-dark text-center text-white fixed-bottom">
-  <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     Plan smart. Plan Rooster.
     <a href="https://github.com/HrPrakashR/rooster" target="_blank"></a>
@@ -64,5 +50,4 @@
       <i class="fa-brands fa-github"></i>
     </a>
   </div>
-  <!-- Copyright -->
 </footer>

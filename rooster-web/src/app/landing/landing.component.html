@@ -1,6 +1,10 @@
 
+<ng-container *ngIf="currentUser">
 <div class="bg-image" style="background-image: url('../assets/pictures/rooster_bg_image.jpg');">
   <div class="color-overlay d-flex justify-content-center align-items-center">
-    <h1>Welcome to Rooster.</h1>
+    <h1>
+      Welcome, {{currentUser.firstName}} {{currentUser.lastName}}!
+    </h1>
   </div>
 </div>
+</ng-container>
