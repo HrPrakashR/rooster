@@ -19,7 +19,15 @@
   color: white;
 }
 
+.btn-exit {
+  background-color: #fe0957;
+  color: white;
+}
 
+.btn-exit:hover {
+  background-color: #ff5f8d;
+  color: white;
+}
 
 .btn-delete {
   background-color: #fe0957;
