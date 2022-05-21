@@ -222,10 +222,11 @@ export class GeneratorComponent implements OnInit {
   }
 
   generateNewRoster() {
-    this.generatedPeriods = undefined;
+    this.generatedPeriods = [];
     this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
       .subscribe(result => this.generatedPeriods = result);
     this.enableSaveRoster = true;
+    this.createCalendar();
   }
 
   saveNewRoster() {
@@ -237,12 +238,11 @@ export class GeneratorComponent implements OnInit {
      this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
 */
     // Danach (bitte subscribe verwenden, wie in createCalendar):
-    this.enableSaveRoster = false;
-    this.generatedPeriods = undefined;
-    this.createCalendar();
+    this.clearGeneratedValues();
   }
 
   clearGeneratedValues() {
+    this.enableSaveRoster = false;
     this.generatedPeriods = undefined;
     this.createCalendar();
   }
