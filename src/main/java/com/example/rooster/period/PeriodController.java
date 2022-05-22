@@ -178,6 +178,8 @@ public class PeriodController {
 
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: nach 7-RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
+                    // TODO: beruecksichtige Requests
+                    // TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
                     Purpose purpose = Purpose.WORKING_HOURS;
                     int hourFrom = 8;
                     int hourTo = 15;
