@@ -130,7 +130,7 @@
 <section class="column justify-content-center row justify-content-center" id="all_leaves">
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4 text-center">
-      <button (click)="clearAllPeriods()" *ngIf="!allLeave" class="btn btn-primary mb-5" type="button">Leave Summary of
+      <button (click)="clearAllPeriods()" *ngIf="!allLeave && authService.isOwner" class="btn btn-primary mb-5" type="button">Leave Summary of
         all Employees
       </button>
       <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-primary" type="button">Leave Summary of
