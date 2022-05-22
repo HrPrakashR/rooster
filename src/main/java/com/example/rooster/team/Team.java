@@ -192,40 +192,6 @@ public class Team {
         return sundayTo;
     }
 
-
-/*  actually we do not need that method. But it is possibly usable in the future.
-
-    public List<List<Date>> getWeekdays() {
-        List<List<Date>> weekdays = new ArrayList<>();
-        List<Date> weekdaysFrom = new ArrayList<>();
-        List<Date> weekdaysTo = new ArrayList<>();
-
-        weekdaysFrom.add(getMondayFrom());
-        weekdaysFrom.add(getTuesdayFrom());
-        weekdaysFrom.add(getWednesdayFrom());
-        weekdaysFrom.add(getThursdayFrom());
-        weekdaysFrom.add(getFridayFrom());
-        weekdaysFrom.add(getSaturdayFrom());
-        weekdaysFrom.add(getSundayFrom());
-
-        weekdaysTo.add(getMondayTo());
-        weekdaysTo.add(getTuesdayTo());
-        weekdaysTo.add(getWednesdayTo());
-        weekdaysTo.add(getThursdayTo());
-        weekdaysTo.add(getFridayTo());
-        weekdaysTo.add(getSaturdayTo());
-        weekdaysTo.add(getSundayTo());
-
-        for (int i = 0; i < 7; i++) {
-            List<Date> day = new ArrayList<>();
-            day.add(weekdaysFrom.get(i));
-            day.add(weekdaysTo.get(i));
-            weekdays.add(day);
-        }
-
-        return weekdays;
-    }*/
-
     public void setSundayTo(Date sundayTo) {
         this.sundayTo = sundayTo;
     }

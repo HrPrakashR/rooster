@@ -271,4 +271,8 @@ export class GeneratorComponent implements OnInit {
         ))
     )
   }
+
+  getBreakTime(teamId: number) {
+    return this.teams?.filter((team) => team.id.valueOf() == teamId)[0].minBreakTime;
+  }
 }

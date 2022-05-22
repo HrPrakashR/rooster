@@ -127,7 +127,8 @@ public class PeriodController {
 
     @GetMapping("/generatedRoster/total/{employeeId}")
     public Double getTotalForGenerated(@PathVariable int employeeId) {
-        return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, this.employeeService.getEmployee(employeeId));
+        Employee employee = this.employeeService.getEmployee(employeeId);
+        return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, employee, employee.getTeam());
     }
 
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
@@ -160,7 +161,7 @@ public class PeriodController {
                 // check if they have enough time to work at another day
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
-                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee),
+                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee, team),
                         employee
                 ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
                         // check if there is no other period at this day
@@ -173,6 +174,10 @@ public class PeriodController {
                         DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK))
                 ) {
                     // initialize values WORK AND CALCULATE HERE
+
+
+                    // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
+                    // TODO: nach 7-RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
                     Purpose purpose = Purpose.WORKING_HOURS;
                     int hourFrom = 8;
                     int hourTo = 15;
@@ -181,7 +186,7 @@ public class PeriodController {
 
 
                     // add working times
-                    generatedPlan.add(GeneratorWorker.createPeriodDTO(
+                    PeriodDTO createdPeriodDTO = GeneratorWorker.createPeriodDTO(
                             i.get(),
                             month,
                             year,
@@ -190,8 +195,12 @@ public class PeriodController {
                             hourTo,
                             minuteTo,
                             employee.getId(),
-                            purpose.name())
-                    );
+                            purpose.name());
+
+                    // calculate with breakTime
+                    createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
+
+                    generatedPlan.add(createdPeriodDTO);
                 }
                 i.incrementAndGet();
             });
