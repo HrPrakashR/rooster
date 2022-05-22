@@ -126,7 +126,7 @@ public class PeriodController {
     }
 
     @GetMapping("/generatedRoster/total/{employeeId}")
-    public Double getTotalForGenerated(@PathVariable int employeeId){
+    public Double getTotalForGenerated(@PathVariable int employeeId) {
         return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, this.employeeService.getEmployee(employeeId));
     }
 
@@ -162,10 +162,15 @@ public class PeriodController {
                         GeneratorWorker.getCompulsory(year, month, employee),
                         GeneratorWorker.getTotalWorkingHours(generatedPlan, employee),
                         employee
-                ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) &&
-                        predefinedPlan.stream()
+                ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
+                        // check if there is no other period at this day
+                        && predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
+                        // check if team works at this day
+                        && DateWorker.checkIfTeamWorksAtDay(
+                                team,
+                        DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK))
                 ) {
                     // initialize values WORK AND CALCULATE HERE
                     Purpose purpose = Purpose.WORKING_HOURS;

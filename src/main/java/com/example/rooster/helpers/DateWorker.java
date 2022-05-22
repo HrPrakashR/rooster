@@ -6,7 +6,6 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateWorker {
 
@@ -177,15 +176,43 @@ public class DateWorker {
         Calendar calendar = getCalendarObject(getDate(false, year, month));
         int counter = 1;
         int day = 1;
-        while(day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+        while (day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             if (getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
                     getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
                 counter++;
             }
             day++;
         }
-        System.out.println("i = " + counter);
         return counter;
+    }
+
+    public static boolean checkIfTeamWorksAtDay(Team team, int i) {
+        switch (i) {
+            case 1 -> {
+                return team.getSundayFrom() != null;
+            }
+            case 2 -> {
+                return team.getMondayTo() != null;
+            }
+            case 3 -> {
+                return team.getTuesdayFrom() != null;
+            }
+            case 4 -> {
+                return team.getWednesdayFrom() != null;
+            }
+            case 5 -> {
+                return team.getThursdayFrom() != null;
+            }
+            case 6 -> {
+                return team.getFridayFrom() != null;
+            }
+            case 7 -> {
+                return team.getSaturdayFrom() != null;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 
     private List<DateDTO> getWorkingPeriods(Team team, int year, int month) {
