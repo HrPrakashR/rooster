@@ -78,7 +78,10 @@ public class GeneratorWorker {
         List<Integer> workingDays = new ArrayList<>();
         for (int i = 1; i <= day; i++) {
             boolean doesTeamWork = DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK));
-            if(doesTeamWork) workingDays.add(day);
+            if(!doesTeamWork) {
+                workingDays.add(day);
+                i += team.getRestDays()-1;
+            }
         }
         return workingDays.contains(day);
     }
