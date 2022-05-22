@@ -17,7 +17,7 @@ show the team members of each team as details
       <div class="container p-3 my-3">
         <!-- Button trigger modal -->
         <button type="button" id="buttonAdd" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                (click)="showAddTeamRequest()" *ngIf="!addTeam">
+                (click)="showAddTeamRequest()" *ngIf="!addTeam && authService.isOwner">
           New team
           <span><i class="fa-solid fa-people-group"></i></span>
         </button>
@@ -194,12 +194,12 @@ show the team members of each team as details
                     Team members
                   </button>
                 <div class="gap-2 d-md-block">
-                  <button id="editTeam" (click)="editModeOn(team)" type="button" class="btn btn-edit m-2" data-bs-toggle="modal"
+                  <button id="editTeam" (click)="editModeOn(team)" *ngIf="authService.isOwner" type="button" class="btn btn-edit m-2" data-bs-toggle="modal"
                           data-bs-target="#exampleModal">
                     Edit
                     <span><i class="fa-solid fa-pencil"></i></span>
                   </button>
-                  <button (click)="deleteTeam(team.id)" class="btn btn-exit" type="button">
+                  <button (click)="deleteTeam(team.id)" *ngIf="authService.isOwner" class="btn btn-exit" type="button">
                     Delete
                     <span><i class="fa-solid fa-user-xmark"></i></span>
                   </button>
@@ -299,9 +299,10 @@ show the team members of each team as details
 <!--                                </tbody>-->
 <!--                              </table>-->
 
-
-                              <div class="form-control mb-2">
+                                <div class="form-control mb-2">
+<!--                                  <a [routerLink]="['api/employee/',employee.id]">-->
                                 <h4>{{employee.firstName}} {{employee.lastName}}</h4>
+<!--                                  </a>-->
                                 <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
                                 <p class="card-text">Position: {{employee.role}}</p>
                                 <p class="card-text">Hours/Week: {{employee.hoursPerWeek}}</p>
