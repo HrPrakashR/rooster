@@ -28,7 +28,7 @@
 
   <figure *ngIf="createEmployee" class="text-center">
 
-    <div class="container-fluid p-3 my-3">
+    <div class="container-fluid p-3 my-3 w-50">
       <ng-container *ngIf=createEmployee>
 <!--        <button (click)="createEmployee = !createEmployee" class="btn btn-primary" type="button">Close Form</button>-->
 
@@ -37,20 +37,21 @@
 <!--        </button>-->
 
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Employee details</h5>
+<!--        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"-->
+<!--             aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--          <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--              <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="staticBackdropLabel">Employee details</h5>-->
                 <div>
                   <button class="btn btn-add m-2" data-bs-dismiss="modal"
                           (click)="saveEmployee(newEmployee)" value="submit">Submit</button>
-                  <button type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
+                  <button (click)="createEmployee = !createEmployee" type="button" class="btn btn-exit"
+                          >
                     <span><i class="fa-solid fa-circle-xmark"></i></span>
                   </button>
                 </div>
-              </div>
+<!--              </div>-->
               <div class="modal-body">
 
                 <form #contactForm="ngForm">
@@ -105,9 +106,9 @@
               </form>
               </div>
 
-            </div>
-          </div>
-        </div>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
       </ng-container>
     </div>
@@ -160,4 +161,4 @@
     </div>
   </figure>
 </ng-container>
-<app-employee-details [teams]="teams"></app-employee-details>
+<!--<app-employee-details [teams]="teams"></app-employee-details>-->
