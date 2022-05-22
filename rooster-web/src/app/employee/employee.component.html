@@ -8,8 +8,10 @@
       <p class="card-text">
         Position: {{ currentUser.role.substring(0, 1)}}{{ currentUser.role.substring(1, currentUser.role.length.valueOf()).toLocaleLowerCase() }}</p>
       <p class="card-text">E-Mail: {{ currentUser.email.toLocaleLowerCase() }}</p>
-      <a (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'"
-         class="btn btn-add m-1">
+
+      <!-- Button trigger modal -->
+      <a type="button" id="buttonAdd" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+        (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'">
       New employee
         <span><i class="fa-solid fa-user-plus"></i></span>
       </a>
@@ -17,7 +19,7 @@
          class="btn btn-primary m-1">Show My Team</a>
       <div *ngIf="currentUser.role == 'OWNER'" class="dropdown m-3">
         <label for="team">Select a Team:</label>
-        <select [(ngModel)]="selectedTeam" id="team" name="team">
+        <select [(ngModel)]="selectedTeam" id="team" name="team" class="form-control">
           <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
         </select>
       </div>
@@ -26,64 +28,88 @@
 
   <figure *ngIf="createEmployee" class="text-center">
 
-    <div class="container-fluid p-3 my-3">
+    <div class="container-fluid p-3 my-3 w-50">
       <ng-container *ngIf=createEmployee>
-        <button (click)="createEmployee = !createEmployee" class="btn btn-primary" type="button">Close Form</button>
-        <form #contactForm="ngForm">
-          <p>
-            <label for="firstName">Name:</label>
-            <input #firstName="ngModel" [(ngModel)]="newEmployee.firstName" id="firstName" name="firstName" placeholder="First Name"
-                   type="text">
-          </p>
+<!--        <button (click)="createEmployee = !createEmployee" class="btn btn-primary" type="button">Close Form</button>-->
 
-          <p>
-            <label for="lastName">Last Name:</label>
-            <input #firstName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
-                   type="text">
-          </p>
+<!--        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">-->
+<!--          Launch static backdrop modal-->
+<!--        </button>-->
 
-          <p>
-            <label for="email">Email:</label>
-            <input #email="ngModel" [(ngModel)]="newEmployee.email" id="email" name="email" placeholder="Email"
-                   type="text">
-          </p>
+        <!-- Modal -->
+<!--        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"-->
+<!--             aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--          <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--              <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="staticBackdropLabel">Employee details</h5>-->
+                <div>
+                  <button class="btn btn-add m-2" data-bs-dismiss="modal"
+                          (click)="saveEmployee(newEmployee)" value="submit">Submit</button>
+                  <button (click)="createEmployee = !createEmployee" type="button" class="btn btn-exit"
+                          >
+                    <span><i class="fa-solid fa-circle-xmark"></i></span>
+                  </button>
+                </div>
+<!--              </div>-->
+              <div class="modal-body">
 
-          <p>
-            <label for="teamId">Team:</label>
-            <select [(ngModel)]="newEmployee.team" id="teamId" name="team">
-              <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
-            </select>
-          </p>
+                <form #contactForm="ngForm">
+                  <div class="row">
+                    <div class="col form-group">
+                      <label for="firstName">Name:</label>
+                      <input #firstName="ngModel" [(ngModel)]="newEmployee.firstName" id="firstName" name="firstName" placeholder="First Name"
+                             type="text" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                      <label for="lastName">Last Name:</label>
+                      <input #firstName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
+                             type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="email">Email:</label>
+                    <input #email="ngModel" [(ngModel)]="newEmployee.email" id="email" name="email" placeholder="email@email.de"
+                           type="text" class="form-control">
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                      <label for="hoursPerWeek">Hours Per Week:</label>
+                      <input #hoursPerWeek="ngModel" [(ngModel)]="newEmployee.hoursPerWeek" [min]="0" id="hoursPerWeek"
+                             name="hoursPerWeek" placeholder="40" step="1" type="number" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                      <label for="balanceHours">Balance Hours:</label>
+                      <input #balanceHours="ngModel" [(ngModel)]="newEmployee.balanceHours" id="balanceHours" name="balanceHours"
+                             placeholder="5" step="0.25" type="number" class="form-control">
+                    </div>
+                    <div class="col form-group">
+                      <label for="breakTime">Break Time:</label>
+                      <input #breakTime="ngModel" [(ngModel)]="newEmployee.breakTime" [min]="0" id="breakTime" name="breakTime"
+                             placeholder="1" step="0,25" type="number" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                      <label for="teamId">Team:</label>
+                      <select [(ngModel)]="newEmployee.team" id="teamId" name="team" class="form-control">
+                        <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col form-group">
+                      <label for="role">Role:</label>
+                      <select [(ngModel)]="newEmployee.role" id="role" name="role" class="form-control">
+                        <option *ngFor="let r of role | keyvalue" [ngValue]="r.key">{{r.value}}</option>
+                      </select>
+                    </div>
+                  </div>
+              </form>
+              </div>
 
-          <p>
-            <label for="hoursPerWeek">Hours Per Week:</label>
-            <input #hoursPerWeek="ngModel" [(ngModel)]="newEmployee.hoursPerWeek" [min]="0" id="hoursPerWeek"
-                   name="hoursPerWeek" placeholder="Hours Per Week" step="1" type="number">
-          </p>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-          <p>
-            <label for="balanceHours">Balance Hours:</label>
-            <input #balanceHours="ngModel" [(ngModel)]="newEmployee.balanceHours" id="balanceHours" name="balanceHours"
-                   placeholder="Balance Hours" step="0.25" type="number">
-          </p>
-
-          <p>
-            <label for="breakTime">Break Time:</label>
-            <input #breakTime="ngModel" [(ngModel)]="newEmployee.breakTime" [min]="0" id="breakTime" name="breakTime"
-                   placeholder="Break Time" step="0,25" type="number">
-          </p>
-
-          <p>
-            <label for="role">Role:</label>
-            <select [(ngModel)]="newEmployee.role" id="role" name="role">
-              <option *ngFor="let r of role | keyvalue" [ngValue]="r.key">{{r.value}}</option>
-            </select>
-          </p>
-
-          <p>
-            <button (click)="saveEmployee(newEmployee)" value="Save">Save</button>
-          </p>
-        </form>
       </ng-container>
     </div>
   </figure>
@@ -135,4 +161,4 @@
     </div>
   </figure>
 </ng-container>
-<app-employee-details [teams]="teams"></app-employee-details>
+<!--<app-employee-details [teams]="teams"></app-employee-details>-->
