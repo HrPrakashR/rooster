@@ -31,7 +31,6 @@
   </div>
 
 <ng-container *ngIf="selectedTeam">
-
   <div class="text-center">
     <button *ngIf="authService.isAdmin" (click)="generateNewRoster()" class="btn btn-outline-primary m-3" type="button">Generate a new Roster
     </button>
@@ -42,6 +41,8 @@
       Return to the Roster
     </button>
   </div>
+
+  <div class="h1 text-lg-start">{{ selectedTeam.name }}</div>
 
   <div class="container-fluid p-3 my-3 mb-5">
     <table class="table table-striped table-hover text-lg-start">
