@@ -63,7 +63,7 @@
                     </div>
                     <div class="col form-group">
                       <label for="lastName">Last Name:</label>
-                      <input #firstName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
+                      <input #lastName="ngModel" [(ngModel)]="newEmployee.lastName" id="lastName" name="lastName" placeholder="Last Name"
                              type="text" class="form-control">
                     </div>
                   </div>
@@ -147,9 +147,11 @@
               <p class="card-text">Position: {{capitalizeFirstLetter(employee.role)}}</p>
               <p class="card-text">{{employee.email}}</p>
               <div class="gap-2 d-md-block">
-              <a [routerLink]="['/employee', employee.id]" class="btn btn-details m-2">Details
-              <span><i class="fa-solid fa-circle-info"></i></span>
-              </a>
+                <button id="editEmployee" (click)="editModeOn(employee)" type="button" class="btn btn-edit m-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                  Edit
+                  <span><i class="fa-solid fa-pencil"></i></span>
+                </button>
               <button (click)="deleteEmployee(employee.id)" class="btn btn-delete" value="delete">Delete
               <span><i class="fa-solid fa-user-xmark"></i></span>
               </button>
@@ -162,3 +164,50 @@
   </figure>
 </ng-container>
 <!--<app-employee-details [teams]="teams"></app-employee-details>-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+        <button (click)="editEmployee(selectedEmployee)" type="button"
+                class="btn btn-success" data-bs-dismiss="modal">Save</button>
+        <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+          <span><i class="fa-solid fa-circle-xmark"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="editMode" class="text-center">
+          <div>
+            <label for="firstName1">First Name: </label>
+            <input class="form-control" #firstName="ngModel" [(ngModel)]="selectedEmployee.firstName" id="firstName1" name="firstName"
+            type="text">
+          </div>
+          <div>
+            <label for="lastName1">Last Name: </label>
+            <input class="form-control" #´lastName="ngModel" [(ngModel)]="selectedEmployee.lastName" id="lastName1" name="lastName"
+                   type="text">
+          </div>
+          <div>
+            <label for="email1">Email: </label>
+            <input class="form-control" #email="ngModel" [(ngModel)]="selectedEmployee.email" id="email1" name="email"
+                   type="text">
+          </div>
+          <div>
+            <label for="employeeRole">Position: </label>
+            <select class="form-control" [(ngModel)]="selectedEmployee.role" id="employeeRole" name="employeeRole">
+              <option *ngFor="let r of role | keyvalue" [ngValue]="r.key">{{r.value}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="employeeTeam">Team: </label>
+            <select class="form-control" [(ngModel)]="selectedEmployee.team" id="employeeTeam" name="employeeTeam">
+              <option *ngFor="let team of teams" [ngValue]="team.id">{{team.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

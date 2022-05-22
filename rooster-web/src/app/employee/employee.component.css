@@ -38,3 +38,13 @@
   background-color: #ff5f8d;
   color: white;
 }
+
+.btn-edit {
+  background-color: #ea914d;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #f2bd94;
+  color: white;
+}

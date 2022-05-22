@@ -5,6 +5,7 @@ import {Team} from "../team/team";
 import {Role} from "./role";
 import {EmployeeService} from "./employee.service";
 import {Period} from "../period/period";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-employee',
@@ -91,5 +92,17 @@ export class EmployeeComponent implements OnInit {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 
+  public editModeOn(employee: Employee){
+    this.editMode = true;
+    this.selectedEmployee = employee;
+  }
+
+  public editModeOff(){
+    this.editMode = false;
+  }
+
+  editEmployee(employee: Employee){
+    this.employeeService.editEmployee(employee).subscribe(() => this.getEmployees());
+  }
 
 }
