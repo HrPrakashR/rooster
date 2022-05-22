@@ -28,7 +28,15 @@ export class AuthService {
   }
 
   get isAdmin() {
-    return this.employee?.role ?? false;   //TODO Rolle bestimmen
+    return (this.employee?.role === 'MANAGER' || this.employee?.role === 'OWNER') ?? false;   //TODO Rolle bestimmen
+  }
+
+  get isOwner() {
+    return (this.employee?.role === 'OWNER') ?? false;
+  }
+
+  get isManager() {
+    return (this.employee?.role === 'MANAGER') ?? false;
   }
 
   private static createToken(username: string, password: string) {
