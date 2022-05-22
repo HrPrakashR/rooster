@@ -73,7 +73,8 @@
                 <ng-container [ngSwitch]="period.purpose">
                   <b *ngSwitchCase="'WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}<br>
+                    <small class="small fw-light"> ({{ getBreakTime(employee.team) }} Hours break time) </small>
                   </b>
                   <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
                   <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
