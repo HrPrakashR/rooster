@@ -6,10 +6,7 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class GeneratorWorker {
@@ -71,5 +68,31 @@ public class GeneratorWorker {
         Calendar calendar = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(dateString));
         calendar.add(Calendar.MINUTE, (int) Math.round(timeToAdd * 60));
         return DateWorker.convertDateToDateString(calendar.getTime());
+    }
+
+    public static boolean isWorkingDay(int year, int month, int day, Team team, Employee employee) {
+        // check if we can lay the team.getRestDays on the teamWorkingDays
+        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        List<Integer> workingDays = new ArrayList<>();
+        List<Integer> removeDays = new ArrayList<>();
+        for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, i);
+            if (!DateWorker.checkIfTeamWorksAtDay(team, calendar.get(Calendar.DAY_OF_WEEK))) {
+                if ((new Random()).nextInt(0, 100) < 50) {
+                    for (int n = i; n < (i + team.getRestDays()); n++) {
+                        removeDays.add(n);
+                    }
+                } else {
+                    for (int n = i; n > (i - team.getRestDays()); n--) {
+                        removeDays.add(n);
+                    }
+                }
+
+            }
+            workingDays.add(i);
+
+        }
+        workingDays.removeAll(removeDays);
+        return workingDays.contains(day);
     }
 }

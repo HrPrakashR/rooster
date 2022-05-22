@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -147,7 +144,8 @@ public class PeriodController {
 
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
-                                .anyMatch(purpose -> period.getPurpose().equals(purpose)))
+                                .anyMatch(purpose -> period.getPurpose().equals(purpose)
+                                && DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(period.getDateFrom()).get(Calendar.DAY_OF_WEEK))))
                 .map(periodService::convertToPeriodDTO).toList();
 
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
@@ -168,16 +166,13 @@ public class PeriodController {
                         && predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
-                        // check if team works at this day
-                        && DateWorker.checkIfTeamWorksAtDay(
-                                team,
-                        DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK))
+                        // check the teams working times and the employees rest day
+                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team, employee)
                 ) {
                     // initialize values WORK AND CALCULATE HERE
 
 
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
-                    // TODO: nach 7-RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
                     // TODO: beruecksichtige Requests
                     // TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
                     Purpose purpose = Purpose.WORKING_HOURS;
@@ -202,7 +197,10 @@ public class PeriodController {
                     // calculate with breakTime
                     createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
-                    generatedPlan.add(createdPeriodDTO);
+                    // a little randomizing the creation
+                    if((new Random()).nextInt(0,8)<GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
+                        generatedPlan.add(createdPeriodDTO);
+                    }
                 }
                 i.incrementAndGet();
             });
