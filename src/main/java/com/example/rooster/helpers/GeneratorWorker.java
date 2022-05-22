@@ -5,7 +5,6 @@ import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.Purpose;
 
 import java.time.Duration;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -39,16 +38,16 @@ public class GeneratorWorker {
 
     public static double getTotalWorkingHours(List<PeriodDTO> workingTimes, Employee employee) {
         double total = workingTimes.stream().filter(periodDTO ->
-                periodDTO.getEmployee() == employee.getId() &&
-                        periodDTO.getPurpose().equals(Purpose.WORKING_HOURS.name())
+                        periodDTO.getEmployee() == employee.getId() &&
+                                periodDTO.getPurpose().equals(Purpose.WORKING_HOURS.name())
                 )
                 .mapToDouble(periodDTO ->
-                // Stunden zaehlen
+                        // Stunden zaehlen
                         Duration.between(
                                 DateWorker.convertDateStringToDate(periodDTO.getDateFrom()).toInstant(),
                                 DateWorker.convertDateStringToDate(periodDTO.getDateTo()).toInstant()
-                                ).toHours()
-        ).sum();
+                        ).toHours()
+                ).sum();
 
         total += workingTimes.stream().filter(periodDTO ->
                         periodDTO.getEmployee() == employee.getId() &&

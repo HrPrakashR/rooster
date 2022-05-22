@@ -6,7 +6,6 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateWorker {
 
@@ -177,7 +176,7 @@ public class DateWorker {
         Calendar calendar = getCalendarObject(getDate(false, year, month));
         int counter = 1;
         int day = 1;
-        while(day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+        while (day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             if (getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
                     getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
                 counter++;

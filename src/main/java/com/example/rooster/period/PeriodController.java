@@ -126,7 +126,7 @@ public class PeriodController {
     }
 
     @GetMapping("/generatedRoster/total/{employeeId}")
-    public Double getTotalForGenerated(@PathVariable int employeeId){
+    public Double getTotalForGenerated(@PathVariable int employeeId) {
         return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, this.employeeService.getEmployee(employeeId));
     }
 
