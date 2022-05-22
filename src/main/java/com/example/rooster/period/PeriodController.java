@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -200,7 +197,10 @@ public class PeriodController {
                     // calculate with breakTime
                     createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
-                    generatedPlan.add(createdPeriodDTO);
+                    // a little randomizing the creation
+                    if((new Random()).nextInt(0,8)<GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
+                        generatedPlan.add(createdPeriodDTO);
+                    }
                 }
                 i.incrementAndGet();
             });
