@@ -254,30 +254,26 @@ show the team members of each team as details
                   </div>
                   <div class="row">
                     <ng-container *ngFor="let employee of employees">
-                        <div class="col-sm-3" *ngIf="employee.team == selectedTeam.id">
-                          <div class="card m-5">
+                        <div *ngIf="employee.team == selectedTeam.id">
+<!--                          <div class="card m-5">-->
                             <div class="card-body text-center">
-                              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                              data-holder-rendered="true"
-                                      src="/assets/pictures/profile_picture.png"></p>
+<!--                              <p><img alt="100x100" class="rounded-circle z-depth-2"-->
+<!--                              data-holder-rendered="true"-->
+<!--                                      src="/assets/pictures/profile_picture.png"></p>-->
                               <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
-                              <ul *ngFor="let team of teams">
+                              <ul>
                                 <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
 
                               <li class="card-text">Position: {{employee.role}}</li>
                               <li class="card-text">Email: {{employee.email}}</li>
                               </ul>
                             </div>
-                          </div>
+<!--                          </div>-->
                         </div>
                     </ng-container>
                   </div>
                 </section>
               </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
 
       </div>
     </div>
