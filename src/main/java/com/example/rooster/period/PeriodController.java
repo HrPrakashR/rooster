@@ -168,16 +168,13 @@ public class PeriodController {
                         && predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
-                        // check if team works at this day
-                        && DateWorker.checkIfTeamWorksAtDay(
-                                team,
-                        DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK))
+                        // TODO: nach 7 minus RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
+                        && GeneratorWorker.checkRestDay(year, month, i.get(), generatedPlan, employee, team)
                 ) {
                     // initialize values WORK AND CALCULATE HERE
 
 
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
-                    // TODO: nach 7-RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
                     // TODO: beruecksichtige Requests
                     // TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
                     Purpose purpose = Purpose.WORKING_HOURS;

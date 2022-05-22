@@ -6,7 +6,7 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.time.Duration;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +71,15 @@ public class GeneratorWorker {
         Calendar calendar = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(dateString));
         calendar.add(Calendar.MINUTE, (int) Math.round(timeToAdd * 60));
         return DateWorker.convertDateToDateString(calendar.getTime());
+    }
+
+    public static boolean checkRestDay(int year, int month, int day, List<PeriodDTO> generatedPlan, Employee employee, Team team) {
+        // check if we can lay the team.getRestDays on the teamWorkingDays
+        List<Integer> workingDays = new ArrayList<>();
+        for (int i = 1; i <= day; i++) {
+            boolean doesTeamWork = DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK));
+            if(doesTeamWork) workingDays.add(day);
+        }
+        return workingDays.contains(day);
     }
 }
