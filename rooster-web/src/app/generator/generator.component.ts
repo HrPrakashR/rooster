@@ -211,8 +211,8 @@ export class GeneratorComponent implements OnInit {
   }
 
   returnNewBalance(workingTime: number, employee: Employee) {
-    let total = (this.returnMonthlyWorkingHours(employee) - workingTime - employee.balanceHours.valueOf());
-    return total.toFixed();
+    let total = (workingTime + employee.balanceHours.valueOf() - this.returnMonthlyWorkingHours(employee));
+    return total.toFixed(2);
   }
 
   private numberOfWeekDays() {
