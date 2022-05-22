@@ -162,12 +162,35 @@ show the team members of each team as details
         <ng-container *ngFor="let team of teams">
           <div class="col-sm-3 m-3 mb-4">
             <div class="card">
-              <img class="card-img-top" src="/assets/pictures/profile_picture.png"
-                   alt="Card image cap">
+              <div class="card border-0" [ngSwitch]="team.id">
+                <div *ngSwitchCase=1>
+                  <img class="card-img-top" src="/assets/pictures/Sales.jpg"
+                       alt="Card image cap" style="width: 300px; height: 200px;">
+                </div>
+                <div *ngSwitchCase=2>
+                  <img class="card-img-top" src="/assets/pictures/marketing.jpg"
+                       alt="Card image cap" style="width: 300px; height: 200px;">
+                </div>
+                <div *ngSwitchCase=3>
+                  <img class="card-img-top" src="/assets/pictures/hr.jpg"
+                       alt="Card image cap" style="width: 300px; height: 200px;">
+                </div>
+                <div *ngSwitchCase=4>
+                  <img class="card-img-top" src="/assets/pictures/product.jpg"
+                       alt="Card image cap" style="width: 300px; height: 200px;">
+                </div>
+                <div *ngSwitchCase=5>
+                  <img class="card-img-top" src="/assets/pictures/customerserv.jpg"
+                       alt="Card image cap" style="width: 300px; height: 200px;">
+                </div>
+              </div>
+
+
               <div class="card-body">
                 <h5 class="card-title">{{ team.name }}</h5>
                 <div>
-                  <button id="showTeam" (click)="getTeam(team.id)" type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#exampleModalShow">
+                  <button id="showTeam" (click)="getTeam(team.id)" type="button"
+                          class="btn btn-add" data-bs-toggle="modal" data-bs-target="#exampleModalShow">
                     Team members
                   </button>
                 <div class="gap-2 d-md-block">
@@ -229,55 +252,67 @@ show the team members of each team as details
                   </div>
                 </div>
               </div>
-<!--              <div class="modal-footer">-->
-<!--                <button (click)="editModeOff()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                -->
-<!--              </div>-->
             </div>
           </div>
         </div>
 
-
         <div class="modal fade" id="exampleModalShow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content w-auto">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabelShow">Team Members</h5>
+                <h5 class="modal-title" id="exampleModalLabelShow">{{selectedTeam.name}} Team Members</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
               <div class="modal-body">
-                <p *ngIf="selectedTeam == undefined"> No team Members in your team</p>
                 <section *ngIf="selectedTeam != undefined" class="text-center">
                   <div *ngFor="let team of teams">
-                    <h5 *ngIf="team == selectedTeam" class="section-title h1">Members of {{team.name}} team</h5>
+                    <h5 *ngIf="team == selectedTeam" class="section-title h1"></h5>
                   </div>
                   <div class="row">
-                    <ng-container *ngFor="let employee of employees">
-                        <div class="col-sm-3" *ngIf="employee.team == selectedTeam.id">
-                          <div class="card m-5">
-                            <div class="card-body text-center">
-                              <p><img alt="100x100" class="rounded-circle z-depth-2"
-                              data-holder-rendered="true"
-                                      src="/assets/pictures/profile_picture.png"></p>
-                              <h4 class="card-title">Name:{{employee.firstName}} {{employee.lastName}}</h4>
-                              <ul *ngFor="let team of teams">
-                                <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
+                        <div *ngFor="let employee of employees">
+                          <div *ngIf="employee.team == selectedTeam.id">
+                          <div>
+<!--                          <div>-->
+<!--                          <div class="card m-5">-->
+<!--                            <div>-->
+<!--                              <table class="table table-striped">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                  <th scope="col">Employee Id</th>-->
+<!--                                  <th scope="col">Name</th>-->
+<!--                                  <th scope="col">Position</th>-->
+<!--                                  <th scope="col">Email</th>-->
+<!--                                  <th scope="col">Balance hours</th>-->
+<!--                                  <th scope="col">Break time</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody *ngFor="let employee of employees">-->
+<!--                                <tr *ngIf="employee.team == selectedTeam.id">-->
+<!--                                  <th scope="row">{{employee.id}}</th>-->
+<!--                                  <td>{{employee.firstName}} {{employee.lastName}}</td>-->
+<!--                                  <td>{{employee.role}}</td>-->
+<!--                                  <td>{{employee.email}}</td>-->
+<!--                                  <td>{{employee.balanceHours}}</td>-->
+<!--                                  <td>{{employee.breakTime}}</td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                              </table>-->
 
-                              <li class="card-text">Position: {{employee.role}}</li>
-                              <li class="card-text">Email: {{employee.email}}</li>
-                              </ul>
+
+                              <div class="form-control mb-2">
+                                <h4>{{employee.firstName}} {{employee.lastName}}</h4>
+                                <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
+                                <p class="card-text">Position: {{employee.role}}</p>
+                                <p class="card-text">Hours/Week: {{employee.hoursPerWeek}}</p>
+                                <p class="card-text">Email: {{employee.email}}</p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                    </ng-container>
                   </div>
                 </section>
               </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
 
       </div>
     </div>
