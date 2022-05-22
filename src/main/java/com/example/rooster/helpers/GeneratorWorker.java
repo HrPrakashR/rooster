@@ -44,7 +44,7 @@ public class GeneratorWorker {
 
                     Calendar calendarFrom = GeneratorWorker.getFrom(team, year, month, i.get());
                     Calendar calendarTo = GeneratorWorker.getTo(team, year, month, i.get());
-                    double workingHours = GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
+                    double workingHours = GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) + team.getMinBreakTime();
                     // early shift, late shift, middle shift
                     int randomNumber = (new Random()).nextInt(0, 100);
                     if (randomNumber < 35) {
@@ -63,7 +63,7 @@ public class GeneratorWorker {
                         minuteFrom = calendarTo.get(Calendar.MINUTE);
                     } else {
                         double differenceHours = DateWorker.calculateHours(DateWorker.convertDateToDateString(calendarFrom.getTime()), DateWorker.convertDateToDateString(calendarTo.getTime()));
-                        if (differenceHours > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) + team.getMinBreakTime()) {
+                        if (differenceHours > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(differenceHours * 60) / 4);
                             calendarTo.add(Calendar.MINUTE, ((int) Math.round(differenceHours * 60) / 4) * (-1));
                         }
