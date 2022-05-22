@@ -70,7 +70,7 @@ public class GeneratorWorker {
         return DateWorker.convertDateToDateString(calendar.getTime());
     }
 
-    public static boolean isWorkingDay(int year, int month, int day, Team team) {
+    public static boolean isWorkingDay(int year, int month, int day, Team team, Employee employee) {
         // check if we can lay the team.getRestDays on the teamWorkingDays
         Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
         List<Integer> workingDays = new ArrayList<>();
@@ -89,7 +89,7 @@ public class GeneratorWorker {
                 }
 
             }
-            if((new Random()).nextInt(0,100)<20) {
+            if((new Random()).nextInt(0,8)<GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
                 workingDays.add(i);
             }
         }
