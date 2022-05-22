@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EmployeeService} from "../employee/employee.service";
 import {Employee} from "../employee/employee";
 import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-landing',
@@ -13,7 +14,9 @@ export class LandingComponent implements OnInit {
   employees?: Employee[];
   currentUser?: Employee;
 
-  constructor(private http: HttpClient, private employeeService: EmployeeService) { }
+  constructor(private http: HttpClient,
+              private employeeService: EmployeeService,
+              public authService: AuthService ) { }
 
   ngOnInit(): void {
     this.http.get<Employee>('/api/users/current').subscribe(user => this.currentUser = user);

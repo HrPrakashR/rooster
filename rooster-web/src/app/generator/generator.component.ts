@@ -3,6 +3,7 @@ import {Team} from "../team/team";
 import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
 import {Period} from "../period/period";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-generator',
@@ -32,7 +33,7 @@ export class GeneratorComponent implements OnInit {
   enableSaveRoster: boolean = false;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public authService: AuthService) {
   }
 
   ngOnInit(): void {

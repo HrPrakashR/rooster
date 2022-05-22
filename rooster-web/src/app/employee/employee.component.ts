@@ -6,6 +6,7 @@ import {Role} from "./role";
 import {EmployeeService} from "./employee.service";
 import {Period} from "../period/period";
 import {Observable} from "rxjs";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-employee',
@@ -30,7 +31,7 @@ export class EmployeeComponent implements OnInit {
   myTeam: boolean = false;
   selectedTeam?: number = 0;
 
-  constructor(private http: HttpClient, private employeeService: EmployeeService) {
+  constructor(private http: HttpClient, private employeeService: EmployeeService, public authService: AuthService) {
   }
 
   ngOnInit(): void {

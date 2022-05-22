@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Team} from "./team";
 import {Employee} from "../employee/employee";
 import {EmployeeService} from "../employee/employee.service";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-team',
@@ -25,7 +26,9 @@ export class TeamComponent implements OnInit {
   team?: Team;
 
 
-  constructor(private http: HttpClient, private employeeService: EmployeeService) {
+  constructor(private http: HttpClient,
+              private employeeService: EmployeeService,
+              public authService: AuthService) {
   }
 
   ngOnInit(): void {
