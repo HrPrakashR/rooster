@@ -33,7 +33,7 @@
 <ng-container *ngIf="selectedTeam">
 
   <div class="text-center">
-    <button (click)="generateNewRoster()" class="btn btn-outline-primary m-3" type="button">Generate a new Roster
+    <button *ngIf="authService.isAdmin" (click)="generateNewRoster()" class="btn btn-outline-primary m-3" type="button">Generate a new Roster
     </button>
     <button (click)="saveNewRoster()" *ngIf="enableSaveRoster" class="btn btn-outline-success m-3" type="button">Save
       the new Roster
