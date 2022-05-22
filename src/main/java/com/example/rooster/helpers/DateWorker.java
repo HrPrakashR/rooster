@@ -184,7 +184,6 @@ public class DateWorker {
             }
             day++;
         }
-        System.out.println("i = " + counter);
         return counter;
     }
 

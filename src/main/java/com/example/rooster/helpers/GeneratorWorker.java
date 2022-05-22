@@ -50,8 +50,6 @@ public class GeneratorWorker {
                                 ).toHours()
         ).sum();
 
-        System.out.println("total = " + total);
-
         total += workingTimes.stream().filter(periodDTO ->
                         periodDTO.getEmployee() == employee.getId() &&
                                 Stream.of(Purpose.CONFIRMED_VACATION.name(), Purpose.SICK_LEAVE.name())
@@ -59,17 +57,11 @@ public class GeneratorWorker {
                 )
                 .mapToDouble(periodDTO -> GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())).sum();
 
-        System.out.println("total2 = " + total);
-
         return total;
     }
 
     public static double getCompulsory(int year, int month, Employee employee) {
-        double compulsory = DateWorker.countAllWeekdaysOfMonth(year, month) *
+        return DateWorker.countAllWeekdaysOfMonth(year, month) *
                 GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
-
-        System.out.println("compulsory = " + compulsory);
-
-        return compulsory;
     }
 }
