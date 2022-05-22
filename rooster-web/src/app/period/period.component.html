@@ -9,22 +9,38 @@
     <img alt="profile" class="card-img-top" src="/assets/pictures/profile_picture.png">
     <div class="card-body">
       <h5 class="card-title" *ngIf="currentUser != undefined"> {{currentUser.firstName}} {{currentUser.lastName}}
-        <br> Employee Id: {{currentUser.id}}
+<!--        <br> Employee Id: {{currentUser.id}}-->
       </h5>
       <div *ngIf="currentUser != undefined" [(ngModel)]="newPeriod.employee == currentUser.id">
       </div>
+      <button (click)="openFormNewLeaveRequest()" class="btn btn-add mr-1 mb-4 justify-content-center"
+              role="button">
+        New Leave <span><i class="fa-solid fa-pencil m-1" aria-hidden="true"></i></span>
+      </button>
 
-      <form class="form-group">
+      <form class="form-group" *ngIf="newLeaveRequest">
         <label style="display: inline-block">Purpose:
         </label>
         <select class="form-control" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
           <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.key">{{p.value}}</option>
         </select>
         <br>
-        <label>Employee Id: </label>
-        <select class="form-control" [(ngModel)]="newPeriod.employee" id="periodId" name="periodId">
-          <option *ngFor="let e of employees" [ngValue]="e.id">{{e.id}}</option>
-        </select>
+        <div *ngIf="authService.isOwner">
+         <label>Employee Name: </label>
+          <select class="form-control" [(ngModel)]="newPeriod.employee" id="periodId1" name="periodId">
+           <option *ngFor="let e of employees" [ngValue]="e.id">{{e.firstName}} {{e.lastName}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="!authService.isOwner">
+          <div *ngIf="currentUser">
+          <label>Employee Name: </label>
+          <select class="form-control" [(ngModel)]="newPeriod.employee" id="periodId2" name="periodId">
+            <option [ngValue]="currentUser.id">{{currentUser.firstName}} {{currentUser.lastName}}</option>
+          </select>
+          </div>
+        </div>
+
         <label>From:</label>
         <input class="form-control text-center" [(ngModel)]="newPeriod.dateFrom" type="datetime-local"
                name="periodDateFrom">
@@ -142,10 +158,10 @@
             <thead>
             <tr>
               <th scope="col"></th>
-              <th scope="col">EmployeeId</th>
+              <th scope="col">Employee</th>
               <th scope="col">Purpose</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
+              <th scope="col">Begin</th>
+              <th scope="col">End</th>
             </tr>
             </thead>
             <tbody>
