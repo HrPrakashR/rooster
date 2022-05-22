@@ -5,6 +5,7 @@ import {Employee} from "../employee/employee";
 import {Purpose} from "./purpose";
 import {EmployeeService} from "../employee/employee.service";
 import {Team} from "../team/team";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-period',
@@ -34,7 +35,9 @@ export class PeriodComponent implements OnInit {
 
   public Purpose = Purpose;
 
-  constructor(private http: HttpClient, private employeeService: EmployeeService) {
+  constructor(private http: HttpClient,
+              private employeeService: EmployeeService,
+              public authService: AuthService) {
   }
 
   getEmployees() {

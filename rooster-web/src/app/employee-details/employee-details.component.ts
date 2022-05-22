@@ -4,6 +4,7 @@ import {Employee} from "../employee/employee";
 import {EmployeeService} from "../employee/employee.service";
 import {Role} from "../employee/role";
 import {Team} from "../team/team";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-employee-details',
@@ -18,7 +19,10 @@ export class EmployeeDetailsComponent implements OnInit {
   @Input() teams?: any[]
   roleNames = Object.keys(Role);
 
-  constructor(private employeeService: EmployeeService, private route:ActivatedRoute, private router: Router) { }
+  constructor(private employeeService: EmployeeService,
+              private route:ActivatedRoute,
+              private router: Router,
+              public authService: AuthService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')

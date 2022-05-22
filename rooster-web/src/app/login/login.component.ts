@@ -15,7 +15,9 @@ export class LoginComponent implements OnInit {
   loginError?: string;
   passwordAlert?: string;
 
-  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
+  constructor(private http: HttpClient,
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
