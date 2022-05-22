@@ -32,8 +32,8 @@ public class GeneratorWorker {
         return newPeriodDTO;
     }
 
-    public static Double CompulsoryWorkingHourDifference(double compulsory, double workingHours) {
-        return compulsory - workingHours;
+    public static Double CompulsoryWorkingHourDifference(double compulsory, double workingHours, Employee employee) {
+        return compulsory - workingHours - employee.getBalanceHours();
     }
 
     public static double getTotalWorkingHours(List<PeriodDTO> workingTimes, Employee employee) {
@@ -49,20 +49,26 @@ public class GeneratorWorker {
                                 ).toHours()
         ).sum();
 
+        System.out.println("total = " + total);
+
         total += workingTimes.stream().filter(periodDTO ->
                         periodDTO.getEmployee() == employee.getId() &&
                                 Stream.of(Purpose.CONFIRMED_VACATION.name(), Purpose.SICK_LEAVE.name())
                                         .anyMatch(purpose -> periodDTO.getPurpose().equals(purpose))
                 )
-                .mapToDouble(periodDTO ->
-                       employee.getHoursPerWeek() / 5
-                ).sum();
+                .mapToDouble(periodDTO -> GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())).sum();
+
+        System.out.println("total2 = " + total);
 
         return total;
     }
 
     public static double getCompulsory(int year, int month, Employee employee) {
-        return DateWorker.getAllDaysOfMonth(year, month).size()
+        double compulsory = DateWorker.getAllDaysOfMonth(year, month).size()
                 * GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
+
+        System.out.println("compulsory = " + compulsory);
+
+        return compulsory;
     }
 }
