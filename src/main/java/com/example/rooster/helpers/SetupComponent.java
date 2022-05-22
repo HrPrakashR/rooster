@@ -46,22 +46,32 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-
         IntStream.rangeClosed(0, maxTeamId - 1).forEachOrdered(this::generateRandomTeam);
 
         this.generateRandomEmployees();
+
+        this.generateBoss();
 
         this.generateRandomPeriods();
 
         this.generateRandomManagers();
 
-        this.generateRandomBoss();
-
     }
 
-    private void generateRandomBoss() {
-        Employee boss = this.employeeRepository.findAll().stream().findFirst().orElseThrow();
+
+    private void generateBoss() {
+        Employee boss = new Employee();
+        boss.setFirstName("Muster");
+        boss.setLastName("Rooster");
+        boss.setEmail("muster@rooster.bestapp");
+        boss.setBreakTime(0.5);
+        boss.setHoursPerWeek(40);
+        boss.setBalanceHours(13);
+        String password = "rooster123";
+        String encodedPassword = passwordEncoder.encode(password);
+        boss.setPassword(encodedPassword);
         boss.setRole(Role.OWNER);
+        boss.setTeam(this.teamRepository.getById(1L));
         this.employeeRepository.save(boss);
     }
 
