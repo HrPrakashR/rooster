@@ -147,43 +147,46 @@ public class PeriodController {
 
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
 
-        AtomicInteger i = new AtomicInteger();
         // iterate through days and employees
-        employees.forEach(employee -> DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
-
-            // check if they have enough time to work at another day
-            // TODO: HERE IT DOES NOT WORK CORRECTLY!
-            if (/*GeneratorWorker.WorkingHourAndCompulsoryDifference(
-                    GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
-                    GeneratorWorker.getCompulsory(generatedPlan, employee)
-            ) > 0 &&*/
-                    predefinedPlan.stream()
-                            .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
-                                    periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
-            ) {
-                // initialize values WORK AND CALCULATE HERE
-                Purpose purpose = Purpose.WORKING_HOURS;
-                int hourFrom = 8;
-                int hourTo = 15;
-                int minuteFrom = 18;
-                int minuteTo = 45;
-
-
-                // add working times
-                generatedPlan.add(GeneratorWorker.createPeriodDTO(
-                        i.get(),
-                        month,
-                        year,
-                        hourFrom,
-                        minuteFrom,
-                        hourTo,
-                        minuteTo,
-                        employee.getId(),
-                        purpose.name())
-                );
-            }
+        employees.forEach(employee -> {
+            AtomicInteger i = new AtomicInteger();
             i.incrementAndGet();
-        }));
+            DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
+
+                // check if they have enough time to work at another day
+                // TODO: HERE IT DOES NOT WORK CORRECTLY!
+                if (/*GeneratorWorker.WorkingHourAndCompulsoryDifference(
+                        GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
+                        GeneratorWorker.getCompulsory(generatedPlan, employee)
+                ) > 0 &&*/
+                        predefinedPlan.stream()
+                                .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
+                                        periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
+                ) {
+                    // initialize values WORK AND CALCULATE HERE
+                    Purpose purpose = Purpose.WORKING_HOURS;
+                    int hourFrom = 8;
+                    int hourTo = 15;
+                    int minuteFrom = 18;
+                    int minuteTo = 45;
+
+
+                    // add working times
+                    generatedPlan.add(GeneratorWorker.createPeriodDTO(
+                            i.get(),
+                            month,
+                            year,
+                            hourFrom,
+                            minuteFrom,
+                            hourTo,
+                            minuteTo,
+                            employee.getId(),
+                            purpose.name())
+                    );
+                }
+                i.incrementAndGet();
+            });
+        });
 
         return generatedPlan;
     }
