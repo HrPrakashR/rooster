@@ -2,12 +2,12 @@ package com.example.rooster.helpers;
 
 import com.example.rooster.employee.Employee;
 import com.example.rooster.period.PeriodDTO;
-import org.assertj.core.api.InstanceOfAssertFactories;
+import com.example.rooster.period.Purpose;
 
 import java.time.Duration;
-import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class GeneratorWorker {
 
@@ -32,18 +32,33 @@ public class GeneratorWorker {
         return newPeriodDTO;
     }
 
-    public static Double WorkingHourAndCompulsoryDifference(double workingHours, double compulsory) {
+    public static Double CompulsoryWorkingHourDifference(double compulsory, double workingHours) {
         return compulsory - workingHours;
     }
 
-    public static double getWorkingHours(List<PeriodDTO> workingTimes, long employeeId) {
-        return workingTimes.stream().filter(periodDTO -> periodDTO.getEmployee() == employeeId).mapToDouble(periodDTO ->
+    public static double getTotalWorkingHours(List<PeriodDTO> workingTimes, Employee employee) {
+        double total = workingTimes.stream().filter(periodDTO ->
+                periodDTO.getEmployee() == employee.getId() &&
+                        periodDTO.getPurpose().equals(Purpose.WORKING_HOURS.name())
+                )
+                .mapToDouble(periodDTO ->
                 // Stunden zaehlen
                         Duration.between(
                                 DateWorker.convertDateStringToDate(periodDTO.getDateFrom()).toInstant(),
                                 DateWorker.convertDateStringToDate(periodDTO.getDateTo()).toInstant()
                                 ).toHours()
         ).sum();
+
+        total += workingTimes.stream().filter(periodDTO ->
+                        periodDTO.getEmployee() == employee.getId() &&
+                                Stream.of(Purpose.CONFIRMED_VACATION.name(), Purpose.SICK_LEAVE.name())
+                                        .anyMatch(purpose -> periodDTO.getPurpose().equals(purpose))
+                )
+                .mapToDouble(periodDTO ->
+                       employee.getHoursPerWeek() / 5
+                ).sum();
+
+        return total;
     }
 
     public static double getCompulsory(List<PeriodDTO> workingTimes, Employee employee) {

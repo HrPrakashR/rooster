@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -155,10 +154,10 @@ public class PeriodController {
 
                 // check if they have enough time to work at another day
                 // TODO: HERE IT DOES NOT WORK CORRECTLY!
-                if (/*GeneratorWorker.WorkingHourAndCompulsoryDifference(
-                        GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
-                        GeneratorWorker.getCompulsory(generatedPlan, employee)
-                ) > 0 &&*/
+                if (GeneratorWorker.CompulsoryWorkingHourDifference(
+                        GeneratorWorker.getCompulsory(generatedPlan, employee),
+                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee)
+                ) > 0 &&
                         predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
