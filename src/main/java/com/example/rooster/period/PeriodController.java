@@ -171,10 +171,9 @@ public class PeriodController {
                 ) {
                     // initialize values WORK AND CALCULATE HERE
 
-
+                    // !!!!Next TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
-                    // TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
 
                     // init values
                     int hourFrom;
@@ -214,9 +213,10 @@ public class PeriodController {
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                     }
 
+                    // if working time is not in the
                     if (calendarTo.before(calendarFrom)) {
-                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
-                        minuteTo = calendarTo.get(Calendar.MINUTE);
+                        hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                        minuteTo = calendarFrom.get(Calendar.MINUTE);
                     }
                     if (calendarFrom.after(calendarTo)) {
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
