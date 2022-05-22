@@ -78,24 +78,21 @@ public class GeneratorWorker {
         for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             calendar.set(Calendar.DAY_OF_MONTH, i);
             if (!DateWorker.checkIfTeamWorksAtDay(team, calendar.get(Calendar.DAY_OF_WEEK))) {
-                if((new Random()).nextInt(0,100)<50){
-                    for(int n = i; n < (i + team.getRestDays()); n++){
+                if ((new Random()).nextInt(0, 100) < 50) {
+                    for (int n = i; n < (i + team.getRestDays()); n++) {
                         removeDays.add(n);
                     }
-                }else{
-                    for(int n = i; n > (i - team.getRestDays()); n--){
+                } else {
+                    for (int n = i; n > (i - team.getRestDays()); n--) {
                         removeDays.add(n);
                     }
                 }
 
             }
-            if((new Random()).nextInt(0,8)<GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
-                workingDays.add(i);
-            }
+            workingDays.add(i);
+
         }
-        System.out.println("removeDays = " + removeDays);
         workingDays.removeAll(removeDays);
-        System.out.println("workingDays = " + workingDays);
         return workingDays.contains(day);
     }
 }

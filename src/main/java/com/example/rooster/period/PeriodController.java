@@ -169,7 +169,7 @@ public class PeriodController {
                         && predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
-                        // TODO: nach 7 minus RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
+                        // check the teams working times and the employees rest day
                         && GeneratorWorker.isWorkingDay(year, month, i.get(), team, employee)
                 ) {
                     // initialize values WORK AND CALCULATE HERE
