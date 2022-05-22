@@ -147,7 +147,8 @@ public class PeriodController {
 
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
-                                .anyMatch(purpose -> period.getPurpose().equals(purpose)))
+                                .anyMatch(purpose -> period.getPurpose().equals(purpose)
+                                && DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(period.getDateFrom()).get(Calendar.DAY_OF_WEEK))))
                 .map(periodService::convertToPeriodDTO).toList();
 
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
@@ -169,7 +170,7 @@ public class PeriodController {
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
                         // TODO: nach 7 minus RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
-                        && GeneratorWorker.checkRestDay(year, month, i.get(), generatedPlan, employee, team)
+                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team)
                 ) {
                     // initialize values WORK AND CALCULATE HERE
 
