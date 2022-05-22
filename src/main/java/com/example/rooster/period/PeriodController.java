@@ -160,7 +160,8 @@ public class PeriodController {
                 // check if they have enough time to work at another day
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
-                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee)
+                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee),
+                        employee
                 ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) &&
                         predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
