@@ -28,7 +28,8 @@ export class PeriodComponent implements OnInit {
   currentUser?: Employee;
 
   status = '';
-  userLeave = false
+  userLeave = false;
+  newLeaveRequest = false;
   allLeave = false;
   showEmployeeList = false;
   periodSelected = false;
@@ -69,7 +70,7 @@ export class PeriodComponent implements OnInit {
 
   saveEntry(newPeriod: Period) {
     this.http.post<Period[]>('/api/periods/new', newPeriod)
-      .subscribe(np => this.periods = np);
+      .subscribe(np => { this.periods = np; this.newLeaveRequest = false});
     this.newPeriod = {} as Period;
   }
 
@@ -105,4 +106,15 @@ export class PeriodComponent implements OnInit {
   public removeTFromDate(date: string){
     return date.replace('T', ' ')
   }
+
+  public openFormNewLeaveRequest() {
+    this.newLeaveRequest = !this.newLeaveRequest;
+  }
+
+  // @ts-ignore
+  public hasEmployeePeriods(employee: Employee): boolean {
+    this.periods?.forEach(period =>
+    {return period.employee === employee.id;});
+  }
+
 }
