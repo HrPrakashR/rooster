@@ -50,11 +50,11 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
         this.generateRandomEmployees();
 
-        this.generateBoss();
-
         this.generateRandomPeriods();
 
         this.generateRandomManagers();
+
+        this.generateBoss();
 
     }
 
@@ -76,7 +76,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     }
 
     private void generateRandomManagers() {
-        IntStream.rangeClosed(0, this.maxTeamId - 1)
+        IntStream.rangeClosed(0, this.maxTeamId)
                 .mapToObj(this.employeeRepository::findAllByTeamId)
                 .map(teamMember -> {
                             if (teamMember.stream().findFirst().isPresent()) {
