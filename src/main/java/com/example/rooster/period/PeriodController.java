@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -142,56 +141,52 @@ public class PeriodController {
 
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
-                                .anyMatch(purpose ->
-                                        period.getPurpose()
-                                                .equals(purpose)))
-                .map(periodService::convertToPeriodDTO)
-                .collect(Collectors.toList());
+                                .anyMatch(purpose -> period.getPurpose().equals(purpose)))
+                .map(periodService::convertToPeriodDTO).toList();
 
-        AtomicInteger i = new AtomicInteger();
+        List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
+
         // iterate through days and employees
-        employees.forEach(employee -> DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
-
-            // check if they have enough time to work at another day
-            // TODO: HERE IT DOES NOT WORK CORRECTLY!
-            if (/*GeneratorWorker.WorkingHourAndCompulsoryDifference(
-                    GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
-                    GeneratorWorker.getCompulsory(generatedPlan, employee)
-            ) > 0 &&*/
-                    predefinedPlan
-                            .stream()
-                            .filter(periodDTO ->
-                                    periodDTO.getEmployee()
-                                            == employee.getId())
-                            .noneMatch(periodDTO ->
-                                    periodDTO.getDateFrom()
-                                            .contains(
-                                                    String.format("%02dT", i.get())))
-            ) {
-                // initialize values WORK AND CALCULATE HERE
-                Purpose purpose = Purpose.WORKING_HOURS;
-                int hourFrom = 8;
-                int hourTo = 15;
-                int minuteFrom = 18;
-                int minuteTo = 45;
-
-
-                // add working times
-                predefinedPlan.add(GeneratorWorker.createPeriodDTO(
-                        i.get(),
-                        month,
-                        year,
-                        hourFrom,
-                        minuteFrom,
-                        hourTo,
-                        minuteTo,
-                        employee.getId(),
-                        purpose.name())
-                );
-            }
+        employees.forEach(employee -> {
+            AtomicInteger i = new AtomicInteger();
             i.incrementAndGet();
-        }));
+            DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
 
-        return predefinedPlan;
+                // check if they have enough time to work at another day
+                // TODO: HERE IT DOES NOT WORK CORRECTLY!
+                if (GeneratorWorker.CompulsoryWorkingHourDifference(
+                        GeneratorWorker.getCompulsory(year, month, employee),
+                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee)
+                ) > 0 &&
+                        predefinedPlan.stream()
+                                .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
+                                        periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
+                ) {
+                    // initialize values WORK AND CALCULATE HERE
+                    Purpose purpose = Purpose.WORKING_HOURS;
+                    int hourFrom = 8;
+                    int hourTo = 15;
+                    int minuteFrom = 18;
+                    int minuteTo = 45;
+
+
+                    // add working times
+                    generatedPlan.add(GeneratorWorker.createPeriodDTO(
+                            i.get(),
+                            month,
+                            year,
+                            hourFrom,
+                            minuteFrom,
+                            hourTo,
+                            minuteTo,
+                            employee.getId(),
+                            purpose.name())
+                    );
+                }
+                i.incrementAndGet();
+            });
+        });
+
+        return generatedPlan;
     }
 }

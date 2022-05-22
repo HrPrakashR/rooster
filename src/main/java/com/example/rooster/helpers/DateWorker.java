@@ -160,8 +160,7 @@ public class DateWorker {
                 .filter(period ->
                         Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
                                 Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
-                )
-                .mapToDouble(period -> dailyWorkingHours)
+                ).mapToDouble(period -> dailyWorkingHours)
                 .sum();
 
         wh += workingHours
