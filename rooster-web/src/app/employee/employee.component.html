@@ -11,7 +11,7 @@
 
       <!-- Button trigger modal -->
       <a type="button" id="buttonAdd" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-        (click)="createEmployee = !createEmployee" *ngIf="currentUser.role == 'MANAGER' || currentUser.role == 'OWNER'">
+        (click)="createEmployee = !createEmployee" *ngIf="authService.isOwner">
       New employee
         <span><i class="fa-solid fa-user-plus"></i></span>
       </a>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <figure *ngIf="createEmployee" class="text-center">
+  <figure *ngIf="leaveRequest" class="text-center">
 
     <div class="container-fluid p-3 my-3 w-50">
       <ng-container *ngIf=createEmployee>
