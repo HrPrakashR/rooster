@@ -6,6 +6,7 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DateWorker {
 
@@ -170,6 +171,21 @@ public class DateWorker {
                 .sum();
 
         return wh;
+    }
+
+    public static int countAllWeekdaysOfMonth(int year, int month) {
+        Calendar calendar = getCalendarObject(getDate(false, year, month));
+        int counter = 1;
+        int day = 1;
+        while(day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+            if (getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
+                    getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                counter++;
+            }
+            day++;
+        }
+        System.out.println("i = " + counter);
+        return counter;
     }
 
     private List<DateDTO> getWorkingPeriods(Team team, int year, int month) {

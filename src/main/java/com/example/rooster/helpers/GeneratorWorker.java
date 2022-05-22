@@ -5,6 +5,7 @@ import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.Purpose;
 
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -64,8 +65,8 @@ public class GeneratorWorker {
     }
 
     public static double getCompulsory(int year, int month, Employee employee) {
-        double compulsory = DateWorker.getAllDaysOfMonth(year, month).size()
-                * GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
+        double compulsory = DateWorker.countAllWeekdaysOfMonth(year, month) *
+                GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
 
         System.out.println("compulsory = " + compulsory);
 
