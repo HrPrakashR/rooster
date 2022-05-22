@@ -5,6 +5,8 @@ import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.period.Purpose;
 
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -62,5 +64,11 @@ public class GeneratorWorker {
     public static double getCompulsory(int year, int month, Employee employee) {
         return DateWorker.countAllWeekdaysOfMonth(year, month) *
                 GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
+    }
+
+    public static String addHoursToDateString(String dateString, double timeToAdd) {
+        Calendar calendar = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(dateString));
+        calendar.add(Calendar.MINUTE, (int) Math.round(timeToAdd * 60));
+        return DateWorker.convertDateToDateString(calendar.getTime());
     }
 }

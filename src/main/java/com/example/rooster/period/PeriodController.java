@@ -173,6 +173,10 @@ public class PeriodController {
                         DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK))
                 ) {
                     // initialize values WORK AND CALCULATE HERE
+
+
+                    // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
+                    // TODO: nach 7-RestDays Arbeitstagen braucht der Employee team.getRestDays Stunden
                     Purpose purpose = Purpose.WORKING_HOURS;
                     int hourFrom = 8;
                     int hourTo = 15;
@@ -181,7 +185,7 @@ public class PeriodController {
 
 
                     // add working times
-                    generatedPlan.add(GeneratorWorker.createPeriodDTO(
+                    PeriodDTO createdPeriodDTO = GeneratorWorker.createPeriodDTO(
                             i.get(),
                             month,
                             year,
@@ -190,8 +194,12 @@ public class PeriodController {
                             hourTo,
                             minuteTo,
                             employee.getId(),
-                            purpose.name())
-                    );
+                            purpose.name());
+
+                    // calculate with breakTime
+                    createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
+
+                    generatedPlan.add(createdPeriodDTO);
                 }
                 i.incrementAndGet();
             });
