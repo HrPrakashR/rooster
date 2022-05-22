@@ -61,8 +61,8 @@ public class GeneratorWorker {
         return total;
     }
 
-    public static double getCompulsory(List<PeriodDTO> workingTimes, Employee employee) {
-        return DateWorker.getWorkingTime(GeneratorWorker.filterByEmployee(workingTimes, employee.getId()).stream().toList(),
-                GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()));
+    public static double getCompulsory(int year, int month, Employee employee) {
+        return DateWorker.getAllDaysOfMonth(year, month).size()
+                * GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
     }
 }
