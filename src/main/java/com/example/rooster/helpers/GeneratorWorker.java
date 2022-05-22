@@ -54,9 +54,7 @@ public class GeneratorWorker {
                                 Stream.of(Purpose.CONFIRMED_VACATION.name(), Purpose.SICK_LEAVE.name())
                                         .anyMatch(purpose -> periodDTO.getPurpose().equals(purpose))
                 )
-                .mapToDouble(periodDTO ->
-                       employee.getHoursPerWeek() / 5
-                ).sum();
+                .mapToDouble(periodDTO -> GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())).sum();
 
         return total;
     }

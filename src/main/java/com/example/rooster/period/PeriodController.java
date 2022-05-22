@@ -161,7 +161,7 @@ public class PeriodController {
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
                         GeneratorWorker.getTotalWorkingHours(generatedPlan, employee)
-                ) > 0 &&
+                ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) &&
                         predefinedPlan.stream()
                                 .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                         periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
