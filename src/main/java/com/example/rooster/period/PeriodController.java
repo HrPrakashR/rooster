@@ -142,11 +142,10 @@ public class PeriodController {
 
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
-                                .anyMatch(purpose ->
-                                        period.getPurpose()
-                                                .equals(purpose)))
-                .map(periodService::convertToPeriodDTO)
-                .collect(Collectors.toList());
+                                .anyMatch(purpose -> period.getPurpose().equals(purpose)))
+                .map(periodService::convertToPeriodDTO).toList();
+
+        List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
 
         AtomicInteger i = new AtomicInteger();
         // iterate through days and employees
@@ -158,15 +157,9 @@ public class PeriodController {
                     GeneratorWorker.getWorkingHours(generatedPlan, employee.getId()),
                     GeneratorWorker.getCompulsory(generatedPlan, employee)
             ) > 0 &&*/
-                    predefinedPlan
-                            .stream()
-                            .filter(periodDTO ->
-                                    periodDTO.getEmployee()
-                                            == employee.getId())
-                            .noneMatch(periodDTO ->
-                                    periodDTO.getDateFrom()
-                                            .contains(
-                                                    String.format("%02dT", i.get())))
+                    predefinedPlan.stream()
+                            .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
+                                    periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
             ) {
                 // initialize values WORK AND CALCULATE HERE
                 Purpose purpose = Purpose.WORKING_HOURS;
@@ -177,7 +170,7 @@ public class PeriodController {
 
 
                 // add working times
-                predefinedPlan.add(GeneratorWorker.createPeriodDTO(
+                generatedPlan.add(GeneratorWorker.createPeriodDTO(
                         i.get(),
                         month,
                         year,
@@ -192,6 +185,6 @@ public class PeriodController {
             i.incrementAndGet();
         }));
 
-        return predefinedPlan;
+        return generatedPlan;
     }
 }
