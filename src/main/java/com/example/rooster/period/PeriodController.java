@@ -127,7 +127,8 @@ public class PeriodController {
 
     @GetMapping("/generatedRoster/total/{employeeId}")
     public Double getTotalForGenerated(@PathVariable int employeeId) {
-        return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, this.employeeService.getEmployee(employeeId));
+        Employee employee = this.employeeService.getEmployee(employeeId);
+        return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, employee, employee.getTeam());
     }
 
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
@@ -160,7 +161,7 @@ public class PeriodController {
                 // check if they have enough time to work at another day
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
-                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee),
+                        GeneratorWorker.getTotalWorkingHours(generatedPlan, employee, team),
                         employee
                 ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
                         // check if there is no other period at this day
