@@ -25,6 +25,8 @@ public class PeriodController {
     private final EmployeeService employeeService;
     private final TeamService teamService;
 
+    private List<PeriodDTO> generatedPlan;
+
     public PeriodController(PeriodService periodService, EmployeeService employeeService, TeamService teamService) {
         this.periodService = periodService;
         this.employeeService = employeeService;
@@ -48,8 +50,6 @@ public class PeriodController {
 
     @GetMapping("/employee/workingHour/{employeeId}/{year}/{month}")
     public Double returnWorkingHours(@PathVariable long employeeId, @PathVariable int year, @PathVariable int month) {
-
-
         List<PeriodDTO> workingHours = periodService.getPeriodsByEmployeeAndBetween(
                 employeeService.getEmployeeById(employeeId),
                 DateWorker.getDateObject(year, month, false),
@@ -125,6 +125,11 @@ public class PeriodController {
         return periodDTOs;
     }
 
+    @GetMapping("/generatedRoster/total/{employeeId}")
+    public Double getTotalForGenerated(@PathVariable int employeeId){
+        return GeneratorWorker.getTotalWorkingHours(this.generatedPlan, this.employeeService.getEmployee(employeeId));
+    }
+
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
 
@@ -153,7 +158,6 @@ public class PeriodController {
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
 
                 // check if they have enough time to work at another day
-                // TODO: HERE IT DOES NOT WORK CORRECTLY!
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
                         GeneratorWorker.getTotalWorkingHours(generatedPlan, employee)
@@ -187,6 +191,7 @@ public class PeriodController {
             });
         });
 
+        this.generatedPlan = generatedPlan;
         return generatedPlan;
     }
 }

@@ -32,7 +32,8 @@ export class GeneratorComponent implements OnInit {
   enableSaveRoster: boolean = false;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.month = new Date().getMonth();
@@ -92,18 +93,29 @@ export class GeneratorComponent implements OnInit {
             this.predefinedPeriods = [];
             this.employees?.forEach(employee => {
 
-              if(this.generatedPeriods == undefined || this.generatedPeriods.length < 1){
-                this.predefinedPeriods = [];
-                this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
-                  .subscribe(result => this.predefinedPeriods?.push(...result));
-              }else{
-                this.predefinedPeriods = this.generatedPeriods;
-              }
-
+                if (this.generatedPeriods == undefined || this.generatedPeriods.length < 1) {
+                  this.predefinedPeriods = [];
+                  this.http.get<Period[]>('/api/periods/employee/' + employee.id + '/' + this.year + '/' + this.month)
+                    .subscribe(result => this.predefinedPeriods?.push(...result));
+                } else {
+                  this.predefinedPeriods = this.generatedPeriods;
+                }
 
                 this.workingPeriods = [];
-                this.http.get<number>('/api/periods/employee/workingHour/' + employee.id + '/' + this.year + '/' + this.month)
-                  .subscribe(result => this.workingPeriods?.push({'employeeId': employee.id, 'workingTime': result}));
+                if (this.generatedPeriods == undefined || this.generatedPeriods.length < 1) {
+                  this.http.get<number>('/api/periods/employee/workingHour/' + employee.id + '/' + this.year + '/' + this.month)
+                    .subscribe(result => this.workingPeriods?.push({'employeeId': employee.id, 'workingTime': result}));
+                } else {
+                  this.employees?.forEach(employee => {
+                      this.http.get<number>('api/periods/generatedRoster/total/' + employee.id)
+                        .subscribe(result => {
+                          this.workingPeriods?.push({'employeeId': employee.id, 'workingTime': result});
+                          this.removeDublicatesFromWorkingPeriods();
+                        })
+
+                    }
+                  )
+                }
               }
             );
           }
@@ -249,5 +261,13 @@ export class GeneratorComponent implements OnInit {
     this.enableSaveRoster = false;
     this.generatedPeriods = undefined;
     this.createCalendar();
+  }
+
+  private removeDublicatesFromWorkingPeriods() {
+    this.workingPeriods = this.workingPeriods?.filter((thing, index, self) =>
+        index === self.findIndex((t) => (
+          t.workingTime === thing.workingTime && t.employeeId === thing.employeeId
+        ))
+    )
   }
 }
