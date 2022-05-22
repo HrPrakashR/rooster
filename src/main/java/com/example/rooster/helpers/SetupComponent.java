@@ -56,6 +56,8 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
         this.generateBoss();
 
+        this.generateBossPeriods();
+
     }
 
 
@@ -193,6 +195,15 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
 
         this.teamController.newTeam(team);
+    }
+
+    public void generateBossPeriods() {
+        Employee boss = this.employeeRepository.findAllByRole(Role.OWNER).get(0);
+        for (int i = 0; i < 31; i++) {
+            if(random.nextInt(3) == 1) {
+                this.generateRandomPeriodDTO(boss, i);
+            }
+        }
     }
 
     public String setRandomShiftBegin() {
