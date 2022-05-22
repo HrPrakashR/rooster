@@ -6,6 +6,7 @@ import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -94,5 +95,31 @@ public class GeneratorWorker {
         }
         workingDays.removeAll(removeDays);
         return workingDays.contains(day);
+    }
+
+    public static Calendar getFrom(Team team, int year, int month, int day) {
+        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        return switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case 2 -> DateWorker.getCalendarObject(team.getMondayFrom());
+            case 3 -> DateWorker.getCalendarObject(team.getTuesdayFrom());
+            case 4 -> DateWorker.getCalendarObject(team.getWednesdayFrom());
+            case 5 -> DateWorker.getCalendarObject(team.getThursdayFrom());
+            case 6 -> DateWorker.getCalendarObject(team.getFridayFrom());
+            case 7 -> DateWorker.getCalendarObject(team.getSaturdayFrom());
+            default -> DateWorker.getCalendarObject(team.getSundayFrom());
+        };
+    }
+
+    public static Calendar getTo(Team team, int year, int month, int day) {
+        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        return switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case 2 -> DateWorker.getCalendarObject(team.getMondayTo());
+            case 3 -> DateWorker.getCalendarObject(team.getTuesdayTo());
+            case 4 -> DateWorker.getCalendarObject(team.getWednesdayTo());
+            case 5 -> DateWorker.getCalendarObject(team.getThursdayTo());
+            case 6 -> DateWorker.getCalendarObject(team.getFridayTo());
+            case 7 -> DateWorker.getCalendarObject(team.getSaturdayTo());
+            default -> DateWorker.getCalendarObject(team.getSundayTo());
+        };
     }
 }

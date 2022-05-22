@@ -175,11 +175,48 @@ public class PeriodController {
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
                     // TODO: ueberpruefe, ob alle Zeiten abgedeckt sind
+
+                    // init values
+                    int hourFrom = 0;
+                    int hourTo = 0;
+                    int minuteFrom = 0;
+                    int minuteTo = 0;
                     Purpose purpose = Purpose.WORKING_HOURS;
-                    int hourFrom = 8;
-                    int hourTo = 15;
-                    int minuteFrom = 18;
-                    int minuteTo = 45;
+
+                    Calendar calendarFrom = GeneratorWorker.getFrom(team, year, month, i.get());
+                    Calendar calendarTo = GeneratorWorker.getTo(team, year, month, i.get());
+                    double workingHours = GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek());
+                    // early shift, late shift, middle shift
+                    int randomNumber = (new Random()).nextInt(0,99);
+                    if(randomNumber < 33){
+                        hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                        minuteFrom = calendarFrom.get(Calendar.MINUTE);
+                        calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
+                        calendarFrom.add(Calendar.MINUTE, (int) Math.round(team.getMinBreakTime() * 60));
+                        hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                        minuteTo = calendarFrom.get(Calendar.MINUTE);
+                    }else if(randomNumber < 66){
+                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
+                        minuteTo = calendarTo.get(Calendar.MINUTE);
+                        calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours*60)) * (-1));
+                        calendarTo.add(Calendar.MINUTE, ((int) Math.round(team.getMinBreakTime() * 60)) * (-1));
+                        hourFrom = calendarTo.get(Calendar.HOUR_OF_DAY);
+                        minuteFrom = calendarTo.get(Calendar.MINUTE);
+                    }else{
+                        hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY) + differenceHour;
+                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY) + differenceHour;
+                        minuteFrom = calendarFrom.get(Calendar.MINUTE) + differenceMinute;
+                        minuteTo = calendarTo.get(Calendar.MINUTE) + differenceMinute;
+                    }
+
+                    if(calendarTo.before(calendarFrom)){
+                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
+                        minuteTo = calendarTo.get(Calendar.MINUTE);
+                    }
+                    if(calendarFrom.after(calendarTo)){
+                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
+                        minuteTo = calendarTo.get(Calendar.MINUTE);
+                    }
 
 
                     // add working times
