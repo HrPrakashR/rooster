@@ -145,7 +145,7 @@ public class PeriodController {
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose -> period.getPurpose().equals(purpose)
-                                && DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(period.getDateFrom()).get(Calendar.DAY_OF_WEEK))))
+                                        && DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(period.getDateFrom()).get(Calendar.DAY_OF_WEEK))))
                 .map(periodService::convertToPeriodDTO).toList();
 
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
@@ -164,8 +164,8 @@ public class PeriodController {
                 ) > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())
                         // check if there is no other period at this day
                         && predefinedPlan.stream()
-                                .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
-                                        periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
+                        .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
+                                periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
                         // check the teams working times and the employees rest day
                         && GeneratorWorker.isWorkingDay(year, month, i.get(), team, employee)
                 ) {
@@ -198,7 +198,7 @@ public class PeriodController {
                     createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
                     // a little randomizing the creation
-                    if((new Random()).nextInt(0,8)<GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
+                    if ((new Random()).nextInt(0, 7) < GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
                         generatedPlan.add(createdPeriodDTO);
                     }
                 }
