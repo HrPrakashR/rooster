@@ -1,6 +1,7 @@
 package com.example.rooster.helpers;
 
 import com.example.rooster.period.DateDTO;
+import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.team.Team;
 
 import java.lang.constant.Constable;
@@ -43,6 +44,10 @@ public class DateWorker {
         return getDateObject(0, minutes, hours, day, month, year);
     }
 
+    public static Calendar convertDateStringToCalendar(String dateTime){
+        return convertDateToCalendarObject(convertDateStringToDate(dateTime));
+    }
+
     private static int getIntFromSubstring(String string, int start, int end) {
         return Integer.parseInt(string.substring(start, end));
     }
@@ -50,9 +55,7 @@ public class DateWorker {
     public static List<Calendar> getAllDaysOfMonth(int year, int month) {
         List<Calendar> days = new ArrayList<>();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
+        Calendar calendar = getCalendarObject(0,0,0,0,year,month);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         IntStream.rangeClosed(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                 .forEachOrdered(i -> {
@@ -103,11 +106,8 @@ public class DateWorker {
     }
 
     public static Calendar getFirstOrLastDayOfMonth(boolean lastDayOfMonth, int year, int month) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
+        Calendar calendar = getCalendarObject(0,0,0,0,month,year);
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-
         calendar.set(Calendar.AM_PM, lastDayOfMonth ? Calendar.PM : Calendar.AM);
         calendar.set(Calendar.MILLISECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
         calendar.set(Calendar.SECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
@@ -262,5 +262,14 @@ public class DateWorker {
                         date.get(Calendar.YEAR)
                 )
         );
+    }
+
+    public static String createDateString(int day, int month, int year){
+        return String.format("%04d-%02d-%02d", year, month, day);
+    }
+
+    public static boolean checkIfPeriodDTOContainsDate(PeriodDTO periodDTO, int day, int year, int month){
+        return periodDTO.getDateFrom().startsWith(createDateString(day, month, year))
+                || periodDTO.getDateTo().startsWith(createDateString(day, month, year));
     }
 }
