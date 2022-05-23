@@ -221,10 +221,14 @@ show the team members of each team as details
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
-                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
-                <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                <div class="gap-2 d-md-block">
+                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
+                  <span><i class="fa-solid fa-floppy-disk"></i></span>
+                </button>
+                <button (click)="editModeOff()" type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
                   <span><i class="fa-solid fa-circle-xmark"></i></span>
                 </button>
+                </div>
               </div>
               <div class="modal-body">
 
