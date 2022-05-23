@@ -77,7 +77,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   deleteEmployee(id: number): void {
-    var result = confirm("Are you sure you want to delete this employee?");
+    var result = confirm("Are you sure you want to delete this employee? This operation cannot be undone.");
     if (result) {
       this.employees = this.employees?.filter(employee => employee.id !== id);
       this.http.delete('api/employees/delete/' + id)
