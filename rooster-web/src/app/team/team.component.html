@@ -1,18 +1,7 @@
-<!--
-TODO:
-CEO => can add/edit/delete teams / can see details of all teams
-Manager => Edit Teams / can see the details of his/her team
-Employee, Trainee => can see details of his/her team
-
-create an edit button /
-show the team members of each team as details
--->
-
 <section id="teams" class="pb-5 text-center">
   <div class="container">
     <h5 class="section-title h1">YOUR TEAMS</h5>
-
-<!--    To add a new Team-->
+    <!--    To add a new Team-->
     <div *ngIf="!teamSelected">
       <div class="container p-3 my-3">
         <!-- Button trigger modal -->
@@ -21,28 +10,30 @@ show the team members of each team as details
           New team
           <span><i class="fa-solid fa-people-group"></i></span>
         </button>
-
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content text-center">
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">New team details</h5>
                 <div class="gap-2 d-md-block">
-                <button class="btn btn-add m-1" data-bs-dismiss="modal"
-                        (click)="addNewTeam(newTeam)" value="submit" [disabled]="!teamForm?.valid">
-                  <span><i class="fa-solid fa-floppy-disk"></i></span>
+                  <button class="btn btn-add m-1" data-bs-dismiss="modal"
+                          (click)="addNewTeam(newTeam)" value="submit" [disabled]="!teamForm?.valid">
+                    <span><i class="fa-solid fa-floppy-disk"></i></span>
                   </button>
-                <button (click)="showAddTeamRequest()" type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
-                  <span><i class="fa-solid fa-circle-xmark"></i></span>
-                </button>
+                  <button (click)="showAddTeamRequest()" type="button" class="btn btn-exit" data-bs-dismiss="modal"
+                          aria-label="Close">
+                    <span><i class="fa-solid fa-circle-xmark"></i></span>
+                  </button>
                 </div>
               </div>
               <div class="modal-body">
-<!--                form to add a new Team-->
+                <!--                form to add a new Team-->
                 <form #teamForm="ngForm" [hidden]="!addTeam">
                   <label for="name">Name</label>
-                  <input class="form-control" type="text" name="name" id="name" [(ngModel)]="newTeam.name" #name="ngModel" placeholder="Name"
+                  <input class="form-control" type="text" name="name" id="name" [(ngModel)]="newTeam.name"
+                         #name="ngModel" placeholder="Name"
                          required>
                   <div *ngIf="name.invalid" class="error">
                     <div *ngIf="name.hasError('required')">
@@ -52,99 +43,107 @@ show the team members of each team as details
                   <div class="row">
                     <div class="col form-group">
                       <label for="restHours">Rest Hours</label>
-                      <input class="form-control" type="text" name="restHours" id="restHours" [(ngModel)]="newTeam.restHours" placeholder="Rest Hours">
+                      <input class="form-control" type="text" name="restHours" id="restHours"
+                             [(ngModel)]="newTeam.restHours" placeholder="Rest Hours">
                     </div>
-
                     <div class="col form-group">
                       <label for="restDays">Rest Days</label>
-                      <input class="form-control" type="text" name="restDays" id="restDays" [(ngModel)]="newTeam.restDays" placeholder="Rest Days">
+                      <input class="form-control" type="text" name="restDays" id="restDays"
+                             [(ngModel)]="newTeam.restDays" placeholder="Rest Days">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="mondayFrom">Monday From</label>
-                      <input class="form-control" type="Time" name="mondayFrom" id="mondayFrom" [(ngModel)]="newTeam.mondayFrom"
+                      <input class="form-control" type="Time" name="mondayFrom" id="mondayFrom"
+                             [(ngModel)]="newTeam.mondayFrom"
                              placeholder="Monday From">
                     </div>
                     <div class="col form-group">
                       <label for="mondayTo">Monday To</label>
-                      <input class="form-control" type="Time" name="mondayTo" id="mondayTo" [(ngModel)]="newTeam.mondayTo" placeholder="Monday To">
+                      <input class="form-control" type="Time" name="mondayTo" id="mondayTo"
+                             [(ngModel)]="newTeam.mondayTo" placeholder="Monday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="tuesdayFrom">Tuesday From</label>
-                      <input class="form-control" type="Time" name="tuesdayFrom" id="tuesdayFrom" [(ngModel)]="newTeam.tuesdayFrom"
+                      <input class="form-control" type="Time" name="tuesdayFrom" id="tuesdayFrom"
+                             [(ngModel)]="newTeam.tuesdayFrom"
                              placeholder="Tuesday From">
                     </div>
                     <div class="col form-group">
                       <label for="tuesdayTo">Tuesday To</label>
-                      <input class="form-control" type="Time" name="tuesdayTo" id="tuesdayTo" [(ngModel)]="newTeam.tuesdayTo" placeholder="Tuesday To">
+                      <input class="form-control" type="Time" name="tuesdayTo" id="tuesdayTo"
+                             [(ngModel)]="newTeam.tuesdayTo" placeholder="Tuesday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="wednesdayFrom">Wednesday From</label>
-                      <input type="Time" class="form-control" name="wednesdayFrom" id="wednesdayFrom" [(ngModel)]="newTeam.wednesdayFrom"
+                      <input type="Time" class="form-control" name="wednesdayFrom" id="wednesdayFrom"
+                             [(ngModel)]="newTeam.wednesdayFrom"
                              placeholder="Wednesday From">
                     </div>
                     <div class="col form-group">
                       <label for="wednesdayTo">Wednesday To</label>
-                      <input class="form-control" type="Time" name="wednesdayTo" id="wednesdayTo" [(ngModel)]="newTeam.wednesdayTo"
+                      <input class="form-control" type="Time" name="wednesdayTo" id="wednesdayTo"
+                             [(ngModel)]="newTeam.wednesdayTo"
                              placeholder="Wednesday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="thursdayFrom">Thursday From</label>
-                      <input class="form-control" type="Time" name="thursdayFrom" id="thursdayFrom" [(ngModel)]="newTeam.thursdayFrom"
+                      <input class="form-control" type="Time" name="thursdayFrom" id="thursdayFrom"
+                             [(ngModel)]="newTeam.thursdayFrom"
                              placeholder="Thursday From">
                     </div>
                     <div class="col form-group">
                       <label for="thursdayTo">Thursday To</label>
-                      <input class="form-control" type="Time" name="thursdayTo" id="thursdayTo" [(ngModel)]="newTeam.thursdayTo"
+                      <input class="form-control" type="Time" name="thursdayTo" id="thursdayTo"
+                             [(ngModel)]="newTeam.thursdayTo"
                              placeholder="Thursday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="fridayFrom">Friday From</label>
-                      <input class="form-control" type="Time" name="fridayFrom" id="fridayFrom" [(ngModel)]="newTeam.fridayFrom"
+                      <input class="form-control" type="Time" name="fridayFrom" id="fridayFrom"
+                             [(ngModel)]="newTeam.fridayFrom"
                              placeholder="Friday From">
                     </div>
                     <div class="col form-group">
                       <label for="fridayTo">Friday To</label>
-                      <input class="form-control" type="Time" name="fridayTo" id="fridayTo" [(ngModel)]="newTeam.fridayTo" placeholder="Friday To">
+                      <input class="form-control" type="Time" name="fridayTo" id="fridayTo"
+                             [(ngModel)]="newTeam.fridayTo" placeholder="Friday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="saturdayFrom">saturday From</label>
-                      <input class="form-control" type="Time" name="saturdayFrom" id="saturdayFrom" [(ngModel)]="newTeam.saturdayFrom"
+                      <input class="form-control" type="Time" name="saturdayFrom" id="saturdayFrom"
+                             [(ngModel)]="newTeam.saturdayFrom"
                              placeholder="Saturday From">
                     </div>
                     <div class="col form-group">
                       <label for="saturdayTo">Saturday To</label>
-                      <input class="form-control" type="Time" name="saturdayTo" id="saturdayTo" [(ngModel)]="newTeam.saturdayTo"
+                      <input class="form-control" type="Time" name="saturdayTo" id="saturdayTo"
+                             [(ngModel)]="newTeam.saturdayTo"
                              placeholder="Saturday To">
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="col form-group">
                       <label for="saturdayFrom">Sunday From</label>
-                      <input class="form-control" type="Time" name="sundayFrom" id="sundayFrom" [(ngModel)]="newTeam.sundayFrom"
+                      <input class="form-control" type="Time" name="sundayFrom" id="sundayFrom"
+                             [(ngModel)]="newTeam.sundayFrom"
                              placeholder="Sunday From">
                     </div>
                     <div class="col form-group">
                       <label for="sundayTo">Sunday To</label>
-                      <input class="form-control" type="Time" name="sundayTo" id="sundayTo" [(ngModel)]="newTeam.sundayTo" placeholder="Sunday To">
+                      <input class="form-control" type="Time" name="sundayTo" id="sundayTo"
+                             [(ngModel)]="newTeam.sundayTo" placeholder="Sunday To">
                     </div>
                   </div>
                 </form>
@@ -152,11 +151,7 @@ show the team members of each team as details
             </div>
           </div>
         </div>
-<!--        End of form-->
-
       </div>
-
-
       <!-- Team member -->
       <div class="justify-content-center row" *ngIf="teams != undefined">
         <ng-container *ngFor="let team of teams">
@@ -185,7 +180,6 @@ show the team members of each team as details
                 </div>
               </div>
 
-
               <div class="card-body">
                 <h5 class="card-title">{{ team.name }}</h5>
                 <div>
@@ -193,18 +187,20 @@ show the team members of each team as details
                           class="btn btn-add" data-bs-toggle="modal" data-bs-target="#exampleModalShow">
                     Team members
                   </button>
-                <div class="gap-2 d-md-block">
-                  <button id="editTeam" (click)="editModeOn(team)" *ngIf="authService.isOwner" type="button" class="btn btn-edit m-2" data-bs-toggle="modal"
-                          data-bs-target="#exampleModal">
-                    Edit
-                    <span><i class="fa-solid fa-pencil"></i></span>
-                  </button>
-                  <button (click)="deleteTeam(team.id)" *ngIf="authService.isOwner" class="btn btn-exit" type="button">
-                    Delete
-                    <span><i class="fa-solid fa-user-xmark"></i></span>
-                  </button>
+                  <div class="gap-2 d-md-block">
+                    <button id="editTeam" (click)="editModeOn(team)" *ngIf="authService.isOwner" type="button"
+                            class="btn btn-edit m-2" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                      Edit
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
+                    <button (click)="deleteTeam(team.id)" *ngIf="authService.isOwner" class="btn btn-exit"
+                            type="button">
+                      Delete
+                      <span><i class="fa-solid fa-user-xmark"></i></span>
+                    </button>
+                  </div>
                 </div>
-              </div>
                 <div class="collapse" id="collapseExample" *ngFor="let employee of employees">
                   <div class="card card-body" *ngIf="employee.team === team.id">
                     {{employee.firstName}} {{employee.lastName}}
@@ -214,7 +210,6 @@ show the team members of each team as details
             </div>
           </div>
         </ng-container>
-
         <!-- Edit Function with Bootstrap Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -222,36 +217,41 @@ show the team members of each team as details
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
                 <div class="gap-2 d-md-block">
-                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
-                  <span><i class="fa-solid fa-floppy-disk"></i></span>
-                </button>
-                <button (click)="editModeOff()" type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
-                  <span><i class="fa-solid fa-circle-xmark"></i></span>
-                </button>
+                  <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-add m-1"
+                          data-bs-dismiss="modal">
+                    <span><i class="fa-solid fa-floppy-disk"></i></span>
+                  </button>
+                  <button (click)="editModeOff()" type="button" class="btn btn-exit" data-bs-dismiss="modal"
+                          aria-label="Close">
+                    <span><i class="fa-solid fa-circle-xmark"></i></span>
+                  </button>
                 </div>
               </div>
               <div class="modal-body">
-
                 <!--Edit Feature-->
                 <div *ngIf="editMode" class="text-center">
                   <div>
                     <label for="teamName1">Name: </label>
-                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1" name="teamName"
+                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.name" id="teamName1"
+                           name="teamName"
                            type="text">
                   </div>
                   <div>
                     <label for="restHours1">Rest Hours: </label>
-                    <input class="form-control" #restHours="ngModel" [(ngModel)]="selectedTeam.restHours" id="restHours1" name="restHours"
+                    <input class="form-control" #restHours="ngModel" [(ngModel)]="selectedTeam.restHours"
+                           id="restHours1" name="restHours"
                            type="text">
                   </div>
                   <div>
                     <label for="restDays1">Rest Days: </label>
-                    <input class="form-control" #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1" name="restDays"
+                    <input class="form-control" #restDays="ngModel" [(ngModel)]="selectedTeam.restDays" id="restDays1"
+                           name="restDays"
                            type="text">
                   </div>
                   <div>
                     <label for="minBreakTime1">Min Break Time: </label>
-                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime" id="minBreakTime1" name="minBreakTime"
+                    <input class="form-control" #teamName="ngModel" [(ngModel)]="selectedTeam.minBreakTime"
+                           id="minBreakTime1" name="minBreakTime"
                            type="text">
                   </div>
                 </div>
@@ -259,8 +259,8 @@ show the team members of each team as details
             </div>
           </div>
         </div>
-
-        <div class="modal fade" id="exampleModalShow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModalShow" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content w-auto">
               <div class="modal-header">
@@ -269,68 +269,34 @@ show the team members of each team as details
                   <span><i class="fa-solid fa-circle-xmark"></i></span>
                 </button>
               </div>
-
               <div class="modal-body">
                 <section *ngIf="selectedTeam != undefined" class="text-center">
                   <div *ngFor="let team of teams">
                     <h5 *ngIf="team == selectedTeam" class="section-title h1"></h5>
                   </div>
                   <div class="row">
-                        <div *ngFor="let employee of employees">
-                          <div *ngIf="employee.team == selectedTeam.id">
-                          <div>
-<!--                          <div>-->
-<!--                          <div class="card m-5">-->
-<!--                            <div>-->
-<!--                              <table class="table table-striped">-->
-<!--                                <thead>-->
-<!--                                <tr>-->
-<!--                                  <th scope="col">Employee Id</th>-->
-<!--                                  <th scope="col">Name</th>-->
-<!--                                  <th scope="col">Position</th>-->
-<!--                                  <th scope="col">Email</th>-->
-<!--                                  <th scope="col">Balance hours</th>-->
-<!--                                  <th scope="col">Break time</th>-->
-<!--                                </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody *ngFor="let employee of employees">-->
-<!--                                <tr *ngIf="employee.team == selectedTeam.id">-->
-<!--                                  <th scope="row">{{employee.id}}</th>-->
-<!--                                  <td>{{employee.firstName}} {{employee.lastName}}</td>-->
-<!--                                  <td>{{employee.role}}</td>-->
-<!--                                  <td>{{employee.email}}</td>-->
-<!--                                  <td>{{employee.balanceHours}}</td>-->
-<!--                                  <td>{{employee.breakTime}}</td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                              </table>-->
-
-                                <div class="form-control mb-2">
-<!--                                  <a [routerLink]="['/employee/',employee.id]">-->
-                                <h4>{{employee.firstName}} {{employee.lastName}}</h4>
-<!--                                  </a>-->
-                                <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
-                                <p class="card-text">Position: {{employee.role}}</p>
-                                <p class="card-text">Hours/Week: {{employee.hoursPerWeek}}</p>
-                                <p class="card-text">Email: {{employee.email}}</p>
-                              </div>
-                            </div>
+                    <div *ngFor="let employee of employees">
+                      <div *ngIf="employee.team == selectedTeam.id">
+                        <div>
+                          <div class="form-control mb-2">
+                            <h4>{{employee.firstName}} {{employee.lastName}}</h4>
+                            <p *ngIf="team == selectedTeam" class="card-text">Team: {{team.name}}</p>
+                            <p class="card-text">Position: {{employee.role}}</p>
+                            <p class="card-text">Hours/Week: {{employee.hoursPerWeek}}</p>
+                            <p class="card-text">Email: {{employee.email}}</p>
                           </div>
                         </div>
+                      </div>
+                    </div>
                   </div>
                 </section>
               </div>
-
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- ./Team member -->
-
-      </div>
-    </div>
-  </div>
-
 </section>
-<!-- ./ Section -->
+
 
