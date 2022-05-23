@@ -129,15 +129,6 @@ public class GeneratorWorker {
             });
         });
 
-        // !!!!Next TODO: DOES NOT WORK
-        //  ueberpruefe am Ende, ob alle Zeiten abgedeckt sind. Ansonsten fuelle diese Daten
-        if (missingWorkingTime(team, generatedPlan)) {
-            System.out.println("repeated");
-            List<PeriodDTO> newList = generatePlan(generatedPlan, employees, year, month, team);
-            generatedPlan.clear();
-            generatedPlan.addAll(newList);
-        }
-
         return generatedPlan;
     }
 
