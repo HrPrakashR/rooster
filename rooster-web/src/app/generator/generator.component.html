@@ -75,10 +75,10 @@
                   <b *ngSwitchCase="'WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
-                    <button (click)="editModeOn(period)" type="button"
+                    <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
                             class="btn btn-edit" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
-                      <span><i class="fa-solid fa-pencil"></i></span>
+                      <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
                     </button>
                     <br>
                     <small class="small fw-light"> ({{ getBreakTime(employee.team) }} Hours break time) </small>
@@ -181,15 +181,20 @@
 </ng-container>
 </div>
 
+<!-- Edit Function with Bootstrap Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
-        <button (click)="editPeriod(selectedPeriod)" type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
-        <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
-          <span><i class="fa-solid fa-circle-xmark"></i></span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Leave Request</h5>
+        <div class="gap-2 d-md-block">
+          <button (click)="editPeriod(selectedPeriod)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
+            <span><i class="fa-solid fa-floppy-disk"></i></span>
+          </button>
+          <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+            <span><i class="fa-solid fa-circle-xmark"></i></span>
+          </button>
+        </div>
       </div>
       <div class="modal-body">
 
@@ -208,8 +213,9 @@
           <label>End: </label>
           <input class="form-control text-center" [(ngModel)]="selectedPeriod.dateTo" type="datetime-local"
                  name="periodDateTo">
-
         </div>
+        <br>
+        <button type="button" class="btn btn-outline-danger" (click)="deletePeriod(selectedPeriod)">Delete Period</button>
       </div>
     </div>
   </div>
