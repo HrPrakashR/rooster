@@ -84,9 +84,9 @@ public class DateWorker {
      * @return Calendar object
      */
     public static Calendar convertDateToCalendarObject(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
+            Calendar calendar = Calendar.getInstance();
+            if(date != null) calendar.setTime(date);
+            return calendar;
     }
 
     /**
