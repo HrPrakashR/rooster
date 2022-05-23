@@ -7,6 +7,7 @@ import com.example.rooster.team.Team;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -14,8 +15,10 @@ public class GeneratorWorker {
 
     public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<Employee> employees, int year, int month, Team team){
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
+        AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         // iterate through days and employees
         employees.forEach(employee -> {
+            freeDaySwitch.set(!freeDaySwitch.get());
             AtomicInteger i = new AtomicInteger();
             i.incrementAndGet();
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
@@ -30,7 +33,7 @@ public class GeneratorWorker {
                         .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                 periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
                         // check the teams working times and the employees rest day
-                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team, employee)
+                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team, freeDaySwitch.get())
                 ) {
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
@@ -199,7 +202,7 @@ public class GeneratorWorker {
         return DateWorker.convertDateToDateString(calendar.getTime());
     }
 
-    public static boolean isWorkingDay(int year, int month, int day, Team team, Employee employee) {
+    public static boolean isWorkingDay(int year, int month, int day, Team team, boolean freeDaySwitch) {
         // check if we can lay the team.getRestDays on the teamWorkingDays
         Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
         List<Integer> workingDays = new ArrayList<>();
@@ -207,7 +210,7 @@ public class GeneratorWorker {
         for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             calendar.set(Calendar.DAY_OF_MONTH, i);
             if (!DateWorker.checkIfTeamWorksAtDay(team, calendar.get(Calendar.DAY_OF_WEEK))) {
-                if ((new Random()).nextInt(0, 100) < 50) {
+                if (freeDaySwitch) {
                     for (int n = i; n < (i + team.getRestDays()); n++) {
                         removeDays.add(n);
                     }
