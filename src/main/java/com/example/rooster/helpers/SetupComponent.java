@@ -121,7 +121,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 16 + ((employee.getId() * day) % 3),
                 15 * ((employee.getId() * day + 2) % 4)));
         period.setEmployee(employee.getId());
-        if ((employee.getId() * day) % 2 > 0) {
+        if (((employee.getId()*5 + day*7)) % 2 > 0) {
             this.periodController.submitPeriodRequest(period);
         }
     }
