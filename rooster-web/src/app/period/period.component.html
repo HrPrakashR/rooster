@@ -109,8 +109,8 @@
                   <tr *ngSwitchCase="'WORKING_HOURS'" class="wHours">
                     <th scope="row"></th>
                     <td class="align-middle">Working hours</td>
-                    <td class="align-middle">{{removeTFromDate(period.dateTo)}}</td>
                     <td class="align-middle">{{removeTFromDate(period.dateFrom)}}</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateTo)}}</td>
                     <td class="align-middle">
                       <button (click)="editModeOn(period)" type="button"
                               class="btn btn-edit" data-bs-toggle="modal"
