@@ -240,13 +240,16 @@ export class GeneratorComponent implements OnInit {
   }
 
   generateNewRoster() {
-    this.generatedPeriods = [];
-    this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
-      .subscribe(result => {
-        this.generatedPeriods = result
-        this.enableSaveRoster = true;
-        this.createCalendar();
-      });
+    var result = confirm("Are you sure you want to generate a new roster? This operation cannot be undone.");
+    if (result) {
+      this.generatedPeriods = [];
+      this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
+        .subscribe(result => {
+          this.generatedPeriods = result
+          this.enableSaveRoster = true;
+          this.createCalendar();
+        });
+    }
 
   }
 

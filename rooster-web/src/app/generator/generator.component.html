@@ -32,13 +32,14 @@
 
 <ng-container *ngIf="selectedTeam">
   <div class="text-center">
-    <button *ngIf="authService.isAdmin" (click)="generateNewRoster()" class="btn btn-outline-primary m-3" type="button">Generate a new Roster
+    <button *ngIf="authService.isAdmin" (click)="generateNewRoster()" class="btn btn-generate m-2" type="button">
+      Generate new Roster
     </button>
-    <button (click)="saveNewRoster()" *ngIf="enableSaveRoster" class="btn btn-outline-success m-3" type="button">Save
-      the new Roster
+    <button (click)="saveNewRoster()" *ngIf="enableSaveRoster" class="btn btn-save m-1" type="button">
+      <span><i class="fa-solid fa-floppy-disk"></i></span>
     </button>
-    <button (click)="clearGeneratedValues()" *ngIf="enableSaveRoster" class="btn btn-outline-info m-3" type="button">
-      Return to the Roster
+    <button (click)="clearGeneratedValues()" *ngIf="enableSaveRoster" class="btn btn-edit" type="button">
+      <span><i class="fa-solid fa-rotate-left"></i></span>
     </button>
   </div>
 
@@ -76,29 +77,64 @@
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
                     <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
-                            class="btn btn-edit" data-bs-toggle="modal"
+                            class="btn" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
-                      <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                      <span><i class="fa-solid fa-pencil"></i></span>
                     </button>
                     <br>
-                    <small class="small fw-light"> ({{ getBreakTime(employee.team) }} Hours break time) </small>
+                    <small class="small fw-light"> ({{ getBreakTime(employee.team) }}h break time) </small>
                   </b>
-                  <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
-                  <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave</span>
-                  <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation Request</span>
+                  <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation
+                  <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                          class="btn" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
+                  </span>
+                  <span *ngSwitchCase="'SICK_LEAVE'" class="text-primary">Sick Leave
+                    <br>
+                  <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                          class="btn" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
+                  </span>
+                  <span *ngSwitchCase="'VACATION_REQUEST'" class="text-secondary">Vacation Request
+                    <br>
+                  <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                          class="btn" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
+                  </span>
                   <span *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                            class="btn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
                     (Request)
                   </span>
                   <span *ngSwitchCase="'ABSENCE'" class="text-primary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                            class="btn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
                     (Absence)
                   </span>
                   <span *ngSwitchCase="'FREE_TIME_REQUEST'" class="text-secondary">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
                     {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    <button *ngIf="authService.isOwner" (click)="editModeOn(period)" type="button"
+                            class="btn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
                     (Free-Time Request)
                   </span>
                 </ng-container>
@@ -188,10 +224,10 @@
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Leave Request</h5>
         <div class="gap-2 d-md-block">
-          <button (click)="editPeriod(selectedPeriod)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
+          <button (click)="editPeriod(selectedPeriod)" type="button" class="btn btn-save m-1" data-bs-dismiss="modal">
             <span><i class="fa-solid fa-floppy-disk"></i></span>
           </button>
-          <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+          <button (click)="editModeOff()" type="button" class="btn btn-delete" data-bs-dismiss="modal" aria-label="Close">
             <span><i class="fa-solid fa-circle-xmark"></i></span>
           </button>
         </div>
@@ -215,7 +251,9 @@
                  name="periodDateTo">
         </div>
         <br>
-        <button type="button" class="btn btn-outline-danger" (click)="deletePeriod(selectedPeriod)">Delete Period</button>
+        <button type="button" class="btn btn-delete" (click)="deletePeriod(selectedPeriod)">
+          <span><i class="fa-solid fa-trash-can"></i></span>
+        </button>
       </div>
     </div>
   </div>
