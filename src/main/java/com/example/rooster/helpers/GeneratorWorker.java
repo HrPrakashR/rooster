@@ -19,12 +19,13 @@ public class GeneratorWorker {
 
     /**
      * Generates a new roster
+     *
      * @param predefinedPlan List<PeriodDTO> List with predefined values
-     * @param requestList List<PeriodDTO> List with requests from employees
-     * @param employees List<Employee> List with all employees of this roster
-     * @param year Year
-     * @param month Month
-     * @param team Team as object
+     * @param requestList    List<PeriodDTO> List with requests from employees
+     * @param employees      List<Employee> List with all employees of this roster
+     * @param year           Year
+     * @param month          Month
+     * @param team           Team as object
      * @return New roster of this month (List with PeriodDTO's)
      */
     public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<PeriodDTO> requestList, List<Employee> employees, int year, int month, Team team) {
@@ -169,6 +170,7 @@ public class GeneratorWorker {
 
     /**
      * Get dily working hours from weekly working hours
+     *
      * @param weeklyWorkingTime weekly working hours
      * @return daily working hours as Double
      */
@@ -178,14 +180,15 @@ public class GeneratorWorker {
 
     /**
      * creates a PeriodDTO
-     * @param day Day
-     * @param month Month
-     * @param year Year
-     * @param hourFrom Hour from
-     * @param minuteFrom Minute from
-     * @param hourTo Hour to
-     * @param minuteTo Minute to
-     * @param employeeId Employee Id
+     *
+     * @param day           Day
+     * @param month         Month
+     * @param year          Year
+     * @param hourFrom      Hour from
+     * @param minuteFrom    Minute from
+     * @param hourTo        Hour to
+     * @param minuteTo      Minute to
+     * @param employeeId    Employee Id
      * @param purposeString Purpose as String
      * @return PeriodDTO
      */
@@ -204,9 +207,10 @@ public class GeneratorWorker {
 
     /**
      * Calculates the difference between the compulsory and real working hours
-     * @param compulsory Monthly compulsory working hours
+     *
+     * @param compulsory   Monthly compulsory working hours
      * @param workingHours Real monthly working hours
-     * @param employee Employee as object
+     * @param employee     Employee as object
      * @return Double with Difference
      */
     public static Double CompulsoryWorkingHourDifference(double compulsory, double workingHours, Employee employee) {
@@ -215,9 +219,10 @@ public class GeneratorWorker {
 
     /**
      * Calculates the total working hours of an employee
+     *
      * @param workingTimes List with working times as PeriodDTO's
-     * @param employee Employee as Object
-     * @param team Team as Object
+     * @param employee     Employee as Object
+     * @param team         Team as Object
      * @return Total working hours as Double
      */
     public static double getTotalWorkingHours(List<PeriodDTO> workingTimes, Employee employee, Team team) {
@@ -244,8 +249,9 @@ public class GeneratorWorker {
 
     /**
      * Calculate the compulsory working time of an employee
-     * @param year Year
-     * @param month Month
+     *
+     * @param year     Year
+     * @param month    Month
      * @param employee Employee as Object
      * @return Compulsory as double
      */
@@ -256,10 +262,11 @@ public class GeneratorWorker {
 
     /**
      * Checks if an Employee shout get another workday on this date
-     * @param year Year
-     * @param month Month
-     * @param day Day
-     * @param team Team as Object
+     *
+     * @param year          Year
+     * @param month         Month
+     * @param day           Day
+     * @param team          Team as Object
      * @param freeDaySwitch Boolean if employee has a free day request
      * @return Boolean if an Employee should work
      */
@@ -286,10 +293,11 @@ public class GeneratorWorker {
 
     /**
      * Returns the beginning working time of a team from a specific date
-     * @param team Team as object
-     * @param year Year
+     *
+     * @param team  Team as object
+     * @param year  Year
      * @param month Month
-     * @param day Day
+     * @param day   Day
      * @return Calendar object with the beginning working time of a team.
      */
     public static Calendar getFrom(Team team, int year, int month, int day) {
@@ -307,10 +315,11 @@ public class GeneratorWorker {
 
     /**
      * Returns the end of working time of a team from a specific date
-     * @param team Team as object
-     * @param year Year
+     *
+     * @param team  Team as object
+     * @param year  Year
      * @param month Month
-     * @param day Day
+     * @param day   Day
      * @return Calendar object with the end working time of a team.
      */
     public static Calendar getTo(Team team, int year, int month, int day) {
@@ -328,7 +337,8 @@ public class GeneratorWorker {
 
     /**
      * Returns the working time of a PeriodDTO List
-     * @param workingHours List with PeriodDTO including working times
+     *
+     * @param workingHours      List with PeriodDTO including working times
      * @param dailyWorkingHours Double with daily working hours
      * @return Double with working time
      */
@@ -357,8 +367,9 @@ public class GeneratorWorker {
 
     /**
      * Checks if the team works at a specific weekday
+     *
      * @param team Team
-     * @param day Weekday (1 = Sunday, 2 = Monday, ...)
+     * @param day  Weekday (1 = Sunday, 2 = Monday, ...)
      * @return Boolean
      */
     public static boolean checkIfTeamWorksAtDay(Team team, int day) {
