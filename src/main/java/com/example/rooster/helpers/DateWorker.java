@@ -1,23 +1,31 @@
 package com.example.rooster.helpers;
 
 import com.example.rooster.period.DateDTO;
-import com.example.rooster.period.PeriodDTO;
-import com.example.rooster.period.Purpose;
 import com.example.rooster.team.Team;
 
+import java.lang.constant.Constable;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class DateWorker {
 
     public static String convertDateToTimeString(Date date) {
-        Calendar calendar = getCalendarObject(date);
+        Calendar calendar = convertDateToCalendarObject(date);
+        return convertCalendarToTimeString(calendar);
+    }
+
+    public static String convertCalendarToTimeString(Calendar calendar){
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
         return String.format("%02d:%02d", hours, minutes);
     }
 
     public static String convertDateToDateString(Date date) {
-        Calendar calendar = getCalendarObject(date);
+        Calendar calendar = convertDateToCalendarObject(date);
+        return convertCalendarToDateString(calendar);
+    }
+
+    public static String  convertCalendarToDateString(Calendar calendar){
         int minutes = calendar.get(Calendar.MINUTE);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -27,27 +35,16 @@ public class DateWorker {
     }
 
     public static Date convertDateStringToDate(String dateTime) {
-        int year = Integer.parseInt(dateTime.substring(0, 4));
-        int month = Integer.parseInt(dateTime.substring(5, 7));
-        int day = Integer.parseInt(dateTime.substring(8, 10));
-        int hours = Integer.parseInt(dateTime.substring(11, 13));
-        int minutes = Integer.parseInt(dateTime.substring(14, 16));
+        int year = getIntFromSubstring(dateTime, 0, 4);
+        int month = getIntFromSubstring(dateTime, 5, 7);
+        int day = getIntFromSubstring(dateTime, 8, 10);
+        int hours = getIntFromSubstring(dateTime, 11, 13);
+        int minutes = getIntFromSubstring(dateTime, 14, 16);
         return getDateObject(0, minutes, hours, day, month, year);
     }
 
-    public static Date getDate(boolean lastDayOfMonth, int year, int month) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-        calendar.set(Calendar.AM_PM, lastDayOfMonth ? Calendar.PM : Calendar.AM);
-        calendar.set(Calendar.MILLISECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
-        calendar.set(Calendar.SECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
-        calendar.set(Calendar.MINUTE, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
-        calendar.set(Calendar.HOUR, lastDayOfMonth ? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
-
-        return calendar.getTime();
+    private static int getIntFromSubstring(String string, int start, int end) {
+        return Integer.parseInt(string.substring(start, end));
     }
 
     public static List<Calendar> getAllDaysOfMonth(int year, int month) {
@@ -56,19 +53,23 @@ public class DateWorker {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
-        calendar.set(
-                Calendar.DAY_OF_MONTH,
-                calendar.getActualMinimum(Calendar.DAY_OF_MONTH)
-        );
-        int i = 1;
-        while (i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-            days.add(calendar);
-            calendar.set(Calendar.DAY_OF_MONTH, ++i);
-        }
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        IntStream.rangeClosed(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+                .forEachOrdered(i -> {
+                    days.add(calendar);
+                    calendar.set(Calendar.DAY_OF_MONTH, i);
+                });
         return days;
     }
 
-    public static List<Calendar> removeDays(List<Calendar> calendarInput, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday) {
+    public static List<Calendar> removeDays(List<Calendar> calendarInput,
+                                            boolean monday,
+                                            boolean tuesday,
+                                            boolean wednesday,
+                                            boolean thursday,
+                                            boolean friday,
+                                            boolean saturday,
+                                            boolean sunday) {
         List<Calendar> days = new ArrayList<>();
         calendarInput.forEach(day -> {
                     switch (day.get(Calendar.DAY_OF_WEEK)) {
@@ -101,42 +102,55 @@ public class DateWorker {
         return days;
     }
 
-    public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year) {
+    public static Calendar getFirstOrLastDayOfMonth(boolean lastDayOfMonth, int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        calendar.set(Calendar.AM_PM, lastDayOfMonth ? Calendar.PM : Calendar.AM);
+        calendar.set(Calendar.MILLISECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
+        calendar.set(Calendar.SECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
+        calendar.set(Calendar.MINUTE, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
+        calendar.set(Calendar.HOUR, lastDayOfMonth ? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
+
+        return calendar;
+    }
+
+    public static Calendar getCalendarObject(int seconds, int minutes, int hours, int day, int month, int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.SECOND, seconds);
         calendar.set(Calendar.MINUTE, minutes);
         calendar.set(Calendar.HOUR_OF_DAY, hours);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.YEAR, year);
-        return calendar.getTime();
+
+        if (day != 0) {
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+        }
+        if (month != 0) {
+            calendar.set(Calendar.MONTH, month);
+        }
+        if (year != 0) {
+            calendar.set(Calendar.YEAR, year);
+        }
+
+        return calendar;
+    }
+
+    public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year) {
+        return getCalendarObject(seconds, minutes, hours, day, month, year).getTime();
     }
 
     public static Date getDateObject(int seconds, int minutes, int hours) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.SECOND, seconds);
-        calendar.set(Calendar.MINUTE, minutes);
-        calendar.set(Calendar.HOUR_OF_DAY, hours);
-        return calendar.getTime();
+        return getCalendarObject(seconds, minutes, hours, 0, 0, 0).getTime();
     }
 
     public static Date getDateObject(int year, int month, boolean dayMax) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
+        Calendar calendar = getCalendarObject(0, 0, 0, 0, month, year);
         calendar.set(Calendar.DAY_OF_MONTH, dayMax ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
 
-    public static Date getDateObjectYMD(int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        return calendar.getTime();
-    }
-
-    public static Calendar getCalendarObject(Date date) {
+    public static Calendar convertDateToCalendarObject(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
@@ -149,36 +163,15 @@ public class DateWorker {
         return diff / (1000 * 60 * 60);
     }
 
-    public static Double getWorkingTime(List<PeriodDTO> workingHours, Double dailyWorkingHours) {
 
-        if (workingHours.isEmpty()) {
-            return 0.0;
-        }
-
-        double wh = workingHours
-                .stream()
-                .filter(period ->
-                        Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
-                                Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
-                ).mapToDouble(period -> dailyWorkingHours)
-                .sum();
-
-        wh += workingHours
-                .stream()
-                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
-                .mapToDouble(period -> DateWorker.calculateHours(period.getDateFrom(), period.getDateTo()))
-                .sum();
-
-        return wh;
-    }
 
     public static int countAllWeekdaysOfMonth(int year, int month) {
-        Calendar calendar = getCalendarObject(getDate(false, year, month));
+        Calendar calendar = getFirstOrLastDayOfMonth(false, year, month);
         int counter = 1;
         int day = 1;
         while (day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-            if (getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY &&
-                    getCalendarObject(getDateObjectYMD(year, month, day)).get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+            int actualDate = getCalendarObject(0, 0, 0, day, month, year).get(Calendar.DAY_OF_WEEK);
+            if (actualDate != Calendar.SUNDAY && actualDate != Calendar.SATURDAY) {
                 counter++;
             }
             day++;
@@ -213,26 +206,6 @@ public class DateWorker {
                 return false;
             }
         }
-    }
-
-    private List<DateDTO> getWorkingPeriods(Team team, int year, int month) {
-        List<DateDTO> workingPeriods = new ArrayList<>();
-        List<Calendar> allDays = DateWorker.getAllDaysOfMonth(year, month);
-
-        // if times are the same, at that day is no working day
-        boolean monday = team.getMondayFrom() == team.getMondayTo();
-        boolean tuesday = team.getTuesdayFrom() == team.getTuesdayTo();
-        boolean wednesday = team.getWednesdayFrom() == team.getWednesdayTo();
-        boolean thursday = team.getThursdayFrom() == team.getThursdayTo();
-        boolean friday = team.getFridayFrom() == team.getFridayTo();
-        boolean saturday = team.getSaturdayFrom() == team.getSaturdayTo();
-        boolean sunday = team.getSundayFrom() == team.getSundayTo();
-
-        List<Calendar> workingTime = DateWorker.removeDays(allDays, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
-
-        workingTime.forEach(day -> workingPeriods.add(getDateDTOForWorkingPeriod(day, team)));
-
-        return workingPeriods;
     }
 
     public DateDTO getDateDTOForWorkingPeriod(Calendar date, Team team) {
@@ -272,18 +245,18 @@ public class DateWorker {
         }
 
         return new DateDTO(
-                DateWorker.getDateObject(
-                        DateWorker.getCalendarObject(getFrom).get(Calendar.SECOND),
-                        DateWorker.getCalendarObject(getFrom).get(Calendar.MINUTE),
-                        DateWorker.getCalendarObject(getFrom).get(Calendar.HOUR_OF_DAY),
+                getDateObject(
+                        convertDateToCalendarObject(getFrom).get(Calendar.SECOND),
+                        convertDateToCalendarObject(getFrom).get(Calendar.MINUTE),
+                        convertDateToCalendarObject(getFrom).get(Calendar.HOUR_OF_DAY),
                         date.get(Calendar.DAY_OF_MONTH),
                         date.get(Calendar.MONTH),
                         date.get(Calendar.YEAR)
                 ),
-                DateWorker.getDateObject(
-                        DateWorker.getCalendarObject(getTo).get(Calendar.SECOND),
-                        DateWorker.getCalendarObject(getTo).get(Calendar.MINUTE),
-                        DateWorker.getCalendarObject(getTo).get(Calendar.HOUR_OF_DAY),
+                getDateObject(
+                        convertDateToCalendarObject(getTo).get(Calendar.SECOND),
+                        convertDateToCalendarObject(getTo).get(Calendar.MINUTE),
+                        convertDateToCalendarObject(getTo).get(Calendar.HOUR_OF_DAY),
                         date.get(Calendar.DAY_OF_MONTH),
                         date.get(Calendar.MONTH),
                         date.get(Calendar.YEAR)

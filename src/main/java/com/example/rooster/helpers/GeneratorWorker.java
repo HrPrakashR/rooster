@@ -37,7 +37,7 @@ public class GeneratorWorker {
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
                 AtomicBoolean freeTimeRequest = new AtomicBoolean(false);
 
-                if (DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+                if (DateWorker.convertDateToCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
                     weeklyWorkingTime.set(0);
                 }
 
@@ -74,7 +74,7 @@ public class GeneratorWorker {
                         && weeklyWorkingTime.getAndAdd((int) GeneratorWorker.getTotalWorkingHours(
                         generatedPlan.stream().filter(periodDTO -> periodDTO.getEmployee() == employee.getId()
                                 && periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month,
-                                DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).getFirstDayOfWeek()))).toList(),
+                                DateWorker.convertDateToCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).getFirstDayOfWeek()))).toList(),
                         employee, team)) <= employee.getHoursPerWeek()
                         && !freeTimeRequest.get()
                 ) {
@@ -158,8 +158,8 @@ public class GeneratorWorker {
     private static boolean missingWorkingTime(Team team, List<PeriodDTO> generatedPlan) {
         List<Integer> daysNeeded = new ArrayList<>();
         generatedPlan.forEach(periodDTO -> {
-            Calendar calendarFrom = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateFrom()));
-            Calendar calendarTo = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateTo()));
+            Calendar calendarFrom = DateWorker.convertDateToCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateFrom()));
+            Calendar calendarTo = DateWorker.convertDateToCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateTo()));
 
             if (GeneratorWorker.getFrom(team,
                     calendarFrom.get(Calendar.YEAR),
@@ -235,14 +235,14 @@ public class GeneratorWorker {
     }
 
     public static String addHoursToDateString(String dateString, double timeToAdd) {
-        Calendar calendar = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(dateString));
+        Calendar calendar = DateWorker.convertDateToCalendarObject(DateWorker.convertDateStringToDate(dateString));
         calendar.add(Calendar.MINUTE, (int) Math.round(timeToAdd * 60));
         return DateWorker.convertDateToDateString(calendar.getTime());
     }
 
     public static boolean isWorkingDay(int year, int month, int day, Team team, boolean freeDaySwitch) {
         // check if we can lay the team.getRestDays on the teamWorkingDays
-        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        Calendar calendar = DateWorker.getCalendarObject(0, 0, 0, day, year, month);
         List<Integer> workingDays = new ArrayList<>();
         List<Integer> removeDays = new ArrayList<>();
         for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
@@ -267,28 +267,51 @@ public class GeneratorWorker {
     }
 
     public static Calendar getFrom(Team team, int year, int month, int day) {
-        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        Calendar calendar = DateWorker.getCalendarObject(0, 0, 0, day, year, month);
         return switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-            case 2 -> DateWorker.getCalendarObject(team.getMondayFrom());
-            case 3 -> DateWorker.getCalendarObject(team.getTuesdayFrom());
-            case 4 -> DateWorker.getCalendarObject(team.getWednesdayFrom());
-            case 5 -> DateWorker.getCalendarObject(team.getThursdayFrom());
-            case 6 -> DateWorker.getCalendarObject(team.getFridayFrom());
-            case 7 -> DateWorker.getCalendarObject(team.getSaturdayFrom());
-            default -> DateWorker.getCalendarObject(team.getSundayFrom());
+            case 2 -> DateWorker.convertDateToCalendarObject(team.getMondayFrom());
+            case 3 -> DateWorker.convertDateToCalendarObject(team.getTuesdayFrom());
+            case 4 -> DateWorker.convertDateToCalendarObject(team.getWednesdayFrom());
+            case 5 -> DateWorker.convertDateToCalendarObject(team.getThursdayFrom());
+            case 6 -> DateWorker.convertDateToCalendarObject(team.getFridayFrom());
+            case 7 -> DateWorker.convertDateToCalendarObject(team.getSaturdayFrom());
+            default -> DateWorker.convertDateToCalendarObject(team.getSundayFrom());
         };
     }
 
     public static Calendar getTo(Team team, int year, int month, int day) {
-        Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
+        Calendar calendar = DateWorker.getCalendarObject(0, 0, 0, day, year, month);
         return switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-            case 2 -> DateWorker.getCalendarObject(team.getMondayTo());
-            case 3 -> DateWorker.getCalendarObject(team.getTuesdayTo());
-            case 4 -> DateWorker.getCalendarObject(team.getWednesdayTo());
-            case 5 -> DateWorker.getCalendarObject(team.getThursdayTo());
-            case 6 -> DateWorker.getCalendarObject(team.getFridayTo());
-            case 7 -> DateWorker.getCalendarObject(team.getSaturdayTo());
-            default -> DateWorker.getCalendarObject(team.getSundayTo());
+            case 2 -> DateWorker.convertDateToCalendarObject(team.getMondayTo());
+            case 3 -> DateWorker.convertDateToCalendarObject(team.getTuesdayTo());
+            case 4 -> DateWorker.convertDateToCalendarObject(team.getWednesdayTo());
+            case 5 -> DateWorker.convertDateToCalendarObject(team.getThursdayTo());
+            case 6 -> DateWorker.convertDateToCalendarObject(team.getFridayTo());
+            case 7 -> DateWorker.convertDateToCalendarObject(team.getSaturdayTo());
+            default -> DateWorker.convertDateToCalendarObject(team.getSundayTo());
         };
+    }
+
+    public static Double getWorkingTime(List<PeriodDTO> workingHours, Double dailyWorkingHours) {
+
+        if (workingHours.isEmpty()) {
+            return 0.0;
+        }
+
+        double wh = workingHours
+                .stream()
+                .filter(period ->
+                        Objects.equals(period.getPurpose(), Purpose.CONFIRMED_VACATION.name()) ||
+                                Objects.equals(period.getPurpose(), Purpose.SICK_LEAVE.name())
+                ).mapToDouble(period -> dailyWorkingHours)
+                .sum();
+
+        wh += workingHours
+                .stream()
+                .filter(period -> Objects.equals(period.getPurpose(), Purpose.WORKING_HOURS.name()))
+                .mapToDouble(period -> DateWorker.calculateHours(period.getDateFrom(), period.getDateTo()))
+                .sum();
+
+        return wh;
     }
 }
