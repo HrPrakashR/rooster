@@ -18,10 +18,18 @@ export class LandingComponent implements OnInit {
               private employeeService: EmployeeService,
               public authService: AuthService ) { }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to ensure that the initialization code runs
+   */
   ngOnInit(): void {
     this.http.get<Employee>('/api/users/current').subscribe(user => this.currentUser = user);
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to get all the employees
+   */
   getEmployees() {
     this.http
       .get<Employee[]>('/api/employees/get_all')

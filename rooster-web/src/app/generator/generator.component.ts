@@ -41,12 +41,21 @@ export class GeneratorComponent implements OnInit {
   constructor(private http: HttpClient, public authService: AuthService) {
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to ensure that the initialization code runs
+   */
   ngOnInit(): void {
     this.month = new Date().getMonth();
     this.year = new Date().getFullYear();
     this.createCalendar();
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get the name of a month
+   * @param month Month number is given as an input
+   */
   getMonthName(month: number | string) {
     if (typeof month === "string") {
       month = parseInt(month);
@@ -81,6 +90,10 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to create a calendar
+   */
   createCalendar() {
 
     this.days = [1];
@@ -143,12 +156,21 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to set a selectedTeam using a team id
+   */
   setSelectedTeam() {
     this.http
       .get<Team>('/api/teams/get/' + this.selectedTeamId)
       .subscribe(result => this.selectedTeam = result);
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get day as string
+   * @param day Day as number is given as an input
+   */
   returnDayName(day: number) {
     let selectedDate = this.createDate(day);
     switch (selectedDate.getDay()) {
@@ -171,6 +193,11 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get the compulsory working hours for a day
+   * @param day Day as number is given as an input
+   */
   returnCompulsory(day: number) {
     switch (this.createDate(day).getDay()) {
       case 0:
@@ -192,6 +219,12 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to create a Date
+   * @param day Day as number is given as an input
+   * @private
+   */
   private createDate(day: number) {
     let date = new Date();
     date.setDate(day);
@@ -200,6 +233,11 @@ export class GeneratorComponent implements OnInit {
     return date;
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to return the date in two digits if it is less than 10
+   * @param day Day as number is given as an input
+   */
   addNull(day: number) {
     if (day < 10) {
       return '0' + day;
@@ -207,24 +245,51 @@ export class GeneratorComponent implements OnInit {
     return '' + day;
   }
 
+  /**
+   * This method has two parameters and returns void
+   * is used to get the total number of working hours
+   * @param workingTime Working hours as number is given as an input
+   * @param employee Employee object is given as an input
+   */
   returnTotal(workingTime: number, employee: Employee) {
     let total = workingTime + employee.balanceHours;
     return total.toFixed(2)
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get the mothly working hours of an Employee
+   * @param employee Employee obkect is given as an input
+   */
   returnMonthlyWorkingHours(employee: Employee) {
     return (employee.hoursPerWeek / 5) * this.numberOfWeekDays();
   }
 
+  /**
+   * This method has two parameters and returns void
+   * is used to get the balance working hours at the end of a month
+   * @param workingTime Working hours as number is given as an input
+   * @param employee Employee object is given as an input
+   */
   returnNewBalance(workingTime: number, employee: Employee) {
     let total = (workingTime + employee.balanceHours.valueOf() - this.returnMonthlyWorkingHours(employee));
     return total.toFixed(2);
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to get the current day in a week
+   * @private
+   */
   private numberOfWeekDays() {
     return this.days.filter(day => this.isWeekDay(day)).length;
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to check if a given day is a week day
+   * @param day Day as number is given as an input
+   */
   isWeekDay(day: number) {
     let selectedDate = this.createDate(day);
     switch (selectedDate.getDay()) {
@@ -239,6 +304,10 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get the generated New Roster
+   */
   generateNewRoster() {
     this.generatedPeriods = [];
       this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
@@ -249,6 +318,10 @@ export class GeneratorComponent implements OnInit {
         });
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to save the new Roster
+   */
   saveNewRoster() {
     var result = confirm("Are you sure you want to save this roster? This operation cannot be undone.");
     if (result) {
@@ -265,12 +338,21 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to clear the generated values
+   */
   clearGeneratedValues() {
     this.enableSaveRoster = false;
     this.generatedPeriods = undefined;
     this.createCalendar();
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to remove the duplication from working hours
+   * @private this method is private
+   */
   private removeDublicatesFromWorkingPeriods() {
     this.workingPeriods = this.workingPeriods?.filter((thing, index, self) =>
         index === self.findIndex((t) => (
@@ -279,25 +361,49 @@ export class GeneratorComponent implements OnInit {
     )
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to get the break time of a team
+   * @param teamId Team id as number is given as an input
+   */
   getBreakTime(teamId: number) {
     return this.teams?.filter((team) => team.id.valueOf() == teamId)[0].minBreakTime;
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to set a period as selectedPeriod and boolean for editMode as true
+   * @param period Period object is given as an input
+   */
   editModeOn(period: Period) {
     this.editMode = true;
     this.selectedPeriod = period;
   }
 
+  /**
+   * This method has no parameter and returns void
+   * is used to set the boolean for editMode as false
+   */
   editModeOff() {
     this.editMode = false;
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to edit the Period
+   * @param period Period object is given as an input
+   */
   editPeriod(period: Period) {
     const url = `/api/periods/edit`;
     this.http.post<Period>(url, period).subscribe();
     this.editMode = false;
   }
 
+  /**
+   * This method has one parameter and returns void
+   * is used to delete a selected period
+   * @param selectedPeriod Period object is given as an input
+   */
   public deletePeriod(selectedPeriod: Period) {
     var result = confirm("Are you sure you want to delete this leave request? This operation cannot be undone.");
     if (result) {

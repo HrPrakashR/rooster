@@ -23,10 +23,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to validate the login credentials
+   */
   valid() {
     return this.credentials && this.credentials.email.length !== 0 && this.credentials.password.length !== 0;
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to enable login or get an error message
+   */
   login() {
     if (this.valid()) {
       this.authService.authenticate(this.credentials.email, this.credentials.password,
@@ -35,6 +43,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to reset the password
+   */
   forgotPassword() {
     this.http.get("/api/users/sendPassword/email/" + this.credentials.email, {responseType: 'text'}).subscribe(result => this.passwordAlert = result);
   }

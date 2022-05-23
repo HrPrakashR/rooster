@@ -6,9 +6,6 @@ import {Observable} from 'rxjs';
 import {Employee} from './employee';
 import {Team} from "../team/team";
 
-// import { MessageService } from './message.service';
-
-
 @Injectable({providedIn: 'root'})
 export class EmployeeService {
 
@@ -20,50 +17,42 @@ export class EmployeeService {
   constructor(private http: HttpClient) {
   }
 
-  /** GET employee by id. Will 404 if id not found (this part is not included) */
+  /**
+   * This method has one parameter and returns an Employee object
+   * used to get an employee and return it to other classes
+   * @param id Employee id is given as an input
+   */
   getEmployee(id: number): Observable<Employee> {
     const url = `${this.employeesUrl}/get/${id}`;
     return this.http.get<Employee>(url);
   }
 
-  /** DELETE: delete the hero from the server */
+  /**
+   * This method has one parameter and returns an Employee object
+   * used to get delete an Employee by id
+   * @param id Employee id is given as an input
+   */
   deleteEmployee(id: number): Observable<Employee> {
     const url = `${this.employeesUrl}/delete/${id}`;
     return this.http.delete<Employee>(url, this.httpOptions)
   }
 
+  /**
+   * This method has one parameter and returns an Employee object
+   * used to edit an employee
+   * @param employee Employee object is given as an input
+   */
   editEmployee(employee: Employee): Observable<Employee> {
     const url = `${this.employeesUrl}/edit`;
     return this.http.post<Employee>(url, employee, this.httpOptions)
   }
 
+  /**
+   * This method has no parameters and returns all Teams
+   * used to get all the teams
+   */
   getTeams(): Observable<Team[]> {
     return this.http.get<Team[]>('/api/teams/get_all');
   }
 
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   *
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  // private handleError<T>(operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-  //
-  //     // TODO: send the error to remote logging infrastructure
-  //     console.error(error); // log to console instead
-  //
-  //     // TODO: better job of transforming error for user consumption
-  //     this.log(`${operation} failed: ${error.message}`);
-  //
-  //     // Let the app keep running by returning an empty result.
-  //     return of(result as T);
-  //   };
-  // }
-
-  // /** Log a HeroService message with the MessageService */
-  // private log(message: string) {
-  //   this.messageService.add(`HeroService: ${message}`);
-  // }
 }
