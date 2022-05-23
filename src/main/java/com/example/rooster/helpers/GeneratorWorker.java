@@ -17,11 +17,15 @@ public class GeneratorWorker {
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
         AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
+        AtomicInteger switchPeriods = new AtomicInteger((new Random()).nextInt(0,3));
         // iterate through days and employees
         employees.forEach(employee -> {
             freeDaySwitch.set(!freeDaySwitch.get());
             twoEmployeesSwitch.set(!twoEmployeesSwitch.get());
             AtomicInteger i = new AtomicInteger();
+            if(switchPeriods.getAndIncrement() == 2){
+                switchPeriods.set(0);
+            }
             i.incrementAndGet();
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
                 // check if they have enough time to work at another day
@@ -52,21 +56,20 @@ public class GeneratorWorker {
                     double differenceHours = DateWorker.calculateHours(DateWorker.convertDateToDateString(calendarFrom.getTime()), DateWorker.convertDateToDateString(calendarTo.getTime()));
                     double workingHours = GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) + team.getMinBreakTime();
 
+                    // switch shifts
                     if (employees.size() == 1 || differenceHours <= workingHours) {
                         hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                         minuteFrom = calendarFrom.get(Calendar.MINUTE);
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                     } else {
-                        // early shift, late shift, middle shift
-                        int randomNumber = (new Random()).nextInt(0, 100);
-                        if (randomNumber < 35 || (twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        if (switchPeriods.get() == 0 || (twoEmployeesSwitch.get() && employees.size() == 2)) {
                             hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteFrom = calendarFrom.get(Calendar.MINUTE);
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
                             hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarFrom.get(Calendar.MINUTE);
-                        } else if (randomNumber < 80 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        } else if (switchPeriods.get() == 1 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
                             hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarTo.get(Calendar.MINUTE);
                             calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
