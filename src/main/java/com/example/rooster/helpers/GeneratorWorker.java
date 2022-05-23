@@ -13,7 +13,8 @@ import java.util.stream.Stream;
 
 public class GeneratorWorker {
 
-    public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<Employee> employees, int year, int month, Team team) {
+    public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<PeriodDTO> requestList, List<Employee> employees, int year, int month, Team team) {
+        // Initialize important variables
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
         AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) == 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
@@ -22,6 +23,7 @@ public class GeneratorWorker {
         AtomicInteger weeklyWorkingTime = new AtomicInteger(0);
         boolean[] earlyCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
         boolean[] lateCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
+
         // iterate through days and employees
         employees.forEach(employee -> {
             weeklyWorkingTime.set(0);
@@ -33,10 +35,30 @@ public class GeneratorWorker {
             }
             i.incrementAndGet();
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
+                AtomicBoolean freeTimeRequest = new AtomicBoolean(false);
 
                 if (DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
                     weeklyWorkingTime.set(0);
                 }
+
+                Optional<PeriodDTO> actualRequest = requestList.stream().filter(periodDTO ->
+                        periodDTO.getEmployee() == employee.getId() &&
+                                periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get()))).findFirst();
+                if (actualRequest.isPresent()) {
+                    switch (actualRequest.get().getPurpose()) {
+                        case "FREE_TIME_REQUEST" -> freeTimeRequest.set(true);
+                        case "VACATION_REQUEST" -> {
+                            actualRequest.get().setPurpose("CONFIRMED_VACATION");
+                            generatedPlan.add(actualRequest.get());
+                            freeTimeRequest.set(true);
+                        }
+                        case "WORKING_HOUR_REQUEST" -> {
+                            actualRequest.get().setPurpose("WORKING_HOURS");
+                            generatedPlan.add(actualRequest.get());
+                        }
+                    }
+                }
+
                 // check if they have enough time to work at another day
                 if (GeneratorWorker.CompulsoryWorkingHourDifference(
                         GeneratorWorker.getCompulsory(year, month, employee),
@@ -54,8 +76,8 @@ public class GeneratorWorker {
                                 && periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month,
                                 DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).getFirstDayOfWeek()))).toList(),
                         employee, team)) <= employee.getHoursPerWeek()
+                        && !freeTimeRequest.get()
                 ) {
-                    // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
 
                     // initialize values
@@ -129,15 +151,6 @@ public class GeneratorWorker {
                 i.incrementAndGet();
             });
         });
-
-        // !!!!Next TODO: DOES NOT WORK
-        //  ueberpruefe am Ende, ob alle Zeiten abgedeckt sind. Ansonsten fuelle diese Daten
-        if (missingWorkingTime(team, generatedPlan)) {
-            System.out.println("repeated");
-            List<PeriodDTO> newList = generatePlan(generatedPlan, employees, year, month, team);
-            generatedPlan.clear();
-            generatedPlan.addAll(newList);
-        }
 
         return generatedPlan;
     }

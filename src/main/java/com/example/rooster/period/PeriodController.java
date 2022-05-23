@@ -144,13 +144,18 @@ public class PeriodController {
                         DateWorker.getDateObject(year, month, false),
                         DateWorker.getDateObject(year, month, true));
 
+        List<PeriodDTO> predefinedRequests = predefinedPeriods.stream().filter(period ->
+                Stream.of(Purpose.VACATION_REQUEST, Purpose.FREE_TIME_REQUEST, Purpose.WORKING_HOUR_REQUEST)
+                        .anyMatch(purpose -> period.getPurpose().equals(purpose)
+                )).map(periodService::convertToPeriodDTO).toList();
+
         List<PeriodDTO> predefinedPlan = predefinedPeriods.stream().filter(period ->
                         Stream.of(Purpose.WORKING_HOURS, Purpose.CONFIRMED_VACATION, Purpose.ABSENCE, Purpose.SICK_LEAVE)
                                 .anyMatch(purpose -> period.getPurpose().equals(purpose)
                                         && DateWorker.checkIfTeamWorksAtDay(team, DateWorker.getCalendarObject(period.getDateFrom()).get(Calendar.DAY_OF_WEEK))))
                 .map(periodService::convertToPeriodDTO).toList();
 
-        this.generatedPlan = GeneratorWorker.generatePlan(predefinedPlan, employees, year, month, team);
+        this.generatedPlan = GeneratorWorker.generatePlan(predefinedPlan, predefinedRequests, employees, year, month, team);
         return generatedPlan;
     }
 
