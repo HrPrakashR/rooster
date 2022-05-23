@@ -29,10 +29,10 @@ show the team members of each team as details
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">New team details</h5>
                 <div class="gap-2 d-md-block">
-                <button class="btn btn-add m-2" data-bs-dismiss="modal"
+                <button class="btn btn-add m-1" data-bs-dismiss="modal"
                         (click)="addNewTeam(newTeam)" value="submit" [disabled]="!teamForm?.valid">
-                  <span><i class="fa-solid fa-user-plus"></i></span>
-                  Submit</button>
+                  <span><i class="fa-solid fa-floppy-disk"></i></span>
+                  </button>
                 <button (click)="showAddTeamRequest()" type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
                   <span><i class="fa-solid fa-circle-xmark"></i></span>
                 </button>
@@ -165,23 +165,23 @@ show the team members of each team as details
               <div class="card border-0" [ngSwitch]="team.id">
                 <div *ngSwitchCase=1>
                   <img class="card-img-top" src="/assets/pictures/Sales.jpg"
-                       alt="Card image cap" style="width: 300px; height: 200px;">
+                       alt="Card image cap" style="width: 100%; height: 200px;">
                 </div>
                 <div *ngSwitchCase=2>
                   <img class="card-img-top" src="/assets/pictures/marketing.jpg"
-                       alt="Card image cap" style="width: 300px; height: 200px;">
+                       alt="Card image cap" style="width: 100%; height: 200px;">
                 </div>
                 <div *ngSwitchCase=3>
                   <img class="card-img-top" src="/assets/pictures/hr.jpg"
-                       alt="Card image cap" style="width: 300px; height: 200px;">
+                       alt="Card image cap" style="width: 100%; height: 200px;">
                 </div>
                 <div *ngSwitchCase=4>
                   <img class="card-img-top" src="/assets/pictures/product.jpg"
-                       alt="Card image cap" style="width: 300px; height: 200px;">
+                       alt="Card image cap" style="width: 100%; height: 200px;">
                 </div>
                 <div *ngSwitchCase=5>
                   <img class="card-img-top" src="/assets/pictures/customerserv.jpg"
-                       alt="Card image cap" style="width: 300px; height: 200px;">
+                       alt="Card image cap" style="width: 100%; height: 200px;">
                 </div>
               </div>
 
@@ -221,10 +221,14 @@ show the team members of each team as details
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
-                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
-                <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                <div class="gap-2 d-md-block">
+                <button (click)="editTeam(selectedTeam)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
+                  <span><i class="fa-solid fa-floppy-disk"></i></span>
+                </button>
+                <button (click)="editModeOff()" type="button" class="btn btn-exit" data-bs-dismiss="modal" aria-label="Close">
                   <span><i class="fa-solid fa-circle-xmark"></i></span>
                 </button>
+                </div>
               </div>
               <div class="modal-body">
 
@@ -261,7 +265,9 @@ show the team members of each team as details
             <div class="modal-content w-auto">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabelShow">{{selectedTeam.name}} Team Members</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-exit" data-bs-dismiss="modal" aria-label="Close">
+                  <span><i class="fa-solid fa-circle-xmark"></i></span>
+                </button>
               </div>
 
               <div class="modal-body">
