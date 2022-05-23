@@ -106,7 +106,8 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private void generateRandomEmployees() {
         for (int i = 1; i <= this.maxTeamId; i++) {
-            for (int n = 1; n <= random.nextInt(5, 10); n++) {
+            int numberOfEmployees = random.nextInt(3, 6);
+            for (int n = 1; n <= numberOfEmployees; n++) {
                 generateRandomEmployee(i);
             }
         }
