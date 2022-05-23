@@ -2,6 +2,11 @@ package com.example.rooster.employee;
 
 public class EmployeeConverter {
 
+    /**
+     * this class method helps to convert an employee entity to a DTO object
+     * @param employee is an entity
+     * @return value is an employee DTO
+     */
     public static EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
