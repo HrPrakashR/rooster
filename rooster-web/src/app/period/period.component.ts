@@ -86,8 +86,13 @@ export class PeriodComponent implements OnInit {
       .subscribe(() => this.status = "All leave requests of selected Employee")
   }
 
-  editModeOn() {
+  editModeOn(period: Period) {
     this.editMode = true;
+    this.selectedPeriod = period;
+  }
+
+  editModeOff() {
+    this.editMode = false;
   }
 
   editPeriod(period: Period) {
