@@ -21,8 +21,11 @@
       <form class="form-group" *ngIf="newLeaveRequest">
         <label style="display: inline-block">Purpose:
         </label>
-        <select class="form-control" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
+        <select class="form-control" *ngIf="authService.isOwner" [(ngModel)]="newPeriod.purpose" id="periodPurpose" name="periodPurpose">
           <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.key">{{p.value}}</option>
+        </select>
+        <select class="form-control" *ngIf="!authService.isOwner" [(ngModel)]="newPeriod.purpose" id="periodPurpose2" name="periodPurpose">
+          <option *ngFor="let p of PurposeRequests | keyvalue" [ngValue]="p.key">{{p.value}}</option>
         </select>
         <br>
         <div *ngIf="authService.isOwner">

@@ -6,6 +6,7 @@ import {Purpose} from "./purpose";
 import {EmployeeService} from "../employee/employee.service";
 import {Team} from "../team/team";
 import {AuthService} from "../auth.service";
+import {PurposeRequests} from "./purposeRequests";
 
 @Component({
   selector: 'app-period',
@@ -35,6 +36,7 @@ export class PeriodComponent implements OnInit {
   periodSelected = false;
 
   public Purpose = Purpose;
+  public PurposeRequests = PurposeRequests;
 
   constructor(private http: HttpClient,
               private employeeService: EmployeeService,
