@@ -1,5 +1,9 @@
 package com.example.rooster.period;
 
+/**
+ * Class for creating the Period DTOs
+ * Contains the purpose as string, not an Enum
+ */
 public class PeriodDTO {
 
     private long id;
