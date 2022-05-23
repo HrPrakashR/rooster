@@ -18,6 +18,8 @@ public class GeneratorWorker {
         AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicInteger switchPeriods = new AtomicInteger((new Random()).nextInt(0,3));
+        boolean[] earlyCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
+        boolean[] lateCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
         // iterate through days and employees
         employees.forEach(employee -> {
             freeDaySwitch.set(!freeDaySwitch.get());
@@ -63,13 +65,15 @@ public class GeneratorWorker {
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                     } else {
-                        if (switchPeriods.get() == 0 || (twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        if ((!earlyCheck[i.get()-1] && switchPeriods.get() == 0 || switchPeriods.get() == 1) || (switchPeriods.get() == 0 && employees.size() > 2) || (twoEmployeesSwitch.get() && employees.size() == 2)) {
+                            earlyCheck[i.get()-1] = true;
                             hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteFrom = calendarFrom.get(Calendar.MINUTE);
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
                             hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarFrom.get(Calendar.MINUTE);
-                        } else if (switchPeriods.get() == 2 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        } else if ((!lateCheck[i.get()-1] && switchPeriods.get() == 2 || switchPeriods.get() == 1) || (switchPeriods.get() == 2 && employees.size() > 2) || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
+                            lateCheck[i.get()-1] = true;
                             hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarTo.get(Calendar.MINUTE);
                             calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
@@ -106,9 +110,6 @@ public class GeneratorWorker {
                             minuteTo,
                             employee.getId(),
                             purpose.name());
-
-                    // calculate with breakTime
-                    createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
                     generatedPlan.add(createdPeriodDTO);
 
