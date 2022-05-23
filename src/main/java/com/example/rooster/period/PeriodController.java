@@ -84,7 +84,7 @@ public class PeriodController {
     public void saveNewRoster(@RequestBody PeriodDTO[] periodDTOs) {
         //TODO: Get team, month and year from the incoming periods
         //TODO: Then delete all periods from this team within this month
-        Team periodTeam = this.employeeService.getEmployee(periodDTOs[0].getEmployee()).getTeam();
+        Team periodTeam = this.employeeService.getEmployee(periodDTOs[periodDTOs.length/2].getEmployee()).getTeam();
         Period firstPeriod = this.periodService.convertToPeriod(periodDTOs[0]);
         Date date = firstPeriod.getDateTo();
         Calendar cal = Calendar.getInstance();
@@ -132,8 +132,6 @@ public class PeriodController {
 
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
-
-        month -= 1;
 
         // fetching necessary information
         Team team = this.teamService.getTeam(teamId);
