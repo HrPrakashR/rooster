@@ -46,49 +46,49 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        for (int i = 0; i < maxTeamId; i++){
+        for (int i = 0; i < maxTeamId; i++) {
 
-                TeamDTO team = new TeamDTO();
-                team.setName(teamNames.get(i));
-                team.setRestHours(10 + i%4);
-                team.setRestDays(2);
-                team.setMinBreakTime(0.25 * (i%3) + 0.5);
+            TeamDTO team = new TeamDTO();
+            team.setName(teamNames.get(i));
+            team.setRestHours(10 + i % 4);
+            team.setRestDays(2);
+            team.setMinBreakTime(0.25 * (i % 3) + 0.5);
 
-                team.setMondayFrom(i%2 == 0?"00:00":setRandomShiftBegin(i));
-                team.setMondayTo(i%2 == 0?"00:00":setRandomShiftEnd(i));
+            team.setMondayFrom(i % 2 == 0 ? setNullShiftTime() : setRandomShiftBegin(i));
+            team.setMondayTo(i % 2 == 0 ? setNullShiftTime() : setRandomShiftEnd(i));
 
-                team.setTuesdayFrom(setRandomShiftBegin(i));
-                team.setTuesdayTo(setRandomShiftEnd(i));
+            team.setTuesdayFrom(setRandomShiftBegin(i));
+            team.setTuesdayTo(setRandomShiftEnd(i));
 
-                team.setWednesdayFrom(setRandomShiftBegin(i));
-                team.setWednesdayTo(setRandomShiftEnd(i));
+            team.setWednesdayFrom(setRandomShiftBegin(i));
+            team.setWednesdayTo(setRandomShiftEnd(i));
 
-                team.setThursdayFrom(setRandomShiftBegin(i));
-                team.setThursdayTo(setRandomShiftEnd(i));
+            team.setThursdayFrom(setRandomShiftBegin(i));
+            team.setThursdayTo(setRandomShiftEnd(i));
 
-                team.setFridayFrom(setRandomShiftBegin(i));
-                team.setFridayTo(setRandomShiftEnd(i));
+            team.setFridayFrom(setRandomShiftBegin(i));
+            team.setFridayTo(setRandomShiftEnd(i));
 
-                team.setSaturdayFrom(i%2 == 1?"00:00":setRandomShiftBegin(i));
-                team.setSaturdayTo(i%2 == 1?"00:00":setRandomShiftEnd(i));
+            team.setSaturdayFrom(i % 2 == 1 ? setNullShiftTime() : setRandomShiftBegin(i));
+            team.setSaturdayTo(i % 2 == 1 ? setNullShiftTime() : setRandomShiftEnd(i));
 
-                team.setSundayFrom("00:00");
-                team.setSundayTo("00:00");
+            team.setSundayFrom(setNullShiftTime());
+            team.setSundayTo(setNullShiftTime());
 
-                this.teamController.newTeam(team);
-            }
+            this.teamController.newTeam(team);
+        }
 
         for (int i = 0; i < this.names.size(); i++) {
             Employee employee = new Employee();
-            Team team = this.teamRepository.getById((1 + i/5L));
+            Team team = this.teamRepository.getById((1 + i / 5L));
             String firstName = names.get(i);
             employee.setFirstName(firstName);
             employee.setLastName(lastNames.get(i));
             employee.setEmail(firstName + "@rooster.bestapp");
             employee.setTeam(team);
-            employee.setBreakTime(0.5 + 0.25 * (i%3));
-            employee.setHoursPerWeek(15 + 5 * (i%6));
-            employee.setBalanceHours(i%2 == 0? 5*(i%5): -5*(i/5));
+            employee.setBreakTime(0.5 + 0.25 * (i % 3));
+            employee.setHoursPerWeek(15 + 5 * (i % 6));
+            employee.setBalanceHours(i % 2 == 0 ? 5 * (i % 5) : -5 * (i / 5));
             employee.setRole(getNextRole(i));
             String password = "rooster123";
             String encodedPassword = passwordEncoder.encode(password);
@@ -97,7 +97,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         }
 
         for (long i = 6; i <= 30; i++) {
-            for (int j= 0; j <= 30; j++) {
+            for (int j = 0; j <= 30; j++) {
                 generatePeriodDTO(employeeRepository.getById(i), j);
             }
         }
@@ -107,27 +107,27 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     private void generatePeriodDTO(Employee employee, int day) {
         PeriodDTO period = new PeriodDTO();
-        period.setPurpose(getNextPurpose((int) employee.getId(), day ));
+        period.setPurpose(getNextPurpose((int) employee.getId(), day));
         period.setDateFrom(String.format("%04d-%02d-%02dT%02d:%02d",
                 2022,
                 4,
                 day,
-                8 + ((employee.getId()*day)%3),
-                15 * ((employee.getId()*day)%4)));
+                8 + ((employee.getId() * day) % 3),
+                15 * ((employee.getId() * day) % 4)));
         period.setDateTo(String.format("%04d-%02d-%02dT%02d:%02d",
                 2022,
                 4,
                 day,
-                16 + ((employee.getId()*day)%3),
-                15 * ((employee.getId()*day + 2)%4)));
+                16 + ((employee.getId() * day) % 3),
+                15 * ((employee.getId() * day + 2) % 4)));
         period.setEmployee(employee.getId());
-        if((employee.getId() * day)%2 > 0) {
+        if ((employee.getId() * day) % 2 > 0) {
             this.periodController.submitPeriodRequest(period);
         }
     }
 
     private String getNextPurpose(int id, int day) {
-        return switch ((2*id + 7*day)%10) {
+        return switch ((2 * id + 7 * day) % 10) {
             case 7 -> Purpose.SICK_LEAVE.name();
             case 8 -> Purpose.CONFIRMED_VACATION.name();
             case 9 -> Purpose.VACATION_REQUEST.name();
@@ -138,9 +138,9 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private Role getNextRole(int i) {
         if (i == 0) {
             return Role.OWNER;
-        } else if (i == 1 || i%5 == 0) {
+        } else if (i == 1 || i % 5 == 0) {
             return Role.MANAGER;
-        } else if (i%5 == 4) {
+        } else if (i % 5 == 4) {
             return Role.TRAINEE;
         } else {
             return Role.STAFF;
@@ -149,22 +149,15 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
 
     public String setRandomShiftBegin(int i) {
-        return String.format("%02d:%02d", 9 - i%2, 15 * (i%4));
+        return String.format("%02d:%02d", 9 - i % 2, 15 * (i % 4));
     }
 
     public String setRandomShiftEnd(int i) {
-        return String.format("%02d:%02d",  18 - i%2, 15 * (i%4));
+        return String.format("%02d:%02d", 18 - i % 2, 15 * (i % 4));
     }
 
     public String setNullShiftTime() {
         return String.format("%02d:%02d", 0, 0);
     }
-
-    public String setRandomShiftBegin() {
-        return String.format("%02d:%02d", random.nextInt(8, 10), 15 * random.nextInt(0, 4));
-    }
-
-    public String setRandomShiftEnd() {
-        return String.format("%02d:%02d", random.nextInt(16, 18), 15 * random.nextInt(0, 4));
-    }
 }
+
