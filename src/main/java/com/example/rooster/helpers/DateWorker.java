@@ -1,7 +1,6 @@
 package com.example.rooster.helpers;
 
 import com.example.rooster.period.PeriodDTO;
-import com.example.rooster.team.Team;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,24 +8,51 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Static utility methods to work with dates and times
+ */
 public class DateWorker {
 
+    /**
+     * Converts a Date object into Time String (angular-frontend compatible)
+     *
+     * @param date any Date object
+     * @return String in String.format("%02d:%02d", hours, minutes)
+     */
     public static String convertDateToTimeString(Date date) {
         Calendar calendar = convertDateToCalendarObject(date);
         return convertCalendarToTimeString(calendar);
     }
 
+    /**
+     * Converts a Calendar object to Time String
+     *
+     * @param calendar any Calendar objecct
+     * @return String in String.format("%02d:%02d", hours, minutes)
+     */
     public static String convertCalendarToTimeString(Calendar calendar) {
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
         return String.format("%02d:%02d", hours, minutes);
     }
 
+    /**
+     * Converts a Date object into Date String
+     *
+     * @param date any Date object
+     * @return String in String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes)
+     */
     public static String convertDateToDateString(Date date) {
         Calendar calendar = convertDateToCalendarObject(date);
         return convertCalendarToDateString(calendar);
     }
 
+    /**
+     * Converts a Calendar object into String
+     *
+     * @param calendar any Calendar object
+     * @return String in String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes)
+     */
     public static String convertCalendarToDateString(Calendar calendar) {
         int minutes = calendar.get(Calendar.MINUTE);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
@@ -36,6 +62,12 @@ public class DateWorker {
         return String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes);
     }
 
+    /**
+     * converts a Date String into Date object
+     *
+     * @param dateTime a String with String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes)
+     * @return Calendar object
+     */
     public static Date convertDateStringToDate(String dateTime) {
         int year = getIntFromSubstring(dateTime, 0, 4);
         int month = getIntFromSubstring(dateTime, 5, 7);
@@ -45,14 +77,37 @@ public class DateWorker {
         return getDateObject(0, minutes, hours, day, month, year);
     }
 
-    public static Calendar convertDateStringToCalendar(String dateTime) {
-        return convertDateToCalendarObject(convertDateStringToDate(dateTime));
+    /**
+     * Converts a Date into Calendar object
+     *
+     * @param date Any Date object
+     * @return Calendar object
+     */
+    public static Calendar convertDateToCalendarObject(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
     }
 
+    /**
+     * Takes a String and converts the substring into integer
+     *
+     * @param string a String with numbers
+     * @param start  substring beginning
+     * @param end    substring ends
+     * @return integer
+     */
     private static int getIntFromSubstring(String string, int start, int end) {
         return Integer.parseInt(string.substring(start, end));
     }
 
+    /**
+     * Returns a List with Calendar objects with all days of a specific month
+     *
+     * @param year  Year
+     * @param month month
+     * @return List with Calendar objects
+     */
     public static List<Calendar> getAllDaysOfMonth(int year, int month) {
         List<Calendar> days = new ArrayList<>();
 
@@ -66,46 +121,14 @@ public class DateWorker {
         return days;
     }
 
-    public static List<Calendar> removeDays(List<Calendar> calendarInput,
-                                            boolean monday,
-                                            boolean tuesday,
-                                            boolean wednesday,
-                                            boolean thursday,
-                                            boolean friday,
-                                            boolean saturday,
-                                            boolean sunday) {
-        List<Calendar> days = new ArrayList<>();
-        calendarInput.forEach(day -> {
-                    switch (day.get(Calendar.DAY_OF_WEEK)) {
-                        case 1:
-                            if (!sunday) days.add(day);
-                            break;
-                        case 2:
-                            if (!monday) days.add(day);
-                            break;
-                        case 3:
-                            if (!tuesday) days.add(day);
-                            break;
-                        case 4:
-                            if (!wednesday) days.add(day);
-                            break;
-                        case 5:
-                            if (!thursday) days.add(day);
-                            break;
-                        case 6:
-                            if (!friday) days.add(day);
-                            break;
-                        case 7:
-                            if (!saturday) days.add(day);
-                            break;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + day.get(Calendar.DAY_OF_WEEK));
-                    }
-                }
-        );
-        return days;
-    }
-
+    /**
+     * Returns the first or last day of the month as Calendar Object
+     *
+     * @param lastDayOfMonth true = last day / false = first day
+     * @param year           Year
+     * @param month          Month
+     * @return Calendar object
+     */
     public static Calendar getFirstOrLastDayOfMonth(boolean lastDayOfMonth, int year, int month) {
         Calendar calendar = getCalendarObject(0, 0, 0, 0, month, year);
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -117,6 +140,17 @@ public class DateWorker {
         return calendar;
     }
 
+    /**
+     * Creates a Calendar object with predefined values
+     *
+     * @param seconds Seconds
+     * @param minutes Minutes
+     * @param hours   Hours
+     * @param day     Day
+     * @param month   Month
+     * @param year    Year
+     * @return Calendar object
+     */
     public static Calendar getCalendarObject(int seconds, int minutes, int hours, int day, int month, int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.SECOND, seconds);
@@ -136,26 +170,55 @@ public class DateWorker {
         return calendar;
     }
 
+    /**
+     * Creates a Date object with predefined values
+     *
+     * @param seconds Seconds
+     * @param minutes Minutes
+     * @param hours   Hours
+     * @param day     Day
+     * @param month   Month
+     * @param year    Year
+     * @return Date object
+     */
     public static Date getDateObject(int seconds, int minutes, int hours, int day, int month, int year) {
         return getCalendarObject(seconds, minutes, hours, day, month, year).getTime();
     }
 
+    /**
+     * Creates a Date object with predefined values
+     *
+     * @param seconds Seconds
+     * @param minutes Minutes
+     * @param hours   Hours
+     * @return Date object
+     */
     public static Date getDateObject(int seconds, int minutes, int hours) {
         return getCalendarObject(seconds, minutes, hours, 0, 0, 0).getTime();
     }
 
-    public static Date getDateObject(int year, int month, boolean dayMax) {
+    /**
+     * Creates a Date object with predefined values and first or last day of a month
+     *
+     * @param year      Year
+     * @param month     Month
+     * @param isLastDay true = last day / false = first day
+     * @return Date object
+     */
+    public static Date getDateObject(int year, int month, boolean isLastDay) {
         Calendar calendar = getCalendarObject(0, 0, 0, 0, month, year);
-        calendar.set(Calendar.DAY_OF_MONTH, dayMax ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, isLastDay ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
 
-    public static Calendar convertDateToCalendarObject(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
-    }
-
+    /**
+     * Calculates hours between two DateStrings.
+     * You can use the implemented Date and String methods to work with those.
+     *
+     * @param dateFrom DateString with String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes)
+     * @param dateTo   DateString with String.format("%04d-%02d-%02dT%02d:%02d", year, month, day, hours, minutes)
+     * @return Double number: hours of difference
+     */
     public static double calculateHours(String dateFrom, String dateTo) {
         Date from = DateWorker.convertDateStringToDate(dateFrom);
         Date to = DateWorker.convertDateStringToDate(dateTo);
@@ -163,7 +226,13 @@ public class DateWorker {
         return diff / (1000 * 60 * 60);
     }
 
-
+    /**
+     * Counts all days of a specific month
+     *
+     * @param year  Year
+     * @param month Month
+     * @return Integer with number of days in a month
+     */
     public static int countAllWeekdaysOfMonth(int year, int month) {
         Calendar calendar = getFirstOrLastDayOfMonth(false, year, month);
         int counter = 1;
@@ -178,39 +247,27 @@ public class DateWorker {
         return counter;
     }
 
-    public static boolean checkIfTeamWorksAtDay(Team team, int i) {
-        switch (i) {
-            case 1 -> {
-                return team.getSundayFrom() != null;
-            }
-            case 2 -> {
-                return team.getMondayTo() != null;
-            }
-            case 3 -> {
-                return team.getTuesdayFrom() != null;
-            }
-            case 4 -> {
-                return team.getWednesdayFrom() != null;
-            }
-            case 5 -> {
-                return team.getThursdayFrom() != null;
-            }
-            case 6 -> {
-                return team.getFridayFrom() != null;
-            }
-            case 7 -> {
-                return team.getSaturdayFrom() != null;
-            }
-            default -> {
-                return false;
-            }
-        }
-    }
-
+    /**
+     * Creates a Date string with String.format("%04d-%02d-%02d", year, month, day)
+     *
+     * @param day   Day
+     * @param month Month
+     * @param year  Year
+     * @return String with String.format("%04d-%02d-%02d", year, month, day)
+     */
     public static String createDateString(int day, int month, int year) {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
+    /**
+     * Checks if a PeriodDTO contains a specific date
+     *
+     * @param periodDTO PeriodDTO
+     * @param day       Day
+     * @param month     Month
+     * @param year      Year
+     * @return boolean
+     */
     public static boolean checkIfPeriodDTOContainsDate(PeriodDTO periodDTO, int day, int month, int year) {
         return periodDTO.getDateFrom().startsWith(createDateString(day, month, year))
                 || periodDTO.getDateTo().startsWith(createDateString(day, month, year));
