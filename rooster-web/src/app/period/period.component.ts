@@ -105,7 +105,7 @@ export class PeriodComponent implements OnInit {
   }
 
   public deletePeriod(id: number) {
-    var result = confirm("Are you sure you want to delete this leave request? This operation cannot be undone.");
+    let result = confirm("Are you sure you want to delete this leave request? This operation cannot be undone.");
     if (result) {
       this.periods = this.periods?.filter(period => period.id !== id);
       this.http.delete<Period>('/api/periods/delete/' + id)
@@ -181,7 +181,7 @@ export class PeriodComponent implements OnInit {
 
   /**
    * This method takes an employee as a parameter and returns
-   * employee
+   * a boolean.
    */
   // @ts-ignore
   public hasEmployeePeriods(employee: Employee): boolean {
