@@ -1,0 +1,40 @@
+.btn-save {
+  background-color: #71bbbc;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #aad6d7;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #fe0957;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #ff5f8d;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #ea914d;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #f2bd94;
+  color: white;
+}
+
+.btn-generate {
+  background-color:
+    #5b4880;
+  color: white;
+}
+
+.btn-generate:hover {
+  background-color: #cec8d9;
+  color: white;
+}
