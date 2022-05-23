@@ -1,5 +1,8 @@
 package com.example.rooster.period;
 
+/**
+ * Enum Class for possible reasons of absence or presence
+ */
 public enum Purpose {
     VACATION_REQUEST,
     CONFIRMED_VACATION,
