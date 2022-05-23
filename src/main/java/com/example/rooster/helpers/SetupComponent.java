@@ -20,6 +20,10 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+/**
+ * Component to create initial data for the application.
+ * Created data is stored in the database
+ */
 @Component
 public class SetupComponent implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -45,7 +49,9 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-
+        /**
+         * Creating teams with random attributes
+         */
         for (int i = 0; i < maxTeamId; i++) {
 
             TeamDTO team = new TeamDTO();
@@ -78,6 +84,9 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             this.teamController.newTeam(team);
         }
 
+        /**
+         * Creating employees with random attributes
+         */
         for (int i = 0; i < this.names.size(); i++) {
             Employee employee = new Employee();
             Team team = this.teamRepository.getById((1 + i / 5L));
@@ -96,6 +105,9 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
             this.employeeRepository.save(employee);
         }
 
+        /**
+         * Creating periods with random attributes
+         */
         for (long i = 6; i <= 30; i++) {
             for (int j = 0; j <= 30; j++) {
                 generatePeriodDTO(employeeRepository.getById(i), j);
@@ -103,7 +115,6 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         }
 
     }
-
 
     private void generatePeriodDTO(Employee employee, int day) {
         PeriodDTO period = new PeriodDTO();
@@ -126,6 +137,10 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         }
     }
 
+    /**
+     * Assigning the next purpose for period creation.
+     * ~16% Vacation, ~32% Working hours, ~16% Free time request, ~32% Vacation request
+     */
     private String getNextPurpose(int id, int day) {
         return switch ((2 * id + 7 * day) % 6) {
             case 0 -> Purpose.CONFIRMED_VACATION.name();
@@ -135,6 +150,13 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         };
     }
 
+    /**
+     * Assigning the next role for employee creation.
+     * First employee is the owner.
+     * First employee of the teams are managers.
+     * Last employee of each team is a trainee.
+     * The other employees are staff.
+     */
     private Role getNextRole(int i) {
         if (i == 0) {
             return Role.OWNER;
@@ -147,15 +169,28 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
         }
     }
 
-
+    /**
+     * Assigning a random beginning time for the shift
+     * @param i receives team id as random generator
+     * @return time in hours and minutes as string
+     */
     public String setRandomShiftBegin(int i) {
         return String.format("%02d:%02d", 9 - i % 2, 15 * (i % 4));
     }
 
+    /**
+     * Assigning a random ending time for the shift
+     * @param i receives team id as random generator
+     * @return time in hours and minutes as string
+     */
     public String setRandomShiftEnd(int i) {
         return String.format("%02d:%02d", 18 - i % 2, 15 * (i % 4));
     }
 
+    /**
+     * Assigning the shift beginning and ending as 0 o'clock for free days
+     * @return null o'clock as string
+     */
     public String setNullShiftTime() {
         return String.format("%02d:%02d", 0, 0);
     }

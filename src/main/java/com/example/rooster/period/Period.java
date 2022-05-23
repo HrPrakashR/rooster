@@ -5,6 +5,9 @@ import com.example.rooster.employee.Employee;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entity class to create and store the Periods
+ */
 @Entity
 @Table(name = "period")
 public class Period {

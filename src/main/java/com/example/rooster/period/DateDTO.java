@@ -2,6 +2,10 @@ package com.example.rooster.period;
 
 import java.util.Date;
 
+/**
+ * Class for holding Date DTOs, which are used for the information exchange (dates)
+ * between backend and frontend.
+ */
 public class DateDTO {
     private Date dateFrom;
     private Date dateTo;
