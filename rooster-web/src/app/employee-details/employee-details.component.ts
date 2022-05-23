@@ -24,39 +24,73 @@ export class EmployeeDetailsComponent implements OnInit {
               private router: Router,
               public authService: AuthService) { }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to ensure that the initialization code runs
+   */
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')
     this.employeeService.getEmployee(Number(id)).subscribe(result => this.employee = result);
     this.getTeams();
   }
 
-//TODO: Write the duplicate methods in EmployeeService
+  /**
+   * This method has no parameters and returns void
+   * used to navigate current Page to employee
+   */
   goBack() {
     this.router.navigate(['/employee']);
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to get all the teams
+   */
   getTeams() {
     this.employeeService.getTeams()
       .subscribe(result => this.teams = result);
   }
 
+  /**
+   * This method has one parameter and returns void
+   * used to get a team name
+   * @param id Team id is given as an input
+   */
   getTeamName(id: number) {
     // @ts-ignore
     return this.teams?.find(t => t.id === id).name;
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to change the boolean value as true for editMode
+   */
   editModeOn() {
     this.editMode = true;
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to change the boolean value as false for editMode
+   */
   public editModeOff() {
     this.editMode = false;
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to edit an employee
+   * @param employee Employee object is given as an input
+   */
   editEmployee(employee: Employee) {
     this.employeeService.editEmployee(employee).subscribe();
   }
 
+  /**
+   * This method has one parameter and returns void
+   * used to capitalize the first letter of a word
+   * @param word a String is given as an input
+   */
   capitalizeFirstLetter(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
