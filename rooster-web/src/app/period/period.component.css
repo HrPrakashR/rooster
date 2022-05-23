@@ -126,7 +126,7 @@
 /*}*/
 
 .sick{
-  background: #0dcaf0;
+  background: #dfb2ba;
   color: white;
 }
 .btn-add {
@@ -145,17 +145,17 @@
 }
 
 .vacation{
-  background: orange;
+  background: #ea914d;
   color: white;
 }
 
 .cVacation{
-  background: green;
+  background: #5cb4ac;
   color: white;
 }
 
 .sWorkingH{
-  background: #0c63e4;
+  background: #bfb7d1;
   color: white;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .freeTime{
-  background: #d63384;
+  background: #fc64a4;
   color: white;
 }
 
