@@ -84,9 +84,12 @@ export class TeamComponent implements OnInit {
   }
 
   public deleteTeam(id: number) {
-    this.teams = this.teams?.filter(t => t.id !== id);
-    this.http.delete('api/teams/delete/' + id)
-      .subscribe(() => this.status = 'Delete successful');
+    var result = confirm("Are you sure you want to delete this team? This operation cannot be undone.");
+    if (result) {
+      this.teams = this.teams?.filter(t => t.id !== id);
+      this.http.delete('api/teams/delete/' + id)
+        .subscribe(() => this.status = 'Delete successful');
+    }
   }
 
   public getTeam(id: number) {

@@ -147,7 +147,7 @@
               <p class="card-text">Position: {{capitalizeFirstLetter(employee.role)}}</p>
               <p class="card-text">{{employee.email}}</p>
               <div class="gap-2 d-md-block">
-                <button id="editEmployee" (click)="editModeOn(employee)" type="button" class="btn btn-edit m-2" data-bs-toggle="modal"
+                <button id="editEmployee" (click)="editModeOn(employee)" type="button" class="btn btn-edit m-1" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                   Edit
                   <span><i class="fa-solid fa-pencil"></i></span>
@@ -171,11 +171,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+        <div class="gap-2 d-md-block">
         <button (click)="editEmployee(selectedEmployee)" type="button"
-                class="btn btn-success" data-bs-dismiss="modal">Save</button>
-        <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                class="btn btn-add m-1" data-bs-dismiss="modal">
+          <span><i class="fa-solid fa-floppy-disk"></i></span>
+        </button>
+        <button (click)="editModeOff()" type="button" class="btn btn-delete" data-bs-dismiss="modal" aria-label="Close">
           <span><i class="fa-solid fa-circle-xmark"></i></span>
         </button>
+        </div>
       </div>
       <div class="modal-body">
         <div *ngIf="editMode" class="text-center">
