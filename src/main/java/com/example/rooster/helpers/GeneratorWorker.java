@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 public class GeneratorWorker {
 
     public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<PeriodDTO> requestList, List<Employee> employees, int year, int month, Team team) {
+        // Initialize important variables
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
         AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) == 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
@@ -43,14 +44,15 @@ public class GeneratorWorker {
                 Optional<PeriodDTO> actualRequest = requestList.stream().filter(periodDTO ->
                         periodDTO.getEmployee() == employee.getId() &&
                                 periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get()))).findFirst();
-                if(actualRequest.isPresent()){
-                    switch (actualRequest.get().getPurpose()){
+                if (actualRequest.isPresent()) {
+                    switch (actualRequest.get().getPurpose()) {
                         case "FREE_TIME_REQUEST" -> freeTimeRequest.set(true);
                         case "VACATION_REQUEST" -> {
                             actualRequest.get().setPurpose("CONFIRMED_VACATION");
                             generatedPlan.add(actualRequest.get());
+                            freeTimeRequest.set(true);
                         }
-                        case "WORKING_HOUR_REQUEST" ->  {
+                        case "WORKING_HOUR_REQUEST" -> {
                             actualRequest.get().setPurpose("WORKING_HOURS");
                             generatedPlan.add(actualRequest.get());
                         }
