@@ -41,12 +41,21 @@ export class GeneratorComponent implements OnInit {
   constructor(private http: HttpClient, public authService: AuthService) {
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to ensure that the initialization code runs
+   */
   ngOnInit(): void {
     this.month = new Date().getMonth();
     this.year = new Date().getFullYear();
     this.createCalendar();
   }
 
+  /**
+   * This method has one parameter and returns void
+   * used to get the name of a month
+   * @param month Month number is given as an input
+   */
   getMonthName(month: number | string) {
     if (typeof month === "string") {
       month = parseInt(month);
@@ -81,6 +90,10 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has no parameters and returns void
+   * is used to create a calendar
+   */
   createCalendar() {
 
     this.days = [1];
@@ -143,12 +156,21 @@ export class GeneratorComponent implements OnInit {
     }
   }
 
+  /**
+   * This method has no parameters and returns void
+   * used to set a selectedTeam using a team id
+   */
   setSelectedTeam() {
     this.http
       .get<Team>('/api/teams/get/' + this.selectedTeamId)
       .subscribe(result => this.selectedTeam = result);
   }
 
+  /**
+   * This method has one parameter and returns void
+   * used to get day as string
+   * @param day
+   */
   returnDayName(day: number) {
     let selectedDate = this.createDate(day);
     switch (selectedDate.getDay()) {
