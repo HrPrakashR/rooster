@@ -1,11 +1,12 @@
 package com.example.rooster.helpers;
 
-import com.example.rooster.period.DateDTO;
 import com.example.rooster.period.PeriodDTO;
 import com.example.rooster.team.Team;
 
-import java.lang.constant.Constable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class DateWorker {
@@ -15,7 +16,7 @@ public class DateWorker {
         return convertCalendarToTimeString(calendar);
     }
 
-    public static String convertCalendarToTimeString(Calendar calendar){
+    public static String convertCalendarToTimeString(Calendar calendar) {
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
         return String.format("%02d:%02d", hours, minutes);
@@ -26,7 +27,7 @@ public class DateWorker {
         return convertCalendarToDateString(calendar);
     }
 
-    public static String  convertCalendarToDateString(Calendar calendar){
+    public static String convertCalendarToDateString(Calendar calendar) {
         int minutes = calendar.get(Calendar.MINUTE);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -44,7 +45,7 @@ public class DateWorker {
         return getDateObject(0, minutes, hours, day, month, year);
     }
 
-    public static Calendar convertDateStringToCalendar(String dateTime){
+    public static Calendar convertDateStringToCalendar(String dateTime) {
         return convertDateToCalendarObject(convertDateStringToDate(dateTime));
     }
 
@@ -55,7 +56,7 @@ public class DateWorker {
     public static List<Calendar> getAllDaysOfMonth(int year, int month) {
         List<Calendar> days = new ArrayList<>();
 
-        Calendar calendar = getCalendarObject(0,0,0,0,year,month);
+        Calendar calendar = getCalendarObject(0, 0, 0, 0, year, month);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         IntStream.rangeClosed(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                 .forEachOrdered(i -> {
@@ -106,14 +107,13 @@ public class DateWorker {
     }
 
     public static Calendar getFirstOrLastDayOfMonth(boolean lastDayOfMonth, int year, int month) {
-        Calendar calendar = getCalendarObject(0,0,0,0,month,year);
+        Calendar calendar = getCalendarObject(0, 0, 0, 0, month, year);
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth ? calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.AM_PM, lastDayOfMonth ? Calendar.PM : Calendar.AM);
         calendar.set(Calendar.MILLISECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MILLISECOND) : calendar.getActualMinimum(Calendar.MILLISECOND));
         calendar.set(Calendar.SECOND, lastDayOfMonth ? calendar.getActualMaximum(Calendar.SECOND) : calendar.getActualMinimum(Calendar.SECOND));
         calendar.set(Calendar.MINUTE, lastDayOfMonth ? calendar.getActualMaximum(Calendar.MINUTE) : calendar.getActualMinimum(Calendar.MINUTE));
         calendar.set(Calendar.HOUR, lastDayOfMonth ? calendar.getActualMaximum(Calendar.HOUR) : calendar.getActualMinimum(Calendar.HOUR));
-
         return calendar;
     }
 
@@ -164,7 +164,6 @@ public class DateWorker {
     }
 
 
-
     public static int countAllWeekdaysOfMonth(int year, int month) {
         Calendar calendar = getFirstOrLastDayOfMonth(false, year, month);
         int counter = 1;
@@ -208,67 +207,11 @@ public class DateWorker {
         }
     }
 
-    public DateDTO getDateDTOForWorkingPeriod(Calendar date, Team team) {
-        Date getFrom;
-        Date getTo;
-
-        switch (date.get(Calendar.DAY_OF_WEEK)) {
-            case 1 -> {
-                getFrom = team.getSundayFrom();
-                getTo = team.getSundayTo();
-            }
-            case 2 -> {
-                getFrom = team.getMondayFrom();
-                getTo = team.getMondayTo();
-            }
-            case 3 -> {
-                getFrom = team.getTuesdayFrom();
-                getTo = team.getTuesdayTo();
-            }
-            case 4 -> {
-                getFrom = team.getWednesdayFrom();
-                getTo = team.getWednesdayTo();
-            }
-            case 5 -> {
-                getFrom = team.getThursdayFrom();
-                getTo = team.getThursdayTo();
-            }
-            case 6 -> {
-                getFrom = team.getFridayFrom();
-                getTo = team.getFridayTo();
-            }
-            case 7 -> {
-                getFrom = team.getSaturdayFrom();
-                getTo = team.getSaturdayTo();
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + date.get(Calendar.DAY_OF_WEEK));
-        }
-
-        return new DateDTO(
-                getDateObject(
-                        convertDateToCalendarObject(getFrom).get(Calendar.SECOND),
-                        convertDateToCalendarObject(getFrom).get(Calendar.MINUTE),
-                        convertDateToCalendarObject(getFrom).get(Calendar.HOUR_OF_DAY),
-                        date.get(Calendar.DAY_OF_MONTH),
-                        date.get(Calendar.MONTH),
-                        date.get(Calendar.YEAR)
-                ),
-                getDateObject(
-                        convertDateToCalendarObject(getTo).get(Calendar.SECOND),
-                        convertDateToCalendarObject(getTo).get(Calendar.MINUTE),
-                        convertDateToCalendarObject(getTo).get(Calendar.HOUR_OF_DAY),
-                        date.get(Calendar.DAY_OF_MONTH),
-                        date.get(Calendar.MONTH),
-                        date.get(Calendar.YEAR)
-                )
-        );
-    }
-
-    public static String createDateString(int day, int month, int year){
+    public static String createDateString(int day, int month, int year) {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
 
-    public static boolean checkIfPeriodDTOContainsDate(PeriodDTO periodDTO, int day, int year, int month){
+    public static boolean checkIfPeriodDTOContainsDate(PeriodDTO periodDTO, int day, int month, int year) {
         return periodDTO.getDateFrom().startsWith(createDateString(day, month, year))
                 || periodDTO.getDateTo().startsWith(createDateString(day, month, year));
     }

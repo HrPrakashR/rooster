@@ -156,7 +156,7 @@ public class PeriodController {
                 .map(periodService::convertToPeriodDTO).toList();
 
         this.generatedPlan = GeneratorWorker.generatePlan(predefinedPlan, predefinedRequests, employees, year, month, team);
-        return generatedPlan;
+        return this.generatedPlan;
     }
 
 }
