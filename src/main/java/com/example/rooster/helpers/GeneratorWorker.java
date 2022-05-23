@@ -69,7 +69,7 @@ public class GeneratorWorker {
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
                             hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarFrom.get(Calendar.MINUTE);
-                        } else if (switchPeriods.get() == 1 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        } else if (switchPeriods.get() == 2 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
                             hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                             minuteTo = calendarTo.get(Calendar.MINUTE);
                             calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
