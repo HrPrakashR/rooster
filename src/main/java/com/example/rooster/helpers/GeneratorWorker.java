@@ -51,21 +51,18 @@ public class GeneratorWorker {
                         hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                         minuteFrom = calendarFrom.get(Calendar.MINUTE);
                         calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
-                        calendarFrom.add(Calendar.MINUTE, (int) Math.round(team.getMinBreakTime() * 60));
                         hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarFrom.get(Calendar.MINUTE);
                     } else if (randomNumber < 80) {
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                         calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
-                        calendarTo.add(Calendar.MINUTE, ((int) Math.round(team.getMinBreakTime() * 60)) * (-1));
                         hourFrom = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteFrom = calendarTo.get(Calendar.MINUTE);
                     } else {
                         double differenceHours = DateWorker.calculateHours(DateWorker.convertDateToDateString(calendarFrom.getTime()), DateWorker.convertDateToDateString(calendarTo.getTime()));
                         if (differenceHours > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(differenceHours * 60) / 4);
-                            calendarTo.add(Calendar.MINUTE, ((int) Math.round(differenceHours * 60) / 4) * (-1));
                         }
                         hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
@@ -83,7 +80,6 @@ public class GeneratorWorker {
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                     }
 
-
                     // add working times
                     PeriodDTO createdPeriodDTO = GeneratorWorker.createPeriodDTO(
                             i.get(),
@@ -99,10 +95,8 @@ public class GeneratorWorker {
                     // calculate with breakTime
                     createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
-                    // a little randomizing the creation
-                    if ((new Random()).nextInt(0, 7) < GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
-                        generatedPlan.add(createdPeriodDTO);
-                    }
+                    generatedPlan.add(createdPeriodDTO);
+
                 }
                 i.incrementAndGet();
             });
