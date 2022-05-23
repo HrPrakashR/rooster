@@ -15,7 +15,7 @@
       </div>
       <button (click)="openFormNewLeaveRequest()" class="btn btn-add mr-1 mb-4 justify-content-center"
               role="button">
-        New Leave <span><i class="fa-solid fa-pencil m-1" aria-hidden="true"></i></span>
+        New Attendance <span><i class="fa-solid fa-pencil m-1" aria-hidden="true"></i></span>
       </button>
 
       <form class="form-group" *ngIf="newLeaveRequest">
@@ -61,15 +61,15 @@
   </div>
 </section>
 
-<!-- Table for Personal Leave Summary of any User (Current user) -->
+<!-- Table for Personal Attendance Summary of any User (Current user) -->
 <br>
 <section class="column justify-content-center row justify-content-center" id="cards">
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4 text-center">
-      <button type="button" (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-add">Your Leave summary
+      <button type="button" (click)="showLeaveRequest()" *ngIf="userLeave" class="btn btn-add">Your Attendance summary
       <span><i class="fa-solid fa-calendar-days"></i></span>
       </button>
-      <button type="button" (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-add">Hide your Leave summary
+      <button type="button" (click)="showLeaveRequest()" *ngIf="!userLeave" class="btn btn-add">Hide your Attendance summary
       <span><i class="fa-solid fa-calendar-xmark"></i></span>
       </button>
       <div class="card" *ngIf="!userLeave">
@@ -249,7 +249,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Leave Request</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Attendance Request</h5>
         <div class="gap-2 d-md-block">
         <button (click)="saveEntry(selectedPeriod)" type="button" class="btn btn-add m-1" data-bs-dismiss="modal">
           <span><i class="fa-solid fa-floppy-disk"></i></span>
@@ -283,15 +283,15 @@
   </div>
 </div>
 
-<!-- Table for Personal Leave Summary of all Employees -->
+<!-- Table for Personal Attendance Summary of all Employees -->
 <section class="column justify-content-center row justify-content-center" id="all_leaves">
   <div class="col-md-9 table-responsive embed-responsive">
     <div class="mb-4 text-center">
-      <button (click)="clearAllPeriods()" *ngIf="!allLeave && authService.isOwner" class="btn btn-add mb-5" type="button">Leave Summary of
+      <button (click)="clearAllPeriods()" *ngIf="!allLeave && authService.isOwner" class="btn btn-add mb-5" type="button">Attendance Summary of
         all Employees
         <span><i class="fa-solid fa-calendar-days"></i></span>
       </button>
-      <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-add" type="button">Leave Summary of
+      <button (click)="clearAllPeriods()" *ngIf="allLeave" class="btn btn-add" type="button">Attendance Summary of
         all Employees
         <span><i class="fa-solid fa-calendar-xmark"></i></span>
       </button>
