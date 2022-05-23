@@ -75,9 +75,12 @@ export class PeriodComponent implements OnInit {
   }
 
   public deletePeriod(id: number) {
-    this.periods = this.periods?.filter(period => period.id !== id);
-    this.http.delete<Period>('/api/periods/delete/' + id)
-      .subscribe(() => this.status = 'Period successfully deleted');
+    var result = confirm("Are you sure you want to delete this leave request? This operation cannot be undone.");
+    if (result) {
+      this.periods = this.periods?.filter(period => period.id !== id);
+      this.http.delete<Period>('/api/periods/delete/' + id)
+        .subscribe(() => this.status = 'Period successfully deleted');
+    }
   }
 
   public showEmployeesLeave(id: number) {
