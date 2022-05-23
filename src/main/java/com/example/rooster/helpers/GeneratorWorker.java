@@ -15,8 +15,9 @@ public class GeneratorWorker {
 
     public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<Employee> employees, int year, int month, Team team) {
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
-        AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
+        AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) == 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
+        AtomicBoolean beginWithEarly = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicInteger switchPeriods = new AtomicInteger((new Random()).nextInt(0,3));
         boolean[] earlyCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
         boolean[] lateCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
@@ -65,7 +66,7 @@ public class GeneratorWorker {
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarTo.get(Calendar.MINUTE);
                     } else {
-                        if ((!earlyCheck[i.get()-1] && switchPeriods.get() == 0 || switchPeriods.get() == 1) || (switchPeriods.get() == 0 && employees.size() > 2) || (twoEmployeesSwitch.get() && employees.size() == 2)) {
+                        if (((!earlyCheck[i.get()-1] && switchPeriods.get() == 0 || switchPeriods.get() == 1) && beginWithEarly.get()) || (switchPeriods.get() == 0 && employees.size() > 2) || (twoEmployeesSwitch.get() && employees.size() == 2)) {
                             earlyCheck[i.get()-1] = true;
                             hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                             minuteFrom = calendarFrom.get(Calendar.MINUTE);
