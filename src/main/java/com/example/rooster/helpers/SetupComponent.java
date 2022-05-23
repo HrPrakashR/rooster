@@ -121,17 +121,17 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 16 + ((employee.getId() * day) % 3),
                 15 * ((employee.getId() * day + 2) % 4)));
         period.setEmployee(employee.getId());
-        if (((employee.getId()*5 + day*7)) % 2 > 0) {
+        if (((employee.getId()*4 + day*7)) % 9 < 1) {
             this.periodController.submitPeriodRequest(period);
         }
     }
 
     private String getNextPurpose(int id, int day) {
-        return switch ((2 * id + 7 * day) % 10) {
-            case 7 -> Purpose.SICK_LEAVE.name();
-            case 8 -> Purpose.CONFIRMED_VACATION.name();
-            case 9 -> Purpose.VACATION_REQUEST.name();
-            default -> Purpose.WORKING_HOURS.name();
+        return switch ((2 * id + 7 * day) % 6) {
+            case 0 -> Purpose.CONFIRMED_VACATION.name();
+            case 2,3 -> Purpose.WORKING_HOURS.name();
+            case 4 -> Purpose.FREE_TIME_REQUEST.name();
+            default -> Purpose.VACATION_REQUEST.name();
         };
     }
 
