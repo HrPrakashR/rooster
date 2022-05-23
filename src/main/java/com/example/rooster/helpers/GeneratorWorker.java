@@ -52,6 +52,7 @@ public class GeneratorWorker {
             i.incrementAndGet();
 
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
+                freeTimeRequest.set(false);
 
                 if (DateWorker.getCalendarObject(0, 0, 0, i.get(), month, year).get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
                     weeklyWorkingTime.set(0);
@@ -84,7 +85,7 @@ public class GeneratorWorker {
                         getTotalWorkingHours(generatedPlan, employee, team),
                         employee) > getDailyWorkingHours(employee.getHoursPerWeek())
                         // check if there is no other period at this day
-                        && predefinedPlan.stream()
+                        && generatedPlan.stream()
                         .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId()
                                 && DateWorker.checkIfPeriodDTOContainsDate(periodDTO, i.get(), month, year))
                         // check the teams working times and the employees rest day
@@ -93,6 +94,7 @@ public class GeneratorWorker {
                                 && DateWorker.checkIfPeriodDTOContainsDate(periodDTO,
                                 DateWorker.getCalendarObject(0, 0, 0, i.get(), month, year).getFirstDayOfWeek(), month, year)).toList(),
                         employee, team)) <= employee.getHoursPerWeek()
+                        && !freeTimeRequest.get()
                 ) {
                     // initialize values
                     int hourFrom = 0;
@@ -147,7 +149,7 @@ public class GeneratorWorker {
                                                     calendarTo.get(Calendar.MINUTE),
                                                     calendarTo.get(Calendar.HOUR_OF_DAY),
                                                     i.get(), month, year)))
-                            < GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
+                                    < GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
                                 hourFrom = getFrom(team, year, month, i.get()).get(Calendar.HOUR_OF_DAY);
                                 minuteFrom = getFrom(team, year, month, i.get()).get(Calendar.MINUTE);
                             }
@@ -277,37 +279,6 @@ public class GeneratorWorker {
         return DateWorker.countAllWeekdaysOfMonth(year, month) *
                 getDailyWorkingHours(employee.getHoursPerWeek());
     }
-
-    /*    *//**
-     * Checks if an Employee shout get another workday on this date
-     *
-     * @param year          Year
-     * @param month         Month
-     * @param day           Day
-     * @param team          Team as Object
-     * @param freeDaySwitch Boolean if employee has a free day request
-     * @return Boolean if an Employee should work
-     *//*
-    public static boolean isWorkingDay(int year, int month, int day, Team team, boolean freeDaySwitch) {
-        Calendar calendar = DateWorker.getCalendarObject(0, 0, 0, day, month, year);
-        List<Integer> workingDays = new ArrayList<>();
-        List<Integer> removeDays = new ArrayList<>();
-        for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-            calendar.set(Calendar.DAY_OF_MONTH, i);
-            if (!checkIfTeamWorksAtDay(team, calendar.get(Calendar.DAY_OF_WEEK))) {
-                if (freeDaySwitch) {
-                    IntStream.range(i, (i + team.getRestDays())).forEachOrdered(removeDays::add);
-                } else {
-                    int finalI = i;
-                    IntStream.iterate(i, n -> n > (finalI - team.getRestDays()), n -> n - 1).forEachOrdered(removeDays::add);
-                }
-                removeDays.add(i);
-            }
-            workingDays.add(i);
-        }
-        workingDays.removeAll(removeDays);
-        return workingDays.contains(day);
-    }*/
 
     /**
      * Returns the beginning working time of a team from a specific date
