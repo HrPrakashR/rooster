@@ -55,7 +55,6 @@ public class GeneratorWorker {
                                 DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, i.get())).getFirstDayOfWeek()))).toList(),
                         employee, team)) <= employee.getHoursPerWeek()
                 ) {
-                    // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
 
                     // initialize values
