@@ -87,8 +87,8 @@ public class PeriodService {
 
     public void deleteAllPeriodsByTeamAndByMonthAndByYear(Team team, int month, int year) {
         List<Period> teamPeriods = this.periodRepository.findAllByEmployeeTeam(team);
-        Date firstDay = DateWorker.getDate(false, year, month);
-        Date lastDay = DateWorker.getDate(true, year, month);
+        Date firstDay = DateWorker.getFirstOrLastDayOfMonth(false, year, month).getTime();
+        Date lastDay = DateWorker.getFirstOrLastDayOfMonth(true, year, month).getTime();
 
         for (Period teamPeriod : teamPeriods) {
             if (teamPeriod.getDateFrom().after(firstDay) && teamPeriod.getDateTo().before(lastDay)) {
