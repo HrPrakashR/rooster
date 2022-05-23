@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Employee} from "../employee/employee";
 import {Period} from "../period/period";
 import {AuthService} from "../auth.service";
+import {Purpose} from "../period/purpose";
 
 @Component({
   selector: 'app-generator',
@@ -31,6 +32,10 @@ export class GeneratorComponent implements OnInit {
 
   generatedPeriods?: Period[];
   enableSaveRoster: boolean = false;
+
+  editMode = false;
+  selectedPeriod = {} as Period;
+  public Purpose = Purpose;
 
 
   constructor(private http: HttpClient, public authService: AuthService) {
@@ -274,5 +279,20 @@ export class GeneratorComponent implements OnInit {
 
   getBreakTime(teamId: number) {
     return this.teams?.filter((team) => team.id.valueOf() == teamId)[0].minBreakTime;
+  }
+
+  editModeOn(period: Period) {
+    this.editMode = true;
+    this.selectedPeriod = period;
+  }
+
+  editModeOff() {
+    this.editMode = false;
+  }
+
+  editPeriod(period: Period) {
+    const url = `/api/periods/edit`;
+    this.http.post<Period>(url, period).subscribe();
+    this.editMode = false;
   }
 }

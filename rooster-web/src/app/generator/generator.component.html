@@ -74,7 +74,13 @@
                 <ng-container [ngSwitch]="period.purpose">
                   <b *ngSwitchCase="'WORKING_HOURS'">
                     {{period.dateFrom.substring(period.dateFrom.length - 5, period.dateFrom.length)}} -
-                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}<br>
+                    {{period.dateTo.substring(period.dateTo.length - 5, period.dateTo.length)}}
+                    <button (click)="editModeOn(period)" type="button"
+                            class="btn btn-edit" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                      <span><i class="fa-solid fa-pencil"></i></span>
+                    </button>
+                    <br>
                     <small class="small fw-light"> ({{ getBreakTime(employee.team) }} Hours break time) </small>
                   </b>
                   <span *ngSwitchCase="'CONFIRMED_VACATION'" class="text-info">Vacation</span>
@@ -173,4 +179,38 @@
     </table>
   </div>
 </ng-container>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
+        <button (click)="editPeriod(selectedPeriod)" type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+        <button (click)="editModeOff()" type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+          <span><i class="fa-solid fa-circle-xmark"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <!--Edit Feature-->
+        <div *ngIf="editMode" class="text-center">
+          <div>
+            <label for="leavePurpose">Purpose: </label>
+            <select class="form-control" #teamName="ngModel" [(ngModel)]="selectedPeriod.purpose"
+                    id="leavePurpose" name="leavePurpose" type="text">
+              <option *ngFor="let p of Purpose | keyvalue" [ngValue]="p.key">{{p.value}}</option>
+            </select>
+          </div>
+          <label>Begin:</label>
+          <input class="form-control text-center" [(ngModel)]="selectedPeriod.dateFrom" type="datetime-local"
+                 name="periodDateFrom">
+          <label>End: </label>
+          <input class="form-control text-center" [(ngModel)]="selectedPeriod.dateTo" type="datetime-local"
+                 name="periodDateTo">
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
