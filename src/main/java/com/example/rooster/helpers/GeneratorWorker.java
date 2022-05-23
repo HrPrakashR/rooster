@@ -7,16 +7,25 @@ import com.example.rooster.team.Team;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class GeneratorWorker {
 
-    public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<Employee> employees, int year, int month, Team team){
+    public static List<PeriodDTO> generatePlan(List<PeriodDTO> predefinedPlan, List<Employee> employees, int year, int month, Team team) {
         List<PeriodDTO> generatedPlan = new ArrayList<>(predefinedPlan);
+        AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
+        AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
+        AtomicInteger switchPeriods = new AtomicInteger((new Random()).nextInt(0,3));
         // iterate through days and employees
         employees.forEach(employee -> {
+            freeDaySwitch.set(!freeDaySwitch.get());
+            twoEmployeesSwitch.set(!twoEmployeesSwitch.get());
             AtomicInteger i = new AtomicInteger();
+            if(switchPeriods.getAndIncrement() == 2){
+                switchPeriods.set(0);
+            }
             i.incrementAndGet();
             DateWorker.getAllDaysOfMonth(year, month).forEach(day -> {
                 // check if they have enough time to work at another day
@@ -30,7 +39,7 @@ public class GeneratorWorker {
                         .noneMatch(periodDTO -> periodDTO.getEmployee() == employee.getId() &&
                                 periodDTO.getDateFrom().startsWith(String.format("%04d-%02d-%02d", year, month, i.get())))
                         // check the teams working times and the employees rest day
-                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team, employee)
+                        && GeneratorWorker.isWorkingDay(year, month, i.get(), team, freeDaySwitch.get())
                 ) {
                     // TODO: zwischen hourTo und nächster hourFrom eines gleichen employees muessen team.getRestHours Stunden liegen
                     // TODO: beruecksichtige Requests
@@ -44,45 +53,47 @@ public class GeneratorWorker {
 
                     Calendar calendarFrom = GeneratorWorker.getFrom(team, year, month, i.get());
                     Calendar calendarTo = GeneratorWorker.getTo(team, year, month, i.get());
+                    double differenceHours = DateWorker.calculateHours(DateWorker.convertDateToDateString(calendarFrom.getTime()), DateWorker.convertDateToDateString(calendarTo.getTime()));
                     double workingHours = GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek()) + team.getMinBreakTime();
-                    // early shift, late shift, middle shift
-                    int randomNumber = (new Random()).nextInt(0, 100);
-                    if (randomNumber < 35) {
+
+                    // switch shifts
+                    if (employees.size() == 1 || differenceHours <= workingHours) {
                         hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
                         minuteFrom = calendarFrom.get(Calendar.MINUTE);
-                        calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
-                        calendarFrom.add(Calendar.MINUTE, (int) Math.round(team.getMinBreakTime() * 60));
-                        hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
-                        minuteTo = calendarFrom.get(Calendar.MINUTE);
-                    } else if (randomNumber < 80) {
                         hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
                         minuteTo = calendarTo.get(Calendar.MINUTE);
-                        calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
-                        calendarTo.add(Calendar.MINUTE, ((int) Math.round(team.getMinBreakTime() * 60)) * (-1));
-                        hourFrom = calendarTo.get(Calendar.HOUR_OF_DAY);
-                        minuteFrom = calendarTo.get(Calendar.MINUTE);
                     } else {
-                        double differenceHours = DateWorker.calculateHours(DateWorker.convertDateToDateString(calendarFrom.getTime()), DateWorker.convertDateToDateString(calendarTo.getTime()));
-                        if (differenceHours > GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
+                        if (switchPeriods.get() == 0 || (twoEmployeesSwitch.get() && employees.size() == 2)) {
+                            hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                            minuteFrom = calendarFrom.get(Calendar.MINUTE);
+                            calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
+                            hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                            minuteTo = calendarFrom.get(Calendar.MINUTE);
+                        } else if (switchPeriods.get() == 2 || (!twoEmployeesSwitch.get() && employees.size() == 2)) {
+                            hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
+                            minuteTo = calendarTo.get(Calendar.MINUTE);
+                            calendarTo.add(Calendar.MINUTE, ((int) Math.round(workingHours * 60)) * (-1));
+                            hourFrom = calendarTo.get(Calendar.HOUR_OF_DAY);
+                            minuteFrom = calendarTo.get(Calendar.MINUTE);
+                        } else {
                             calendarFrom.add(Calendar.MINUTE, (int) Math.round(differenceHours * 60) / 4);
-                            calendarTo.add(Calendar.MINUTE, ((int) Math.round(differenceHours * 60) / 4) * (-1));
+                            hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                            minuteFrom = calendarFrom.get(Calendar.MINUTE);
+                            calendarFrom.add(Calendar.MINUTE, (int) Math.round(workingHours * 60));
+                            hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
+                            minuteTo = calendarFrom.get(Calendar.MINUTE);
                         }
-                        hourFrom = calendarFrom.get(Calendar.HOUR_OF_DAY);
-                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
-                        minuteFrom = calendarFrom.get(Calendar.MINUTE);
-                        minuteTo = calendarTo.get(Calendar.MINUTE);
                     }
 
                     // if working time is not in the
-                    if (calendarTo.before(calendarFrom)) {
-                        hourTo = calendarFrom.get(Calendar.HOUR_OF_DAY);
-                        minuteTo = calendarFrom.get(Calendar.MINUTE);
+                    if (hourFrom < GeneratorWorker.getFrom(team, year, month, i.get()).get(Calendar.HOUR_OF_DAY)) {
+                        hourFrom = GeneratorWorker.getFrom(team, year, month, i.get()).get(Calendar.HOUR_OF_DAY);
+                        minuteFrom = GeneratorWorker.getFrom(team, year, month, i.get()).get(Calendar.MINUTE);
                     }
-                    if (calendarFrom.after(calendarTo)) {
-                        hourTo = calendarTo.get(Calendar.HOUR_OF_DAY);
-                        minuteTo = calendarTo.get(Calendar.MINUTE);
+                    if (hourTo > GeneratorWorker.getTo(team, year, month, i.get()).get(Calendar.HOUR_OF_DAY)) {
+                        hourTo = GeneratorWorker.getTo(team, year, month, i.get()).get(Calendar.HOUR_OF_DAY);
+                        minuteTo = GeneratorWorker.getTo(team, year, month, i.get()).get(Calendar.MINUTE);
                     }
-
 
                     // add working times
                     PeriodDTO createdPeriodDTO = GeneratorWorker.createPeriodDTO(
@@ -99,10 +110,8 @@ public class GeneratorWorker {
                     // calculate with breakTime
                     createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
-                    // a little randomizing the creation
-                    if ((new Random()).nextInt(0, 7) < GeneratorWorker.getDailyWorkingHours(employee.getHoursPerWeek())) {
-                        generatedPlan.add(createdPeriodDTO);
-                    }
+                    generatedPlan.add(createdPeriodDTO);
+
                 }
                 i.incrementAndGet();
             });
@@ -110,12 +119,12 @@ public class GeneratorWorker {
 
         // !!!!Next TODO: DOES NOT WORK
         //  ueberpruefe am Ende, ob alle Zeiten abgedeckt sind. Ansonsten fuelle diese Daten
-            if(missingWorkingTime(team, generatedPlan)){
-                System.out.println("repeated");
-                List<PeriodDTO> newList = generatePlan(generatedPlan, employees, year, month, team);
-                generatedPlan.clear();
-                generatedPlan.addAll(newList);
-            }
+        if (missingWorkingTime(team, generatedPlan)) {
+            System.out.println("repeated");
+            List<PeriodDTO> newList = generatePlan(generatedPlan, employees, year, month, team);
+            generatedPlan.clear();
+            generatedPlan.addAll(newList);
+        }
 
         return generatedPlan;
     }
@@ -126,19 +135,19 @@ public class GeneratorWorker {
             Calendar calendarFrom = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateFrom()));
             Calendar calendarTo = DateWorker.getCalendarObject(DateWorker.convertDateStringToDate(periodDTO.getDateTo()));
 
-            if(GeneratorWorker.getFrom(team,
+            if (GeneratorWorker.getFrom(team,
                     calendarFrom.get(Calendar.YEAR),
                     calendarFrom.get(Calendar.MONTH),
                     calendarFrom.get(Calendar.DAY_OF_MONTH)
-            ).after(calendarFrom.getTime())){
+            ).after(calendarFrom.getTime())) {
                 daysNeeded.add(calendarFrom.get(Calendar.DAY_OF_MONTH));
             }
 
-            if(GeneratorWorker.getTo(team,
+            if (GeneratorWorker.getTo(team,
                     calendarTo.get(Calendar.YEAR),
                     calendarTo.get(Calendar.MONTH),
                     calendarTo.get(Calendar.DAY_OF_MONTH)
-            ).before(calendarTo.getTime())){
+            ).before(calendarTo.getTime())) {
                 daysNeeded.add(calendarTo.get(Calendar.DAY_OF_MONTH));
             }
 
@@ -205,7 +214,7 @@ public class GeneratorWorker {
         return DateWorker.convertDateToDateString(calendar.getTime());
     }
 
-    public static boolean isWorkingDay(int year, int month, int day, Team team, Employee employee) {
+    public static boolean isWorkingDay(int year, int month, int day, Team team, boolean freeDaySwitch) {
         // check if we can lay the team.getRestDays on the teamWorkingDays
         Calendar calendar = DateWorker.getCalendarObject(DateWorker.getDateObjectYMD(year, month, day));
         List<Integer> workingDays = new ArrayList<>();
@@ -213,7 +222,7 @@ public class GeneratorWorker {
         for (int i = 1; i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             calendar.set(Calendar.DAY_OF_MONTH, i);
             if (!DateWorker.checkIfTeamWorksAtDay(team, calendar.get(Calendar.DAY_OF_WEEK))) {
-                if ((new Random()).nextInt(0, 100) < 50) {
+                if (freeDaySwitch) {
                     for (int n = i; n < (i + team.getRestDays()); n++) {
                         removeDays.add(n);
                     }
