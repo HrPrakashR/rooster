@@ -133,6 +133,8 @@ public class PeriodController {
     @GetMapping("/generateNewRoster/{teamId}/{year}/{month}")
     public List<PeriodDTO> getGeneratedRoster(@PathVariable long teamId, @PathVariable int year, @PathVariable int month) {
 
+        month -= 1;
+
         // fetching necessary information
         Team team = this.teamService.getTeam(teamId);
         List<Employee> employees = this.employeeService.getEmployees(team);
