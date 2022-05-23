@@ -18,8 +18,8 @@ public class GeneratorWorker {
         AtomicBoolean freeDaySwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicBoolean twoEmployeesSwitch = new AtomicBoolean((new Random()).nextInt(0, 2) != 0);
         AtomicInteger switchPeriods = new AtomicInteger((new Random()).nextInt(0,3));
-        boolean[] earlyCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()-1];
-        boolean[] lateCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()-1];
+        boolean[] earlyCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
+        boolean[] lateCheck = new boolean[DateWorker.getAllDaysOfMonth(year, month).size()];
         // iterate through days and employees
         employees.forEach(employee -> {
             freeDaySwitch.set(!freeDaySwitch.get());
@@ -110,9 +110,6 @@ public class GeneratorWorker {
                             minuteTo,
                             employee.getId(),
                             purpose.name());
-
-                    // calculate with breakTime
-                    createdPeriodDTO.setDateTo(GeneratorWorker.addHoursToDateString(createdPeriodDTO.getDateTo(), team.getMinBreakTime()));
 
                     generatedPlan.add(createdPeriodDTO);
 
