@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 @Component
 public class SetupComponent implements ApplicationListener<ApplicationReadyEvent> {
@@ -33,7 +31,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private final List<String> lastNames = Names.lastNames;
     private final List<String> teamNames = List.of("Sales", "Marketing", "Human Resources", "Production", "Customer Service");
     private final int maxTeamId = this.teamNames.size();
-    private long employeeId = 0;
+    private final long employeeId = 0;
 
     public SetupComponent(EmployeeRepository employeeRepository, TeamController teamController, TeamRepository teamRepository, PeriodController periodController, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
@@ -101,7 +99,6 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 generatePeriodDTO(employeeRepository.getById(i), j);
             }
         }
-
     }
 
 
@@ -121,7 +118,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
                 16 + ((employee.getId() * day) % 3),
                 15 * ((employee.getId() * day + 2) % 4)));
         period.setEmployee(employee.getId());
-        if (((employee.getId()*4 + day*7)) % 9 < 1) {
+        if (((employee.getId() * 4 + day * 7L)) % 9 < 1) {
             this.periodController.submitPeriodRequest(period);
         }
     }
@@ -129,7 +126,7 @@ public class SetupComponent implements ApplicationListener<ApplicationReadyEvent
     private String getNextPurpose(int id, int day) {
         return switch ((2 * id + 7 * day) % 6) {
             case 0 -> Purpose.CONFIRMED_VACATION.name();
-            case 2,3 -> Purpose.WORKING_HOURS.name();
+            case 2, 3 -> Purpose.WORKING_HOURS.name();
             case 4 -> Purpose.FREE_TIME_REQUEST.name();
             default -> Purpose.VACATION_REQUEST.name();
         };

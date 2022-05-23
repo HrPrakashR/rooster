@@ -111,8 +111,7 @@ public class DateWorker {
     public static List<Calendar> getAllDaysOfMonth(int year, int month) {
         List<Calendar> days = new ArrayList<>();
 
-        Calendar calendar = getCalendarObject(0, 0, 0, 0, year, month);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Calendar calendar = getCalendarObject(0, 0, 0, 1, month, year);
         IntStream.rangeClosed(1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                 .forEachOrdered(i -> {
                     days.add(calendar);
