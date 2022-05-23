@@ -295,4 +295,15 @@ export class GeneratorComponent implements OnInit {
     this.http.post<Period>(url, period).subscribe();
     this.editMode = false;
   }
+
+  public deletePeriod(selectedPeriod: Period) {
+    var result = confirm("Are you sure you want to delete this leave request? This operation cannot be undone.");
+    if (result) {
+
+        this.predefinedPeriods = this.predefinedPeriods?.filter(period => period !== selectedPeriod);
+        this.http.delete<Period>('/api/periods/delete/' + selectedPeriod.id)
+          .subscribe();
+
+    }
+  }
 }
