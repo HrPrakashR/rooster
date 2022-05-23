@@ -35,6 +35,8 @@ public class EmployeeDTO {
         this.role = role;
     }
 
+    // Getter / Setter
+
     public long getId() {
         return id;
     }
