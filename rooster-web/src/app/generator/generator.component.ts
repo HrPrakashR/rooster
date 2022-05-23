@@ -240,30 +240,29 @@ export class GeneratorComponent implements OnInit {
   }
 
   generateNewRoster() {
-    var result = confirm("Are you sure you want to generate a new roster? This operation cannot be undone.");
-    if (result) {
-      this.generatedPeriods = [];
+    this.generatedPeriods = [];
       this.http.get<Period[]>('/api/periods/generateNewRoster/' + this.selectedTeamId + '/' + this.year + '/' + this.month)
         .subscribe(result => {
           this.generatedPeriods = result
           this.enableSaveRoster = true;
           this.createCalendar();
         });
-    }
-
   }
 
   saveNewRoster() {
-    this.http.post<Period[]>('/api/periods/saveNewRoster', this.generatedPeriods).subscribe(() => this.createCalendar());
-    /*
-        TODO:
-        this.generatedPeriods beinhaltet den neu generierten Dienstplan.
-        Bitte durchiterieren und jede Period abspeichern.
-        Wenn es am gleichen Tag und beim gleichen Employee ein Period besteht, dann wird die alte Period von der neuen ueberschrieben.
-         this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
-    */
-    // Danach (bitte subscribe verwenden, wie in createCalendar):
-    //this.clearGeneratedValues();
+    var result = confirm("Are you sure you want to save this roster? This operation cannot be undone.");
+    if (result) {
+      this.http.post<Period[]>('/api/periods/saveNewRoster', this.generatedPeriods).subscribe(() => this.createCalendar());
+      /*
+          TODO:
+          this.generatedPeriods beinhaltet den neu generierten Dienstplan.
+          Bitte durchiterieren und jede Period abspeichern.
+          Wenn es am gleichen Tag und beim gleichen Employee ein Period besteht, dann wird die alte Period von der neuen ueberschrieben.
+           this.generatedPeriods?.forEach(period -> SAVE EVERY PERIOD. MAYBE REPLACE OLD ONES)
+      */
+      // Danach (bitte subscribe verwenden, wie in createCalendar):
+      //this.clearGeneratedValues();
+    }
   }
 
   clearGeneratedValues() {
@@ -306,7 +305,6 @@ export class GeneratorComponent implements OnInit {
         this.predefinedPeriods = this.predefinedPeriods?.filter(period => period !== selectedPeriod);
         this.http.delete<Period>('/api/periods/delete/' + selectedPeriod.id)
           .subscribe();
-
     }
   }
 }
