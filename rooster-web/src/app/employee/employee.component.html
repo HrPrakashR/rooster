@@ -15,7 +15,7 @@
       New employee
         <span><i class="fa-solid fa-user-plus"></i></span>
       </a>
-      <a (click)="myTeam = !myTeam" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'"
+      <a (click)="selectedTeam = currentUser.team" *ngIf="currentUser.role == 'STAFF' || currentUser.role == 'SUBSTITUTE_MANAGER'"
          class="btn btn-primary m-1">Show My Team</a>
       <div *ngIf="currentUser.role == 'OWNER'" class="dropdown m-3">
         <label for="team">Select a Team:</label>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <figure *ngIf="leaveRequest" class="text-center">
+  <figure *ngIf="authService.isOwner" class="text-center">
 
     <div class="container-fluid p-3 my-3 w-50">
       <ng-container *ngIf=createEmployee>
