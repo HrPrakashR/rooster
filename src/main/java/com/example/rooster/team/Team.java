@@ -3,6 +3,9 @@ package com.example.rooster.team;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entity class for teams.
+ */
 @Entity
 @Table(name = "team")
 public class Team {
@@ -11,7 +14,6 @@ public class Team {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    // wird unique festgelegt im Setter
     private String name;
 
     private double restHours;

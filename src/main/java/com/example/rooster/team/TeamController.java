@@ -28,7 +28,6 @@ public class TeamController {
     }
 
     // Create a new Team
-    //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/new")
     public TeamDTO newTeam(@RequestBody TeamDTO teamDTO) {
         Team newTeam = teamService.convertToTeam(teamDTO);
@@ -37,7 +36,6 @@ public class TeamController {
     }
 
     //Edit a Team
-    //TODO: Check if the team name already exists. Teams with the same new are not allowed.
     @PostMapping("/edit")
     public TeamDTO update(@RequestBody TeamDTO teamDTO) {
         Team teamToEdit = teamService.convertToTeam(teamDTO);

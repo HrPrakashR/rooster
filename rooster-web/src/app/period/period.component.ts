@@ -30,6 +30,7 @@ export class PeriodComponent implements OnInit {
 
   status = '';
   userLeave = false;
+  teamRequests = false;
   newLeaveRequest = false;
   allLeave = false;
   showEmployeeList = false;
@@ -86,6 +87,10 @@ export class PeriodComponent implements OnInit {
    */
   showLeaveRequest() {
     this.userLeave = !this.userLeave
+  }
+
+  showTeamRequests() {
+    this.teamRequests = !this.teamRequests
   }
 
   /**
@@ -191,4 +196,31 @@ export class PeriodComponent implements OnInit {
     {return period.employee === employee.id;});
   }
 
+  public getTeamOfEmployee(period: Period) {
+    let tempEmployeeId = period.employee;
+    let selectedEmployee = this.employees?.filter(employee => employee.id == tempEmployeeId)[0];
+    let selectedTeam = selectedEmployee?.team;
+    return selectedTeam;
+  }
+
+  public getEmployeeOfPeriod(period: Period): Employee {
+    let tempEmployeeId = period.employee;
+    let selectedEmployee = this.employees?.filter(employee => employee.id == tempEmployeeId)[0];
+    // @ts-ignore
+    return selectedEmployee;
+  }
+
+  confirmPeriod(period: Period) {
+    alert(typeof period.purpose)
+    if (period.purpose == 'FREE_TIME_REQUEST') {
+      period.purpose = 'ABSENCE';
+    }
+    if (period.purpose == 'VACATION_REQUEST') {
+      period.purpose = 'CONFIRMED_VACATION';
+    }
+    if (period.purpose == 'WORKING_HOUR_REQUEST') {
+      period.purpose = 'WORKING_HOURS';
+    }
+    this.editPeriod(period);
+  }
 }

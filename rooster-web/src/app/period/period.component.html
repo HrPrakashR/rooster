@@ -246,6 +246,101 @@
   </div>
 </section>
 
+<!-- Table for requests of a team (Visible only to team manager) -->
+<br>
+<section class="column justify-content-center row justify-content-center" id="cards2" *ngIf="authService.isManager">
+  <div class="col-md-9 table-responsive embed-responsive">
+    <div class="mb-4 text-center">
+      <button type="button" (click)="showTeamRequests()" *ngIf="teamRequests" class="btn btn-add">Show team requests
+        <span><i class="fa-solid fa-calendar-days"></i></span>
+      </button>
+      <button type="button" (click)="showTeamRequests()" *ngIf="!teamRequests" class="btn btn-add">Hide team requests
+        <span><i class="fa-solid fa-calendar-xmark"></i></span>
+      </button>
+      <div class="card" *ngIf="!teamRequests">
+        <div class="card-body text-center">
+          <table class="table table-responsive-sm table-hover" *ngIf="currentUser != undefined">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Employee</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Begin</th>
+              <th scope="col">End</th>
+              <th scope="col">Edit/Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let period of periods">
+              <ng-container *ngIf="getTeamOfEmployee(period) == currentUser.team">
+                <ng-container [ngSwitch]="period.purpose">
+                  <tr *ngSwitchCase="'VACATION_REQUEST'" class="vacation">
+                    <th scope="row"></th>
+                    <td class="align-middle">{{getEmployeeOfPeriod(period).firstName}} {{getEmployeeOfPeriod(period).lastName}}</td>
+                    <td class="align-middle">Vacation request</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateFrom)}}</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateTo)}}</td>
+                    <td class="align-middle">
+                      <button (click)="confirmPeriod(period)" type="button"
+                              class="btn btn-edit" data-bs-toggle="modal"
+                              data-bs-target="#exampleModal">
+                        Confirm
+                        <span><i class="fa-solid fa-pencil"></i></span>
+                      </button>
+                      <button (click)="deletePeriod(period.id)" class="btn btn-exit" type="button">
+                        Reject
+                        <span><i class="fa-solid fa-circle-xmark"></i></span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngSwitchCase="'FREE_TIME_REQUEST'" class="freeTime">
+                    <th scope="row"></th>
+                    <td class="align-middle">{{getEmployeeOfPeriod(period).firstName}} {{getEmployeeOfPeriod(period).lastName}}</td>
+                    <td class="align-middle">Free time request</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateFrom)}}</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateTo)}}</td>
+                    <td class="align-middle">
+                      <button (click)="confirmPeriod(period)" type="button"
+                              class="btn btn-edit" data-bs-toggle="modal"
+                              data-bs-target="#exampleModal">
+                        Confirm
+                        <span><i class="fa-solid fa-pencil"></i></span>
+                      </button>
+                      <button (click)="deletePeriod(period.id)" class="btn btn-exit" type="button">
+                        Reject
+                        <span><i class="fa-solid fa-circle-xmark"></i></span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngSwitchCase="'WORKING_HOUR_REQUEST'" class="wHourRequest">
+                    <th scope="row"></th>
+                    <td class="align-middle">{{getEmployeeOfPeriod(period).firstName}} {{getEmployeeOfPeriod(period).lastName}}</td>
+                    <td class="align-middle">Working hour request</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateFrom)}}</td>
+                    <td class="align-middle">{{removeTFromDate(period.dateTo)}}</td>
+                    <td class="align-middle">
+                      <button (click)="confirmPeriod(period)" type="button"
+                              class="btn btn-edit" data-bs-toggle="modal"
+                              data-bs-target="#exampleModal">
+                        Confirm
+                        <span><i class="fa-solid fa-pencil"></i></span>
+                      </button>
+                      <button (click)="deletePeriod(period.id)" class="btn btn-exit" type="button">
+                        Reject
+                        <span><i class="fa-solid fa-circle-xmark"></i></span>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Edit Function with Bootstrap Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
